@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/src/components/ui/tooltip";
 
 interface formProps {
     viewPage: toggleBtn;
