@@ -12,6 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { Link } from "react-router";
+import Footer from "~/src/components/Footer";
 
 const prebuildTemplate = [
   {
@@ -123,15 +125,18 @@ export default function Home() {
                 </CardTitle>
                 <CardTitle className="">{form.name}</CardTitle>
                 <CardDescription>{form.description}</CardDescription>
+                <Link to={`formBuilder/${form.id}`} >
+                  <Button className="bg-white hover:bg-emerald-700 text-emerald-700 hover:text-white border border-emerald-700 capitalize w-full">
+                    load template
+                  </Button>
+                </Link>
 
-                <Button className="bg-white hover:bg-emerald-700 text-emerald-700 hover:text-white border border-emerald-700 capitalize w-full">
-                  load template
-                </Button>
               </Card>
             ))}
           </div>
         </section>
       </div>
+      <Footer />
     </div>
   );
 }
