@@ -19,7 +19,7 @@ export default function Header({ viewPage, setViewPage }: formProps) {
     const [isPageOpen, setIsPageOpen] = useState(false);
     return (
         <div>
-            <header className="w-full p-2 backdrop:blur-lg shadow-lg/20">
+            <header className="w-full p-2 bg-white fixed z-20 backdrop:blur-lg shadow-lg/20">
                 <nav className="w-full md:w-[90%] h-full flex items-center justify-between m-auto gap-3">
                     <div className="flex items-center justify-evenly gap-6">
                         <div className="flex items-center gap-2">
