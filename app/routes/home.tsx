@@ -65,13 +65,17 @@ export default function Home() {
             required.
           </p>
           <div className="grid md:flex items-center justify-center gap-6 mx-auto my-5">
-            <Button className="bg-emerald-700 hover:bg-emerald-800 transition-all flex items-center gap-1 p-5 text-white text-sm font-medium rounded-sm shadow-lg capitalize">
-              Launch your form{" "}
-              <MoveRight className="w-3.5 h-3.5 text-white mx-2" />
-            </Button>
-            <Button className="bg-transparent group hover:bg-gray-100 border border-black p-5 text-black text-sm font-medium rounded-sm shadow-lg capitalize">
-              Explore prebuilt templates
-            </Button>
+            <Link to="/form-builder">
+              <Button className="bg-emerald-700 hover:bg-emerald-800 transition-all flex items-center gap-1 p-5 text-white text-sm font-medium rounded-sm shadow-lg capitalize">
+                Launch your form{" "}
+                <MoveRight className="w-3.5 h-3.5 text-white mx-2" />
+              </Button>
+            </Link>
+            <Link to="/form-builder">
+              <Button className="bg-transparent group hover:bg-gray-100 border border-black p-5 text-black text-sm font-medium rounded-sm shadow-lg capitalize">
+                Explore prebuilt templates
+              </Button>
+            </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mx-auto mt-10">
             <div className="flex items-center gap-2 w-50">
@@ -100,7 +104,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="">
+        <section className="w-full md:w-[80%] mx-auto my-5">
           <img
             className="w-fit h-fit object-cover overflow-hidden"
             src={formImage}
@@ -114,7 +118,8 @@ export default function Home() {
               Start with pre-build configured teplate
             </h1>
             <p className="mt-2 text-base sm:text-lg text-[#6B7872] text-center max-w-2xl mx-auto font-normal leading-relaxed">
-              Select any industry template to instantly populate the 3-column builder
+              Select any industry template to instantly populate the 3-column
+              builder
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3">
@@ -125,12 +130,11 @@ export default function Home() {
                 </CardTitle>
                 <CardTitle className="">{form.name}</CardTitle>
                 <CardDescription>{form.description}</CardDescription>
-                <Link to={`formBuilder/${form.id}`} >
+                <Link to={`formBuilder/${form.id}`}>
                   <Button className="bg-white hover:bg-emerald-700 text-emerald-700 hover:text-white border border-emerald-700 capitalize w-full">
                     load template
                   </Button>
                 </Link>
-
               </Card>
             ))}
           </div>
