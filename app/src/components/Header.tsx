@@ -1,10 +1,24 @@
-import { Eye, Home, LayoutFreeform, LucideForm, RotateCcw, UserRound } from "lucide-react";
+import {
+    Eye,
+    Home,
+    LayoutFreeform,
+    LucideForm,
+    RotateCcw,
+    UserRound,
+} from "lucide-react";
 import { Button } from "./ui/button";
+import { useState } from "react";
 
-export default function Header() {
+interface formProps {
+    viewPage: toggleBtn;
+    setViewPage: React.Dispatch<React.SetStateAction<toggleBtn>>;
+}
+
+export default function Header({ viewPage, setViewPage }: formProps) {
+    const [isPageOpen, setIsPageOpen] = useState(false);
     return (
         <div>
-            <header className="w-full p-2 bg-white backdrop:blur-lg shadow-lg/20">
+            <header className="w-full p-2 backdrop:blur-lg shadow-lg/20">
                 <nav className="w-full md:w-[90%] h-full flex items-center justify-between m-auto gap-3">
                     <div className="flex items-center justify-evenly gap-6">
                         <div className="flex items-center gap-2">
@@ -24,19 +38,27 @@ export default function Header() {
                             </div>
                         </div>
                         <span className="text-gray-200 text-2xl">|</span>
-                        <div className="bg-[#FAF9F6] flex items-center justify-between gap-2 rounded-sm border border-gray-300 py-1 px-2">
+                        <div className="hidden md:flex items-center bg-[#FAF9F6] p-1 rounded-sm border border-[#E2E8E4]">
                             {/* is home ? text-green : text-black */}
-                            <Button className="bg-white text-black text-xs font-normal rounded-sm group hover:bg-transparent hover:text-emerald-700 shadow">
-                                <Home className="size-3 text-black group-hover:text-emerald-700" />{" "}
-                                Home Page
+                            <Button
+                                onClick={() => setViewPage("Home")}
+                                className={`text-[12px] font-normal rounded-sm ${viewPage === "Home" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                            >
+                                <Home className="size-3 group-hover:text-emerald-700" /> Home
                             </Button>
-                            <Button className="bg-white text-black text-xs font-normal rounded-sm group hover:bg-transparent hover:text-emerald-700 shadow">
-                                <LayoutFreeform className="size-3 text-black group-hover:text-emerald-700" />{" "}
+                            <Button
+                                onClick={() => setViewPage("FormBuilder")}
+                                className={`text-[12px] font-normal rounded-sm ${viewPage === "FormBuilder" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                            >
+                                <LayoutFreeform className="size-3 group-hover:text-emerald-700" />{" "}
                                 Form Builder
                             </Button>
-                            <Button className="bg-white text-black text-xs font-normal rounded-sm group hover:bg-transparent hover:text-emerald-700 shadow">
-                                <Eye className="size-3 text-black group-hover:text-emerald-700" />{" "}
-                                Live Priview
+                            <Button
+                                onClick={() => setViewPage("LivePreview")}
+                                className={`text-[12px] font-normal rounded-sm ${viewPage === "LivePreview" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                            >
+                                <Eye className="size-3 group-hover:text-emerald-700" /> Live
+                                Preview
                             </Button>
                         </div>
                     </div>
@@ -48,7 +70,7 @@ export default function Header() {
                             Sign In
                         </Button>
                         <Button className="bg-emerald-700 hover:bg-white text-sm font-medium rounded-sm hover:text-black border border-gray-400/50">
-                            <UserRound />  Sign Up
+                            <UserRound /> Sign Up
                         </Button>
                     </div>
                 </nav>
