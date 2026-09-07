@@ -124,7 +124,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3">
             {prebuildTemplate?.map((form) => (
-              <Card className="mx-auto w-full md:w-90 p-5 border group hover:border-emerald-700">
+              <Card key={form.id} className="mx-auto w-full md:w-90 p-5 border group hover:border-emerald-700">
                 <CardTitle className="rounded-sm p-2 w-fit bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-sm font-bold group-hover:bg-emerald-700 group-hover:text-white">
                   0{form.id}
                 </CardTitle>

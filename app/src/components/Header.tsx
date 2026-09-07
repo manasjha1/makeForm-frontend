@@ -9,6 +9,7 @@ import {
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/src/components/ui/tooltip";
+import { Link } from "react-router";
 
 interface formProps {
     viewPage: toggleBtn;
@@ -40,26 +41,32 @@ export default function Header({ viewPage, setViewPage }: formProps) {
                         </div>
                         <span className="text-gray-200 text-2xl">|</span>
                         <div className="hidden md:flex items-center bg-[#f9f6f0] p-1 rounded-sm border border-[#E2E8E4]">
-                            <Button
-                                onClick={() => setViewPage("Home")}
-                                className={`text-[12px] font-normal rounded-sm ${viewPage === "Home" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
-                            >
-                                <Home className="size-3 group-hover:text-emerald-700" /> Home
-                            </Button>
-                            <Button
-                                onClick={() => setViewPage("FormBuilder")}
-                                className={`text-[12px] font-normal rounded-sm ${viewPage === "FormBuilder" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
-                            >
-                                <LayoutFreeform className="size-3 group-hover:text-emerald-700" />{" "}
-                                Form Builder
-                            </Button>
-                            <Button
-                                onClick={() => setViewPage("LivePreview")}
-                                className={`text-[12px] font-normal rounded-sm ${viewPage === "LivePreview" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
-                            >
-                                <Eye className="size-3 group-hover:text-emerald-700" /> Live
-                                Preview
-                            </Button>
+                            <Link to="/">
+                                <Button
+                                    onClick={() => setViewPage("Home")}
+                                    className={`text-[12px] font-medium transition-all px-5 rounded-sm ${viewPage === "Home" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                                >
+                                    <Home className="size-3 group-hover:text-emerald-700" /> Home
+                                </Button>
+                            </Link>
+                            <Link to="/form-builder">
+                                <Button
+                                    onClick={() => setViewPage("FormBuilder")}
+                                    className={`text-[12px] font-medium transition-all px-5 rounded-sm ${viewPage === "FormBuilder" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                                >
+                                    <LayoutFreeform className="size-3 group-hover:text-emerald-700" />{" "}
+                                    Form Builder
+                                </Button>
+                            </Link>
+                            <Link to="/live-preview">
+                                <Button
+                                    onClick={() => setViewPage("LivePreview")}
+                                    className={`text-[12px] font-medium transition-all px-5 rounded-sm ${viewPage === "LivePreview" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                                >
+                                    <Eye className="size-3 group-hover:text-emerald-700" /> Live
+                                    Preview
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                     <div className="flex items-center justify-between gap-3">

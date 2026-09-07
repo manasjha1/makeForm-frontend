@@ -1,6 +1,7 @@
 import { FormInput, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link } from "react-router";
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 interface FooterProps {
     onNavigate?: (mode: toggleBtn) => void;
@@ -124,10 +125,10 @@ export default function Footer({ onNavigate }: FooterProps) {
                     <div className="flex items-center gap-4">
                         <span className="flex items-center gap-1.5">
                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                            All Systems Operational
+                            <FaGithub className="w-6 h-6" />
                         </span>
                         <span>•</span>
-                        <span>Designed with Emerald Precision</span>
+                        <span><FaLinkedin className="w-6 h-6" /></span>
                     </div>
                 </div>
             </div>
