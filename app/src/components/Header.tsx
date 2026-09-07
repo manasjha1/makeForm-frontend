@@ -80,12 +80,17 @@ export default function Header({ viewPage, setViewPage }: formProps) {
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-                        <Button className="bg-white hover:bg-gray-50 text-black font-medium rounded-sm border border-gray-400/50">
-                            Sign In
-                        </Button>
-                        <Button className="bg-emerald-700 hover:bg-white text-sm font-medium rounded-sm hover:text-black border border-gray-400/50">
-                            <UserRound /> Sign Up
-                        </Button>
+                        <Link to="/login">
+                            <Button className="bg-white hover:bg-gray-50 text-black font-medium rounded-sm border border-gray-400/50">
+                                Sign In
+                            </Button>
+                        </Link>
+                        <Link to="/create-account">
+                            <Button className="bg-emerald-700 hover:bg-white text-sm font-medium rounded-sm hover:text-black border border-gray-400/50">
+                                <UserRound /> Sign Up
+                            </Button>
+                        </Link>
+
                     </div>
                 </nav>
             </header>
