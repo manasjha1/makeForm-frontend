@@ -27,8 +27,10 @@ export default function Login() {
                     </div>
                 </section>
                 {/* form section */}
-                <section className="w-auto h-fit p-4 rounded-lg bg-white border border-gray-500 shadow">
-                    <div className=""></div>
+                <section className="w-auto h-fit p-4 rounded-lg bg-white border border-gray-300 shadow">
+                    <div className="grid gap-2 items-center justify-center mx-auto p-2">
+                        
+                    </div>
                 </section>
             </div>
         </div>

@@ -11,7 +11,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
+} from "~/src/components/ui/card";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 
