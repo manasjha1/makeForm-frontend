@@ -1,7 +1,7 @@
 import { FormInput, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link } from "react-router";
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 interface FooterProps {
     onNavigate?: (mode: toggleBtn) => void;
@@ -23,7 +23,8 @@ export default function Footer({ onNavigate }: FooterProps) {
                             </span>
                         </div>
                         <p className="text-xs text-[#6B7872] leading-relaxed max-w-sm">
-                            The next-generation visual form studio. Design high-converting web forms with conditional logic, validation, and zero code.
+                            The next-generation visual form studio. Design high-converting web
+                            forms with conditional logic, validation, and zero code.
                         </p>
                         <div className="flex items-center gap-2 pt-1 text-[11px] text-[#047857] font-semibold bg-[#ECFDF5] px-3 py-1 rounded-full w-fit border border-[#A7F3D0]">
                             <Sparkles className="w-3.5 h-3.5" />
@@ -39,22 +40,34 @@ export default function Footer({ onNavigate }: FooterProps) {
                             </h4>
                             <ul className="space-y-2 text-[#6B7872]">
                                 <li>
-                                    <button onClick={() => onNavigate?.('FormBuilder')} className="hover:text-[#047857] transition-colors cursor-pointer">
+                                    <button
+                                        onClick={() => onNavigate?.("FormBuilder")}
+                                        className="hover:text-[#047857] transition-colors cursor-pointer"
+                                    >
                                         3-Column Canvas
                                     </button>
                                 </li>
                                 <li>
-                                    <button onClick={() => onNavigate?.('LivePreview')} className="hover:text-[#047857] transition-colors cursor-pointer">
+                                    <button
+                                        onClick={() => onNavigate?.("LivePreview")}
+                                        className="hover:text-[#047857] transition-colors cursor-pointer"
+                                    >
                                         Live Form Preview
                                     </button>
                                 </li>
                                 <li>
-                                    <button onClick={() => onNavigate?.('Home')} className="hover:text-[#047857] transition-colors cursor-pointer">
+                                    <button
+                                        onClick={() => onNavigate?.("Home")}
+                                        className="hover:text-[#047857] transition-colors cursor-pointer"
+                                    >
                                         Prebuilt Templates
                                     </button>
                                 </li>
                                 <li>
-                                    <a href="#templates" className="hover:text-[#047857] transition-colors">
+                                    <a
+                                        href="#templates"
+                                        className="hover:text-[#047857] transition-colors"
+                                    >
                                         Conditional Field Logic
                                     </a>
                                 </li>
@@ -67,22 +80,34 @@ export default function Footer({ onNavigate }: FooterProps) {
                             </h4>
                             <ul className="space-y-2 text-[#6B7872]">
                                 <li>
-                                    <Link to="/login" className="hover:text-[#047857] transition-colors cursor-pointer">
+                                    <Link
+                                        to="/login"
+                                        className="hover:text-[#047857] transition-colors cursor-pointer"
+                                    >
                                         Log In
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/create-account" className="hover:text-[#047857] transition-colors cursor-pointer">
+                                    <Link
+                                        to="/create-account"
+                                        className="hover:text-[#047857] transition-colors cursor-pointer"
+                                    >
                                         Create Account
                                     </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-[#047857] transition-colors">
+                                    <a
+                                        href="#"
+                                        className="hover:text-[#047857] transition-colors"
+                                    >
                                         Security & Compliance
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-[#047857] transition-colors">
+                                    <a
+                                        href="#"
+                                        className="hover:text-[#047857] transition-colors"
+                                    >
                                         Enterprise Workspace
                                     </a>
                                 </li>
@@ -95,22 +120,34 @@ export default function Footer({ onNavigate }: FooterProps) {
                             </h4>
                             <ul className="space-y-2 text-[#6B7872]">
                                 <li>
-                                    <a href="#" className="hover:text-[#047857] transition-colors">
+                                    <a
+                                        href="#"
+                                        className="hover:text-[#047857] transition-colors"
+                                    >
                                         Documentation
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-[#047857] transition-colors">
+                                    <a
+                                        href="#"
+                                        className="hover:text-[#047857] transition-colors"
+                                    >
                                         API & Webhooks
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-[#047857] transition-colors">
+                                    <a
+                                        href="#"
+                                        className="hover:text-[#047857] transition-colors"
+                                    >
                                         Privacy Policy
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-[#047857] transition-colors">
+                                    <a
+                                        href="#"
+                                        className="hover:text-[#047857] transition-colors"
+                                    >
                                         Terms of Service
                                     </a>
                                 </li>
@@ -123,12 +160,14 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <div className="mt-10 pt-6 border-t border-[#E2E8E4] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#6B7872]">
                     <p>© 2026 DynamicForm Studio Inc. All rights reserved.</p>
                     <div className="flex items-center gap-4">
-                        <span className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                            <FaGithub className="w-6 h-6" />
+                        <span className="flex items-center gap-2">
+                            <Link to="https://github.com/manasjha1">
+                                <FaGithub className="w-6 h-6" />
+                            </Link>
+                            <Link to="https://www.linkedin.com/in/manas-jha-0310mk/">
+                                <FaLinkedin className="w-6 h-6" />
+                            </Link>
                         </span>
-                        <span>•</span>
-                        <span><FaLinkedin className="w-6 h-6" /></span>
                     </div>
                 </div>
             </div>
