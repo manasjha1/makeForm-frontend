@@ -37,15 +37,16 @@ import { Link } from "react-router"
 const formSchema = z.object({
     name: z
         .string()
-        .max(20, "name must be at least 5 characters."),
+        .min(5, "name must be at least 5 characters")
+        .max(20, "name must be at least 20 characters."),
     email: z
         .string()
-        .min(5, "email must be at least 5 characters.")
+        .min(22, "email must be at least 22 characters.")
         .max(32, "email must be at most 32 characters."),
     password: z
         .string()
         .min(20, "password must be at least 20 characters.")
-        .max(50, "password must be at most 100 characters."),
+        .max(50, "password must be at most 50 characters."),
 })
 
 interface formProps {
@@ -88,7 +89,7 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                             </span>
                         </h4>
                         <p className="text-center text-[10px] text-gray-700 font-normal uppercase">
-                            visual form architect
+                            create your account to start building custom forms
                         </p>
                     </div>
                 </section>
@@ -192,10 +193,10 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                         </CardContent>
                         <CardFooter>
                             <Field className="grid items-center mx-auto" orientation="horizontal">
-                                <Button type="button" variant="outline" onClick={() => form.reset()}>
+                                <Button className="rounded-sm border border-emerald-700 text-emerald-700 hover:bg-gray-500/5 hover:text-emerald-700" type="button" variant="outline" onClick={() => form.reset()}>
                                     Reset
                                 </Button>
-                                <Button type="submit" form="register-form">
+                                <Button className="rounded-sm bg-emerald-700 text-white hover:bg-emerald-800" type="submit" form="register-form">
                                     Submit
                                 </Button>
                             </Field>

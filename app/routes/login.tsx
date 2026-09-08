@@ -84,7 +84,7 @@ export default function Login({ viewPage, setViewPage }: formProps) {
                             </span>
                         </h4>
                         <p className="text-center text-[10px] text-gray-700 font-normal uppercase">
-                            visual form architect
+                            sign in to access you form studio
                         </p>
                     </div>
                 </section>
@@ -164,10 +164,10 @@ export default function Login({ viewPage, setViewPage }: formProps) {
                         </CardContent>
                         <CardFooter>
                             <Field className="grid items-center mx-auto" orientation="horizontal">
-                                <Button type="button" variant="outline" onClick={() => form.reset()}>
+                                <Button className="rounded-sm border border-emerald-700 text-emerald-700 hover:bg-gray-500/5 hover:text-emerald-700" type="button" variant="outline" onClick={() => form.reset()}>
                                     Reset
                                 </Button>
-                                <Button type="submit" form="login-form">
+                                <Button className="rounded-sm bg-emerald-700 text-white hover:bg-emerald-800" type="submit" form="login-form">
                                     Submit
                                 </Button>
                             </Field>
