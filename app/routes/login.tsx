@@ -24,24 +24,25 @@ import { Input } from "~/src/components/ui/input"
 import {
     InputGroup,
     InputGroupAddon,
+    InputGroupInput,
     InputGroupText,
     InputGroupTextarea,
 } from "~/src/components/ui/input-group"
 import toast, { Toaster } from 'react-hot-toast';
 import Header from "~/src/components/Header"
 import type { SetStateAction } from "react"
-import { LayoutFreeform, LucideForm } from "lucide-react"
+import { Lock, LucideForm, Mail } from "lucide-react"
 import { Link } from "react-router"
 
 const formSchema = z.object({
-    title: z
+    email: z
         .string()
-        .min(5, "Bug title must be at least 5 characters.")
-        .max(32, "Bug title must be at most 32 characters."),
-    description: z
+        .min(5, "email must be at least 5 characters.")
+        .max(32, "email must be at most 32 characters."),
+    password: z
         .string()
-        .min(20, "Description must be at least 20 characters.")
-        .max(100, "Description must be at most 100 characters."),
+        .min(20, "password must be at least 20 characters.")
+        .max(50, "password must be at most 100 characters."),
 })
 
 interface formProps {
@@ -53,8 +54,8 @@ export default function Login({ viewPage, setViewPage }: formProps) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: "",
-            description: "",
+            email: "",
+            password: "",
         },
     })
     function onSubmit(data: z.infer<typeof formSchema>) {
@@ -87,14 +88,14 @@ export default function Login({ viewPage, setViewPage }: formProps) {
                         </p>
                     </div>
                 </section>
-                <section>
-                    <Card className="w-full mx-auto sm:max-w-md">
-                        <CardHeader className="grid items-center-safe justify-center">
-                            <div className="flex items-center bg-[#f9f6f0] p-1 rounded-sm border border-[#E2E8E4]">
+                <section className="p-2 m-2">
+                    <Card className="w-full mx-auto sm:max-w-md shadow-xl ">
+                        <CardContent>
+                            <div className="flex items-center justify-center w-full bg-[#f9f6f0] p-1 mb-4 rounded-sm border border-[#E2E8E4]">
                                 <Link to="/sign-in">
                                     <Button
                                         onClick={() => setViewPage("login")}
-                                        className={`text-[12px] font-medium transition-all px-5 md:px-10 lg:px-20 rounded-sm ${viewPage !== "login" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                                        className={`text-[12px] font-medium transition-all px-8 md:px-17 rounded-sm ${viewPage !== "login" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
                                     >
                                         Sign In
                                     </Button>
@@ -102,31 +103,32 @@ export default function Login({ viewPage, setViewPage }: formProps) {
                                 <Link to="/create-account">
                                     <Button
                                         onClick={() => setViewPage("register")}
-                                        className={`text-[12px] font-medium transition-all px-5 md:px-10 lg:px-15 rounded-sm ${viewPage === "register" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                                        className={`text-[12px] font-medium transition-all px-8 md:px-17 rounded-sm ${viewPage === "register" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
                                     >
                                         Create Account
                                     </Button>
                                 </Link>
                             </div>
-                        </CardHeader>
-                        <CardContent>
-                            <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+                            <form id="login-form" onSubmit={form.handleSubmit(onSubmit)}>
                                 <FieldGroup>
                                     <Controller
-                                        name="title"
+                                        name="email"
                                         control={form.control}
                                         render={({ field, fieldState }) => (
                                             <Field data-invalid={fieldState.invalid}>
-                                                <FieldLabel htmlFor="form-rhf-demo-title">
-                                                    Bug Title
+                                                <FieldLabel htmlFor="login-form-email">
+                                                    Email
                                                 </FieldLabel>
-                                                <Input
-                                                    {...field}
-                                                    id="form-rhf-demo-title"
-                                                    aria-invalid={fieldState.invalid}
-                                                    placeholder="Login button not working on mobile"
-                                                    autoComplete="off"
-                                                />
+                                                <InputGroup className="rounded-sm">
+                                                    <InputGroupInput {...field}
+                                                        id="login-form-email"
+                                                        aria-invalid={fieldState.invalid}
+                                                        placeholder="enter your email"
+                                                        autoComplete="off" />
+                                                    <InputGroupAddon>
+                                                        <Mail />
+                                                    </InputGroupAddon>
+                                                </InputGroup>
                                                 {fieldState.invalid && (
                                                     <FieldError errors={[fieldState.error]} />
                                                 )}
@@ -134,32 +136,23 @@ export default function Login({ viewPage, setViewPage }: formProps) {
                                         )}
                                     />
                                     <Controller
-                                        name="description"
+                                        name="password"
                                         control={form.control}
                                         render={({ field, fieldState }) => (
                                             <Field data-invalid={fieldState.invalid}>
-                                                <FieldLabel htmlFor="form-rhf-demo-description">
-                                                    Description
+                                                <FieldLabel htmlFor="login-form-password">
+                                                    Password
                                                 </FieldLabel>
-                                                <InputGroup>
-                                                    <InputGroupTextarea
-                                                        {...field}
-                                                        id="form-rhf-demo-description"
-                                                        placeholder="I'm having an issue with the login button on mobile."
-                                                        rows={6}
-                                                        className="min-h-24 resize-none"
+                                                <InputGroup className="rounded-sm">
+                                                    <InputGroupInput {...field}
+                                                        id="login-form-password"
                                                         aria-invalid={fieldState.invalid}
-                                                    />
-                                                    <InputGroupAddon align="block-end">
-                                                        <InputGroupText className="tabular-nums">
-                                                            {field.value.length}/100 characters
-                                                        </InputGroupText>
+                                                        placeholder="••••••••"
+                                                        autoComplete="off" />
+                                                    <InputGroupAddon>
+                                                        <Lock />
                                                     </InputGroupAddon>
                                                 </InputGroup>
-                                                <FieldDescription>
-                                                    Include steps to reproduce, expected behavior, and what
-                                                    actually happened.
-                                                </FieldDescription>
                                                 {fieldState.invalid && (
                                                     <FieldError errors={[fieldState.error]} />
                                                 )}
@@ -170,11 +163,11 @@ export default function Login({ viewPage, setViewPage }: formProps) {
                             </form>
                         </CardContent>
                         <CardFooter>
-                            <Field orientation="horizontal">
+                            <Field className="grid items-center mx-auto" orientation="horizontal">
                                 <Button type="button" variant="outline" onClick={() => form.reset()}>
                                     Reset
                                 </Button>
-                                <Button type="submit" form="form-rhf-demo">
+                                <Button type="submit" form="login-form">
                                     Submit
                                 </Button>
                             </Field>

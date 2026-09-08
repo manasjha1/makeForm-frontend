@@ -40,7 +40,7 @@ export default function Header({ viewPage, setViewPage }: formProps) {
                             </div>
                         </div>
                         <span className="text-gray-200 text-2xl">|</span>
-                        <div className="hidden md:flex items-center bg-[#f9f6f0] p-1 rounded-sm border border-[#E2E8E4]">
+                        <div className="hidden lg:flex items-center bg-[#f9f6f0] p-1 rounded-sm border border-[#E2E8E4]">
                             <Link to="/">
                                 <Button
                                     onClick={() => setViewPage("Home")}
@@ -80,16 +80,18 @@ export default function Header({ viewPage, setViewPage }: formProps) {
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-                        <Link to="/sign-in">
-                            <Button className="bg-white hover:bg-gray-50 text-black font-medium rounded-sm border border-gray-400/50">
-                                Sign In
-                            </Button>
-                        </Link>
-                        <Link to="/create-account">
-                            <Button className="bg-emerald-700 hover:bg-white text-sm font-medium rounded-sm hover:text-black border border-gray-400/50">
-                                <UserRound /> Sign Up
-                            </Button>
-                        </Link>
+                        <div className="hidden lg:flex items-center">
+                            <Link to="/sign-in">
+                                <Button className="bg-white hover:bg-gray-50 text-black font-medium rounded-sm border border-gray-400/50">
+                                    Sign In
+                                </Button>
+                            </Link>
+                            <Link to="/create-account">
+                                <Button className="bg-emerald-700 hover:bg-white text-sm font-medium rounded-sm hover:text-black border border-gray-400/50">
+                                    <UserRound /> Sign Up
+                                </Button>
+                            </Link>
+                        </div>
 
                     </div>
                 </nav>
