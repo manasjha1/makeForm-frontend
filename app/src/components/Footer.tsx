@@ -81,7 +81,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                             <ul className="space-y-2 text-[#6B7872]">
                                 <li>
                                     <Link
-                                        to="/login"
+                                        to="/sign-in"
                                         className="hover:text-[#047857] transition-colors cursor-pointer"
                                     >
                                         Log In

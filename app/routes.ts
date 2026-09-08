@@ -5,5 +5,5 @@ export default [
   route("form-builder", "./routes/formBuilder.tsx"),
   route("live-preview", "./routes/livePreview.tsx"),
   route("create-account", "./routes/register.tsx"),
-  route("login", "./routes/login.tsx"),
+  route("sign-in", "./routes/login.tsx"),
 ] satisfies RouteConfig;

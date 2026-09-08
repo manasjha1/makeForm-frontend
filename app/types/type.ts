@@ -1,1 +1,7 @@
-type toggleBtn = "Home" | "FormBuilder" | "LivePreview" | "";
+type toggleBtn =
+  | "Home"
+  | "FormBuilder"
+  | "LivePreview"
+  | ""
+  | "login"
+  | "register";

@@ -80,7 +80,7 @@ export default function Header({ viewPage, setViewPage }: formProps) {
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-                        <Link to="/login">
+                        <Link to="/sign-in">
                             <Button className="bg-white hover:bg-gray-50 text-black font-medium rounded-sm border border-gray-400/50">
                                 Sign In
                             </Button>
