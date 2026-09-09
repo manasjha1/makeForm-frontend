@@ -39,7 +39,7 @@ export default function Header({ viewPage, setViewPage }: formProps) {
                             />
                         </Link>
                         <span className="text-gray-200 text-2xl hidden lg:flex">|</span>
-                        <div className="hidden lg:flex items-center bg-[#f9f6f0] p-1 rounded-sm border border-[#E2E8E4]">
+                        <div className="hidden lg:flex items-center bg-[#f9f6f0] p-1 rounded-sm border border-[#E2E8E4] inset-shadow-accent">
                             <Link to="/">
                                 <Button
                                     onClick={() => setViewPage("Home")}

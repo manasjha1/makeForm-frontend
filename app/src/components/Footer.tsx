@@ -2,6 +2,7 @@ import { FormInput, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link } from "react-router";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import makeForm_logo from "~/assests/makeForm_logo.png"
 
 interface FooterProps {
     onNavigate?: (mode: toggleBtn) => void;
@@ -14,14 +15,15 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
                     {/* Brand Column */}
                     <div className="md:col-span-4 space-y-3">
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-8 h-8 rounded-xl bg-[#047857] flex items-center justify-center text-white shadow-2xs">
-                                <FormInput className="w-4 h-4 stroke-[2.2]" />
-                            </div>
-                            <span className="font-extrabold text-[#1C2925] text-base tracking-tight font-sans">
-                                Dynamic<span className="text-[#047857]">Form</span>
-                            </span>
-                        </div>
+                        {/* logo */}
+                        <Link to="/">
+                            <img
+                                className="w-fit h-12 object-cover overflow-hidden"
+
+                                src={makeForm_logo}
+                                alt="makeForm-logo"
+                            />
+                        </Link>
                         <p className="text-xs text-[#6B7872] leading-relaxed max-w-sm">
                             The next-generation visual form studio. Design high-converting web
                             forms with conditional logic, validation, and zero code.

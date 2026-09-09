@@ -28,6 +28,7 @@ import {
     InputGroupText,
     InputGroupTextarea,
 } from "~/src/components/ui/input-group"
+import makeForm_png from "~/assests/makeForm_login.png"
 import toast, { Toaster } from 'react-hot-toast';
 import Header from "~/src/components/Header"
 import type { SetStateAction } from "react"
@@ -77,22 +78,11 @@ export default function Register({ viewPage, setViewPage }: formProps) {
             }} />
             <div className="grid gap-6">
                 {/* logo section */}
-                <section className="flex-1 items-center justify-center m-auto gap-2 mt-20">
-                    <div className="bg-emerald-700 rounded-lg inset-shadow-2xs p-2 w-fit mx-auto mb-3">
-                        <LucideForm className="size-6 text-white" />
-                    </div>
-                    <div className="flex-col items-baseline">
-                        <h4 className="text-black text-center text-xl md:text-2xl lg:text-4xl font-bold">
-                            make
-                            <span className="text-emerald-700 text-xl md:text-2xl lg:text-4xl font-bold">
-                                Form
-                            </span>
-                        </h4>
-                        <p className="text-center text-[10px] text-gray-700 font-normal uppercase">
-                            create your account to start building custom forms
-                        </p>
-                    </div>
-                </section>
+                <img
+                    className="w-fit h-30 mx-auto mt-30 object-cover overflow-hidden"
+                    src={makeForm_png}
+                    alt="makeForm_png"
+                />
                 <section className="p-2 m-2">
                     <Card className="w-full mx-auto sm:max-w-md shadow-lg">
                         <CardContent>
