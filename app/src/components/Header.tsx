@@ -6,9 +6,15 @@ import {
     RotateCcw,
     UserRound,
 } from "lucide-react";
+import makeForm_logo from "~/assests/makeForm_logo.png";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/src/components/ui/tooltip";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "~/src/components/ui/tooltip";
 import { Link } from "react-router";
 
 interface formProps {
@@ -23,22 +29,14 @@ export default function Header({ viewPage, setViewPage }: formProps) {
             <header className="w-full p-2 bg-white fixed z-20 backdrop:blur-lg shadow-lg/20">
                 <nav className="w-full md:w-[90%] h-full flex items-center justify-between m-auto gap-3">
                     <div className="flex items-center justify-evenly gap-6">
-                        <div className="flex items-center gap-2">
-                            <div className="bg-emerald-700 rounded-lg inset-shadow-2xs p-2">
-                                <LucideForm className="size-6 text-white" />
-                            </div>
-                            <div className="flex-col items-baseline">
-                                <h4 className="text-black text-left text-xl font-bold">
-                                    make
-                                    <span className="text-left text-emerald-700 text-xl font-bold">
-                                        Form
-                                    </span>
-                                </h4>
-                                <p className="text-left text-[10px] text-gray-700 font-normal uppercase">
-                                    visual form architect
-                                </p>
-                            </div>
-                        </div>
+                        {/* logo */}
+                        <Link to="/">
+                            <img
+                                className="w-full h-12 object-cover overflow-hidden"
+                                src={makeForm_logo}
+                                alt="makeForm-logo"
+                            />
+                        </Link>
                         <span className="text-gray-200 text-2xl">|</span>
                         <div className="hidden lg:flex items-center bg-[#f9f6f0] p-1 rounded-sm border border-[#E2E8E4]">
                             <Link to="/">
@@ -92,7 +90,6 @@ export default function Header({ viewPage, setViewPage }: formProps) {
                                 </Button>
                             </Link>
                         </div>
-
                     </div>
                 </nav>
             </header>

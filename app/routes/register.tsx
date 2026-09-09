@@ -41,11 +41,11 @@ const formSchema = z.object({
         .max(20, "name must be at least 20 characters."),
     email: z
         .string()
-        .min(22, "email must be at least 22 characters.")
+        .min(10, "email must be at least 10 characters.")
         .max(32, "email must be at most 32 characters."),
     password: z
         .string()
-        .min(20, "password must be at least 20 characters.")
+        .min(8, "password must be at least 8 characters.")
         .max(50, "password must be at most 50 characters."),
 })
 
@@ -82,9 +82,9 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                         <LucideForm className="size-6 text-white" />
                     </div>
                     <div className="flex-col items-baseline">
-                        <h4 className="text-black text-center text-xl font-bold">
+                        <h4 className="text-black text-center text-xl md:text-2xl lg:text-4xl font-bold">
                             make
-                            <span className="text-emerald-700 text-xl font-bold">
+                            <span className="text-emerald-700 text-xl md:text-2xl lg:text-4xl font-bold">
                                 Form
                             </span>
                         </h4>
