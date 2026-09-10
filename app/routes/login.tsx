@@ -84,10 +84,10 @@ export default function Login({ viewPage, setViewPage }: formProps) {
                     throw new Error("Function not implemented.");
                 }}
             />
-            <div className="grid gap-6">
+            <div className="grid gap-4">
                 {/* logo section */}
                 <img
-                    className="w-fit h-30 mx-auto mt-30 object-cover overflow-hidden"
+                    className="w-fit h-30 mx-auto mt-20 object-cover overflow-hidden"
                     src={makeForm_png}
                     alt="makeForm_png"
                 />
