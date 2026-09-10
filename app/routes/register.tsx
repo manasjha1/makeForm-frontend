@@ -40,7 +40,7 @@ import {
     Minus,
     User,
 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaGoogle, FaLine } from "react-icons/fa";
 
 const formSchema = z.object({
@@ -64,6 +64,7 @@ interface formProps {
 }
 
 export default function Register({ viewPage, setViewPage }: formProps) {
+    const navigate = useNavigate()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -86,6 +87,10 @@ export default function Register({ viewPage, setViewPage }: formProps) {
             );
             const result = await response.json()
             console.log("response data", result);
+            if (result.ok) {
+                navigate("/form-builder")
+            }
+            return toast.error("Invalid credentials")
 
         } catch (error) {
             console.error(error)
@@ -224,6 +229,9 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                             )}
                                         />
                                     </FieldGroup>
+                                    <Button className="bg-transparent hover:bg-transparent text-xs text-blue-500 hover:underline">
+                                        Resend verification code
+                                    </Button>
                                 </form>
                             </section>
                         </CardContent>
@@ -234,7 +242,7 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                     type="submit"
                                     form="register-form"
                                 >
-                                    Submit
+                                    Send verification code
                                 </Button>
                             </Field>
                         </CardFooter>
