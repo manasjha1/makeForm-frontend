@@ -72,8 +72,24 @@ export default function Register({ viewPage, setViewPage }: formProps) {
             password: "",
         },
     });
-    function onSubmit(data: z.infer<typeof formSchema>) {
-        toast.success("You submitted the following details");
+    const onSubmit = async (data: z.infer<typeof formSchema>) => {
+        try {
+            const response = await fetch(
+                "http://localhost:5000/api/v1/auth/register",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                }
+            );
+            const result = await response.json()
+            console.log("response data", result);
+
+        } catch (error) {
+            console.error(error)
+        }
         console.log("You submitted the following details", data);
     }
 
