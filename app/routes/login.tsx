@@ -42,8 +42,8 @@ const formSchema = z.object({
         .max(32, "email must be at most 32 characters."),
     password: z
         .string()
-        .min(20, "password must be at least 20 characters.")
-        .max(50, "password must be at most 100 characters."),
+        .min(8, "password must be at least 5 characters.")
+        .max(20, "password must be at most 20 characters."),
 });
 
 interface formProps {
@@ -61,15 +61,20 @@ export default function Login({ viewPage, setViewPage }: formProps) {
     });
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try {
-            const response = await fetch("http://localhost:5000/api/v1/auth/register")
-            const data = await response.json()
-            console.log("response data", data);
-
+            const response = await fetch("http://localhost:5000/api/v1/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            console.log("response data", result);
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
         console.log("You submitted the following details", data);
-    }
+    };
 
     return (
         <div>
@@ -180,9 +185,7 @@ export default function Login({ viewPage, setViewPage }: formProps) {
                             </section>
                         </CardContent>
                         <CardFooter>
-                            <Field
-                                orientation="horizontal"
-                            >
+                            <Field orientation="horizontal">
                                 <Button
                                     className="rounded-sm w-full bg-emerald-700 text-white hover:bg-emerald-800"
                                     type="submit"
