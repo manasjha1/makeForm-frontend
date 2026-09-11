@@ -79,9 +79,11 @@ export default function Header({ viewPage, setViewPage }: formProps) {
                                 </TooltipContent>
                             </Tooltip>
                             <Tooltip>
-                                <TooltipTrigger className="hover:bg-gray-50 border border-[#E2E8E4] p-1 rounded-sm flex lg:hidden">
-                                    <User className="size-5 text-gray-600" />
-                                </TooltipTrigger>
+                                <Link to="/create-account">
+                                    <TooltipTrigger className="hover:bg-gray-50 border border-[#E2E8E4] p-1 rounded-sm flex lg:hidden">
+                                        <User className="size-5 text-gray-600" />
+                                    </TooltipTrigger>
+                                </Link>
                                 <TooltipContent>
                                     <p>Create account</p>
                                 </TooltipContent>
