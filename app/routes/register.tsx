@@ -31,8 +31,10 @@ import {
 import makeForm_png from "~/assests/makeForm_login.png";
 import toast, { Toaster } from "react-hot-toast";
 import Header from "~/src/components/Header";
-import type { SetStateAction } from "react";
+import { useState, type SetStateAction } from "react";
 import {
+    Eye,
+    EyeOff,
     LayoutFreeform,
     Lock,
     LucideForm,
@@ -64,6 +66,7 @@ interface formProps {
 }
 
 export default function Register({ viewPage, setViewPage }: formProps) {
+    const [viewPassword, setViewPassword] = useState(false);
     const navigate = useNavigate()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -87,10 +90,13 @@ export default function Register({ viewPage, setViewPage }: formProps) {
             );
             const result = await response.json()
             console.log("response data", result);
-            if (result.ok) {
-                navigate("/form-builder")
+            if (result) {
+                navigate("/verify-otp")
+                console.log("form submmited", result);
+
+            } else {
+                toast.error("Invailid credentials")
             }
-            return toast.error("Invalid credentials")
 
         } catch (error) {
             console.error(error)
@@ -211,7 +217,9 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                                         Password
                                                     </FieldLabel>
                                                     <InputGroup className="rounded-sm">
+
                                                         <InputGroupInput
+                                                            type={viewPassword ? "text" : "password"}
                                                             {...field}
                                                             id="login-form-password"
                                                             aria-invalid={fieldState.invalid}
@@ -237,6 +245,7 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                         </CardContent>
                         <CardFooter>
                             <Field orientation="horizontal">
+                                {/* <Link to="/verify-otp"> */}
                                 <Button
                                     className="rounded-sm w-full bg-emerald-700 text-white hover:bg-emerald-800"
                                     type="submit"
@@ -244,6 +253,8 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                 >
                                     Send verification code
                                 </Button>
+                                {/* </Link> */}
+
                             </Field>
                         </CardFooter>
                     </Card>
