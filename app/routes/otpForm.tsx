@@ -1,6 +1,5 @@
-import { RefreshCwIcon } from "lucide-react"
-
-import { Button } from "~/src/components/ui/button"
+import { MoveLeft, RefreshCwIcon } from "lucide-react";
+import { Button } from "~/src/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,22 +7,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "~/src/components/ui/card"
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "~/src/components/ui/field"
+} from "~/src/components/ui/card";
+import { Field, FieldDescription, FieldLabel } from "~/src/components/ui/field";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "~/src/components/ui/input-otp"
+} from "~/src/components/ui/input-otp";
 
-export default function InputOTPForm() {
+export default function OtpForm() {
   return (
-    <div className="p-5">
+    <div className="w-full h-screen grid grid-cols-1 gap-0 items-center justify-center">
       <Card className="mx-auto max-w-md">
         <CardHeader>
           <CardTitle>Verify your login</CardTitle>
@@ -56,14 +51,15 @@ export default function InputOTPForm() {
                 <InputOTPSlot index={5} />
               </InputOTPGroup>
             </InputOTP>
-            <FieldDescription>
-              <a href="#">I no longer have access to this email address.</a>
-            </FieldDescription>
+            <FieldDescription></FieldDescription>
           </Field>
         </CardContent>
         <CardFooter>
           <Field>
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full bg-emerald-700 text-white hover:bg-emerald-800"
+            >
               Verify
             </Button>
             <div className="text-sm text-muted-foreground">
@@ -78,6 +74,9 @@ export default function InputOTPForm() {
           </Field>
         </CardFooter>
       </Card>
+      <Button className="w-fit mx-auto flex items-center gap-2 bg-amber-400 group hover:bg-transparent text-sm text-gray-500">
+        <MoveLeft className="size-4" /> Return to home
+      </Button>
     </div>
-  )
+  );
 }

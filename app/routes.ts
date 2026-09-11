@@ -6,5 +6,5 @@ export default [
   route("live-preview", "./routes/livePreview.tsx"),
   route("create-account", "./routes/register.tsx"),
   route("sign-in", "./routes/login.tsx"),
-  route("verify-otp", "./routes/otpVerifyer.tsx"),
+  route("verify-otp", "./routes/otpForm.tsx"),
 ] satisfies RouteConfig;
