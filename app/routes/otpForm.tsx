@@ -1,5 +1,9 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { MoveLeft, RefreshCwIcon } from "lucide-react";
 import type { SetStateAction } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import z, { minLength } from "zod";
 import Header from "~/src/components/Header";
 import { Button } from "~/src/components/ui/button";
 import {
@@ -17,8 +21,19 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "~/src/components/ui/input-otp";
+import { useOTP_Verification } from "~/src/hooks/mutation";
+
+const otpFormSchema = z.number()
 
 export default function OtpForm() {
+  const navigate = useNavigate()
+  const verify_otp = useOTP_Verification()
+
+  const onSubmit = async (data: any) => {
+    verify_otp
+    console.log("otp result ", verify_otp);
+
+  }
   return (
     <div>
       <Header viewPage={""} setViewPage={function (value: SetStateAction<toggleBtn>): void {
@@ -63,10 +78,11 @@ export default function OtpForm() {
           <CardFooter>
             <Field>
               <Button
+                onClick={onSubmit}
                 type="submit"
                 className="w-full bg-emerald-700 text-white hover:bg-emerald-800"
               >
-                Verify
+                Verify Otp
               </Button>
               <div className="text-sm text-muted-foreground">
                 Having trouble signing in?{" "}
