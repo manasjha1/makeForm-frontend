@@ -44,6 +44,7 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { FaGoogle, FaLine } from "react-icons/fa";
+import { useRegisterAccount } from "~/src/hooks/mutation";
 
 const formSchema = z.object({
     name: z
@@ -66,6 +67,7 @@ interface formProps {
 }
 
 export default function Register({ viewPage, setViewPage }: formProps) {
+    const { mutate: registerAccount } = useRegisterAccount()
     const [viewPassword, setViewPassword] = useState(false);
     const navigate = useNavigate()
     const form = useForm<z.infer<typeof formSchema>>({
@@ -77,35 +79,32 @@ export default function Register({ viewPage, setViewPage }: formProps) {
         },
     });
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
-        try {
-            const response = await fetch(
-                "http://localhost:5000/api/v1/auth/register",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                }
-            );
-            const result = await response.json()
-            console.log("response data", result);
-            if (result) {
-                navigate("/verify-otp")
-                console.log("form submmited", result);
-
-            } else {
-                toast.error("Invailid credentials")
-            }
-
-        } catch (error) {
-            console.error(error)
-        }
-        console.log("You submitted the following details", data);
+        registerAccount(
+            {
+                register: {
+                    name: data.name,
+                    email: data.email,
+                    password: data.password,
+                },
+            },
+            {
+                onSuccess: (data: any) => {
+                    console.log("Data is", data);
+                    localStorage.setItem("token", JSON.stringify(data?.token));
+                    localStorage.setItem("user", JSON.stringify(data?.user));
+                    toast.success(data.message);
+                    navigate("/verify-otp");
+                },
+                onError: (data: any) => {
+                    toast.error(data.message);
+                },
+            },
+        );
     }
 
     return (
         <div>
+            <Toaster />
             <Header
                 viewPage={""}
                 setViewPage={function (value: SetStateAction<toggleBtn>): void {

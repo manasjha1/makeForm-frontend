@@ -7,8 +7,12 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+
 import type { Route } from "./+types/root";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./app.css";
+import { StrictMode } from "react";
+import { queryClient } from "./src/lib/queryCleint";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -42,7 +46,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <Outlet />
+    </QueryClientProvider>
+  </StrictMode>;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
