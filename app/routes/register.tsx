@@ -59,12 +59,6 @@ const formSchema = z.object({
         .string()
         .min(8, "password must be at least 8 characters.")
         .max(50, "password must be at most 50 characters."),
-    otp: z
-        .string()
-        .trim()
-        .min(1, "otp is required")
-        .length(6, "otp must be 6 digits")
-        .regex(/^\d{6}$/, "Please enter the 6-digit verification code"),
 });
 
 interface formProps {
@@ -82,7 +76,6 @@ export default function Register({ viewPage, setViewPage }: formProps) {
             name: "",
             email: "",
             password: "",
-            otp: ""
         },
     });
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
@@ -92,7 +85,6 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                     name: data.name,
                     email: data.email,
                     password: data.password,
-                    otp: data.otp
                 },
             },
             {
@@ -101,9 +93,6 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                     localStorage.setItem("token", JSON.stringify(data?.token));
                     localStorage.setItem("user", JSON.stringify(data?.user));
                     toast.success(data.message);
-                    console.log(
-                        "msg for user", data
-                    );
 
                     navigate("/verify-otp");
                 },
