@@ -2,6 +2,7 @@ type registerType = {
   name: string;
   email: string;
   password: string;
+  otp: string;
 };
 
 type verify_otpType = {
