@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Button } from "~/src/components/ui/button";
+import { Button } from "~/components/ui/button";
 import {
     Card,
     CardContent,
@@ -20,7 +20,7 @@ import {
     FieldLegend,
     FieldSet,
 } from "~/src/components/ui/field";
-import { Input } from "~/src/components/ui/input";
+import { Input } from "~/components/ui/input";
 import {
     InputGroup,
     InputGroupAddon,

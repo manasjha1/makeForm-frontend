@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Button } from "~/src/components/ui/button";
+import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
