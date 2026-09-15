@@ -23,7 +23,16 @@ import {
 } from "~/src/components/ui/input-otp";
 import { useOTP_Verification } from "~/src/hooks/mutation";
 
-const otpFormSchema = z.number()
+const otpSchema = z.object({
+  otp: z
+    .string()
+    .trim()
+    .min(1, "otp is required")
+    .length(6, "otp must be 6 digits")
+    .regex(/^\d{6}$/, "Please enter the 6-digit verification code"),
+});
+
+type otpFormType = z.infer<typeof otpSchema>
 
 export default function OtpForm() {
   const navigate = useNavigate()
@@ -32,8 +41,8 @@ export default function OtpForm() {
   const onSubmit = async (data: any) => {
     verify_otp
     console.log("otp result ", verify_otp);
-
   }
+
   return (
     <div>
       <Header viewPage={""} setViewPage={function (value: SetStateAction<toggleBtn>): void {
