@@ -1,7 +1,7 @@
 import { CheckCircle, MoveRight, Stars } from "lucide-react";
 import type { SetStateAction } from "react";
-import Header from "~/src/components/Header";
-import { Button } from "~/components/ui/button";
+import Header from "~/src/components/Headers";
+import { Button } from "~/src/components/ui/button";
 import formImage from "~/assests/formImage.png";
 import {
   Card,

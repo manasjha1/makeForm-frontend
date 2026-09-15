@@ -2,17 +2,17 @@
 
 import * as React from "react"
 
-import { NavFavorites } from "~/components/nav-favorites"
-import { NavMain } from "~/components/nav-main"
-import { NavSecondary } from "~/components/nav-secondary"
-import { NavWorkspaces } from "~/components/nav-workspaces"
-import { TeamSwitcher } from "~/components/team-switcher"
+import { NavFavorites } from "~/src/components/nav-favorites"
+import { NavMain } from "~/src/components/nav-main"
+import { NavSecondary } from "~/src/components/nav-secondary"
+import { NavWorkspaces } from "~/src/components/nav-workspaces"
+import { TeamSwitcher } from "~/src/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarRail,
-} from "~/components/ui/sidebar"
+} from "~/src/components/ui/sidebar"
 import { TerminalIcon, AudioLinesIcon, SearchIcon, SparklesIcon, HomeIcon, InboxIcon, CalendarIcon, Settings2Icon, BlocksIcon, Trash2Icon, MessageCircleQuestionIcon } from "lucide-react"
 
 // This is sample data.

@@ -2,7 +2,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "~/components/ui/collapsible"
+} from "~/src/components/ui/collapsible"
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -14,7 +14,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "~/components/ui/sidebar"
+} from "~/src/components/ui/sidebar"
 import { ChevronRightIcon, PlusIcon, MoreHorizontalIcon } from "lucide-react"
 
 export function NavWorkspaces({

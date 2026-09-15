@@ -4,8 +4,8 @@ import type { SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import z, { minLength } from "zod";
-import Header from "~/src/components/Header";
-import { Button } from "~/components/ui/button";
+import Header from "~/src/components/Headers";
+import { Button } from "~/src/components/ui/button";
 import {
   Card,
   CardContent,

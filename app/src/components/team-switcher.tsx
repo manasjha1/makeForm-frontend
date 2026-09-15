@@ -10,12 +10,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
+} from "~/src/components/ui/dropdown-menu"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "~/components/ui/sidebar"
+} from "~/src/components/ui/sidebar"
 import { ChevronDownIcon, PlusIcon } from "lucide-react"
 
 export function TeamSwitcher({

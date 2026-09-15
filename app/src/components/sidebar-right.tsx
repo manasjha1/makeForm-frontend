@@ -1,8 +1,8 @@
 import * as React from "react"
 
-import { Calendars } from "~/components/calendars"
-import { DatePicker } from "~/components/date-picker"
-import { NavUser } from "~/components/nav-user"
+import { Calendars } from "~/src/components/calendars"
+import { DatePicker } from "~/src/components/date-picker"
+import { NavUser } from "~/src/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +13,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarSeparator,
-} from "~/components/ui/sidebar"
+} from "~/src/components/ui/sidebar"
 import { PlusIcon } from "lucide-react"
 
 // This is sample data.

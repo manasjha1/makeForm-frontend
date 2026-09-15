@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Button } from "~/components/ui/button";
+import { Button } from "~/src/components/ui/button";
 import {
   Card,
   CardContent,
@@ -29,7 +29,7 @@ import {
 } from "~/src/components/ui/input-group";
 import makeForm_png from "~/assests/makeForm_login.png";
 import toast, { Toaster } from "react-hot-toast";
-import Header from "~/src/components/Header";
+import Header from "~/src/components/Headers";
 import type { SetStateAction } from "react";
 import { Lock, LucideForm, Mail } from "lucide-react";
 import { Link } from "react-router";
