@@ -45,7 +45,7 @@ export default function Home() {
         }}
       />
       <div className="min-h-full p-4">
-        <section className="w-full md:w-[80%] lg:w-[50%] mx-auto my-5 mt-30">
+        <section className="w-full md:w-[80%] lg:w-[50%] mx-auto my-5 mt-20">
           <div className="flex items-center justify-center gap-2 w-sm mx-auto px-3.5 py-1.5 rounded-full bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-xs font-bold mb-6 animate-pulse">
             <Stars className="w-3.5 h-3.5 text-[#047857]" />
             <span>Next-Gen Drag & Drop Form Studio</span>
@@ -125,13 +125,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {prebuildTemplate?.map((form) => (
               <Card key={form.id} className="mx-auto w-full md:w-90 p-5 border group hover:border-emerald-700">
-                <CardTitle className="rounded-sm p-2 w-fit bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-sm font-bold group-hover:bg-emerald-700 group-hover:text-white">
+                <CardTitle className="rounded-sm p-2 mb-2 w-fit bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-sm font-bold group-hover:bg-emerald-700 group-hover:text-white">
                   0{form.id}
                 </CardTitle>
-                <CardTitle className="">{form.name}</CardTitle>
+                <CardTitle className="mb-2">{form.name}</CardTitle>
                 <CardDescription>{form.description}</CardDescription>
                 <Link to={`formBuilder/${form.id}`}>
-                  <Button className="bg-white hover:bg-emerald-700 text-emerald-700 hover:text-white border border-emerald-700 capitalize w-full">
+                  <Button className="bg-white hover:bg-emerald-700 text-emerald-700 hover:text-white border border-emerald-700 capitalize w-full mt-4">
                     load template
                   </Button>
                 </Link>
