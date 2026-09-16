@@ -7,6 +7,7 @@ import {
     RotateCcw,
     X,
     UserRound,
+    User,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
@@ -82,17 +83,17 @@ export default function Header({ viewPage }: formProps) {
                         asChild
                         variant="outline"
                         size="sm"
-                        className="rounded-sm font-medium"
+                        className="rounded-sm font-medium bg-transparent hover:text-emerald-700 border border-emerald-700 text-emerald-700"
                     >
                         <Link to="/sign-in">Sign In</Link>
                     </Button>
                     <Button
                         asChild
                         size="sm"
-                        className="rounded-sm border border-emerald-700 bg-emerald-700 font-medium text-white hover:bg-white hover:text-black"
+                        className="rounded-sm border border-emerald-700 bg-emerald-700 font-medium text-white hover:bg-emerald-800"
                     >
                         <Link to="/create-account">
-                            <UserRound className="size-4" /> Sign Up
+                            <User className="size-4" /> Sign Up
                         </Link>
                     </Button>
                 </div>
@@ -154,14 +155,17 @@ export default function Header({ viewPage }: formProps) {
                                 <RotateCcw className="size-4 text-gray-500" />
                             </Button>
                             <Button
+                                variant={`outline`}
+                                asChild
                                 size="sm"
-                                className="bg-emerald-700 border border-emerald-600 hover:bg-emerald-800 text-white"
+                                className="rounded-sm font-medium"
                             >
                                 <Link to="/sign-in" onClick={closeMenu}>
                                     Sign In
                                 </Link>
                             </Button>
                             <Button
+                                asChild
                                 size="sm"
                                 className="bg-emerald-700 border border-emerald-600 hover:bg-emerald-800 text-white"
                             >
