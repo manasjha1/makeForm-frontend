@@ -44,7 +44,7 @@ export default function OtpForm() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Header viewPage={""} setViewPage={function (value: SetStateAction<toggleBtn>): void {
         throw new Error("Function not implemented.");
       }} />

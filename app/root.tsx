@@ -50,7 +50,7 @@ export default function App() {
   return <StrictMode>
     <QueryClientProvider client={queryClient}>
       <div className="relative min-h-screen">
-        <div className="pointer-events-none fixed inset-0 z-0 opacity-80" aria-hidden="true">
+        <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
           <DotField
             dotRadius={2}
             dotSpacing={16}

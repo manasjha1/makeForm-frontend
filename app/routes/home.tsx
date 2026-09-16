@@ -37,7 +37,7 @@ const prebuildTemplate = [
 
 export default function Home() {
   return (
-    <div className="bg-[#f9f6f0]/90">
+    <div className="min-h-screen">
       <Header
         viewPage={"Home"}
         setViewPage={function (value: SetStateAction<toggleBtn>): void {

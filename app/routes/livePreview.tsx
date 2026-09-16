@@ -3,7 +3,7 @@ import Header from "~/src/components/Headers";
 
 export default function LivePreview() {
     return (
-        <div>
+        <div className="min-h-screen">
             <Header
                 viewPage={"LivePreview"}
                 setViewPage={function (value: SetStateAction<toggleBtn>): void {

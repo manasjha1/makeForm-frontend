@@ -3,7 +3,7 @@ import Header from "~/src/components/Headers";
 
 export default function FormBuilder() {
     return (
-        <div>
+        <div className="min-h-screen">
             <Header
                 viewPage={"FormBuilder"}
                 setViewPage={function (value: SetStateAction<toggleBtn>): void {

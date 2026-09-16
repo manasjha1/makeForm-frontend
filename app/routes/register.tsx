@@ -172,7 +172,7 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                                             {...field}
                                                             id="register-form-name"
                                                             aria-invalid={fieldState.invalid}
-                                                            placeholder="enter your name"
+                                                            placeholder="e.g. Jhon Deo"
                                                             autoComplete="off"
                                                         />
 
@@ -199,7 +199,7 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                                             {...field}
                                                             id="register-form-email"
                                                             aria-invalid={fieldState.invalid}
-                                                            placeholder="enter your email"
+                                                            placeholder="jhon@gmail.com"
                                                             autoComplete="off"
                                                         />
 
