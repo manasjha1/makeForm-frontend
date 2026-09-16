@@ -40,7 +40,7 @@ const InputGroupAddon = React.forwardRef<
     <div
         ref={ref}
         data-slot="input-group-addon"
-        className={cn("flex h-10 items-center justify-center border-l border-input bg-muted/30 px-3 text-muted-foreground", className)}
+        className={cn("flex h-10 items-center justify-center border-l border-input bg-transparent px-3 text-muted-foreground", className)}
         {...props}
     />
 ));

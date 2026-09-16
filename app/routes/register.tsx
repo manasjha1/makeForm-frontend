@@ -104,7 +104,7 @@ export default function Register({ viewPage, setViewPage }: formProps) {
     }
 
     return (
-        <div>
+        <div className="min-h-screen overflow-x-hidden">
             <Toaster />
             <Header
                 viewPage={""}
@@ -112,30 +112,30 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                     throw new Error("Function not implemented.");
                 }}
             />
-            <div className="grid gap-4">
+            <main className="mx-auto grid w-full max-w-2xl gap-4 px-3 py-6 sm:px-6 sm:py-10">
                 {/* logo section */}
                 <img
-                    className="w-fit h-30 mx-auto mt-20 object-cover overflow-hidden"
+                    className="mx-auto h-auto w-full max-w-[18rem] object-contain sm:max-w-[20rem]"
                     src={makeForm_png}
                     alt="makeForm_png"
                 />
-                <section className="p-2 m-2">
-                    <Card className="w-full mx-auto sm:max-w-md shadow-lg">
-                        <CardContent>
+                <section className="w-full">
+                    <Card className="mx-auto w-full max-w-lg overflow-hidden shadow-lg">
+                        <CardContent className="p-4 sm:p-6">
                             <section className="mb-5">
-                                <div className="flex items-center justify-center w-full m-auto bg-[#f9f6f0] p-1 mb-4 rounded-sm border border-[#E2E8E4]">
-                                    <Link to="/sign-in">
+                                <div className="mb-4 flex w-full items-center rounded-sm border border-[#E2E8E4] bg-[#f9f6f0] p-1">
+                                    <Link className="min-w-0 flex-1" to="/sign-in">
                                         <Button
                                             onClick={() => setViewPage("login")}
-                                            className={`text-[12px] font-medium transition-all px-8 md:px-17 rounded-sm ${viewPage === "login" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                                            className={`w-full rounded-sm px-2 text-[11px] font-medium transition-all sm:px-4 sm:text-xs ${viewPage === "login" ? "bg-white text-emerald-700 shadow hover:bg-white" : "bg-transparent text-gray-500 hover:bg-transparent hover:text-black/80"}`}
                                         >
                                             Sign In
                                         </Button>
                                     </Link>
-                                    <Link to="/create-account">
+                                    <Link className="min-w-0 flex-1" to="/create-account">
                                         <Button
                                             onClick={() => setViewPage("register")}
-                                            className={`text-[12px] font-medium transition-all px-6 md:px-17 w-full rounded-sm ${viewPage !== "register" ? "bg-white hover:bg-white text-emerald-700 shadow" : "bg-transparent hover:bg-transparent text-gray-500 hover:text-black/80"}`}
+                                            className={`w-full rounded-sm px-2 text-[11px] font-medium transition-all sm:px-4 sm:text-xs ${viewPage !== "register" ? "bg-white text-emerald-700 shadow hover:bg-white" : "bg-transparent text-gray-500 hover:bg-transparent hover:text-black/80"}`}
                                         >
                                             Create Account
                                         </Button>
@@ -165,6 +165,9 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                                         Full Name
                                                     </FieldLabel>
                                                     <InputGroup className="rounded-sm">
+                                                        <InputGroupAddon>
+                                                            <User />
+                                                        </InputGroupAddon>
                                                         <InputGroupInput
                                                             {...field}
                                                             id="register-form-name"
@@ -172,9 +175,7 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                                             placeholder="enter your name"
                                                             autoComplete="off"
                                                         />
-                                                        <InputGroupAddon>
-                                                            <User />
-                                                        </InputGroupAddon>
+
                                                     </InputGroup>
                                                     {fieldState.invalid && (
                                                         <FieldError errors={[fieldState.error]} />
@@ -191,16 +192,17 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                                         Email Address
                                                     </FieldLabel>
                                                     <InputGroup className="rounded-sm">
+                                                        <InputGroupAddon>
+                                                            <Mail />
+                                                        </InputGroupAddon>
                                                         <InputGroupInput
                                                             {...field}
-                                                            id="login-form-email"
+                                                            id="register-form-email"
                                                             aria-invalid={fieldState.invalid}
                                                             placeholder="enter your email"
                                                             autoComplete="off"
                                                         />
-                                                        <InputGroupAddon>
-                                                            <Mail />
-                                                        </InputGroupAddon>
+
                                                     </InputGroup>
                                                     {fieldState.invalid && (
                                                         <FieldError errors={[fieldState.error]} />
@@ -217,17 +219,23 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                                         Password
                                                     </FieldLabel>
                                                     <InputGroup className="rounded-sm">
-
+                                                        <InputGroupAddon>
+                                                            <Lock />
+                                                        </InputGroupAddon>
                                                         <InputGroupInput
-                                                            type={viewPassword ? "text" : "password"}
+                                                            type={!viewPassword ? "text" : "password"}
                                                             {...field}
-                                                            id="login-form-password"
+                                                            id="register-form-password"
                                                             aria-invalid={fieldState.invalid}
                                                             placeholder="••••••••"
                                                             autoComplete="off"
                                                         />
                                                         <InputGroupAddon>
-                                                            <Lock />
+                                                            {!viewPassword ? (
+                                                                <Eye onClick={() => setViewPassword(!viewPassword)} />
+                                                            ) : (
+                                                                <EyeOff onClick={() => setViewPassword(!viewPassword)} />
+                                                            )}
                                                         </InputGroupAddon>
                                                     </InputGroup>
                                                     {fieldState.invalid && (
@@ -237,14 +245,14 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                                             )}
                                         />
                                     </FieldGroup>
-                                    <Button className="bg-transparent hover:bg-transparent text-xs text-blue-500 hover:underline">
+                                    <Button type="button" className="bg-transparent px-0 text-xs text-blue-500 hover:bg-transparent hover:underline">
                                         Resend verification code
                                     </Button>
                                 </form>
                             </section>
                         </CardContent>
-                        <CardFooter>
-                            <Field orientation="horizontal">
+                        <CardFooter className="p-4 pt-0 sm:p-6 sm:pt-0">
+                            <Field orientation="horizontal" className="w-full">
                                 {/* <Link to="/verify-otp"> */}
                                 <Button
                                     className="rounded-sm w-full bg-emerald-700 text-white hover:bg-emerald-800"
@@ -259,7 +267,7 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                         </CardFooter>
                     </Card>
                 </section>
-            </div>
+            </main>
         </div>
     );
 }
