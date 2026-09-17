@@ -89,15 +89,18 @@ export default function Register({ viewPage, setViewPage }: formProps) {
             },
             {
                 onSuccess: (data: any) => {
-                    console.log("Data is", data);
+                    console.log("result is", data);
                     localStorage.setItem("token", JSON.stringify(data?.token));
                     localStorage.setItem("user", JSON.stringify(data?.user));
                     toast.success(data.message);
+                    console.log("data is", data.message);
 
                     navigate("/verify-otp");
                 },
                 onError: (data: any) => {
                     toast.error(data.message);
+                    console.log("data is", data.message);
+                    console.log("data is", data);
                 },
             },
         );
