@@ -5,11 +5,11 @@ type registerType = {
 };
 
 type verify_otpType = {
-  otp: number;
+  otp: string;
 };
 
 type resend_otpType = {
-  resend_otp: number;
+  resend_otp: string;
 };
 
 type loginType = {

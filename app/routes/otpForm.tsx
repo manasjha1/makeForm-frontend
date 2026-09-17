@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MoveLeft, RefreshCwIcon } from "lucide-react";
-import type { SetStateAction } from "react";
+import { useState, type SetStateAction } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import z, { minLength } from "zod";
 import Header from "~/src/components/Headers";
@@ -37,9 +38,34 @@ type otpFormType = z.infer<typeof otpSchema>
 export default function OtpForm() {
   const navigate = useNavigate()
   const verify_otp = useOTP_Verification()
+  const [otp, setOtp] = useState("")
 
-  const onSubmit = async (data: any) => {
-    verify_otp
+  const onSubmit = async (data: z.infer<typeof otpSchema>) => {
+    verify_otp(
+      {
+        otp_verification: {
+          otp: data.otp
+        }
+      },
+      {
+        onSuccess: (data: any) => {
+          console.log("result goted", data);
+          data.cookie("refreshToken", data?.refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+          });
+          toast.success("OTP Verified")
+
+        },
+        onError: () => {
+          toast.error("Invailid OTP")
+          console.log("otp validation", data);
+
+        }
+      }
+    )
     console.log("otp result ", verify_otp);
   }
 
@@ -68,7 +94,7 @@ export default function OtpForm() {
                   Resend Code
                 </Button>
               </div>
-              <InputOTP maxLength={6} id="otp-verification" required>
+              <InputOTP maxLength={6} id="otp-verification" typeof="number" required>
                 <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl">
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />
@@ -81,17 +107,14 @@ export default function OtpForm() {
                   <InputOTPSlot index={5} />
                 </InputOTPGroup>
               </InputOTP>
-              <FieldDescription></FieldDescription>
+              <FieldDescription>
+              </FieldDescription>
             </Field>
           </CardContent>
           <CardFooter>
             <Field>
-              <Button
-                onClick={onSubmit}
-                type="submit"
-                className="w-full bg-emerald-700 text-white hover:bg-emerald-800"
-              >
-                Verify Otp
+              <Button type="submit" onClick={() => onSubmit({ otp })} className="w-full">
+                Verify
               </Button>
               <div className="text-sm text-muted-foreground">
                 Having trouble signing in?{" "}
