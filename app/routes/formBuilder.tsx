@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import Header from "~/src/components/Headers";
 import FormPreview, { formControlClass } from "~/src/components/FormPreview";
 import TemplateGallery from "~/src/components/TemplateGallery";
 import { Button } from "~/src/components/ui/button";
 import { findTemplate } from "~/src/data/form-templates";
 import { createForm, type FormField, type FormTemplate } from "~/src/lib/form-types";
+import { readDraft, saveDraft } from "~/src/lib/form-draft";
 
 export default function FormBuilder() {
     const [params, setParams] = useSearchParams();
     const templateId = params.get("template");
+    const navigate = useNavigate();
+    const [saveError, setSaveError] = useState("");
     const [form, setForm] = useState<FormTemplate | null>(null);
     const [revision, setRevision] = useState(0);
     useEffect(() => {
         const template = findTemplate(templateId);
-        setForm(template ? createForm(template) : null);
+        const draft = readDraft();
+        setForm(template ? draft?.id === template.id ? draft : createForm(template) : null);
+        setSaveError("");
         setRevision((value) => value + 1);
     }, [templateId]);
     const updateField = (id: string, patch: Partial<FormField>) => setForm((current) => current && ({ ...current, fields: current.fields.map((field) => field.id === id ? { ...field, ...patch } : field) }));
@@ -28,8 +33,13 @@ export default function FormBuilder() {
             </> : <>
                 <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
                     <Button variant="outline" onClick={() => setParams({})}>All templates</Button>
+                    <Button onClick={() => {
+                        if (saveDraft(form)) navigate("/live-preview");
+                        else setSaveError("Your browser could not save this draft. You can still test the form in the preview below.");
+                    }}>Save draft & preview</Button>
                     <Button variant="outline" onClick={() => { const template = findTemplate(templateId); if (template) { setForm(createForm(template)); setRevision((value) => value + 1); } }}>Reset template</Button>
                 </div>
+                {saveError && <p role="alert" className="mb-4 text-sm text-red-700">{saveError}</p>}
                 <div className="grid items-start gap-8 lg:grid-cols-2">
                     <section aria-label="Edit form" className="space-y-5">
                         <div><h1 className="text-2xl font-bold text-gray-900">Make it yours</h1><p className="mt-1 text-sm text-gray-500">Edit your form and try it in the preview.</p></div>
