@@ -15,25 +15,7 @@ import {
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 
-const prebuildTemplate = [
-  {
-    id: 0o1,
-    name: "Client Onboarding",
-    description:
-      "Detailed client intake questionnaire with budget, requirements, and brand upload fields.",
-  },
-  {
-    id: 0o2,
-    name: "Event Registration",
-    description:
-      "RSVP form with workshop selection, dietary options, and guest count.",
-  },
-  {
-    id: 0o3,
-    name: "Customer Feedback Survey",
-    description: "NPS rating, multi-choice satisfaction, and feature requests.",
-  },
-];
+import { formTemplates } from "~/src/data/form-templates";
 
 export default function Home() {
   return (
@@ -115,22 +97,21 @@ export default function Home() {
         <section className="w-full md:w-[80%] mx-auto my-5">
           <div className="flex-1 items-center justify-center mx-auto my-10">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1C2925] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
-              Start with pre-build configured teplate
+              Start with a prebuilt form
             </h1>
             <p className="mt-2 text-base sm:text-lg text-[#6B7872] text-center max-w-2xl mx-auto font-normal leading-relaxed">
-              Select any industry template to instantly populate the 3-column
-              builder
+              Choose a ready-to-use template, customize the fields, and preview your form.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {prebuildTemplate?.map((form) => (
-              <Card key={form.id} className="mx-auto w-full md:w-90 p-5 border group hover:border-emerald-700">
+            {formTemplates.map((form) => (
+              <Card key={form.id} className="mx-auto w-full min-w-0 p-5 border group hover:border-emerald-700">
                 <CardTitle className="rounded-sm p-2 mb-2 w-fit bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-sm font-bold group-hover:bg-emerald-700 group-hover:text-white">
-                  0{form.id}
+                  {form.category}
                 </CardTitle>
-                <CardTitle className="mb-2">{form.name}</CardTitle>
+                <CardTitle className="mb-2">{form.title}</CardTitle>
                 <CardDescription>{form.description}</CardDescription>
-                <Link to={`formBuilder/${form.id}`}>
+                <Link to={`/form-builder?template=${form.id}`}>
                   <Button className="bg-white hover:bg-emerald-700 text-emerald-700 hover:text-white border border-emerald-700 capitalize w-full mt-4">
                     load template
                   </Button>
