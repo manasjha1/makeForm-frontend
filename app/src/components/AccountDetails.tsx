@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router";
-import { UserRound } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router";
+import { LogOut, UserRound } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "./ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 type Profile = { name: string; email: string };
 
 export default function AccountDetails({ onNavigate }: { onNavigate?: () => void }) {
     const location = useLocation();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
     const [profile, setProfile] = useState<Profile | null>(null);
     const [ready, setReady] = useState(false);
 
@@ -17,7 +28,7 @@ export default function AccountDetails({ onNavigate }: { onNavigate?: () => void
                 const user = JSON.parse(localStorage.getItem("user") || "null");
                 setProfile(
                     token && user && user.emailVerified !== false &&
-                    typeof user.name === "string" && typeof user.email === "string"
+                        typeof user.name === "string" && typeof user.email === "string"
                         ? { name: user.name, email: user.email }
                         : null,
                 );
@@ -29,20 +40,48 @@ export default function AccountDetails({ onNavigate }: { onNavigate?: () => void
 
         readProfile();
         window.addEventListener("storage", readProfile);
-        return () => window.removeEventListener("storage", readProfile);
+        window.addEventListener("auth-change", readProfile);
+        return () => {
+            window.removeEventListener("storage", readProfile);
+            window.removeEventListener("auth-change", readProfile);
+        };
     }, [location.key]);
+
+    const logout = () => {
+        for (const key of ["token", "refreshToken", "user", "pending_verification_email"]) {
+            localStorage.removeItem(key);
+        }
+        queryClient.clear();
+        setProfile(null);
+        window.dispatchEvent(new Event("auth-change"));
+        onNavigate?.();
+        navigate("/sign-in", { replace: true });
+    };
 
     if (!ready) return null;
 
     if (profile) {
         return (
-            <div aria-label="Your profile" className="flex min-w-0 items-center gap-2 rounded-md border border-emerald-100 bg-white px-3 py-2">
-                <UserRound aria-hidden="true" className="size-8 shrink-0 rounded-full bg-emerald-50 p-1.5 text-emerald-700" />
-                <div className="min-w-0 md:max-w-56">
-                    <p className="wrap-break-word text-sm font-semibold text-gray-900">{profile.name}</p>
-                    <p className="break-all text-xs text-gray-500">{profile.email}</p>
-                </div>
-            </div>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-auto min-w-0 gap-2 px-2 py-1 text-gray-900 hover:bg-emerald-50" aria-label={`Open profile menu for ${profile.name}`}>
+                        <UserRound aria-hidden="true" className="size-8 shrink-0 rounded-full bg-emerald-50 p-1.5 text-emerald-700" />
+                        <span className="max-w-40 truncate text-sm font-semibold capitalize">{profile.name}</span>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64 max-w-[calc(100vw-2rem)]">
+                    <DropdownMenuLabel className="space-y-1 px-3 py-2">
+                        <p className="text-xs font-medium text-gray-500">Your account</p>
+                        <p className="wrap-break-word text-sm font-semibold text-gray-900 capitalize">{profile.name}</p>
+                        <p className="break-all text-xs font-normal text-gray-500">{profile.email}</p>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={logout} className="cursor-pointer gap-2 px-3 py-2">
+                        <LogOut aria-hidden="true" className="size-4" />
+                        Log out
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
         );
     }
 
