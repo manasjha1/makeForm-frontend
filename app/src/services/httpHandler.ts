@@ -174,11 +174,15 @@ export async function apiHandler<T = unknown>(
     const error = err as AxiosError<ApiError>;
 
     // Normalize error shape so callers always get a consistent object
+    const serverError = error.response?.data as any;
     throw {
       message:
-        error.response?.data?.message ?? error.message ?? "Request failed",
+        serverError?.error?.message ??
+        serverError?.message ??
+        error.message ??
+        "Request failed",
       statusCode: error.response?.status ?? 0,
-      errors: error.response?.data?.errors ?? {},
+      errors: serverError?.errors ?? {},
     } satisfies ApiError;
   }
 }

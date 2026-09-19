@@ -49,16 +49,15 @@ import { useRegisterAccount } from "~/src/hooks/mutation";
 const formSchema = z.object({
     name: z
         .string()
-        .min(5, "name must be at least 5 characters")
-        .max(20, "name must be at least 20 characters."),
+        .min(2, "Name must be at least 2 characters.")
+        .max(50, "Name must be at most 50 characters."),
     email: z
         .string()
-        .min(10, "email must be at least 10 characters.")
-        .max(32, "email must be at most 32 characters."),
+        .email("Please enter a valid email address."),
     password: z
         .string()
-        .min(8, "password must be at least 8 characters.")
-        .max(50, "password must be at most 50 characters."),
+        .min(6, "Password must be at least 6 characters.")
+        .max(50, "Password must be at most 50 characters."),
 });
 
 interface formProps {
@@ -67,7 +66,7 @@ interface formProps {
 }
 
 export default function Register({ viewPage, setViewPage }: formProps) {
-    const { mutate: registerAccount } = useRegisterAccount()
+    const { mutate: registerAccount, isPending } = useRegisterAccount()
     const [viewPassword, setViewPassword] = useState(false);
     const navigate = useNavigate()
     const form = useForm<z.infer<typeof formSchema>>({
@@ -88,19 +87,22 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                 },
             },
             {
-                onSuccess: (data: any) => {
-                    console.log("result is", data);
-                    localStorage.setItem("token", JSON.stringify(data?.token));
-                    localStorage.setItem("user", JSON.stringify(data?.user));
-                    toast.success(data.message);
-                    console.log("data is", data.message);
-
-                    navigate("/verify-otp");
+                onSuccess: (response: any) => {
+                    const resData = response?.data || response;
+                    localStorage.setItem("pending_verification_email", data.email);
+                    if (resData?.user) {
+                        localStorage.setItem("user", JSON.stringify(resData.user));
+                    }
+                    toast.success(resData?.message || "Verification code sent to your email!");
+                    navigate("/verify-otp", {
+                        state: {
+                            email: data.email,
+                            name: data.name,
+                        },
+                    });
                 },
-                onError: (data: any) => {
-                    toast.error(data.message);
-                    console.log("data is", data.message);
-                    console.log("data is", data);
+                onError: (err: any) => {
+                    toast.error(err?.message || "Registration failed. Please try again.");
                 },
             },
         );
@@ -258,11 +260,12 @@ export default function Register({ viewPage, setViewPage }: formProps) {
                             <Field orientation="horizontal" className="w-full">
                                 {/* <Link to="/verify-otp"> */}
                                 <Button
-                                    className="rounded-sm w-full bg-emerald-700 text-white hover:bg-emerald-800"
+                                    className="rounded-sm w-full bg-emerald-700 text-white hover:bg-emerald-800 disabled:opacity-60"
                                     type="submit"
                                     form="register-form"
+                                    disabled={isPending}
                                 >
-                                    Send verification code
+                                    {isPending ? "Sending verification code..." : "Send verification code"}
                                 </Button>
                                 {/* </Link> */}
 

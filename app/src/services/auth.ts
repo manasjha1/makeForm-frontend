@@ -11,7 +11,7 @@ export const registerAccount = async ({
     method: `POST`,
     body: register,
   });
-  return response;
+  return response.data;
 };
 
 export const OTP_Verify = async ({
@@ -24,5 +24,31 @@ export const OTP_Verify = async ({
     method: `POST`,
     body: otp_verification,
   });
-  return response;
+  return response.data;
+};
+
+export const resendOTP = async ({
+  resend_otp,
+}: {
+  resend_otp: resend_otpType;
+}) => {
+  const response = await apiHandler({
+    url: `${API_URLS.AUTH.RESEND_OTP}`,
+    method: `POST`,
+    body: resend_otp,
+  });
+  return response.data;
+};
+
+export const loginAccount = async ({
+  login,
+}: {
+  login: loginType;
+}) => {
+  const response = await apiHandler({
+    url: `${API_URLS.AUTH.LOGIN}`,
+    method: `POST`,
+    body: login,
+  });
+  return response.data;
 };

@@ -15,8 +15,8 @@ import { Link } from "react-router";
 import makeForm_logo from "~/assests/makeForm_logo.png"
 
 interface formProps {
-    viewPage: toggleBtn;
-    setViewPage: React.Dispatch<React.SetStateAction<toggleBtn>>;
+    viewPage?: toggleBtn;
+    setViewPage?: React.Dispatch<React.SetStateAction<toggleBtn>>;
 }
 
 export default function Header({ viewPage }: formProps) {

@@ -1,6 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import API_URLS from "~/src/config/apiBook";
-import { OTP_Verify, registerAccount } from "~/src/services/auth";
+import {
+  OTP_Verify,
+  registerAccount,
+  resendOTP,
+  loginAccount,
+} from "~/src/services/auth";
 
 export const useRegisterAccount = () => {
   return useMutation({
@@ -15,5 +20,21 @@ export const useOTP_Verification = () => {
     mutationKey: [API_URLS.AUTH.VERIFY_OTP],
     mutationFn: ({ otp_verification }: { otp_verification: verify_otpType }) =>
       OTP_Verify({ otp_verification }),
+  });
+};
+
+export const useResendOTP = () => {
+  return useMutation({
+    mutationKey: [API_URLS.AUTH.RESEND_OTP],
+    mutationFn: ({ resend_otp }: { resend_otp: resend_otpType }) =>
+      resendOTP({ resend_otp }),
+  });
+};
+
+export const useLoginAccount = () => {
+  return useMutation({
+    mutationKey: [API_URLS.AUTH.LOGIN],
+    mutationFn: ({ login }: { login: loginType }) =>
+      loginAccount({ login }),
   });
 };

@@ -2,14 +2,16 @@ type registerType = {
   name: string;
   email: string;
   password: string;
+  otp?: string;
 };
 
 type verify_otpType = {
+  email: string;
   otp: string;
 };
 
 type resend_otpType = {
-  resend_otp: string;
+  email: string;
 };
 
 type loginType = {
