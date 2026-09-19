@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useLocation, useNavigate, Link } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
 import { ArrowLeft, RefreshCwIcon, ShieldCheck } from "lucide-react";
@@ -20,20 +21,12 @@ import {
   InputOTPSlot,
 } from "~/src/components/ui/input-otp";
 import { useOTP_Verification, useResendOTP } from "~/src/hooks/mutation";
-import makeForm_logo from "~/assests/makeForm_logo.png";
 
 export default function OtpForm() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Get email from router state or fallback to localStorage
-  const [email, setEmail] = useState<string>(() => {
-    return (
-      location.state?.email ||
-      localStorage.getItem("pending_verification_email") ||
-      ""
-    );
-  });
+  const [email, setEmail] = useState<string>("");
 
   const [otp, setOtp] = useState<string>("");
   const [cooldown, setCooldown] = useState<number>(60);
@@ -50,18 +43,23 @@ export default function OtpForm() {
     return () => clearInterval(interval);
   }, [cooldown]);
 
-  // Redirect if no email is found
+  // Browser storage is only available after hydration.
   useEffect(() => {
-    if (!email) {
+    const pendingEmail = location.state?.email ||
+      localStorage.getItem("pending_verification_email") || "";
+    setEmail(pendingEmail);
+    if (!pendingEmail) {
       toast.error("Please enter your details to receive an OTP first.");
       navigate("/create-account");
     }
-  }, [email, navigate]);
+  }, [location.state?.email, navigate]);
 
   const handleVerify = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
 
-    if (!otp || otp.trim().length !== 6) {
+    if (isVerifying) return;
+
+    if (!/^\d{6}$/.test(otp)) {
       toast.error("Please enter a valid 6-digit OTP code.");
       return;
     }
@@ -146,7 +144,7 @@ export default function OtpForm() {
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <Card className="w-full max-w-md shadow-xl border border-[#E2E8E4] bg-white rounded-xl overflow-hidden">
           {/* Top Decorative Header */}
-          <div className="h-2 bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-400" />
+          <div className="h-2 bg-linear-to-r from-emerald-600 via-emerald-500 to-teal-400" />
 
           <CardHeader className="text-center pt-8 pb-4">
             <div className="mx-auto w-12 h-12 bg-emerald-50 text-emerald-700 rounded-full flex items-center justify-center mb-3 border border-emerald-100 shadow-sm">
@@ -188,12 +186,10 @@ export default function OtpForm() {
                     maxLength={6}
                     id="otp-input"
                     value={otp}
-                    onChange={(val) => {
-                      setOtp(val);
-                      if (val.length === 6) {
-                        // Optional auto-submit when all 6 digits are typed
-                      }
-                    }}
+                    onChange={setOtp}
+                    pattern={REGEXP_ONLY_DIGITS}
+                    pasteTransformer={(value) => value.replace(/[\s-]/g, "")}
+                    disabled={isVerifying}
                     autoFocus
                   >
                     <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:font-bold *:data-[slot=input-otp-slot]:border-gray-300 focus-within:*:data-[slot=input-otp-slot]:border-emerald-600">
