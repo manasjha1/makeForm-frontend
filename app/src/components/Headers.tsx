@@ -2,14 +2,12 @@ import {
     Eye,
     Home,
     LayoutFreeform,
-    LucideForm,
     Menu,
     RotateCcw,
     X,
-    UserRound,
-    User,
 } from "lucide-react";
 import { Button } from "./ui/button";
+import AccountDetails from "./AccountDetails";
 import { useState } from "react";
 import { Link } from "react-router";
 import makeForm_logo from "~/assests/makeForm_logo.png"
@@ -79,23 +77,7 @@ export default function Header({ viewPage }: formProps) {
                     >
                         <RotateCcw className="size-4 text-gray-500" />
                     </Button>
-                    <Button
-                        asChild
-                        variant="outline"
-                        size="sm"
-                        className="rounded-sm font-medium bg-transparent hover:text-emerald-700 border border-emerald-700 text-emerald-700"
-                    >
-                        <Link to="/sign-in">Sign In</Link>
-                    </Button>
-                    <Button
-                        asChild
-                        size="sm"
-                        className="rounded-sm border border-emerald-700 bg-emerald-700 font-medium text-white hover:bg-emerald-800"
-                    >
-                        <Link to="/create-account">
-                            <User className="size-4" /> Sign Up
-                        </Link>
-                    </Button>
+                    <AccountDetails onNavigate={closeMenu} />
                 </div>
 
                 <Button
@@ -143,7 +125,7 @@ export default function Header({ viewPage }: formProps) {
                                 <Eye className="size-4" /> Live Preview
                             </Link>
                         </Button>
-                        <div className="mt-1 flex gap-2 border-t bg-amber-300 border-[#E2E8E4] pt-2">
+                        <div className="mt-1 flex flex-wrap items-center gap-2 border-t border-[#E2E8E4] pt-2">
                             <Button
                                 type="button"
                                 size="icon-sm"
@@ -154,25 +136,7 @@ export default function Header({ viewPage }: formProps) {
                             >
                                 <RotateCcw className="size-4 text-gray-500" />
                             </Button>
-                            <Button
-                                variant={`outline`}
-                                asChild
-                                size="sm"
-                                className="rounded-sm font-medium"
-                            >
-                                <Link to="/sign-in" onClick={closeMenu}>
-                                    Sign In
-                                </Link>
-                            </Button>
-                            <Button
-                                asChild
-                                size="sm"
-                                className="bg-emerald-700 border border-emerald-600 hover:bg-emerald-800 text-white"
-                            >
-                                <Link to="/create-account" onClick={closeMenu}>
-                                    <UserRound className="size-4" /> Sign Up
-                                </Link>
-                            </Button>
+                            <AccountDetails onNavigate={closeMenu} />
                         </div>
                     </div>
                 </div>
