@@ -1,0 +1,30 @@
+# Form studio
+
+The `/form-builder` route implements the emerald-and-cream studio from the supplied Figma Make reference:
+https://www.figma.com/make/avUG3VIDUK7EGlCqIqYJoN/High-Fidelity-UI-UX-Mockup
+
+The layout uses a 288px field palette, a flexible dotted canvas, and a 320px settings inspector on desktop. Smaller screens stack the inspector and then the palette. Typography uses Plus Jakarta Sans with the existing local Inter font as fallback. Existing makeForm branding and account routes are retained.
+
+## Editing
+
+- A fresh session opens the nine-field onboarding sample. Templates remain accessible in the status bar and footer, and existing `?template=` links still work.
+- Click or drag a palette item to add it. Use card actions or drag to reorder, duplicate, and remove fields. Keyboard users can focus a card and use its labeled action buttons.
+- Edit the form header with its pencil button. Select a field to edit General, Rules, Options (choice fields), or Logic settings.
+- Changes automatically save to the existing session-storage draft key. Only one draft is retained per browser tab. Storage failures show an error without discarding the in-memory form.
+- Undo retains the last 30 edits for this page session. Reset restores the source template and can be undone.
+
+## Preview behavior
+
+Live Preview supports all nine palette types plus the existing telephone fields. Required, numeric, text-length, choice, email, and file constraints are checked on test submission. File selection is local: only file metadata appears in the test payload, and nothing is uploaded. No production response endpoint is introduced.
+
+A required checkbox group needs at least one selected option; a single agreement checkbox must be checked. Defaults are applied when a new preview mounts. Hidden fields are excluded from validation and the test payload.
+
+Conditional rules reference preceding non-file fields. Removing a dependency or moving it after its dependent clears the affected condition. Hidden ancestors also hide descendants, even when stale answers remain in memory.
+
+## Verification
+
+Run `npm run typecheck`, `npm run build`, `npm run test:templates`, and `npm run test:studio` (Node 24 for the test runner's TypeScript loader).
+
+Browser checks cover desktop and 390px mobile layout, field editing, duplication, deletion, undo, reorder persistence after reload, required validation errors, and a successful test submission. The existing background gradient now uses React's stable `useId` to avoid server/client hydration mismatches.
+
+The Figma connector returned a source-file inventory but its resource reader failed. Implementation was grounded in the interactive Figma preview, rendered DOM styles, and visible design details. No Theme or JSON toolbar was added: the latest reference revision removes those controls.

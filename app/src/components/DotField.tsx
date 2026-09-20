@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useId, useRef } from "react";
 
 const TWO_PI = Math.PI * 2;
 
@@ -51,7 +51,7 @@ const DotField = memo(function DotField({
     const sizeRef = useRef({ w: 0, h: 0, offsetX: 0, offsetY: 0 });
     const glowOpacity = useRef(0);
     const engagement = useRef(0);
-    const glowId = useRef(`dot-field-glow-${Math.random().toString(36).slice(2, 9)}`);
+    const glowId = useId();
     const propsRef = useRef({ dotRadius, dotSpacing, cursorRadius, cursorForce, bulgeOnly, bulgeStrength, sparkle, waveAmplitude, gradientFrom, gradientTo });
 
     propsRef.current = { dotRadius, dotSpacing, cursorRadius, cursorForce, bulgeOnly, bulgeStrength, sparkle, waveAmplitude, gradientFrom, gradientTo };
@@ -230,12 +230,12 @@ const DotField = memo(function DotField({
             <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
             <svg className="absolute inset-0 h-full w-full" aria-hidden="true">
                 <defs>
-                    <radialGradient id={glowId.current}>
+                    <radialGradient id={glowId}>
                         <stop offset="0%" stopColor={glowColor} />
                         <stop offset="100%" stopColor="transparent" />
                     </radialGradient>
                 </defs>
-                <circle ref={glowRef} cx="-9999" cy="-9999" r={glowRadius} fill={`url(#${glowId.current})`} style={{ opacity: 0 }} />
+                <circle ref={glowRef} cx="-9999" cy="-9999" r={glowRadius} fill={`url(#${glowId})`} style={{ opacity: 0 }} />
             </svg>
         </div>
     );

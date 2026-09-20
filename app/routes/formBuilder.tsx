@@ -16,6 +16,10 @@ import { readDraft, saveDraft } from "~/src/lib/form-draft";
 import { duplicateField, moveField, normalizeConditions, removeField } from "~/src/lib/studio-model";
 import "~/src/components/builder/builder.css";
 
+export function meta() {
+    return [{ title: "Form Studio | makeForm" }, { name: "description", content: "Build and preview your form in the makeForm visual studio." }];
+}
+
 export default function FormBuilder() {
     const [params, setParams] = useSearchParams();
     const templateId = params.get("template");
@@ -48,7 +52,7 @@ export default function FormBuilder() {
     const showPreview = () => { if (form) { setSaveError(!saveDraft(form)); setGallery(false); setPreview(true); window.scrollTo({ top: 0, behavior: "instant" }); } };
     const undo = () => { const previous = history.at(-1); if (!previous) return; setForm(previous); setHistory((current) => current.slice(0, -1)); setSelectedId(previous.fields[0]?.id ?? null); setSaveError(!saveDraft(previous)); setMessage("Last edit undone."); };
     return <div className="studio">
-        <StudioHeader count={form?.fields.length ?? 0} preview={preview} onPreview={showPreview} onEdit={() => { setPreview(false); setGallery(!form); }} onReset={() => { const template = findTemplate(form?.id) ?? studioForm; change(createForm(template)); setSelectedId(template.fields[0]?.id ?? null); setPreview(false); setGallery(false); setMessage("Template restored. Use Undo to recover your edits."); }} onUndo={undo} canUndo={!!history.length} />
+        <StudioHeader count={form?.fields.length ?? 0} preview={preview} onPreview={showPreview} onEdit={() => { setPreview(false); setGallery(!form); }} onReset={() => { const template = findTemplate(form?.id ?? null) ?? studioForm; change(createForm(template)); setSelectedId(template.fields[0]?.id ?? null); setPreview(false); setGallery(false); setMessage("Template restored. Use Undo to recover your edits."); }} onUndo={undo} canUndo={!!history.length} />
         {saveError && <p role="alert" className="bg-red-50 px-6 py-3 text-sm text-red-800">Your browser could not save this draft. Keep this page open to preserve your current edits.</p>}
         {gallery ? <main className="mx-auto max-w-6xl px-5 py-8">{form && <button className="studio-button mb-6" onClick={() => setGallery(false)}><ArrowLeft size={14} />Back to editor</button>}{message && <p role="status" className="mb-4">{message}</p>}<TemplateGallery onSelect={(template) => { if (templateId === template.id) { const next = createForm(template); change(next); setSelectedId(next.fields[0]?.id ?? null); } else setParams({ template: template.id }); setGallery(false); setPreview(false); }} /></main>
             : !form ? <main className="studio-empty" role="status">Loading your form studio…</main>
