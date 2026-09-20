@@ -1,0 +1,5 @@
+import { Link } from "react-router";
+
+export default function StudioFooter({ onTemplates, onPreview }: { onTemplates: () => void; onPreview: () => void }) {
+    return <footer className="studio-footer"><div className="studio-footer-grid"><div><h3>makeForm <span className="studio-badge ml-2">Form Studio</span></h3><p className="studio-muted max-w-xs">Build thoughtful forms with a visual workspace. Shape every question, fine-tune the details, and test the experience.</p></div><div><h3>PRODUCT</h3><Link to="/">Landing Page</Link><button className="studio-muted block my-2" onClick={onTemplates}>Form Templates</button><button className="studio-muted block my-2" onClick={onPreview}>Live Preview</button></div><div><h3>ACCOUNT</h3><Link to="/sign-in">Sign In</Link><Link to="/create-account">Create Account</Link></div></div><div className="studio-status mt-7 !px-0"><span>© {new Date().getFullYear()} makeForm. Build forms with clarity.</span><span>Designed for your next great idea.</span></div></footer>;
+}

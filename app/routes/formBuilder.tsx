@@ -1,61 +1,60 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router";
-import Header from "~/src/components/Headers";
-import FormPreview, { formControlClass } from "~/src/components/FormPreview";
+import { useSearchParams } from "react-router";
+import { CheckCircle2, LayoutGrid, Eye, ArrowLeft } from "lucide-react";
+import FormPreview from "~/src/components/FormPreview";
 import TemplateGallery from "~/src/components/TemplateGallery";
-import { Button } from "~/src/components/ui/button";
+import FieldsPalette from "~/src/components/builder/FieldsPalette";
+import FormCanvas from "~/src/components/builder/FormCanvas";
+import FieldSettings from "~/src/components/builder/FieldSettings";
+import StudioHeader from "~/src/components/builder/StudioHeader";
+import StudioFooter from "~/src/components/builder/StudioFooter";
+import { newField } from "~/src/components/builder/field-catalog";
 import { findTemplate } from "~/src/data/form-templates";
-import { createForm, type FormField, type FormTemplate } from "~/src/lib/form-types";
+import { studioForm } from "~/src/data/studio-form";
+import { createForm, type FieldType, type FormField, type FormTemplate } from "~/src/lib/form-types";
 import { readDraft, saveDraft } from "~/src/lib/form-draft";
+import { duplicateField, moveField, normalizeConditions, removeField } from "~/src/lib/studio-model";
+import "~/src/components/builder/builder.css";
 
 export default function FormBuilder() {
     const [params, setParams] = useSearchParams();
     const templateId = params.get("template");
-    const navigate = useNavigate();
-    const [saveError, setSaveError] = useState("");
     const [form, setForm] = useState<FormTemplate | null>(null);
-    const [revision, setRevision] = useState(0);
+    const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [preview, setPreview] = useState(false);
+    const [gallery, setGallery] = useState(false);
+    const [saveError, setSaveError] = useState(false);
+    const [history, setHistory] = useState<FormTemplate[]>([]);
+    const [message, setMessage] = useState("");
     useEffect(() => {
-        const template = findTemplate(templateId);
         const draft = readDraft();
-        setForm(template ? draft?.id === template.id ? draft : createForm(template) : null);
-        setSaveError("");
-        setRevision((value) => value + 1);
+        const template = templateId === studioForm.id ? studioForm : findTemplate(templateId);
+        const next = template ? draft?.id === template.id ? draft : createForm(template) : templateId ? null : draft ?? createForm(studioForm);
+        setForm(next); setSelectedId(next?.fields[0]?.id ?? null); setGallery(!next); setPreview(false); setHistory([]);
+        setMessage(templateId && !next ? "That template is unavailable. Choose one below." : "");
+        if (next) setSaveError(!saveDraft(next));
     }, [templateId]);
-    const updateField = (id: string, patch: Partial<FormField>) => setForm((current) => current && ({ ...current, fields: current.fields.map((field) => field.id === id ? { ...field, ...patch } : field) }));
-    return <div className="min-h-screen bg-[#faf8f5]">
-        <Header viewPage="FormBuilder" />
-        <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-            {!form ? <>
-                <h1 className="mb-2 text-sm font-semibold uppercase tracking-widest text-gray-500">Form builder</h1>
-                {templateId && <p role="status" className="mb-4 text-sm text-amber-800">That template is unavailable. Choose one below.</p>}
-                <TemplateGallery onSelect={(template) => setParams({ template: template.id })} />
-            </> : <>
-                <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-                    <Button variant="outline" onClick={() => setParams({})}>All templates</Button>
-                    <Button onClick={() => {
-                        if (saveDraft(form)) navigate("/live-preview");
-                        else setSaveError("Your browser could not save this draft. You can still test the form in the preview below.");
-                    }}>Save draft & preview</Button>
-                    <Button variant="outline" onClick={() => { const template = findTemplate(templateId); if (template) { setForm(createForm(template)); setRevision((value) => value + 1); } }}>Reset template</Button>
-                </div>
-                {saveError && <p role="alert" className="mb-4 text-sm text-red-700">{saveError}</p>}
-                <div className="grid items-start gap-8 lg:grid-cols-2">
-                    <section aria-label="Edit form" className="space-y-5">
-                        <div><h1 className="text-2xl font-bold text-gray-900">Make it yours</h1><p className="mt-1 text-sm text-gray-500">Edit your form and try it in the preview.</p></div>
-                        <label className="block space-y-2 text-sm font-medium">Form title<input className={formControlClass} value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} /></label>
-                        <label className="block space-y-2 text-sm font-medium">Description<textarea rows={3} className={formControlClass} value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })} /></label>
-                        {form.fields.map((field, index) => <div key={field.id} className="space-y-3 rounded-xl border border-gray-200 bg-white p-4">
-                            <div className="flex items-center justify-between gap-2"><span className="text-xs font-semibold uppercase text-gray-500">Field {index + 1} · {field.type}</span><Button variant="ghost" size="sm" aria-label={`Remove ${field.label}`} onClick={() => setForm({ ...form, fields: form.fields.filter((item) => item.id !== field.id) })}>Remove</Button></div>
-                            <label className="block space-y-1 text-sm">Label<input className={formControlClass} value={field.label} onChange={(event) => updateField(field.id, { label: event.target.value })} /></label>
-                            {field.type === "select" && <label className="block space-y-1 text-sm">Options (one per line)<textarea className={formControlClass} rows={3} value={field.options?.join("\n") || ""} onChange={(event) => updateField(field.id, { options: event.target.value.split("\n") })} /></label>}
-                            <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-emerald-700" checked={field.required} onChange={(event) => updateField(field.id, { required: event.target.checked })} />Required field</label>
-                        </div>)}
-                        <Button variant="outline" onClick={() => setForm({ ...form, fields: [...form.fields, { id: crypto.randomUUID(), label: "New question", type: "text", required: false }] })}>Add text field</Button>
-                    </section>
-                    <section aria-label="Live form preview" className="min-w-0 lg:sticky lg:top-24"><FormPreview key={`${form.id}-${revision}`} form={form} /></section>
-                </div>
-            </>}
-        </main>
+    const change = (next: FormTemplate) => {
+        if (form) setHistory((current) => [...current.slice(-29), form]);
+        const normalized = normalizeConditions(next);
+        setForm(normalized); setSaveError(!saveDraft(normalized)); setMessage("");
+    };
+    const add = (type: FieldType, index = form?.fields.length ?? 0) => {
+        if (!form) return;
+        const field = newField(type); const fields = [...form.fields]; fields.splice(index, 0, field);
+        change({ ...form, fields }); setSelectedId(field.id); setMessage(`Added ${field.label} field.`);
+    };
+    const updateField = (patch: Partial<FormField>) => form && change({ ...form, fields: form.fields.map((field) => field.id === selectedId ? { ...field, ...patch } : field) });
+    const showPreview = () => { if (form) { setSaveError(!saveDraft(form)); setGallery(false); setPreview(true); window.scrollTo({ top: 0, behavior: "instant" }); } };
+    const undo = () => { const previous = history.at(-1); if (!previous) return; setForm(previous); setHistory((current) => current.slice(0, -1)); setSelectedId(previous.fields[0]?.id ?? null); setSaveError(!saveDraft(previous)); setMessage("Last edit undone."); };
+    return <div className="studio">
+        <StudioHeader count={form?.fields.length ?? 0} preview={preview} onPreview={showPreview} onEdit={() => { setPreview(false); setGallery(!form); }} onReset={() => { const template = findTemplate(form?.id) ?? studioForm; change(createForm(template)); setSelectedId(template.fields[0]?.id ?? null); setPreview(false); setGallery(false); setMessage("Template restored. Use Undo to recover your edits."); }} onUndo={undo} canUndo={!!history.length} />
+        {saveError && <p role="alert" className="bg-red-50 px-6 py-3 text-sm text-red-800">Your browser could not save this draft. Keep this page open to preserve your current edits.</p>}
+        {gallery ? <main className="mx-auto max-w-6xl px-5 py-8">{form && <button className="studio-button mb-6" onClick={() => setGallery(false)}><ArrowLeft size={14} />Back to editor</button>}{message && <p role="status" className="mb-4">{message}</p>}<TemplateGallery onSelect={(template) => { if (templateId === template.id) { const next = createForm(template); change(next); setSelectedId(next.fields[0]?.id ?? null); } else setParams({ template: template.id }); setGallery(false); setPreview(false); }} /></main>
+            : !form ? <main className="studio-empty" role="status">Loading your form studio…</main>
+                : preview ? <main className="studio-preview"><div className="mb-5 flex flex-wrap items-center justify-between gap-3"><button className="studio-button" onClick={() => setPreview(false)}><ArrowLeft size={14} />Back to editor</button><span className="studio-muted">Test your form before sharing</span></div><FormPreview key={JSON.stringify(form)} form={form} /></main>
+                    : <div className="studio-workspace"><FieldsPalette onAdd={add} /><FormCanvas form={form} selectedId={selectedId} onSelect={setSelectedId} onChange={change} onAdd={add} onMove={(id, index) => { const next = moveField(form, id, index); if (next !== form) change(next); }} onDuplicate={(id) => { const index = form.fields.findIndex((field) => field.id === id); const field = duplicateField(form.fields[index]); const fields = [...form.fields]; fields.splice(index + 1, 0, field); change({ ...form, fields }); setSelectedId(field.id); }} onDelete={(id) => { const next = removeField(form, id); change(next); if (selectedId === id) setSelectedId(next.fields[0]?.id ?? null); setMessage("Field removed. Use Undo to restore it."); }} /><FieldSettings key={selectedId} field={form.fields.find((field) => field.id === selectedId)} fields={form.fields} onChange={updateField} /></div>}
+        <div className="studio-status"><span role="status" className="flex items-center gap-2"><CheckCircle2 size={12} />{message || (saveError ? "Draft not saved" : "Draft saved in this browser tab")}</span><div className="studio-actions"><button className="studio-button" onClick={() => { setGallery(true); setPreview(false); }}><LayoutGrid size={12} />Templates</button><button className="studio-button primary" disabled={!form} onClick={showPreview}><Eye size={12} />Preview Form</button></div></div>
+        <StudioFooter onTemplates={() => { setGallery(true); setPreview(false); window.scrollTo({ top: 0 }); }} onPreview={showPreview} />
     </div>;
 }
