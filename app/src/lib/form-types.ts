@@ -1,4 +1,6 @@
-export type FieldType = "text" | "email" | "tel" | "number" | "date" | "textarea" | "select" | "checkbox";
+export type FieldType = "text" | "email" | "tel" | "number" | "date" | "textarea" | "select" | "checkbox" | "radio" | "file";
+
+export type FieldCondition = { fieldId: string; operator: "equals" | "notEquals" | "contains" | "notEmpty"; value: string };
 
 export type FormField = {
     id: string;
@@ -9,6 +11,14 @@ export type FormField = {
     options?: string[];
     min?: number;
     max?: number;
+    helpText?: string;
+    defaultValue?: string;
+    minLength?: number;
+    maxLength?: number;
+    errorMessage?: string;
+    accept?: string;
+    maxFileSize?: number;
+    condition?: FieldCondition;
 };
 
 export type FormTemplate = {
