@@ -1,9 +1,10 @@
 import { useId, useRef, useState } from "react";
-import { CheckCircle2, Upload } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import type { FormTemplate } from "../lib/form-types";
 import { initialAnswers, visibleFields, type Answers } from "../lib/studio-model";
 import { validateAnswers, type UploadInfo } from "../lib/form-validation";
 import { Button } from "./ui/button";
+import PreviewUpload from "./builder/PreviewUpload";
 
 export const formControlClass = "w-full rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] px-3 py-2.5 text-sm text-[#1C2925] outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 aria-invalid:border-red-500";
 
@@ -47,7 +48,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         : <><label htmlFor={id} className="block break-words text-sm font-semibold text-[#1C2925]">{field.label}{field.required && <span className="text-red-600"> *</span>}</label>
                             {field.type === "textarea" ? <textarea {...props} rows={4} value={value} placeholder={field.placeholder} onChange={(event) => update(field.id, event.target.value)} />
                                 : field.type === "select" ? <select {...props} value={value} onChange={(event) => update(field.id, event.target.value)}><option value="">{field.placeholder || "Choose an option"}</option>{field.options?.map((option, index) => <option key={index} value={option}>{option}</option>)}</select>
-                                    : field.type === "file" ? <div className="rounded-lg border border-dashed border-[#E2E8E4] bg-[#FAF9F6] p-5"><Upload size={22} className="mb-3 text-emerald-700" /><input {...props} type="file" accept={field.accept} onChange={(event) => { const file = event.target.files?.[0]; setFiles((current) => ({ ...current, [field.id]: file ? { name: file.name, size: file.size, type: file.type } : undefined })); update(field.id, file?.name ?? ""); }} /></div>
+                                    : field.type === "file" ? <PreviewUpload field={field} id={id} invalid={!!errors[field.id]} onChange={(file) => { setFiles((current) => ({ ...current, [field.id]: file })); update(field.id, file?.name ?? ""); }} />
                                         : <input {...props} type={field.type} value={value} step={field.type === "number" ? "any" : undefined} placeholder={field.placeholder} min={field.min} max={field.max} onChange={(event) => update(field.id, event.target.value)} />}
                         </>}
                 <p id={`${id}-help`} className="text-xs text-[#6B7872]">{field.helpText}</p>
