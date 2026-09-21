@@ -183,6 +183,7 @@ export default function FormBuilder() {
         </main>
       ) : (
         <div className="studio-workspace">
+          <StudioPanelNav />
           <FieldsPalette onAdd={add} />
           <FormCanvas
             form={form}

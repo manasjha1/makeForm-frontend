@@ -23,6 +23,8 @@ Conditional rules reference preceding non-file fields. Removing a dependency or 
 
 ## Verification
 
+The second design pass adds a sticky desktop header, selected-card highlights, recoverable palette search, keyboard-operated settings tabs, and a mobile panel jump bar. Preview includes an error summary with field focus links, a file dropzone with local file metadata and removal, and a repeat-test action that clears answers and file selections. Choice renaming preserves the default, new option names avoid duplicates, and drag slots consistently mean “insert before this card.”
+
 Run `npm run typecheck`, `npm run build`, `npm run test:templates`, and `npm run test:studio` (Node 24 for the test runner's TypeScript loader).
 
 Browser checks cover desktop and 390px mobile layout, field editing, duplication, deletion, undo, reorder persistence after reload, required validation errors, and a successful test submission. The existing background gradient now uses React's stable `useId` to avoid server/client hydration mismatches.

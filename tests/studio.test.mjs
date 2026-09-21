@@ -8,7 +8,30 @@ const { studioForm } = await import("../app/src/data/studio-form.ts");
 const { moveField, removeField, duplicateField, visibleFields, normalizeConditions, initialAnswers } = await import("../app/src/lib/studio-model.ts");
 const { validateAnswers } = await import("../app/src/lib/form-validation.ts");
 const { saveDraft, readDraft } = await import("../app/src/lib/form-draft.ts");
+const { dropTargetIndex } = await import("../app/src/lib/studio-model.ts");
+const { nextOptionLabel, renameOption } = await import("../app/src/lib/field-options.ts");
 const field = (id, extra = {}) => ({ id, type: "text", label: id, required: false, ...extra });
+
+test("drop slots place fields before the marker in either direction", () => {
+    const fields = [field("a"), field("b"), field("c"), field("d")];
+    const form = { ...studioForm, fields };
+    assert.deepEqual(moveField(form, "a", dropTargetIndex(fields, "a", 2)).fields.map((item) => item.id), ["b", "a", "c", "d"]);
+    assert.deepEqual(moveField(form, "d", dropTargetIndex(fields, "d", 1)).fields.map((item) => item.id), ["a", "d", "b", "c"]);
+    assert.equal(dropTargetIndex(fields, "a", 4), 3);
+    assert.equal(dropTargetIndex(fields, "b", 2), 1);
+});
+test("choice renaming preserves defaults without mutating the field", () => {
+    const source = field("choice", { type: "select", options: ["One", "Two"], defaultValue: "Two" });
+    assert.deepEqual(renameOption(source, 1, "Second"), { options: ["One", "Second"], defaultValue: "Second" });
+    assert.deepEqual(renameOption(source, 0, "First"), { options: ["First", "Two"] });
+    assert.equal(source.defaultValue, "Two");
+    assert.deepEqual(source.options, ["One", "Two"]);
+});
+test("new option labels remain unique after deletion and reordering", () => {
+    assert.equal(nextOptionLabel([]), "Option 1");
+    assert.equal(nextOptionLabel(["Option 3", "Option 1"]), "Option 2");
+    assert.equal(nextOptionLabel(["Option 1", "Option 2", "Option 3"]), "Option 4");
+});
 
 test("studio starter contains all nine reference field types", () => {
     assert.equal(studioForm.fields.length, 9);
