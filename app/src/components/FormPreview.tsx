@@ -1,10 +1,10 @@
 import { useId, useRef, useState } from "react";
-import { CheckCircle2 } from "lucide-react";
 import type { FormTemplate } from "../lib/form-types";
 import { initialAnswers, visibleFields, type Answers } from "../lib/studio-model";
 import { validateAnswers, type UploadInfo } from "../lib/form-validation";
 import { Button } from "./ui/button";
 import PreviewUpload from "./builder/PreviewUpload";
+import PreviewSuccess from "./builder/PreviewSuccess";
 
 export const formControlClass = "w-full rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] px-3 py-2.5 text-sm text-[#1C2925] outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 aria-invalid:border-red-500";
 
@@ -15,6 +15,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
     const [files, setFiles] = useState<Record<string, UploadInfo | undefined>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [submitted, setSubmitted] = useState<Record<string, unknown> | null>(null);
+    const [attempt, setAttempt] = useState(0);
     const visible = visibleFields(form.fields, answers);
     const visibleErrors = visible.filter((field) => errors[field.id]);
     const focusField = (id: string) => {
@@ -48,7 +49,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         : <><label htmlFor={id} className="block break-words text-sm font-semibold text-[#1C2925]">{field.label}{field.required && <span className="text-red-600"> *</span>}</label>
                             {field.type === "textarea" ? <textarea {...props} rows={4} value={value} placeholder={field.placeholder} onChange={(event) => update(field.id, event.target.value)} />
                                 : field.type === "select" ? <select {...props} value={value} onChange={(event) => update(field.id, event.target.value)}><option value="">{field.placeholder || "Choose an option"}</option>{field.options?.map((option, index) => <option key={index} value={option}>{option}</option>)}</select>
-                                    : field.type === "file" ? <PreviewUpload field={field} id={id} invalid={!!errors[field.id]} onChange={(file) => { setFiles((current) => ({ ...current, [field.id]: file })); update(field.id, file?.name ?? ""); }} />
+                                    : field.type === "file" ? <PreviewUpload key={attempt} field={field} id={id} invalid={!!errors[field.id]} onChange={(file) => { setFiles((current) => ({ ...current, [field.id]: file })); update(field.id, file?.name ?? ""); }} />
                                         : <input {...props} type={field.type} value={value} step={field.type === "number" ? "any" : undefined} placeholder={field.placeholder} min={field.min} max={field.max} onChange={(event) => update(field.id, event.target.value)} />}
                         </>}
                 <p id={`${id}-help`} className="text-xs text-[#6B7872]">{field.helpText}</p>
@@ -56,6 +57,6 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
             </div>;
         })}
         <Button type="submit" className="w-full bg-emerald-700 text-white hover:bg-emerald-800">Test submission</Button>
-        {submitted && <section role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 p-5 text-emerald-900"><CheckCircle2 className="mb-3" /><h3 className="font-semibold">Your form passed validation</h3><p className="my-2 text-sm">This was a test. No response was sent or saved.</p><details><summary className="cursor-pointer text-xs font-semibold">View test response</summary><pre className="mt-3 max-h-64 overflow-auto whitespace-pre-wrap break-all text-xs">{JSON.stringify(submitted, null, 2)}</pre></details></section>}
+        {submitted && <PreviewSuccess response={submitted} onRestart={() => { setAnswers(initialAnswers(form.fields)); setFiles({}); setErrors({}); setSubmitted(null); setAttempt((value) => value + 1); if (visible[0]) focusField(visible[0].id); }} />}
     </form>;
 }
