@@ -2,6 +2,12 @@ import type { FormField, FormTemplate } from "./form-types";
 
 export type Answers = Record<string, string | string[] | boolean>;
 
+// A drop marker describes an insertion slot before a card, not its final index.
+export function dropTargetIndex(fields: FormField[], id: string, slot: number): number {
+    const from = fields.findIndex((field) => field.id === id);
+    return Math.max(0, Math.min(fields.length - 1, slot - (from >= 0 && from < slot ? 1 : 0)));
+}
+
 export function moveField(form: FormTemplate, id: string, target: number): FormTemplate {
     const from = form.fields.findIndex((field) => field.id === id);
     if (from < 0 || target < 0 || target >= form.fields.length || from === target) return form;

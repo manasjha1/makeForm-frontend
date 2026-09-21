@@ -76,7 +76,7 @@ export default function AccountDetails({ onNavigate }: { onNavigate?: () => void
                         <p className="break-all text-xs font-normal text-gray-500">{profile.email}</p>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onSelect={logout} className="cursor-pointer gap-2 px-3 py-2">
+                    <DropdownMenuItem onSelect={logout} className="cursor-pointer gap-2 px-3 py-2 hover:bg-red-500/50">
                         <LogOut aria-hidden="true" className="size-4" />
                         Log out
                     </DropdownMenuItem>
