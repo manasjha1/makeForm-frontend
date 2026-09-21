@@ -39,6 +39,7 @@
 .studio-tabs { display:flex; gap:5px; }
 .studio-tabs button { flex:1; padding:6px 8px; border-radius:6px; font-size:11px; color:var(--studio-muted); background:var(--studio-paper); }
 .studio-tabs button[aria-pressed=true] { color:white; background:var(--studio-green); }
+.studio-tabs button[aria-selected=true] { color:white; background:var(--studio-green); }
 .studio-palette-list { display:flex; flex-direction:column; gap:8px; padding:12px; overflow:auto; }
 .studio-palette-item { width:100%; display:flex; gap:12px; text-align:left; padding:12px; border:1px solid var(--studio-border); border-radius:12px; align-items:center; background:white; }
 .studio-palette-item:hover { border-color:#04785780; background:#f0fdf8; transform:translateY(-1px); }
