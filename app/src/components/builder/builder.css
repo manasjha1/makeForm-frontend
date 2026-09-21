@@ -30,6 +30,9 @@
 .studio-muted { color:var(--studio-muted); font-size:11px; line-height:1.6; }
 .studio-search { position:relative; margin:16px 0; }
 .studio-search svg { position:absolute; left:10px; top:10px; color:var(--studio-muted); }
+.studio-search-clear { position:absolute; right:4px; top:3px; display:grid; place-items:center; width:28px; height:28px; border-radius:5px; }
+.studio-search-clear svg { position:static; }
+.studio-search-clear:hover { background:#d1fae5; }
 .studio-control { display:block; width:100%; padding:9px 12px; background:var(--studio-paper); border:1px solid var(--studio-border); border-radius:8px; color:var(--studio-ink); font-size:12px; }
 .studio-control:focus { outline:none; border-color:var(--studio-green); box-shadow:0 0 0 1px var(--studio-green); }
 .studio-search input { padding-left:32px; }
