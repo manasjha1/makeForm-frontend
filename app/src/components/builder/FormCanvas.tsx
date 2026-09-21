@@ -26,7 +26,7 @@ export default function FormCanvas({ form, selectedId, onSelect, onChange, onAdd
         if (fieldCatalog.some((field) => field.type === type)) onAdd(type, index);
         else if (id) onMove(id, dropTargetIndex(form.fields, id, index));
     };
-    return <main className="studio-canvas" aria-label="Form canvas" onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDropIndex(null); }}>
+    return <main id="studio-canvas" tabIndex={-1} className="studio-canvas" aria-label="Form canvas" onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDropIndex(null); }}>
         <div className="studio-canvas-inner">
             <section className="studio-form-header">
                 <div className="flex items-center justify-between"><span className="studio-eyebrow">Form header <span className="studio-badge ml-2">{form.fields.length} Fields</span></span><button className="studio-icon-button" aria-label="Edit form header" aria-expanded={editingHeader} onClick={() => setEditingHeader(!editingHeader)}><Pencil size={14} /></button></div>

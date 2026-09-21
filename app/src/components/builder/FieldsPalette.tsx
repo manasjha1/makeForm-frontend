@@ -7,7 +7,7 @@ export default function FieldsPalette({ onAdd }: { onAdd: (type: FieldType) => v
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("All");
     const fields = fieldCatalog.filter((field) => (category === "All" || field.category === category) && `${field.label} ${field.description}`.toLowerCase().includes(search.toLowerCase()));
-    return <aside className="studio-panel studio-palette" aria-label="Fields palette">
+    return <aside id="studio-palette" tabIndex={-1} className="studio-panel studio-palette" aria-label="Fields palette">
         <div className="studio-panel-header">
             <div className="flex items-center justify-between gap-2"><h2>Fields Palette</h2><span className="studio-badge">9 Fields</span></div>
             <p className="studio-muted">Click or drag to add onto canvas</p>

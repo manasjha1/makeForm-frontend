@@ -13,7 +13,7 @@ export default function FieldSettings({ field, fields, onChange }: { field?: For
     const Icon = field ? fieldIcon(field.type) : MousePointer2;
     const choice = field && ["select", "radio", "checkbox"].includes(field.type);
     const tabs = ["General", "Rules", ...(choice ? ["Options"] : []), "Logic"];
-    return <aside className="studio-panel studio-settings" aria-label="Field settings">
+    return <aside id="studio-settings" tabIndex={-1} className="studio-panel studio-settings" aria-label="Field settings">
         {!field ? <div className="studio-empty"><MousePointer2 size={24} className="mx-auto mb-4" /><h2>Select a field</h2><p className="studio-muted mt-2">Click any card on the canvas to edit its settings.</p></div> : <>
             <div className="studio-panel-header flex items-center gap-3"><span className="studio-field-icon"><Icon size={19} /></span><div className="min-w-0"><span className="studio-eyebrow">{field.type}</span><h2 className="truncate">{field.label || "Untitled field"}</h2><p className="studio-muted truncate" title={field.id}>ID: {field.id}</p></div></div>
             <div className="studio-settings-tabs studio-tabs" role="tablist" aria-label="Settings sections">{tabs.map((item, index) => <button key={item} id={tabId + item} role="tab" aria-selected={tab === item} aria-controls={tabId + "panel"} tabIndex={tab === item ? 0 : -1} onClick={() => setTab(item)} onKeyDown={(event) => {
