@@ -15,17 +15,27 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [submitted, setSubmitted] = useState<Record<string, unknown> | null>(null);
     const visible = visibleFields(form.fields, answers);
+    const visibleErrors = visible.filter((field) => errors[field.id]);
+    const focusField = (id: string) => {
+        const target = formRef.current?.elements.namedItem(id);
+        if (target instanceof HTMLElement) target.focus();
+        else if (target instanceof RadioNodeList) (target[0] as HTMLElement)?.focus();
+    };
     const update = (id: string, value: Answers[string]) => { setAnswers((current) => ({ ...current, [id]: value })); setErrors((current) => { const next = { ...current }; delete next[id]; return next; }); setSubmitted(null); };
 
     return <form ref={formRef} noValidate className="space-y-6 rounded-2xl border border-[#E2E8E4] border-t-4 border-t-emerald-700 bg-white p-5 shadow-sm sm:p-8" onSubmit={(event) => {
         event.preventDefault();
         const next = validateAnswers(visible, answers, files);
         setErrors(next); setSubmitted(null);
-        if (Object.keys(next).length) { const first = formRef.current?.elements.namedItem(Object.keys(next)[0]); if (first instanceof HTMLElement) first.focus(); else if (first instanceof RadioNodeList) (first[0] as HTMLElement)?.focus(); return; }
+        if (Object.keys(next).length) { focusField(Object.keys(next)[0]); return; }
         setSubmitted(Object.fromEntries(visible.map((field) => [field.id, field.type === "file" ? files[field.id] ?? null : answers[field.id] ?? ""])));
     }}>
         <div><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-emerald-700">Live preview</p><h2 className="break-words text-2xl font-bold text-[#1C2925]">{form.title}</h2><p className="mt-2 whitespace-pre-wrap break-words text-sm text-[#6B7872]">{form.description}</p></div>
         <p className="text-xs text-[#6B7872]">Fields marked * are required. Test responses and files stay in this preview and are not uploaded.</p>
+        {visibleErrors.length > 0 && <section aria-label="Validation summary" className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800">
+            <h3 className="text-sm font-semibold">Check {visibleErrors.length} {visibleErrors.length === 1 ? "field" : "fields"} before continuing</h3>
+            <ul className="mt-2 space-y-1">{visibleErrors.map((field) => <li key={field.id}><button type="button" className="text-left text-xs underline underline-offset-2" onClick={() => focusField(field.id)}>{field.label}: {errors[field.id]}</button></li>)}</ul>
+        </section>}
         {visible.map((field) => {
             const id = `${prefix}-${field.id}`;
             const props = { id, name: field.id, required: field.required, className: formControlClass, "aria-invalid": !!errors[field.id], "aria-describedby": `${id}-help ${id}-error` };
