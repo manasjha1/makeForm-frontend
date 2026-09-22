@@ -1,5 +1,6 @@
 import { ArrowUp, ArrowDown, Copy, Trash2, GripVertical, CheckCircle2, Upload, ChevronDown, CalendarDays, Check } from "lucide-react";
 import type { FormField } from "../../lib/form-types";
+import { useEffect, useRef } from "react";
 import { fieldIcon } from "./field-catalog";
 
 export function FieldSample({ field }: { field: FormField }) {
@@ -15,7 +16,16 @@ export function FieldSample({ field }: { field: FormField }) {
 type Props = { field: FormField; index: number; count: number; selected: boolean; dropTarget: boolean; onSelect: () => void; onMove: (target: number) => void; onDuplicate: () => void; onDelete: () => void; onDrop: (event: React.DragEvent) => void; onDragOver: (event: React.DragEvent) => void };
 export default function FieldCard({ field, index, count, selected, dropTarget, onSelect, onMove, onDuplicate, onDelete, onDrop, onDragOver }: Props) {
     const Icon = fieldIcon(field.type);
-    return <article className={`studio-card ${selected ? "selected" : ""} ${dropTarget ? "drop-target" : ""}`} aria-label={`${field.label}, field ${index + 1}`} tabIndex={0} onFocus={onSelect} onClick={onSelect} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); onSelect(); } }} draggable onDragStart={(event) => { event.dataTransfer.setData("application/makeform-id", field.id); event.dataTransfer.effectAllowed = "move"; }} onDragOver={onDragOver} onDrop={onDrop}>
+    const card = useRef<HTMLElement>(null);
+    useEffect(() => {
+        if (!selected || !card.current || !window.matchMedia("(min-width:1024px)").matches) return;
+        const canvas = card.current.closest(".studio-canvas");
+        if (!canvas) return;
+        const bounds = card.current.getBoundingClientRect();
+        const viewport = canvas.getBoundingClientRect();
+        if (bounds.top < viewport.top || bounds.bottom > viewport.bottom) card.current.scrollIntoView({ block: "nearest" });
+    }, [selected]);
+    return <article ref={card} aria-current={selected ? "true" : undefined} className={`studio-card ${selected ? "selected" : ""} ${dropTarget ? "drop-target" : ""}`} aria-label={`${field.label}, field ${index + 1}`} tabIndex={0} onFocus={onSelect} onClick={onSelect} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); onSelect(); } }} draggable onDragStart={(event) => { event.dataTransfer.setData("application/makeform-id", field.id); event.dataTransfer.effectAllowed = "move"; }} onDragOver={onDragOver} onDrop={onDrop}>
         <div className="studio-card-top"><span className="studio-card-kind"><GripVertical size={14} /><Icon size={13} />{field.type}<span className="opacity-60">#{index + 1}</span></span>
             <div className="flex" onClick={(event) => event.stopPropagation()}>
                 <button className="studio-icon-button" aria-label={`Move ${field.label} up`} title="Move Up" disabled={index === 0} onClick={() => onMove(index - 1)}><ArrowUp size={14} /></button>
