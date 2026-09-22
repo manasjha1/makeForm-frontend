@@ -11,6 +11,7 @@ export type FormField = {
     options?: string[];
     min?: number;
     max?: number;
+    step?: number;
     helpText?: string;
     defaultValue?: string;
     minLength?: number;
