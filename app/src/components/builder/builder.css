@@ -66,6 +66,8 @@
 .studio-mock-choice { display:flex; align-items:center; gap:8px; font-size:12px; margin:8px 0; }
 .studio-choice-dot { width:14px; height:14px; border:1px solid #cbd5ce; border-radius:50%; flex-shrink:0; }
 .studio-choice-dot.square { border-radius:3px; }
+.studio-choice-dot.checked { display:inline-flex; align-items:center; justify-content:center; border-color:var(--studio-green); background:var(--studio-green); color:white; }
+.studio-choice-dot.checked>span { width:5px; height:5px; border-radius:50%; background:white; }
 .studio-upload { padding:22px 12px; display:flex; flex-direction:column; gap:8px; align-items:center; text-align:center; border:1px dashed #cbd5ce; background:var(--studio-paper); border-radius:8px; font-size:11px; color:var(--studio-muted); }
 .studio-quick-add { padding:20px; border:1px dashed #cbd5ce; border-radius:12px; text-align:center; background:#ffffff80; }
 .studio-quick-add .studio-actions { justify-content:center; margin-top:10px; }

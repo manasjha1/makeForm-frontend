@@ -1,12 +1,15 @@
-import { ArrowUp, ArrowDown, Copy, Trash2, GripVertical, CheckCircle2, Upload, ChevronDown } from "lucide-react";
+import { ArrowUp, ArrowDown, Copy, Trash2, GripVertical, CheckCircle2, Upload, ChevronDown, CalendarDays, Check } from "lucide-react";
 import type { FormField } from "../../lib/form-types";
 import { fieldIcon } from "./field-catalog";
 
 export function FieldSample({ field }: { field: FormField }) {
-    if (field.type === "radio" || field.type === "checkbox") return <div>{(field.options?.length ? field.options : [field.label]).map((option, index) => <div className="studio-mock-choice" key={index}><span className={`studio-choice-dot ${field.type === "checkbox" ? "square" : ""}`} />{option || "Untitled option"}</div>)}</div>;
+    if (field.type === "radio" || field.type === "checkbox") return <div>{(field.options?.length ? field.options : [field.label]).map((option, index) => {
+        const checked = field.type === "radio" ? field.defaultValue === option : !field.options?.length && field.defaultValue === "true";
+        return <div className="studio-mock-choice" key={index}><span className={`studio-choice-dot ${field.type === "checkbox" ? "square" : ""} ${checked ? "checked" : ""}`}>{checked && (field.type === "checkbox" ? <Check size={10} /> : <span />)}</span>{option || "Untitled option"}</div>;
+    })}</div>;
     if (field.type === "file") return <div className="studio-upload"><Upload size={22} /><span>Drop files here or click to upload</span><small>{field.accept || "Any file type"}{field.maxFileSize ? ` up to ${field.maxFileSize}MB` : ""}</small></div>;
-    if (field.type === "textarea") return <div className="studio-control min-h-20 text-[#6b7872]">{field.placeholder || "Enter your response..."}</div>;
-    return <div className="studio-control flex items-center justify-between text-[#6b7872]">{field.defaultValue || field.placeholder || (field.type === "select" ? "Choose an option..." : field.type === "date" ? "YYYY-MM-DD" : "Enter a value...")}{field.type === "select" && <ChevronDown size={14} />}</div>;
+    if (field.type === "textarea") return <div className="studio-control min-h-20 whitespace-pre-wrap break-words text-[#6b7872]">{field.defaultValue || field.placeholder || "Enter your response..."}</div>;
+    return <div className="studio-control flex items-center justify-between text-[#6b7872]">{field.defaultValue || field.placeholder || (field.type === "select" ? "Choose an option..." : field.type === "date" ? "YYYY-MM-DD" : "Enter a value...")}{field.type === "select" && <ChevronDown size={14} />}{field.type === "date" && <CalendarDays size={14} />}</div>;
 }
 
 type Props = { field: FormField; index: number; count: number; selected: boolean; dropTarget: boolean; onSelect: () => void; onMove: (target: number) => void; onDuplicate: () => void; onDelete: () => void; onDrop: (event: React.DragEvent) => void; onDragOver: (event: React.DragEvent) => void };
