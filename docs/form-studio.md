@@ -15,6 +15,12 @@ The layout uses a 288px field palette, a flexible dotted canvas, and a 320px set
 
 ## Preview behavior
 
+Number fields can specify a positive step increment, based on their minimum or zero. Leaving step blank permits any number. Single agreement checkboxes have a checked-by-default control; checkbox groups remain unselected by default.
+
+The example-error toggle demonstrates the mockup's error styling without changing answers. Submitting runs real validation and exits demonstration mode. Conditions can either show or hide a field when matched; older drafts default to show. Descendants of a hidden dependency remain hidden.
+
+The template gallery also offers a blank canvas. Resetting a blank form restores its empty starter, and blank drafts use the same browser-tab storage as other templates.
+
 Live Preview supports all nine palette types plus the existing telephone fields. Required, numeric, text-length, choice, email, and file constraints are checked on test submission. File selection is local: only file metadata appears in the test payload, and nothing is uploaded. No production response endpoint is introduced.
 
 A required checkbox group needs at least one selected option; a single agreement checkbox must be checked. Defaults are applied when a new preview mounts. Hidden fields are excluded from validation and the test payload.

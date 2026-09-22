@@ -12,6 +12,39 @@ const { dropTargetIndex } = await import("../app/src/lib/studio-model.ts");
 const { nextOptionLabel, renameOption } = await import("../app/src/lib/field-options.ts");
 const field = (id, extra = {}) => ({ id, type: "text", label: id, required: false, ...extra });
 
+test("numeric step validation handles decimals and a minimum offset", () => {
+    const number = field("n", { type: "number", min: 0.1, step: 0.2 });
+    assert.deepEqual(validateAnswers([number], { n: "0.3" }), {});
+    assert.ok(validateAnswers([number], { n: "0.2" }).n);
+    assert.deepEqual(validateAnswers([field("n", { type: "number" })], { n: "0.123" }), {});
+});
+test("hide conditions invert matches while hidden parents suppress children", () => {
+    const fields = [field("a"), field("b", { condition: { fieldId: "a", operator: "equals", value: "yes", action: "hide" } }), field("c", { condition: { fieldId: "b", operator: "notEmpty", value: "" } })];
+    assert.deepEqual(visibleFields(fields, { a: "yes", b: "stale" }).map((item) => item.id), ["a"]);
+    assert.deepEqual(visibleFields(fields, { a: "no", b: "answer" }).map((item) => item.id), ["a", "b", "c"]);
+});
+test("agreement defaults affect only single checkboxes", () => {
+    assert.deepEqual(initialAnswers([field("single", { type: "checkbox", defaultValue: "true" }), field("group", { type: "checkbox", defaultValue: "true", options: ["One"] })]), { single: true, group: [] });
+});
+test("new rule settings survive draft persistence and reject invalid steps", () => {
+    const values = new Map();
+    globalThis.sessionStorage = { getItem: (key) => values.get(key), setItem: (key, value) => values.set(key, value) };
+    const form = { ...studioForm, fields: [field("a", { type: "number", step: 0.01 }), field("b", { condition: { fieldId: "a", operator: "notEmpty", value: "", action: "hide" } })] };
+    saveDraft(form);
+    assert.deepEqual(readDraft(), form);
+    form.fields[0].step = -1;
+    saveDraft(form);
+    assert.equal(readDraft(), null);
+    delete globalThis.sessionStorage;
+});
+test("blank starter remains isolated when adding questions", async () => {
+    const { blankForm } = await import("../app/src/data/studio-form.ts");
+    const draft = structuredClone(blankForm);
+    draft.fields.push(field("custom"));
+    assert.equal(blankForm.fields.length, 0);
+    assert.equal(draft.fields.length, 1);
+});
+
 test("drop slots place fields before the marker in either direction", () => {
     const fields = [field("a"), field("b"), field("c"), field("d")];
     const form = { ...studioForm, fields };
