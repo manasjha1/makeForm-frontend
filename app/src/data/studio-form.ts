@@ -1,5 +1,10 @@
 import type { FormTemplate } from "../lib/form-types";
 
+export const blankForm: FormTemplate = {
+    id: "studio-blank", category: "Personal", title: "Untitled form",
+    description: "Add a description to introduce your form.", fields: [],
+};
+
 export const studioForm: FormTemplate = {
     id: "studio-onboarding", category: "Business",
     title: "Client Onboarding & Project Scope",

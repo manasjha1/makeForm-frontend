@@ -11,7 +11,7 @@ import StudioFooter from "~/src/components/builder/StudioFooter";
 import StudioPanelNav from "~/src/components/builder/StudioPanelNav";
 import { newField } from "~/src/components/builder/field-catalog";
 import { findTemplate } from "~/src/data/form-templates";
-import { studioForm } from "~/src/data/studio-form";
+import { studioForm, blankForm } from "~/src/data/studio-form";
 import {
   createForm,
   type FieldType,
@@ -50,7 +50,7 @@ export default function FormBuilder() {
   useEffect(() => {
     const draft = readDraft();
     const template =
-      templateId === studioForm.id ? studioForm : findTemplate(templateId);
+      templateId === studioForm.id ? studioForm : templateId === blankForm.id ? blankForm : findTemplate(templateId);
     const next = template
       ? draft?.id === template.id
         ? draft
@@ -122,7 +122,7 @@ export default function FormBuilder() {
           setGallery(!form);
         }}
         onReset={() => {
-          const template = findTemplate(form?.id ?? null) ?? studioForm;
+          const template = form?.id === blankForm.id ? blankForm : findTemplate(form?.id ?? null) ?? studioForm;
           change(createForm(template));
           setSelectedId(template.fields[0]?.id ?? null);
           setPreview(false);
@@ -165,6 +165,7 @@ export default function FormBuilder() {
               setPreview(false);
             }}
           />
+          <section className="studio-quick-add mt-8"><h2 className="text-lg font-semibold">Prefer a blank canvas?</h2><p className="studio-muted my-3">Start from scratch and add only the questions you need.</p><button className="studio-button primary" onClick={() => { change(createForm(blankForm)); setSelectedId(null); setParams({ template: blankForm.id }); setGallery(false); setPreview(false); }}>Start a blank form</button></section>
         </main>
       ) : !form ? (
         <main className="studio-empty" role="status">
