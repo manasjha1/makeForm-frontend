@@ -1,6 +1,6 @@
 export type FieldType = "text" | "email" | "tel" | "number" | "date" | "textarea" | "select" | "checkbox" | "radio" | "file";
 
-export type FieldCondition = { fieldId: string; operator: "equals" | "notEquals" | "contains" | "notEmpty"; value: string };
+export type FieldCondition = { fieldId: string; operator: "equals" | "notEquals" | "contains" | "notEmpty"; value: string; action?: "show" | "hide" };
 
 export type FormField = {
     id: string;
