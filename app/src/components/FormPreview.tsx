@@ -16,8 +16,10 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [submitted, setSubmitted] = useState<Record<string, unknown> | null>(null);
     const [attempt, setAttempt] = useState(0);
+    const [demoErrors, setDemoErrors] = useState(false);
     const visible = visibleFields(form.fields, answers);
-    const visibleErrors = visible.filter((field) => errors[field.id]);
+    const displayedErrors: Record<string, string> = demoErrors ? Object.fromEntries(visible.map((field) => [field.id, field.errorMessage || "Example validation error."])) : errors;
+    const visibleErrors = visible.filter((field) => displayedErrors[field.id]);
     const focusField = (id: string) => {
         const target = formRef.current?.elements.namedItem(id);
         if (target instanceof HTMLElement) target.focus();
@@ -27,6 +29,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
 
     return <form ref={formRef} noValidate className="space-y-6 rounded-2xl border border-[#E2E8E4] border-t-4 border-t-emerald-700 bg-white p-5 shadow-sm sm:p-8" onSubmit={(event) => {
         event.preventDefault();
+        setDemoErrors(false);
         const next = validateAnswers(visible, answers, files);
         setErrors(next); setSubmitted(null);
         if (Object.keys(next).length) { focusField(Object.keys(next)[0]); return; }
@@ -34,26 +37,27 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
     }}>
         <div><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-emerald-700">Live preview</p><h2 className="break-words text-2xl font-bold text-[#1C2925]">{form.title}</h2><p className="mt-2 whitespace-pre-wrap break-words text-sm text-[#6B7872]">{form.description}</p></div>
         <p className="text-xs text-[#6B7872]">Fields marked * are required. Test responses and files stay in this preview and are not uploaded.</p>
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] p-3"><span className="text-xs text-[#6B7872]">Inspect form states</span><Button type="button" variant="outline" size="sm" aria-pressed={demoErrors} onClick={() => { setDemoErrors(!demoErrors); setSubmitted(null); }}>{demoErrors ? "Hide example errors" : "Show example errors"}</Button></div>
         {visibleErrors.length > 0 && <section aria-label="Validation summary" className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800">
-            <h3 className="text-sm font-semibold">Check {visibleErrors.length} {visibleErrors.length === 1 ? "field" : "fields"} before continuing</h3>
-            <ul className="mt-2 space-y-1">{visibleErrors.map((field) => <li key={field.id}><button type="button" className="text-left text-xs underline underline-offset-2" onClick={() => focusField(field.id)}>{field.label}: {errors[field.id]}</button></li>)}</ul>
+            <h3 className="text-sm font-semibold">{demoErrors ? "Example error styling — your answers are unchanged" : `Check ${visibleErrors.length} ${visibleErrors.length === 1 ? "field" : "fields"} before continuing`}</h3>
+            <ul className="mt-2 space-y-1">{visibleErrors.map((field) => <li key={field.id}><button type="button" className="text-left text-xs underline underline-offset-2" onClick={() => focusField(field.id)}>{field.label}: {displayedErrors[field.id]}</button></li>)}</ul>
         </section>}
         {visible.map((field) => {
             const id = `${prefix}-${field.id}`;
-            const props = { id, name: field.id, required: field.required, className: formControlClass, "aria-invalid": !!errors[field.id], "aria-describedby": `${id}-help ${id}-error` };
+            const props = { id, name: field.id, required: field.required, className: formControlClass, "aria-invalid": !!displayedErrors[field.id], "aria-describedby": `${id}-help ${id}-error` };
             const value = typeof answers[field.id] === "string" ? answers[field.id] as string : "";
             const choices = field.type === "radio" || (field.type === "checkbox" && !!field.options?.length);
             return <div key={field.id} className="space-y-2">
-                {choices ? <fieldset><legend className="mb-2 text-sm font-semibold text-[#1C2925]">{field.label}{field.required && <span className="text-red-600"> *</span>}</legend>{field.options?.map((option, index) => <label key={index} className="my-2 flex items-start gap-2 text-sm text-[#1C2925]"><input type={field.type} name={field.id} className="mt-1 accent-emerald-700" aria-invalid={!!errors[field.id]} aria-describedby={`${id}-help ${id}-error`} checked={field.type === "radio" ? value === option : Array.isArray(answers[field.id]) && (answers[field.id] as string[]).includes(option)} onChange={(event) => { const current = Array.isArray(answers[field.id]) ? answers[field.id] as string[] : []; update(field.id, field.type === "radio" ? option : event.target.checked ? [...current, option] : current.filter((item) => item !== option)); }} />{option}</label>)}</fieldset>
+                {choices ? <fieldset><legend className="mb-2 text-sm font-semibold text-[#1C2925]">{field.label}{field.required && <span className="text-red-600"> *</span>}</legend>{field.options?.map((option, index) => <label key={index} className="my-2 flex items-start gap-2 text-sm text-[#1C2925]"><input type={field.type} name={field.id} className="mt-1 accent-emerald-700" aria-invalid={!!displayedErrors[field.id]} aria-describedby={`${id}-help ${id}-error`} checked={field.type === "radio" ? value === option : Array.isArray(answers[field.id]) && (answers[field.id] as string[]).includes(option)} onChange={(event) => { const current = Array.isArray(answers[field.id]) ? answers[field.id] as string[] : []; update(field.id, field.type === "radio" ? option : event.target.checked ? [...current, option] : current.filter((item) => item !== option)); }} />{option}</label>)}</fieldset>
                     : field.type === "checkbox" ? <label className="flex items-start gap-2 text-sm font-medium"><input {...props} type="checkbox" className="mt-1 accent-emerald-700" checked={answers[field.id] === true} onChange={(event) => update(field.id, event.target.checked)} />{field.label}{field.required && " *"}</label>
                         : <><label htmlFor={id} className="block break-words text-sm font-semibold text-[#1C2925]">{field.label}{field.required && <span className="text-red-600"> *</span>}</label>
                             {field.type === "textarea" ? <textarea {...props} rows={4} value={value} placeholder={field.placeholder} onChange={(event) => update(field.id, event.target.value)} />
                                 : field.type === "select" ? <select {...props} value={value} onChange={(event) => update(field.id, event.target.value)}><option value="">{field.placeholder || "Choose an option"}</option>{field.options?.map((option, index) => <option key={index} value={option}>{option}</option>)}</select>
-                                    : field.type === "file" ? <PreviewUpload key={attempt} field={field} id={id} invalid={!!errors[field.id]} onChange={(file) => { setFiles((current) => ({ ...current, [field.id]: file })); update(field.id, file?.name ?? ""); }} />
+                                    : field.type === "file" ? <PreviewUpload key={attempt} field={field} id={id} invalid={!!displayedErrors[field.id]} onChange={(file) => { setFiles((current) => ({ ...current, [field.id]: file })); update(field.id, file?.name ?? ""); }} />
                                         : <input {...props} type={field.type} value={value} step={field.type === "number" ? field.step ?? "any" : undefined} placeholder={field.placeholder} min={field.min} max={field.max} onChange={(event) => update(field.id, event.target.value)} />}
                         </>}
                 <p id={`${id}-help`} className="text-xs text-[#6B7872]">{field.helpText}</p>
-                <p id={`${id}-error`} role={errors[field.id] ? "alert" : undefined} className="text-xs text-red-700">{errors[field.id]}</p>
+                <p id={`${id}-error`} role={displayedErrors[field.id] ? "alert" : undefined} className="text-xs text-red-700">{displayedErrors[field.id]}</p>
             </div>;
         })}
         <Button type="submit" className="w-full bg-emerald-700 text-white hover:bg-emerald-800">Test submission</Button>
