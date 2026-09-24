@@ -34,9 +34,10 @@ export function validateAnswers(fields: FormField[], answers: Answers, files: Re
             if (field.type === "checkbox" && Array.isArray(value) && value.some((item) => !field.options?.includes(item))) error = "Choose available options.";
             if (field.type === "file" && files[field.id]) {
                 const file = files[field.id]!;
+                if (!Number.isFinite(file.size) || file.size < 0) error = "Choose a file with a valid size.";
                 if (field.maxFileSize && file.size > field.maxFileSize * 1024 * 1024) error = `Choose a file smaller than ${field.maxFileSize} MB.`;
                 const accept = field.accept?.split(",").map((item) => item.trim().toLowerCase()).filter(Boolean);
-                if (accept?.length && !accept.some((item) => item.startsWith(".") ? file.name.toLowerCase().endsWith(item) : item.endsWith("/*") ? file.type.startsWith(item.slice(0, -1)) : file.type === item)) error = "Choose an accepted file type.";
+                if (accept?.length && !accept.some((item) => item.startsWith(".") ? file.name.toLowerCase().endsWith(item) : item.endsWith("/*") ? file.type.toLowerCase().startsWith(item.slice(0, -1)) : file.type.toLowerCase() === item)) error = "Choose an accepted file type.";
             }
         }
         if (error) errors[field.id] = field.errorMessage || error;

@@ -171,3 +171,10 @@ test("notEmpty distinguishes unchecked agreements from text and choice answers",
     for (const source of ["", "   ", false, []]) assert.equal(visibleFields(fields, { source }).length, 1);
     for (const source of ["false", "0", true, ["false"]]) assert.equal(visibleFields(fields, { source }).length, 2);
 });
+
+test("upload validation handles MIME casing and invalid sizes", () => {
+    const upload = field("file", { type: "file", accept: "image/*", maxFileSize: 0.5 });
+    const info = { name: "photo.png", type: "IMAGE/PNG", size: 512 * 1024 };
+    assert.deepEqual(validateAnswers([upload], {}, { file: info }), {});
+    for (const size of [-1, Infinity, NaN, 512 * 1024 + 1]) assert.ok(validateAnswers([upload], {}, { file: { ...info, size } }).file);
+});
