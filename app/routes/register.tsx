@@ -200,7 +200,7 @@ export default function Register() {
                                                             <Lock />
                                                         </InputGroupAddon>
                                                         <InputGroupInput
-                                                            type={!viewPassword ? "text" : "password"}
+                                                            type={viewPassword ? "text" : "password"}
                                                             {...field}
                                                             id="register-form-password"
                                                             aria-invalid={fieldState.invalid}
@@ -208,8 +208,7 @@ export default function Register() {
                                                             autoComplete="off"
                                                         />
                                                         <InputGroupAddon>
-                                                            {!viewPassword ? (
-                                                                <Eye onClick={() => setViewPassword(!viewPassword)} />
+                                                            <button type="button" className="rounded p-1 focus-visible:outline-2 focus-visible:outline-emerald-700" aria-label={viewPassword ? "Hide password" : "Show password"} aria-pressed={viewPassword} onClick={() => setViewPassword((visible) => !visible)}>{viewPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}</button> />
                                                             ) : (
                                                                 <EyeOff onClick={() => setViewPassword(!viewPassword)} />
                                                             )}

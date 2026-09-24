@@ -166,8 +166,7 @@ export default function Login() {
                               autoComplete="current-password"
                             />
                             <InputGroupAddon>
-                              {!viewPassword ? (
-                                <Eye onClick={() => setViewPassword(!viewPassword)} className="cursor-pointer" />
+                              <button type="button" className="rounded p-1 focus-visible:outline-2 focus-visible:outline-emerald-700" aria-label={viewPassword ? "Hide password" : "Show password"} aria-pressed={viewPassword} onClick={() => setViewPassword((visible) => !visible)}>{viewPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}</button> className="cursor-pointer" />
                               ) : (
                                 <EyeOff onClick={() => setViewPassword(!viewPassword)} className="cursor-pointer" />
                               )}
