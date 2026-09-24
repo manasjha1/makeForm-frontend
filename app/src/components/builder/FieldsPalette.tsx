@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Plus, Search, Lightbulb, X } from "lucide-react";
 import { fieldCatalog } from "./field-catalog";
 import type { FieldType } from "../../lib/form-types";
 
 export default function FieldsPalette({ onAdd }: { onAdd: (type: FieldType) => void }) {
+    const searchInput = useRef<HTMLInputElement>(null);
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("All");
-    const fields = fieldCatalog.filter((field) => (category === "All" || field.category === category) && `${field.label} ${field.description}`.toLowerCase().includes(search.toLowerCase()));
+    const fields = fieldCatalog.filter((field) => (category === "All" || field.category === category) && `${field.label} ${field.description}`.toLowerCase().includes(search.trim().toLowerCase()));
     return <aside id="studio-palette" tabIndex={-1} className="studio-panel studio-palette" aria-label="Fields palette">
         <div className="studio-panel-header">
             <div className="flex items-center justify-between gap-2"><h2>Fields Palette</h2><span className="studio-badge">9 Fields</span></div>
             <p className="studio-muted">Click or drag to add onto canvas</p>
-            <div className="studio-search"><Search size={14} /><input className="studio-control !pr-9" aria-label="Search field types" placeholder="Search field types..." value={search} onChange={(event) => setSearch(event.target.value)} />{search && <button className="studio-search-clear" aria-label="Clear field search" onClick={() => setSearch("")}><X size={13} /></button>}</div>
+            <div className="studio-search"><Search size={14} /><input ref={searchInput} type="search" className="studio-control !pr-9" aria-label="Search field types" placeholder="Search field types..." value={search} onChange={(event) => setSearch(event.target.value)} />{search && <button className="studio-search-clear" aria-label="Clear field search" onClick={() => { setSearch(""); searchInput.current?.focus(); }}><X size={13} /></button>}</div>
             <div className="studio-tabs" aria-label="Field categories">{["All", "Basic", "Choice", "Advanced"].map((item) => <button key={item} aria-pressed={category === item} onClick={() => setCategory(item)}>{item}</button>)}</div>
         </div>
         <div className="studio-palette-list">{fields.map(({ type, label, category, description, icon: Icon }) => <button key={type} className="studio-palette-item" draggable onDragStart={(event) => { event.dataTransfer.setData("application/makeform-type", type); event.dataTransfer.effectAllowed = "copy"; }} onClick={() => onAdd(type)} aria-label={`Add ${label} field`}>
