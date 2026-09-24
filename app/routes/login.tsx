@@ -31,6 +31,8 @@ import { useLoginAccount } from "~/src/hooks/mutation";
 const formSchema = z.object({
   email: z
     .string()
+    .trim()
+    .toLowerCase()
     .email("Please enter a valid email address."),
   password: z
     .string()
