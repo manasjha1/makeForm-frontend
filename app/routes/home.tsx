@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <Header viewPage="Home" />
-      <div className="min-h-full p-4">
+      <main className="min-h-full p-4">
         <section className="w-full md:w-[80%] lg:w-[50%] mx-auto my-5 mt-20">
           <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-xs font-bold mb-6 motion-safe:animate-pulse">
             <Stars className="w-3.5 h-3.5 text-[#047857]" />
@@ -37,17 +37,13 @@ export default function Home() {
             and an interactive preview—no code required.
           </p>
           <div className="grid md:flex items-center justify-center gap-6 mx-auto my-5">
-            <Link to="/form-builder">
-              <Button className="bg-emerald-700 hover:bg-emerald-800 transition-all flex items-center gap-1 p-5 text-white text-sm font-medium rounded-sm shadow-lg capitalize">
+            <Button asChild className="bg-emerald-700 hover:bg-emerald-800 transition-all flex items-center gap-1 p-5 text-white text-sm font-medium rounded-sm shadow-lg capitalize"><Link to="/form-builder">
                 Launch your form{" "}
                 <MoveRight className="w-3.5 h-3.5 text-white mx-2" />
-              </Button>
-            </Link>
-            <Link to="/form-builder?view=templates">
-              <Button className="bg-transparent group hover:bg-gray-100 border border-black p-5 text-black text-sm font-medium rounded-sm shadow-lg capitalize">
+              </Link></Button>
+            <Button asChild className="bg-transparent group hover:bg-gray-100 border border-black p-5 text-black text-sm font-medium rounded-sm shadow-lg capitalize"><Link to="/form-builder?view=templates">
                 Explore prebuilt templates
-              </Button>
-            </Link>
+              </Link></Button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mx-auto mt-10">
             <div className="flex items-center gap-2 min-w-0">
@@ -101,16 +97,14 @@ export default function Home() {
                 </CardTitle>
                 <CardTitle className="mb-2">{form.title}</CardTitle>
                 <CardDescription>{form.description}</CardDescription>
-                <Link to={`/form-builder?template=${form.id}`}>
-                  <Button className="bg-white hover:bg-emerald-700 text-emerald-700 hover:text-white border border-emerald-700 capitalize w-full mt-4">
+                <Button asChild className="bg-white hover:bg-emerald-700 text-emerald-700 hover:text-white border border-emerald-700 capitalize w-full mt-4"><Link to={`/form-builder?template=${form.id}`}>
                     load template
-                  </Button>
-                </Link>
+                  </Link></Button>
               </Card>
             ))}
           </div>
         </section>
-      </div>
+      </main>
       <Footer />
     </div>
   );
