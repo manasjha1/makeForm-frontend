@@ -165,3 +165,9 @@ test("number validation accepts decimal notation and rejects JavaScript-only lit
     for (const n of ["0", "-2.5", ".25", "1e3"]) assert.deepEqual(validateAnswers([number], { n }), {});
     assert.ok(validateAnswers([field("n", { type: "number", step: 1e-300 })], { n: "1e300" }).n);
 });
+
+test("notEmpty distinguishes unchecked agreements from text and choice answers", () => {
+    const fields = [field("source"), field("child", { condition: { fieldId: "source", operator: "notEmpty", value: "" } })];
+    for (const source of ["", "   ", false, []]) assert.equal(visibleFields(fields, { source }).length, 1);
+    for (const source of ["false", "0", true, ["false"]]) assert.equal(visibleFields(fields, { source }).length, 2);
+});

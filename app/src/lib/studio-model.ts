@@ -40,7 +40,7 @@ export function visibleFields(fields: FormField[], answers: Answers): FormField[
             const equals = values.includes(rule.value);
             show = rule.operator === "equals" ? equals : rule.operator === "notEquals" ? !equals
                 : rule.operator === "contains" ? values.some((item) => item.includes(rule.value))
-                    : values.some((item) => item !== "" && item !== "false");
+                    : typeof value === "boolean" ? value : values.some((item) => item.trim() !== "");
             if (rule.action === "hide") show = !show;
         }
         if (show) visible.add(field.id);
