@@ -152,8 +152,8 @@ export default function Register() {
                                                             {...field}
                                                             id="register-form-name"
                                                             aria-invalid={fieldState.invalid}
-                                                            placeholder="e.g. Jhon Deo"
-                                                            autoComplete="off"
+                                                            placeholder="e.g. Jordan Lee"
+                                                            autoComplete="name"
                                                         />
 
                                                     </InputGroup>
@@ -179,8 +179,11 @@ export default function Register() {
                                                             {...field}
                                                             id="register-form-email"
                                                             aria-invalid={fieldState.invalid}
-                                                            placeholder="jhon@gmail.com"
-                                                            autoComplete="off"
+                                                            placeholder="you@example.com"
+                                                            type="email"
+                                                            autoComplete="email"
+                                                            autoCapitalize="none"
+                                                            spellCheck={false}
                                                         />
 
                                                     </InputGroup>
@@ -208,14 +211,11 @@ export default function Register() {
                                                             id="register-form-password"
                                                             aria-invalid={fieldState.invalid}
                                                             placeholder="••••••••"
-                                                            autoComplete="off"
+                                                            autoComplete="new-password"
                                                         />
                                                         <InputGroupAddon>
-                                                            <button type="button" className="rounded p-1 focus-visible:outline-2 focus-visible:outline-emerald-700" aria-label={viewPassword ? "Hide password" : "Show password"} aria-pressed={viewPassword} onClick={() => setViewPassword((visible) => !visible)}>{viewPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}</button> />
-                                                            ) : (
-                                                                <EyeOff onClick={() => setViewPassword(!viewPassword)} />
-                                                            )}
-                                                        </InputGroupAddon>
+                                                            <button type="button" className="rounded p-1 focus-visible:outline-2 focus-visible:outline-emerald-700" aria-label={viewPassword ? "Hide password" : "Show password"} aria-pressed={viewPassword} onClick={() => setViewPassword((visible) => !visible)}>{viewPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}</button>
+</InputGroupAddon>
                                                     </InputGroup>
                                                     {fieldState.invalid && (
                                                         <FieldError errors={[fieldState.error]} />

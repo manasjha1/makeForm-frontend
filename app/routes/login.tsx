@@ -135,6 +135,9 @@ export default function Login() {
                             <InputGroupInput
                               {...field}
                               id="login-form-email"
+                              type="email"
+                              autoCapitalize="none"
+                              spellCheck={false}
                               aria-invalid={fieldState.invalid}
                               placeholder="enter your email"
                               autoComplete="email"
@@ -168,11 +171,8 @@ export default function Login() {
                               autoComplete="current-password"
                             />
                             <InputGroupAddon>
-                              <button type="button" className="rounded p-1 focus-visible:outline-2 focus-visible:outline-emerald-700" aria-label={viewPassword ? "Hide password" : "Show password"} aria-pressed={viewPassword} onClick={() => setViewPassword((visible) => !visible)}>{viewPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}</button> className="cursor-pointer" />
-                              ) : (
-                                <EyeOff onClick={() => setViewPassword(!viewPassword)} className="cursor-pointer" />
-                              )}
-                            </InputGroupAddon>
+                              <button type="button" className="rounded p-1 focus-visible:outline-2 focus-visible:outline-emerald-700" aria-label={viewPassword ? "Hide password" : "Show password"} aria-pressed={viewPassword} onClick={() => setViewPassword((visible) => !visible)}>{viewPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}</button>
+</InputGroupAddon>
                           </InputGroup>
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
