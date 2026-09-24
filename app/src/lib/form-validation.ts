@@ -18,12 +18,12 @@ export function validateAnswers(fields: FormField[], answers: Answers, files: Re
             }
             if (field.type === "number") {
                 const number = Number(text);
-                if (!Number.isFinite(number)) error = "Enter a valid number.";
+                if (!/^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.test(text.trim()) || !Number.isFinite(number)) error = "Enter a valid number.";
                 else if (field.min !== undefined && number < field.min) error = `Enter a value of at least ${field.min}.`;
                 else if (field.max !== undefined && number > field.max) error = `Enter a value of at most ${field.max}.`;
                 else if (field.step && field.step > 0) {
                     const steps = (number - (field.min ?? 0)) / field.step;
-                    if (Math.abs(steps - Math.round(steps)) > 1e-7) error = `Use increments of ${field.step} starting at ${field.min ?? 0}.`;
+                    if (!Number.isFinite(steps) || Math.abs(steps - Math.round(steps)) > 1e-7) error = `Use increments of ${field.step} starting at ${field.min ?? 0}.`;
                 }
             }
             if (["text", "email", "tel", "textarea"].includes(field.type)) {

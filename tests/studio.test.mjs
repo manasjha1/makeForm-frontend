@@ -158,3 +158,10 @@ test("renaming a choice preserves dependent exact conditions without altering co
     assert.equal(form.fields[1].condition.value, "Two");
     assert.equal(updateFormField(form, "source", { options: ["Two", "One"] }).fields[1].condition.value, "Two");
 });
+
+test("number validation accepts decimal notation and rejects JavaScript-only literals", () => {
+    const number = field("n", { type: "number" });
+    for (const n of ["0xff", "0b10", "0o10", "Infinity", "1e999"]) assert.ok(validateAnswers([number], { n }).n);
+    for (const n of ["0", "-2.5", ".25", "1e3"]) assert.deepEqual(validateAnswers([number], { n }), {});
+    assert.ok(validateAnswers([field("n", { type: "number", step: 1e-300 })], { n: "1e300" }).n);
+});
