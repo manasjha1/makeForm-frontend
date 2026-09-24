@@ -22,6 +22,10 @@ import {
 } from "~/src/components/ui/input-otp";
 import { useOTP_Verification, useResendOTP } from "~/src/hooks/mutation";
 
+export function meta() {
+    return [{ title: "Verify Email | makeForm" }, { name: "description", content: "Verify your makeForm email with a six-digit code." }];
+}
+
 export default function OtpForm() {
   const navigate = useNavigate();
   const location = useLocation();

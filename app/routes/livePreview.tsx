@@ -7,6 +7,10 @@ import { Button } from "~/src/components/ui/button";
 import { readDraft } from "~/src/lib/form-draft";
 import type { FormTemplate } from "~/src/lib/form-types";
 
+export function meta() {
+    return [{ title: "Live Preview | makeForm" }, { name: "description", content: "Test your saved form draft and validate answers locally." }];
+}
+
 export default function LivePreview() {
     const [form, setForm] = useState<FormTemplate | null>(null);
     const [ready, setReady] = useState(false);

@@ -13,6 +13,10 @@ import Footer from "~/src/components/Footer";
 
 import { formTemplates } from "~/src/data/form-templates";
 
+export function meta() {
+    return [{ title: "makeForm | Visual Form Builder" }, { name: "description", content: "Build forms from templates with validation, conditional logic, and live previews." }];
+}
+
 export default function Home() {
   return (
     <div className="min-h-screen">

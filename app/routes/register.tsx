@@ -63,6 +63,10 @@ const formSchema = z.object({
         .max(50, "Password must be at most 50 characters."),
 });
 
+export function meta() {
+    return [{ title: "Create Account | makeForm" }, { name: "description", content: "Create your makeForm account and verify your email." }];
+}
+
 export default function Register() {
     const { mutate: registerAccount, isPending } = useRegisterAccount()
     const [viewPassword, setViewPassword] = useState(false);

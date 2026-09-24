@@ -40,6 +40,10 @@ const formSchema = z.object({
     .max(50, "Password must be at most 50 characters."),
 });
 
+export function meta() {
+    return [{ title: "Sign In | makeForm" }, { name: "description", content: "Sign in to your makeForm account." }];
+}
+
 export default function Login() {
   const [viewPassword, setViewPassword] = useState(false);
   const navigate = useNavigate();
