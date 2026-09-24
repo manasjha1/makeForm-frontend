@@ -221,9 +221,7 @@ export default function Register() {
                                             )}
                                         />
                                     </FieldGroup>
-                                    <Button type="button" className="bg-transparent px-0 text-xs text-blue-500 hover:bg-transparent hover:underline">
-                                        Resend verification code
-                                    </Button>
+                                    <Link to="/verify-otp" className="inline-block py-2 text-xs text-emerald-700 underline underline-offset-4">Already have a verification code?</Link>
                                 </form>
                             </section>
                         </CardContent>
