@@ -11,6 +11,7 @@ export const formControlClass = "w-full rounded-lg border border-[#E2E8E4] bg-[#
 export default function FormPreview({ form }: { form: FormTemplate }) {
     const prefix = useId();
     const formRef = useRef<HTMLFormElement>(null);
+    const restartFocus = useRef(false);
     const [answers, setAnswers] = useState<Answers>(() => initialAnswers(form.fields));
     const [files, setFiles] = useState<Record<string, UploadInfo | undefined>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -29,9 +30,16 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
         if (target instanceof HTMLElement) target.focus();
         else if (target instanceof RadioNodeList) (target[0] as HTMLElement)?.focus();
     };
+    useEffect(() => {
+        if (!restartFocus.current) return;
+        restartFocus.current = false;
+        const first = visibleFields(form.fields, initialAnswers(form.fields))[0];
+        if (first) focusField(first.id);
+        else formRef.current?.focus();
+    }, [attempt]);
     const update = (id: string, value: Answers[string]) => { setAnswers((current) => ({ ...current, [id]: value })); setSubmitted(null); };
 
-    return <form ref={formRef} noValidate className="space-y-6 rounded-2xl border border-[#E2E8E4] border-t-4 border-t-emerald-700 bg-white p-5 shadow-sm sm:p-8" onSubmit={(event) => {
+    return <form ref={formRef} tabIndex={-1} noValidate className="space-y-6 rounded-2xl border border-[#E2E8E4] border-t-4 border-t-emerald-700 bg-white p-5 shadow-sm sm:p-8" onSubmit={(event) => {
         event.preventDefault();
         setDemoErrors(false);
         setValidationStarted(true);
@@ -66,6 +74,6 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
             </div>;
         })}
         <Button type="submit" className="w-full bg-emerald-700 text-white hover:bg-emerald-800">Test submission</Button>
-        {submitted && <PreviewSuccess response={submitted} onRestart={() => { setAnswers(initialAnswers(form.fields)); setFiles({}); setErrors({}); setValidationStarted(false); setSubmitted(null); setAttempt((value) => value + 1); if (visible[0]) focusField(visible[0].id); }} />}
+        {submitted && <PreviewSuccess response={submitted} onRestart={() => { restartFocus.current = true; setDemoErrors(false); setAnswers(initialAnswers(form.fields)); setFiles({}); setErrors({}); setValidationStarted(false); setSubmitted(null); setAttempt((value) => value + 1); }} />}
     </form>;
 }
