@@ -38,12 +38,7 @@ const formSchema = z.object({
     .max(50, "Password must be at most 50 characters."),
 });
 
-interface formProps {
-  viewPage?: toggleBtn;
-  setViewPage?: React.Dispatch<React.SetStateAction<toggleBtn>>;
-}
-
-export default function Login({ viewPage = "login", setViewPage }: formProps) {
+export default function Login() {
   const [viewPassword, setViewPassword] = useState(false);
   const navigate = useNavigate();
   const { mutate: loginAccount, isPending } = useLoginAccount();

@@ -31,7 +31,7 @@ import {
 import makeForm_png from "~/assests/makeForm_login.png";
 import toast, { Toaster } from "react-hot-toast";
 import Header from "~/src/components/Headers";
-import { useState, type SetStateAction } from "react";
+import { useState } from "react";
 import {
     Eye,
     EyeOff,
@@ -60,12 +60,7 @@ const formSchema = z.object({
         .max(50, "Password must be at most 50 characters."),
 });
 
-interface formProps {
-    viewPage: toggleBtn;
-    setViewPage: React.Dispatch<React.SetStateAction<toggleBtn>>;
-}
-
-export default function Register({ viewPage, setViewPage }: formProps) {
+export default function Register() {
     const { mutate: registerAccount, isPending } = useRegisterAccount()
     const [viewPassword, setViewPassword] = useState(false);
     const navigate = useNavigate()
@@ -111,12 +106,7 @@ export default function Register({ viewPage, setViewPage }: formProps) {
     return (
         <div className="min-h-screen overflow-x-hidden">
             <Toaster />
-            <Header
-                viewPage={""}
-                setViewPage={function (value: SetStateAction<toggleBtn>): void {
-                    throw new Error("Function not implemented.");
-                }}
-            />
+            <Header />
             <main className="mx-auto grid w-full max-w-2xl gap-4 px-3 py-6 sm:px-6 sm:py-10">
                 {/* logo section */}
                 <img
