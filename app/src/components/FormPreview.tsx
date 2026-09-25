@@ -53,7 +53,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         : <><label htmlFor={id} className="block break-words text-sm font-semibold text-[#1C2925]">{field.label}{field.required && <span className="text-red-600"> *</span>}</label>
                             {field.type === "textarea" ? <textarea {...props} rows={4} value={value} placeholder={field.placeholder} onChange={(event) => update(field.id, event.target.value)} />
                                 : field.type === "select" ? <select {...props} value={value} onChange={(event) => update(field.id, event.target.value)}><option value="">{field.placeholder || "Choose an option"}</option>{field.options?.map((option, index) => <option key={index} value={option}>{option}</option>)}</select>
-                                    : field.type === "file" ? <PreviewUpload key={attempt} field={field} id={id} invalid={!!displayedErrors[field.id]} onChange={(file) => { setFiles((current) => ({ ...current, [field.id]: file })); update(field.id, file?.name ?? ""); }} />
+                                    : field.type === "file" ? <PreviewUpload key={attempt} file={files[field.id]} field={field} id={id} invalid={!!displayedErrors[field.id]} onChange={(file) => { setFiles((current) => ({ ...current, [field.id]: file })); update(field.id, file?.name ?? ""); }} />
                                         : <input {...props} type={field.type} value={value} step={field.type === "number" ? field.step ?? "any" : undefined} placeholder={field.placeholder} min={field.min} max={field.max} onChange={(event) => update(field.id, event.target.value)} />}
                         </>}
                 <p id={`${id}-help`} className="text-xs text-[#6B7872]">{field.helpText}</p>
