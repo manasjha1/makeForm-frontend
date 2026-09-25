@@ -58,7 +58,7 @@ export function normalizeConditions(form: FormTemplate): FormTemplate {
     const preceding = new Set<string>();
     return { ...form, fields: form.fields.map((field) => {
         const valid = !field.condition || preceding.has(field.condition.fieldId);
-        preceding.add(field.id);
+        if (field.type !== "file") preceding.add(field.id);
         if (valid) return field;
         const { condition, ...rest } = field;
         return rest;

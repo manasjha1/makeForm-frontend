@@ -143,3 +143,8 @@ test("date validation rejects impossible dates and accepts leap days", () => {
     assert.deepEqual(validateAnswers([date], { date: "2024-02-29" }), {});
     assert.deepEqual(validateAnswers([date], { date: "" }), {});
 });
+
+test("file fields cannot become conditional dependencies", () => {
+    const form = { ...studioForm, fields: [field("upload", { type: "file" }), field("child", { condition: { fieldId: "upload", operator: "notEmpty", value: "" } })] };
+    assert.equal(normalizeConditions(form).fields[1].condition, undefined);
+});
