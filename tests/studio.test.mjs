@@ -126,3 +126,13 @@ test("studio drafts round-trip every new setting", () => {
     assert.deepEqual(initialAnswers(form.fields)["field-9"], []);
     delete globalThis.sessionStorage;
 });
+
+ test("draft recovery rejects duplicate IDs and repairs broken dependencies", () => {
+    let saved;
+    globalThis.sessionStorage = { getItem: () => saved, setItem: (_, value) => { saved = value; } };
+    saveDraft({ ...studioForm, fields: [field("same"), field("same")] });
+    assert.equal(readDraft(), null);
+    saveDraft({ ...studioForm, fields: [field("a", { condition: { fieldId: "missing", operator: "equals", value: "yes" } })] });
+    assert.equal(readDraft().fields[0].condition, undefined);
+    delete globalThis.sessionStorage;
+});

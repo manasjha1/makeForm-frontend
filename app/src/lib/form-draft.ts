@@ -1,11 +1,12 @@
 import { z } from "zod";
 import type { FormTemplate } from "./form-types";
+import { normalizeConditions } from "./studio-model";
 
 const draftSchema = z.object({
     id: z.string(), title: z.string(), description: z.string(),
     category: z.enum(["Business", "Events", "Feedback", "Personal"]),
     fields: z.array(z.object({
-        id: z.string(), label: z.string(), required: z.boolean(),
+        id: z.string().min(1), label: z.string(), required: z.boolean(),
         type: z.enum(["text", "email", "tel", "number", "date", "textarea", "select", "checkbox", "radio", "file"]),
         placeholder: z.string().optional(), options: z.array(z.string()).optional(),
         min: z.number().optional(), max: z.number().optional(),
@@ -14,14 +15,14 @@ const draftSchema = z.object({
         minLength: z.number().int().nonnegative().optional(), maxLength: z.number().int().nonnegative().optional(),
         errorMessage: z.string().optional(), accept: z.string().optional(), maxFileSize: z.number().positive().optional(),
         condition: z.object({ fieldId: z.string(), operator: z.enum(["equals", "notEquals", "contains", "notEmpty"]), value: z.string(), action: z.enum(["show", "hide"]).optional() }).optional(),
-    })),
+    })).refine((fields) => new Set(fields.map((field) => field.id)).size === fields.length, "Field IDs must be unique"),
 });
 const key = "makeform-template-draft-v1";
 
 export function readDraft(): FormTemplate | null {
     try {
         const result = draftSchema.safeParse(JSON.parse(sessionStorage.getItem(key) || "null"));
-        return result.success ? result.data : null;
+        return result.success ? normalizeConditions(result.data) : null;
     } catch { return null; }
 }
 
