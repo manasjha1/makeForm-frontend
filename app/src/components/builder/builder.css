@@ -3,17 +3,13 @@
 .studio button,.studio a,.studio input,.studio select,.studio textarea { transition:background-color .15s,border-color .15s,box-shadow .15s; }
 .studio :focus-visible { outline:2px solid var(--studio-green); outline-offset:3px; }
 .studio button:disabled { opacity:.35; cursor:not-allowed; }
-.studio-header { min-height:64px; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:10px 24px; background:white; border-bottom:1px solid var(--studio-border); }
 .studio-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
 .studio-brand-mark { display:grid; place-items:center; width:36px; height:36px; border-radius:12px; background:var(--studio-green); color:white; }
 .studio-brand strong { font-size:17px; letter-spacing:-.7px; }
 .studio-brand strong span { color:var(--studio-green); }
 .studio-brand small { display:block; font-size:10px; color:var(--studio-muted); }
 .studio-badge { background:#d1fae5; color:#065f46; border-radius:6px; font-size:10px; padding:2px 7px; font-weight:600; white-space:nowrap; }
-.studio-nav,.studio-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-.studio-nav { padding:4px; background:var(--studio-paper); border:1px solid var(--studio-border); border-radius:10px; }
-.studio-nav a,.studio-nav button { display:flex; align-items:center; gap:7px; padding:7px 10px; border-radius:7px; color:var(--studio-muted); font-size:12px; }
-.studio-nav .active { background:white; color:var(--studio-green); box-shadow:0 1px 4px #1c292512; }
+.studio-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
 .studio-button { display:inline-flex; justify-content:center; align-items:center; gap:7px; padding:8px 12px; border:1px solid var(--studio-border); background:white; border-radius:8px; font-size:12px; font-weight:600; }
 .studio-button:hover { background:var(--studio-paper); }
 .studio-button.primary { background:var(--studio-green); border-color:var(--studio-green); color:white; }
@@ -21,7 +17,7 @@
 .studio-icon-button { display:inline-grid; place-items:center; width:26px; height:26px; border-radius:5px; color:var(--studio-muted); }
 .studio-icon-button:hover { color:var(--studio-green); background:#d1fae5; }
 .studio-icon-button.danger:hover { background:#fef2f2; color:#b91c1c; }
-.studio-workspace { display:grid; grid-template-columns:288px minmax(0,1fr) 320px; height:calc(100dvh - 104px); min-height:580px; }
+.studio-workspace { display:grid; grid-template-columns:288px minmax(0,1fr) 320px; height:calc(100dvh - 128px); min-height:580px; }
 .studio-panel { min-width:0; display:flex; flex-direction:column; background:white; overflow:auto; }
 .studio-palette { border-right:1px solid var(--studio-border); }
 .studio-settings { border-left:1px solid var(--studio-border); }
@@ -92,9 +88,9 @@
 @media (min-width:640px) and (max-width:1023px) { .studio-footer-grid { grid-template-columns:1fr 1fr; } }
 .studio-footer h3 { font-size:11px; font-weight:700; margin-bottom:12px; }
 .studio-footer a { display:block; font-size:12px; color:var(--studio-muted); margin:9px 0; }
-@media (max-width:1199px) { .studio-workspace { grid-template-columns:240px minmax(0,1fr) 280px; } .studio-canvas { padding:20px; } .studio-header { flex-wrap:wrap; } }
-@media (max-width:1023px) { .studio-workspace { grid-template-columns:220px minmax(0,1fr); height:auto; min-height:0; } .studio-settings { grid-column:1/-1; border-top:1px solid var(--studio-border); } .studio-panel,.studio-canvas { overflow:visible; } .studio-settings-body { max-width:700px; width:100%; margin:auto; } .studio-nav { order:3; width:100%; justify-content:center; } }
-@media (max-width:639px) { .studio-header { padding:12px; gap:10px; } .studio-actions { gap:4px; } .studio-workspace { display:flex; flex-direction:column; } .studio-palette-list { display:grid; grid-template-columns:1fr 1fr; max-height:230px; overflow:auto; } .studio-palette-item { padding:8px; gap:7px; } .studio-palette-item p,.studio-category { display:none; } .studio-panel-header { padding:16px; } .studio-canvas { padding:20px 12px; } .studio-form-header h1 { font-size:21px; } .studio-card { padding:16px; } .studio-footer-grid { grid-template-columns:1fr 1fr; } .studio-footer-grid>div:first-child { grid-column:1/-1; } }
+@media (max-width:1199px) { .studio-workspace { grid-template-columns:240px minmax(0,1fr) 280px; } .studio-canvas { padding:20px; } }
+@media (max-width:1023px) { .studio-workspace { grid-template-columns:220px minmax(0,1fr); height:auto; min-height:0; } .studio-settings { grid-column:1/-1; border-top:1px solid var(--studio-border); } .studio-panel,.studio-canvas { overflow:visible; } .studio-settings-body { max-width:700px; width:100%; margin:auto; } }
+@media (max-width:639px) { .studio-actions { gap:4px; } .studio-workspace { display:flex; flex-direction:column; } .studio-palette-list { display:grid; grid-template-columns:1fr 1fr; max-height:230px; overflow:auto; } .studio-palette-item { padding:8px; gap:7px; } .studio-palette-item p,.studio-category { display:none; } .studio-panel-header { padding:16px; } .studio-canvas { padding:20px 12px; } .studio-form-header h1 { font-size:21px; } .studio-card { padding:16px; } .studio-footer-grid { grid-template-columns:1fr 1fr; } .studio-footer-grid>div:first-child { grid-column:1/-1; } }
 @media (prefers-reduced-motion:reduce) { .studio * { transition:none!important; } }
 .studio { font-family: "Plus Jakarta Sans", "Inter Variable", sans-serif; }
 .studio-panel-nav { display:none; }
@@ -105,11 +101,11 @@
   #studio-palette,#studio-canvas,#studio-settings { scroll-margin-top:60px; }
   .studio-card .studio-icon-button { min-width:32px; min-height:32px; }
 }
-.studio-header { position:sticky; top:0; z-index:30; background:rgb(255 255 255 / .95); backdrop-filter:blur(12px); box-shadow:0 1px 3px #1c292505; }
 .studio-card { transition:border-color .15s,box-shadow .15s; }
 .studio-card:hover:not(.selected) { border-color:#a7c8b7; box-shadow:0 3px 10px #1c29250a; }
 .studio-card.selected .studio-card-kind { color:var(--studio-green); }
 .studio-selected-note { width:fit-content; padding:4px 7px; border-radius:5px; background:#d1fae5; }
 .studio-panel,.studio-canvas,.studio-palette-list { scrollbar-width:thin; scrollbar-color:#c6d3cb transparent; }
 .studio-canvas { scroll-padding-block:24px; }
-@media (max-width:1023px) { .studio-header { position:relative; } }
+
+@media (max-width:1023px) { .studio .app-header { position:relative; } }
