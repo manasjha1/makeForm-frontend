@@ -48,6 +48,7 @@ export default function FormBuilder() {
   const [gallery, setGallery] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const [history, setHistory] = useState<FormTemplate[]>([]);
+  const [future, setFuture] = useState<FormTemplate[]>([]);
   const [message, setMessage] = useState("");
   useEffect(() => {
     const draft = readDraft();
@@ -65,6 +66,7 @@ export default function FormBuilder() {
     setGallery(!next || galleryRequested);
     setPreview(false);
     setHistory([]);
+    setFuture([]);
     setMessage(
       templateId && !next
         ? "That template is unavailable. Choose one below."
@@ -75,6 +77,7 @@ export default function FormBuilder() {
   useEffect(() => { if (galleryRequested) setGallery(true); }, [galleryRequested]);
   const change = (next: FormTemplate) => {
     if (form) setHistory((current) => [...current.slice(-29), form]);
+    setFuture([]);
     const normalized = normalizeConditions(next);
     setForm(normalized);
     setSaveError(!saveDraft(normalized));
@@ -103,11 +106,22 @@ export default function FormBuilder() {
   const undo = () => {
     const previous = history.at(-1);
     if (!previous) return;
+    if (form) setFuture((current) => [...current.slice(-29), form]);
     setForm(previous);
     setHistory((current) => current.slice(0, -1));
     setSelectedId((current) => previous.fields.some((field) => field.id === current) ? current : previous.fields[0]?.id ?? null);
     setSaveError(!saveDraft(previous));
     setMessage("Last edit undone.");
+  };
+  const redo = () => {
+    const next = future.at(-1);
+    if (!next || !form) return;
+    setHistory((current) => [...current.slice(-29), form]);
+    setFuture((current) => current.slice(0, -1));
+    setForm(next);
+    setSelectedId((current) => next.fields.some((field) => field.id === current) ? current : next.fields[0]?.id ?? null);
+    setSaveError(!saveDraft(next));
+    setMessage("Edit reapplied.");
   };
   return (
     <div className="studio">
@@ -129,6 +143,8 @@ export default function FormBuilder() {
         }}
         onUndo={undo}
         canUndo={!!history.length}
+        onRedo={redo}
+        canRedo={!!future.length}
       />
       {saveError && (
         <p role="alert" className="bg-red-50 px-6 py-3 text-sm text-red-800">

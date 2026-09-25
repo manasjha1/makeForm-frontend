@@ -1,4 +1,4 @@
-import { Eye, Home, LayoutFreeform, Menu, RotateCcw, Undo2, X } from "lucide-react";
+import { Eye, Home, LayoutFreeform, Menu, RotateCcw, Redo2, Undo2, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Button } from "./ui/button";
@@ -14,9 +14,11 @@ type HeaderProps = {
     onReset?: () => void;
     onUndo?: () => void;
     canUndo?: boolean;
+    onRedo?: () => void;
+    canRedo?: boolean;
 };
 
-export default function Header({ viewPage, count, preview, onPreview, onEdit, onReset, onUndo, canUndo }: HeaderProps) {
+export default function Header({ viewPage, count, preview, onPreview, onEdit, onReset, onUndo, canUndo, onRedo, canRedo }: HeaderProps) {
     const [open, setOpen] = useState(false);
     const { pathname, key } = useLocation();
     const menuId = useId();
@@ -38,6 +40,7 @@ export default function Header({ viewPage, count, preview, onPreview, onEdit, on
     });
     const actions = <>
         {onUndo && <Button type="button" size="icon-sm" variant="outline" onClick={onUndo} disabled={!canUndo} aria-label="Undo last edit" title="Undo last edit"><Undo2 className="size-4" /></Button>}
+        {onRedo && <Button type="button" size="icon-sm" variant="outline" onClick={onRedo} disabled={!canRedo} aria-label="Redo last edit" title="Redo last edit"><Redo2 className="size-4" /></Button>}
         {onReset && <Button type="button" size="icon-sm" variant="outline" onClick={onReset} aria-label="Reset to template" title="Reset to template"><RotateCcw className="size-4" /></Button>}
         <AccountDetails onNavigate={closeMenu} />
     </>;
