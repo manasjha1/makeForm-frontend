@@ -11,6 +11,11 @@ export function validateAnswers(fields: FormField[], answers: Answers, files: Re
         let error = field.required && empty ? "This field is required." : "";
         if (!empty) {
             if (field.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) error = "Enter a valid email address.";
+            if (field.type === "date") {
+                const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text);
+                const date = new Date(text + "T00:00:00Z");
+                if (!match || !Number.isFinite(date.getTime()) || date.toISOString().slice(0, 10) !== text) error = "Enter a valid date.";
+            }
             if (field.type === "number") {
                 const number = Number(text);
                 if (!Number.isFinite(number)) error = "Enter a valid number.";

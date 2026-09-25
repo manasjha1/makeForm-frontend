@@ -136,3 +136,10 @@ test("studio drafts round-trip every new setting", () => {
     assert.equal(readDraft().fields[0].condition, undefined);
     delete globalThis.sessionStorage;
 });
+
+test("date validation rejects impossible dates and accepts leap days", () => {
+    const date = field("date", { type: "date" });
+    for (const value of ["2025-02-29", "2026-04-31", "not-a-date", "2026-13-01"]) assert.ok(validateAnswers([date], { date: value }).date);
+    assert.deepEqual(validateAnswers([date], { date: "2024-02-29" }), {});
+    assert.deepEqual(validateAnswers([date], { date: "" }), {});
+});
