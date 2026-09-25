@@ -104,33 +104,9 @@ export default function Login() {
           <Card className="mx-auto w-full max-w-lg overflow-hidden shadow-lg border border-[#E2E8E4] bg-white rounded-xl">
             <CardContent className="p-4 sm:p-6">
               <section className="mb-5">
-                <div className="mb-4 flex w-full items-center rounded-sm border border-[#E2E8E4] bg-[#f9f6f0] p-1">
-                  <Link className="min-w-0 flex-1" to="/sign-in">
-                    <Button
-                      className={`w-full rounded-sm px-2 text-[11px] font-medium transition-all sm:px-4 sm:text-xs ${
-                        viewPage !== "register"
-                          ? "bg-white text-emerald-700 shadow hover:bg-white"
-                          : "bg-transparent text-gray-500 hover:bg-transparent hover:text-black/80"
-                      }`}
-                    >
-                      Sign In
-                    </Button>
-                  </Link>
-                  <Link className="min-w-0 flex-1" to="/create-account">
-                    <Button
-                      className={`w-full rounded-sm px-2 text-[11px] font-medium transition-all sm:px-4 sm:text-xs ${
-                        viewPage === "register"
-                          ? "bg-white text-emerald-700 shadow hover:bg-white"
-                          : "bg-transparent text-gray-500 hover:bg-transparent hover:text-black/80"
-                      }`}
-                    >
-                      Create Account
-                    </Button>
-                  </Link>
-                </div>
-                <Button className="flex w-full items-center justify-center gap-2 rounded-sm border border-gray-300 bg-white text-sm font-medium text-black hover:bg-gray-50">
-                  <FaGoogle /> Continue with Google
-                </Button>
+                <div className="mb-4 flex w-full items-center rounded-sm border border-[#E2E8E4] bg-[#f9f6f0] p-1"><Button asChild variant="ghost" className="min-w-0 flex-1 rounded-sm text-xs bg-white text-emerald-700 shadow-sm"><Link to="/sign-in" aria-current="page">Sign In</Link></Button>
+<Button asChild variant="ghost" className="min-w-0 flex-1 rounded-sm text-xs text-gray-500"><Link to="/create-account">Create Account</Link></Button></div>
+                <Button disabled type="button" title="Google sign-in is not configured" className="flex w-full items-center justify-center gap-2 rounded-sm border border-gray-300 bg-white text-sm font-medium text-black hover:bg-gray-50"><FaGoogle /> Google sign-in unavailable</Button>
               </section>
 
               <div className="relative my-6 text-center">

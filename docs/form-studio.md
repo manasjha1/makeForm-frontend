@@ -36,3 +36,18 @@ Run `npm run typecheck`, `npm run build`, `npm run test:templates`, and `npm run
 Browser checks cover desktop and 390px mobile layout, field editing, duplication, deletion, undo, reorder persistence after reload, required validation errors, and a successful test submission. The existing background gradient now uses React's stable `useId` to avoid server/client hydration mismatches.
 
 The Figma connector returned a source-file inventory but its resource reader failed. Implementation was grounded in the interactive Figma preview, rendered DOM styles, and visible design details. No Theme or JSON toolbar was added: the latest reference revision removes those controls.
+
+## Shared header and completion pass (September 2026)
+
+All routed application pages use `Headers.tsx`. The separate studio navbar was removed. The shared header retains the existing makeForm logo and account actions, indicates the current page, and accepts studio preview/reset/undo/redo callbacks. Its mobile menu closes on navigation or Escape and restores focus to the menu toggle.
+
+- Undo and redo retain up to 30 edits in this page session. Ctrl/Cmd+Z, Ctrl/Cmd+Shift+Z, and Ctrl+Y work in the editor while preserving native text-input undo. A new edit clears redo history; changing templates starts a new history.
+- Template browsing links open `/form-builder?view=templates`. Home and standalone preview share the mockup's product/account/resources footer.
+- Draft loading rejects duplicate or empty field IDs and repairs dangling, forward, or file-based conditions. Renaming a unique choice preserves exact dependent comparisons; switching a condition's source clears the previous comparison value.
+- Preview validates actual calendar dates. After the first test submission, errors update as answers change. Upload metadata remains visible if a conditional upload field hides and reappears; hidden fields remain excluded from validation and payloads. Upload limits may use fractional MB.
+- Restarting a successful test restores defaults, removes files and errors, and focuses the first field visible under the restored defaults.
+- Account tabs use real route links and no longer depend on unimplemented callbacks. Google sign-in is explicitly disabled because the project has no configured Google authentication flow. Email authentication still requires the existing backend; this pass did not exercise account creation or send verification email.
+
+Verification: TypeScript check, client/server production build, and all 24 studio/template tests passed. Browser checks covered the landing-to-gallery link, template loading, add/undo/redo, required and email errors updating live, successful local test submission, repeat-test focus, desktop studio layout, a single header, 390px mobile layout without horizontal overflow, mobile menu Escape dismissal, and registration/sign-in routing. No browser console errors were observed during these checks.
+
+The Figma Make source resource reader remained unavailable. The existing implementation was retained and checked against the interactive reference; no new design assets or removed Theme/JSON controls were introduced. Production form submission and Google OAuth remain outside this local-preview implementation.

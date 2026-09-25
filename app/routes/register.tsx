@@ -118,27 +118,9 @@ export default function Register() {
                     <Card className="mx-auto w-full max-w-lg overflow-hidden shadow-lg">
                         <CardContent className="p-4 sm:p-6">
                             <section className="mb-5">
-                                <div className="mb-4 flex w-full items-center rounded-sm border border-[#E2E8E4] bg-[#f9f6f0] p-1">
-                                    <Link className="min-w-0 flex-1" to="/sign-in">
-                                        <Button
-                                            onClick={() => setViewPage("login")}
-                                            className={`w-full rounded-sm px-2 text-[11px] font-medium transition-all sm:px-4 sm:text-xs ${viewPage === "login" ? "bg-white text-emerald-700 shadow hover:bg-white" : "bg-transparent text-gray-500 hover:bg-transparent hover:text-black/80"}`}
-                                        >
-                                            Sign In
-                                        </Button>
-                                    </Link>
-                                    <Link className="min-w-0 flex-1" to="/create-account">
-                                        <Button
-                                            onClick={() => setViewPage("register")}
-                                            className={`w-full rounded-sm px-2 text-[11px] font-medium transition-all sm:px-4 sm:text-xs ${viewPage !== "register" ? "bg-white text-emerald-700 shadow hover:bg-white" : "bg-transparent text-gray-500 hover:bg-transparent hover:text-black/80"}`}
-                                        >
-                                            Create Account
-                                        </Button>
-                                    </Link>
-                                </div>
-                                <Button className="bg-white text-black text-sm font-medium hover:bg-white/20 border border-gray-300 w-full rounded-sm flex items-center justify-center gap-2">
-                                    <FaGoogle /> Continue with Google
-                                </Button>
+                                <div className="mb-4 flex w-full items-center rounded-sm border border-[#E2E8E4] bg-[#f9f6f0] p-1"><Button asChild variant="ghost" className="min-w-0 flex-1 rounded-sm text-xs text-gray-500"><Link to="/sign-in">Sign In</Link></Button>
+<Button asChild variant="ghost" className="min-w-0 flex-1 rounded-sm text-xs bg-white text-emerald-700 shadow-sm"><Link to="/create-account" aria-current="page">Create Account</Link></Button></div>
+                                <Button disabled type="button" title="Google sign-in is not configured" className="bg-white text-black text-sm font-medium hover:bg-white/20 border border-gray-300 w-full rounded-sm flex items-center justify-center gap-2"><FaGoogle /> Google sign-in unavailable</Button>
                             </section>
                             <div className="relative my-6 text-center">
                                 <div className="absolute inset-0 flex items-center">
