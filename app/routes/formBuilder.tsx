@@ -6,7 +6,7 @@ import TemplateGallery from "~/src/components/TemplateGallery";
 import FieldsPalette from "~/src/components/builder/FieldsPalette";
 import FormCanvas from "~/src/components/builder/FormCanvas";
 import FieldSettings from "~/src/components/builder/FieldSettings";
-import StudioHeader from "~/src/components/builder/StudioHeader";
+import Header from "~/src/components/Headers";
 import StudioFooter from "~/src/components/builder/StudioFooter";
 import StudioPanelNav from "~/src/components/builder/StudioPanelNav";
 import { newField } from "~/src/components/builder/field-catalog";
@@ -113,7 +113,7 @@ export default function FormBuilder() {
   };
   return (
     <div className="studio">
-      <StudioHeader
+      <Header
         count={form?.fields.length ?? 0}
         preview={preview}
         onPreview={showPreview}

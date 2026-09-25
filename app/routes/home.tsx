@@ -1,5 +1,5 @@
 import { CheckCircle, MoveRight, Stars } from "lucide-react";
-import type { SetStateAction } from "react";
+
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
 import formImage from "~/assests/formImage.png";
@@ -20,12 +20,7 @@ import { formTemplates } from "~/src/data/form-templates";
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <Header
-        viewPage={"Home"}
-        setViewPage={function (value: SetStateAction<toggleBtn>): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
+      <Header viewPage="Home" />
       <div className="min-h-full p-4">
         <section className="w-full md:w-[80%] lg:w-[50%] mx-auto my-5 mt-20">
           <div className="flex items-center justify-center gap-2 w-sm mx-auto px-3.5 py-1.5 rounded-full bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-xs font-bold mb-6 animate-pulse">
