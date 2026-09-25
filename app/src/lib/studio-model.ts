@@ -64,3 +64,22 @@ export function normalizeConditions(form: FormTemplate): FormTemplate {
         return rest;
     }) };
 }
+
+// Keep exact choice comparisons attached to a renamed option.
+export function updateFormField(form: FormTemplate, id: string, patch: Partial<FormField>): FormTemplate {
+    const source = form.fields.find((field) => field.id === id);
+    const before = source?.options;
+    const after = patch.options;
+    const renamed = before && after && before.length === after.length
+        ? before.map((value, index) => ({ value, next: after[index] })).filter(({ value, next }) => value !== next)
+        : [];
+    const rename = renamed.length === 1 && before?.filter((value) => value === renamed[0].value).length === 1 ? renamed[0] : null;
+    return { ...form, fields: form.fields.map((field) => {
+        if (field.id === id) return { ...field, ...patch };
+        const rule = field.condition;
+        if (rename && rule?.fieldId === id && ["equals", "notEquals"].includes(rule.operator) && rule.value === rename.value) {
+            return { ...field, condition: { ...rule, value: rename.next } };
+        }
+        return field;
+    }) };
+}

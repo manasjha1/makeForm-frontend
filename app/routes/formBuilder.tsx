@@ -21,6 +21,7 @@ import {
 import { readDraft, saveDraft } from "~/src/lib/form-draft";
 import {
   duplicateField,
+  updateFormField,
   moveField,
   normalizeConditions,
   removeField,
@@ -88,14 +89,9 @@ export default function FormBuilder() {
     setSelectedId(field.id);
     setMessage(`Added ${field.label} field.`);
   };
-  const updateField = (patch: Partial<FormField>) =>
-    form &&
-    change({
-      ...form,
-      fields: form.fields.map((field) =>
-        field.id === selectedId ? { ...field, ...patch } : field,
-      ),
-    });
+  const updateField = (patch: Partial<FormField>) => {
+    if (form && selectedId) change(updateFormField(form, selectedId, patch));
+  };
   const showPreview = () => {
     if (form) {
       setSaveError(!saveDraft(form));

@@ -148,3 +148,13 @@ test("file fields cannot become conditional dependencies", () => {
     const form = { ...studioForm, fields: [field("upload", { type: "file" }), field("child", { condition: { fieldId: "upload", operator: "notEmpty", value: "" } })] };
     assert.equal(normalizeConditions(form).fields[1].condition, undefined);
 });
+
+test("renaming a choice preserves dependent exact conditions without altering contains rules", async () => {
+    const { updateFormField } = await import("../app/src/lib/studio-model.ts");
+    const form = { ...studioForm, fields: [field("source", { type: "select", options: ["One", "Two"] }), field("child", { condition: { fieldId: "source", operator: "equals", value: "Two" } }), field("partial", { condition: { fieldId: "source", operator: "contains", value: "Two" } })] };
+    const next = updateFormField(form, "source", { options: ["One", "Second"] });
+    assert.equal(next.fields[1].condition.value, "Second");
+    assert.equal(next.fields[2].condition.value, "Two");
+    assert.equal(form.fields[1].condition.value, "Two");
+    assert.equal(updateFormField(form, "source", { options: ["Two", "One"] }).fields[1].condition.value, "Two");
+});
