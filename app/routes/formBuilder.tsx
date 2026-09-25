@@ -123,6 +123,18 @@ export default function FormBuilder() {
     setSaveError(!saveDraft(next));
     setMessage("Edit reapplied.");
   };
+  useEffect(() => {
+    const handleKey = (event: KeyboardEvent) => {
+      const target = event.target;
+      if (preview || gallery || !(event.ctrlKey || event.metaKey) || event.altKey ||
+          (target instanceof HTMLElement && (target.isContentEditable || target.closest("input, textarea, select")))) return;
+      const key = event.key.toLowerCase();
+      if (key === "z") { event.preventDefault(); if (event.shiftKey) redo(); else undo(); }
+      else if (key === "y" && event.ctrlKey) { event.preventDefault(); redo(); }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [form, history, future, preview, gallery]);
   return (
     <div className="studio">
       <Header
