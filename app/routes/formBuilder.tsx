@@ -105,7 +105,7 @@ export default function FormBuilder() {
     if (!previous) return;
     setForm(previous);
     setHistory((current) => current.slice(0, -1));
-    setSelectedId(previous.fields[0]?.id ?? null);
+    setSelectedId((current) => previous.fields.some((field) => field.id === current) ? current : previous.fields[0]?.id ?? null);
     setSaveError(!saveDraft(previous));
     setMessage("Last edit undone.");
   };
@@ -196,6 +196,7 @@ export default function FormBuilder() {
             }}
             onDuplicate={(id) => {
               const index = form.fields.findIndex((field) => field.id === id);
+              if (index < 0) return;
               const field = duplicateField(form.fields[index]);
               const fields = [...form.fields];
               fields.splice(index + 1, 0, field);
@@ -203,9 +204,11 @@ export default function FormBuilder() {
               setSelectedId(field.id);
             }}
             onDelete={(id) => {
+              const index = form.fields.findIndex((field) => field.id === id);
+              if (index < 0) return;
               const next = removeField(form, id);
               change(next);
-              if (selectedId === id) setSelectedId(next.fields[0]?.id ?? null);
+              if (selectedId === id) setSelectedId(next.fields[Math.min(index, next.fields.length - 1)]?.id ?? null);
               setMessage("Field removed. Use Undo to restore it.");
             }}
           />
