@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import Footer from "~/src/components/Footer";
 import Header from "~/src/components/Headers";
 import FormPreview from "~/src/components/FormPreview";
 import { Button } from "~/src/components/ui/button";
@@ -19,5 +20,6 @@ export default function LivePreview() {
                 <FormPreview form={form} />
             </> : <section className="rounded-xl border border-gray-200 bg-white p-8 text-center"><h2 className="text-lg font-semibold">Your next form starts here</h2><p className="my-3 text-sm text-gray-500">Choose a template, customize it, then save your draft to preview it here.</p><Button asChild><Link to="/form-builder?view=templates">Browse templates</Link></Button></section>}
         </main>
+        <Footer />
     </div>;
 }
