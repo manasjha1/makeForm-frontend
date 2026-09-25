@@ -5,11 +5,7 @@ import { Button } from "~/src/components/ui/button";
 import formImage from "~/assests/formImage.png";
 import {
   Card,
-  CardAction,
-  CardContent,
   CardDescription,
-  CardFooter,
-  CardHeader,
   CardTitle,
 } from "~/src/components/ui/card";
 import { Link } from "react-router";
@@ -23,7 +19,7 @@ export default function Home() {
       <Header viewPage="Home" />
       <div className="min-h-full p-4">
         <section className="w-full md:w-[80%] lg:w-[50%] mx-auto my-5 mt-20">
-          <div className="flex items-center justify-center gap-2 w-sm mx-auto px-3.5 py-1.5 rounded-full bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-xs font-bold mb-6 animate-pulse">
+          <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-xs font-bold mb-6 motion-safe:animate-pulse">
             <Stars className="w-3.5 h-3.5 text-[#047857]" />
             <span>Next-Gen Drag & Drop Form Studio</span>
           </div>
@@ -37,9 +33,8 @@ export default function Home() {
 
           {/* Short Description */}
           <p className="mt-6 text-base sm:text-lg text-[#6B7872] text-center max-w-2xl mx-auto font-normal leading-relaxed">
-            Design, customize, and deploy multi-column web forms with live field
-            validation, conditional logic, and instant JSON schemas—no code
-            required.
+            Design and customize forms with live validation, conditional logic,
+            and an interactive preview—no code required.
           </p>
           <div className="grid md:flex items-center justify-center gap-6 mx-auto my-5">
             <Link to="/form-builder">
@@ -55,25 +50,25 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mx-auto mt-10">
-            <div className="flex items-center gap-2 w-50">
+            <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-emerald-700" />
               <p className="text-xs text-gray-400 font-normal capitalize">
-                3 - column canvas layout
+                3-column editing workspace
               </p>
             </div>
-            <div className="flex items-center gap-2 w-50">
+            <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-emerald-700" />
               <p className="text-xs text-gray-400 font-normal capitalize">
                 conditional field logic
               </p>
             </div>
-            <div className="flex items-center gap-2 w-50">
+            <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-emerald-700" />
               <p className="text-xs text-gray-400 font-normal capitalize">
-                instant json scheme export
+                ready-to-use form templates
               </p>
             </div>
-            <div className="flex items-center gap-2 w-50">
+            <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-emerald-700" />
               <p className="text-xs text-gray-400 font-normal capitalize">
                 mobile responsive preview
@@ -85,15 +80,15 @@ export default function Home() {
           <img
             className="w-fit h-fit object-cover overflow-hidden"
             src={formImage}
-            alt="form image"
+            alt="makeForm studio with field palette, form canvas, and settings"
           />
         </section>
         <hr className="w-full md:w-[80%] mx-auto my-5" />
         <section className="w-full md:w-[80%] mx-auto my-5">
           <div className="flex-1 items-center justify-center mx-auto my-10">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1C2925] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1C2925] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
               Start with a prebuilt form
-            </h1>
+            </h2>
             <p className="mt-2 text-base sm:text-lg text-[#6B7872] text-center max-w-2xl mx-auto font-normal leading-relaxed">
               Choose a ready-to-use template, customize the fields, and preview your form.
             </p>
