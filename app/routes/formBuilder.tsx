@@ -40,6 +40,7 @@ export function meta() {
 export default function FormBuilder() {
   const [params, setParams] = useSearchParams();
   const templateId = params.get("template");
+  const galleryRequested = params.get("view") === "templates";
   const [form, setForm] = useState<FormTemplate | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [preview, setPreview] = useState(false);
@@ -60,7 +61,7 @@ export default function FormBuilder() {
         : (draft ?? createForm(studioForm));
     setForm(next);
     setSelectedId(next?.fields[0]?.id ?? null);
-    setGallery(!next);
+    setGallery(!next || galleryRequested);
     setPreview(false);
     setHistory([]);
     setMessage(
@@ -70,6 +71,7 @@ export default function FormBuilder() {
     );
     if (next) setSaveError(!saveDraft(next));
   }, [templateId]);
+  useEffect(() => { if (galleryRequested) setGallery(true); }, [galleryRequested]);
   const change = (next: FormTemplate) => {
     if (form) setHistory((current) => [...current.slice(-29), form]);
     const normalized = normalizeConditions(next);

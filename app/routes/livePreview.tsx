@@ -17,7 +17,7 @@ export default function LivePreview() {
             {!ready ? <p role="status">Loading draft…</p> : form ? <>
                 <div className="flex flex-wrap items-center justify-between gap-3"><Button asChild variant="outline"><Link to="/form-builder">Back to editor</Link></Button><p className="text-xs text-gray-500">Draft saved for this browser tab</p></div>
                 <FormPreview form={form} />
-            </> : <section className="rounded-xl border border-gray-200 bg-white p-8 text-center"><h2 className="text-lg font-semibold">Your next form starts here</h2><p className="my-3 text-sm text-gray-500">Choose a template, customize it, then save your draft to preview it here.</p><Button asChild><Link to="/form-builder">Browse templates</Link></Button></section>}
+            </> : <section className="rounded-xl border border-gray-200 bg-white p-8 text-center"><h2 className="text-lg font-semibold">Your next form starts here</h2><p className="my-3 text-sm text-gray-500">Choose a template, customize it, then save your draft to preview it here.</p><Button asChild><Link to="/form-builder?view=templates">Browse templates</Link></Button></section>}
         </main>
     </div>;
 }

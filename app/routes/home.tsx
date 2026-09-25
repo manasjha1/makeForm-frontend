@@ -43,7 +43,7 @@ export default function Home() {
                 <MoveRight className="w-3.5 h-3.5 text-white mx-2" />
               </Button>
             </Link>
-            <Link to="/form-builder">
+            <Link to="/form-builder?view=templates">
               <Button className="bg-transparent group hover:bg-gray-100 border border-black p-5 text-black text-sm font-medium rounded-sm shadow-lg capitalize">
                 Explore prebuilt templates
               </Button>
