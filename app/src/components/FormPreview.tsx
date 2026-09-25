@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { FormTemplate } from "../lib/form-types";
 import { initialAnswers, visibleFields, type Answers } from "../lib/studio-model";
 import { validateAnswers, type UploadInfo } from "../lib/form-validation";
@@ -16,8 +16,12 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [submitted, setSubmitted] = useState<Record<string, unknown> | null>(null);
     const [attempt, setAttempt] = useState(0);
+    const [validationStarted, setValidationStarted] = useState(false);
     const [demoErrors, setDemoErrors] = useState(false);
     const visible = visibleFields(form.fields, answers);
+    useEffect(() => {
+        if (validationStarted) setErrors(validateAnswers(visibleFields(form.fields, answers), answers, files));
+    }, [answers, files, form.fields, validationStarted]);
     const displayedErrors: Record<string, string> = demoErrors ? Object.fromEntries(visible.map((field) => [field.id, field.errorMessage || "Example validation error."])) : errors;
     const visibleErrors = visible.filter((field) => displayedErrors[field.id]);
     const focusField = (id: string) => {
@@ -25,11 +29,12 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
         if (target instanceof HTMLElement) target.focus();
         else if (target instanceof RadioNodeList) (target[0] as HTMLElement)?.focus();
     };
-    const update = (id: string, value: Answers[string]) => { setAnswers((current) => ({ ...current, [id]: value })); setErrors((current) => { const next = { ...current }; delete next[id]; return next; }); setSubmitted(null); };
+    const update = (id: string, value: Answers[string]) => { setAnswers((current) => ({ ...current, [id]: value })); setSubmitted(null); };
 
     return <form ref={formRef} noValidate className="space-y-6 rounded-2xl border border-[#E2E8E4] border-t-4 border-t-emerald-700 bg-white p-5 shadow-sm sm:p-8" onSubmit={(event) => {
         event.preventDefault();
         setDemoErrors(false);
+        setValidationStarted(true);
         const next = validateAnswers(visible, answers, files);
         setErrors(next); setSubmitted(null);
         if (Object.keys(next).length) { focusField(Object.keys(next)[0]); return; }
@@ -61,6 +66,6 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
             </div>;
         })}
         <Button type="submit" className="w-full bg-emerald-700 text-white hover:bg-emerald-800">Test submission</Button>
-        {submitted && <PreviewSuccess response={submitted} onRestart={() => { setAnswers(initialAnswers(form.fields)); setFiles({}); setErrors({}); setSubmitted(null); setAttempt((value) => value + 1); if (visible[0]) focusField(visible[0].id); }} />}
+        {submitted && <PreviewSuccess response={submitted} onRestart={() => { setAnswers(initialAnswers(form.fields)); setFiles({}); setErrors({}); setValidationStarted(false); setSubmitted(null); setAttempt((value) => value + 1); if (visible[0]) focusField(visible[0].id); }} />}
     </form>;
 }
