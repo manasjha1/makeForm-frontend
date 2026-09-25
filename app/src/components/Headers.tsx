@@ -1,5 +1,5 @@
 import { Eye, Home, LayoutFreeform, Menu, RotateCcw, Undo2, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Button } from "./ui/button";
 import AccountDetails from "./AccountDetails";
@@ -18,7 +18,10 @@ type HeaderProps = {
 
 export default function Header({ viewPage, count, preview, onPreview, onEdit, onReset, onUndo, canUndo }: HeaderProps) {
     const [open, setOpen] = useState(false);
-    const { pathname } = useLocation();
+    const { pathname, key } = useLocation();
+    const menuId = useId();
+    const toggle = useRef<HTMLButtonElement>(null);
+    useEffect(() => setOpen(false), [key]);
     const current = viewPage ?? (pathname === "/live-preview" || preview ? "LivePreview" : pathname === "/form-builder" ? "FormBuilder" : pathname === "/" ? "Home" : undefined);
     const closeMenu = () => setOpen(false);
     const links = [
@@ -38,13 +41,13 @@ export default function Header({ viewPage, count, preview, onPreview, onEdit, on
         {onReset && <Button type="button" size="icon-sm" variant="outline" onClick={onReset} aria-label="Reset to template" title="Reset to template"><RotateCcw className="size-4" /></Button>}
         <AccountDetails onNavigate={closeMenu} />
     </>;
-    return <header className="app-header sticky top-0 z-40 w-full border-b border-[#E2E8E4] bg-[#f9f6f0]/95 px-3 py-2 backdrop-blur sm:px-5">
+    return <header onKeyDown={(event) => { if (event.key === "Escape" && open) { setOpen(false); toggle.current?.focus(); } }} className="app-header sticky top-0 z-40 w-full border-b border-[#E2E8E4] bg-[#f9f6f0]/95 px-3 py-2 backdrop-blur sm:px-5">
         <nav aria-label="Main navigation" className="mx-auto flex min-h-14 w-full items-center justify-between gap-3">
             <Link to="/" onClick={closeMenu} className="shrink-0" aria-label="makeForm home"><img className="h-14 w-32 object-contain" src={makeFormLogo} alt="makeForm" /></Link>
             <div className="hidden items-center gap-1 rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] p-1 lg:flex">{navigation()}</div>
             <div className="hidden items-center gap-2 lg:flex">{actions}</div>
-            <Button type="button" size="icon" variant="outline" className="lg:hidden" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</Button>
+            <Button type="button" size="icon" variant="outline" ref={toggle} className="lg:hidden" aria-controls={menuId} aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</Button>
         </nav>
-        {open && <div className="mt-2 border-t border-[#E2E8E4] pt-2 lg:hidden"><div className="grid gap-1">{navigation()}</div><div className="mt-2 flex flex-wrap items-center gap-2 border-t border-[#E2E8E4] pt-2">{actions}</div></div>}
+        {open && <div id={menuId} className="mt-2 border-t border-[#E2E8E4] pt-2 lg:hidden"><div className="grid gap-1">{navigation()}</div><div className="mt-2 flex flex-wrap items-center gap-2 border-t border-[#E2E8E4] pt-2">{actions}</div></div>}
     </header>;
 }
