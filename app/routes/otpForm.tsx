@@ -141,11 +141,11 @@ export default function OtpForm() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] flex flex-col">
+    <div className="otp-page min-h-screen bg-[#faf8f5] flex flex-col">
       <Toaster position="top-right" />
       <Header />
 
-      <main className="flex-1 flex items-center justify-center px-4 py-12">
+      <main className="flex-1 flex items-center justify-center px-3 py-6 sm:px-4 sm:py-12">
         <Card className="w-full max-w-md shadow-xl border border-[#E2E8E4] bg-white rounded-xl overflow-hidden">
           {/* Top Decorative Header */}
           <div className="h-2 bg-linear-to-r from-emerald-600 via-emerald-500 to-teal-400" />
@@ -185,8 +185,9 @@ export default function OtpForm() {
                 </div>
 
                 {/* OTP Input component */}
-                <div className="flex justify-center py-2">
+                <div className="otp-entry flex min-w-0 justify-center py-2">
                   <InputOTP
+                    containerClassName="w-full min-w-0 justify-center"
                     maxLength={6}
                     id="otp-input"
                     value={otp}
@@ -227,7 +228,7 @@ export default function OtpForm() {
               {isVerifying ? "Verifying..." : "Verify & Continue"}
             </Button>
 
-            <div className="flex items-center justify-between w-full text-xs text-gray-500 border-t border-gray-100 pt-4">
+            <div className="flex flex-wrap gap-3 items-center justify-between w-full text-xs text-gray-500 border-t border-gray-100 pt-4">
               <Link
                 to="/create-account"
                 className="flex items-center gap-1.5 text-gray-600 hover:text-emerald-700 transition-colors font-medium"
