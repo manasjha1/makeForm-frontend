@@ -27,3 +27,11 @@
 .template-gallery { min-width:0; overflow-wrap:anywhere; }
 .template-gallery button { min-height:44px; height:auto; white-space:normal; }
 .template-gallery [aria-label="Template categories"] { gap:8px; }
+
+.form-preview { overflow-wrap:anywhere; }
+.form-preview fieldset,.form-preview legend { min-width:0; max-width:100%; }
+.form-preview button { max-width:100%; height:auto; min-height:44px; white-space:normal; }
+.form-preview :is(input,select,textarea) { scroll-margin-block:100px; }
+.form-preview label:has(input[type=radio]),.form-preview label:has(input[type=checkbox]) { min-height:44px; padding-block:8px; }
+.form-preview input:is([type=radio],[type=checkbox]) { width:18px; height:18px; }
+@media (max-width:479px) { .studio-preview { width:100%; padding:20px 12px; } }
