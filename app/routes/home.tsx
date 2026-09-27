@@ -21,13 +21,13 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <Header viewPage="Home" />
-      <main className="min-h-full p-4">
-        <section className="w-full md:w-[80%] lg:w-[50%] mx-auto my-5 mt-20">
+      <main className="home-content min-h-full px-4 sm:px-6">
+        <section className="home-hero mx-auto w-full max-w-4xl">
           <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-xs font-bold mb-6 motion-safe:animate-pulse">
             <Stars className="w-3.5 h-3.5 text-[#047857]" />
             <span>Next-Gen Drag & Drop Form Studio</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1C2925] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
+          <h1 className="home-title text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1C2925] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
             Build intelligent, high-converting forms with{" "}
             <span className="text-[#047857] underline decoration-[#D1FAE5] underline-offset-8">
               effortless elegance
@@ -40,7 +40,7 @@ export default function Home() {
             Design and customize forms with live validation, conditional logic,
             and an interactive preview—no code required.
           </p>
-          <div className="grid md:flex items-center justify-center gap-6 mx-auto my-5">
+          <div className="home-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 mx-auto my-6">
             <Button asChild className="bg-emerald-700 hover:bg-emerald-800 transition-all flex items-center gap-1 p-5 text-white text-sm font-medium rounded-sm shadow-lg capitalize"><Link to="/form-builder">
                 Launch your form{" "}
                 <MoveRight className="w-3.5 h-3.5 text-white mx-2" />
@@ -49,7 +49,7 @@ export default function Home() {
                 Explore prebuilt templates
               </Link></Button>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mx-auto mt-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
             <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-emerald-700" />
               <p className="text-xs text-gray-400 font-normal capitalize">

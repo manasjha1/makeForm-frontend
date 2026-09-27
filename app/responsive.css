@@ -13,3 +13,9 @@
 .app-mobile-menu button[aria-label] { min-width:44px; }
 .app-header > nav > button { min-width:44px; min-height:44px; }
 @media (max-width:479px) { .app-header img { width:112px; height:48px; } }
+
+.home-hero { padding-block:clamp(32px,7vw,96px) 24px; }
+.home-title { font-size:clamp(2rem,5vw,3.75rem); text-wrap:balance; overflow-wrap:anywhere; }
+.home-cta a { min-height:44px; height:auto; white-space:normal; text-align:center; }
+.home-hero svg { flex-shrink:0; }
+@media (max-width:359px) { .home-hero > div:first-child { font-size:10px; padding-inline:8px; } }
