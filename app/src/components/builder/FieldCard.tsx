@@ -27,7 +27,7 @@ export default function FieldCard({ field, index, count, selected, dropTarget, o
     }, [selected]);
     return <article ref={card} aria-current={selected ? "true" : undefined} className={`studio-card ${selected ? "selected" : ""} ${dropTarget ? "drop-target" : ""}`} aria-label={`${field.label}, field ${index + 1}`} tabIndex={0} onFocus={onSelect} onClick={onSelect} onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); onSelect(); } }} draggable onDragStart={(event) => { event.dataTransfer.setData("application/makeform-id", field.id); event.dataTransfer.effectAllowed = "move"; }} onDragOver={onDragOver} onDrop={onDrop}>
         <div className="studio-card-top"><span className="studio-card-kind"><GripVertical size={14} /><Icon size={13} />{field.type}<span className="opacity-60">#{index + 1}</span></span>
-            <div className="flex" onClick={(event) => event.stopPropagation()}>
+            <div className="studio-card-actions flex" onClick={(event) => event.stopPropagation()}>
                 <button className="studio-icon-button" aria-label={`Move ${field.label} up`} title="Move Up" disabled={index === 0} onClick={() => onMove(index - 1)}><ArrowUp size={14} /></button>
                 <button className="studio-icon-button" aria-label={`Move ${field.label} down`} title="Move Down" disabled={index === count - 1} onClick={() => onMove(index + 1)}><ArrowDown size={14} /></button>
                 <button className="studio-icon-button" aria-label={`Duplicate ${field.label}`} title="Duplicate Field" onClick={onDuplicate}><Copy size={14} /></button>

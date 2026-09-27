@@ -126,3 +126,14 @@
   .studio-search input { min-height:44px; }
 }
 @media (min-width:480px) and (max-width:767px) { .studio-palette-list { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+
+.studio-card-top { flex-wrap:wrap; }
+.studio-card-kind,.studio-card-actions { flex-shrink:0; }
+.studio-card :is(.studio-control,.studio-muted,.studio-mock-choice,.studio-upload) { overflow-wrap:anywhere; min-width:0; }
+.studio-card .studio-control svg { flex-shrink:0; }
+.studio-mock-choice { align-items:flex-start; }
+.studio-choice-dot { margin-top:2px; }
+@media (max-width:767px), (pointer:coarse) {
+  .studio-card .studio-icon-button { min-width:44px; min-height:44px; }
+  .studio-card-actions { margin-left:auto; }
+}
