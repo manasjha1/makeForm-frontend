@@ -1,0 +1,9 @@
+/* Shared responsive defaults; component rules below keep overflow local. */
+.app-shell { min-width:0; min-height:100dvh; }
+.app-shell main { min-width:0; }
+.app-shell img { max-width:100%; }
+.app-shell :where(input,select,textarea) { min-width:0; max-width:100%; }
+@media (max-width:767px), (pointer:coarse) {
+  .app-shell input:not([type=checkbox]):not([type=radio]),
+  .app-shell select, .app-shell textarea { font-size:16px; }
+}

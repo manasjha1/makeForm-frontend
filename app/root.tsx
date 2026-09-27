@@ -11,6 +11,7 @@ import {
 import type { Route } from "./+types/root";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./app.css";
+import "./responsive.css";
 import { StrictMode } from "react";
 import { queryClient } from "./src/lib/queryCleint";
 import DotField from "./src/components/DotField";
@@ -49,7 +50,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <div className="relative min-h-screen">
+      <div className="app-shell relative min-h-screen">
         <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
           <DotField
             dotRadius={2}
