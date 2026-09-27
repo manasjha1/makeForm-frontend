@@ -115,3 +115,14 @@
   .studio-panel,.studio-canvas { overflow:visible; }
 }
 @media (min-width:1920px) { .studio-workspace { grid-template-columns:320px minmax(0,1fr) 360px; } }
+
+@media (max-width:767px) {
+  .studio-palette { border-right:0; border-bottom:1px solid var(--studio-border); }
+  .studio-palette-item { min-height:52px; overflow-wrap:anywhere; }
+  .studio-palette-list { grid-template-columns:repeat(2,minmax(0,1fr)); max-height:280px; }
+  .studio-tabs { flex-wrap:wrap; }
+  .studio-tabs button { min-height:44px; min-width:48px; }
+  .studio-search-clear { width:44px; height:44px; top:0; }
+  .studio-search input { min-height:44px; }
+}
+@media (min-width:480px) and (max-width:767px) { .studio-palette-list { grid-template-columns:repeat(3,minmax(0,1fr)); } }
