@@ -35,3 +35,7 @@
 .form-preview label:has(input[type=radio]),.form-preview label:has(input[type=checkbox]) { min-height:44px; padding-block:8px; }
 .form-preview input:is([type=radio],[type=checkbox]) { width:18px; height:18px; }
 @media (max-width:479px) { .studio-preview { width:100%; padding:20px 12px; } }
+
+.preview-upload input[type=file] { display:block; width:100%; max-width:100%; overflow:hidden; }
+.preview-upload input[type=file]::file-selector-button { min-height:44px; max-width:100%; }
+.preview-upload p { overflow-wrap:anywhere; }
