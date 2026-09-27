@@ -141,9 +141,8 @@
 .studio-settings-body > * { min-width:0; overflow-wrap:anywhere; }
 .studio-toggle-row > span { min-width:0; }
 @media (max-width:767px), (pointer:coarse) {
-  .studio-option-row { display:grid; grid-template-columns:repeat(3,44px); justify-content:end; gap:6px; }
+  .studio-option-row { display:grid; grid-template-columns:minmax(44px,1fr) 44px 44px; justify-content:end; gap:6px; }
   .studio-option-row .studio-control { grid-column:1/-1; width:100%; }
-  .studio-option-row { grid-template-columns:minmax(44px,1fr) 44px 44px; }
   .studio-option-row .studio-icon-button { width:44px; height:44px; justify-self:end; }
   .studio-settings .studio-button { min-height:44px; }
   .studio-settings { border-left:0; }
@@ -165,3 +164,6 @@
   .studio-status .studio-button,.studio-quick-add .studio-button { min-height:44px; white-space:normal; }
   .studio-panel-nav button { min-height:44px; }
 }
+
+.studio-card .studio-control.flex { display:flex; gap:8px; }
+@media (min-width:768px) and (max-width:1279px) { .studio-palette .studio-tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); } .studio-palette .studio-tabs button { min-height:36px; } }
