@@ -39,3 +39,11 @@
 .preview-upload input[type=file] { display:block; width:100%; max-width:100%; overflow:hidden; }
 .preview-upload input[type=file]::file-selector-button { min-height:44px; max-width:100%; }
 .preview-upload p { overflow-wrap:anywhere; }
+
+.auth-page main { padding-bottom:max(32px,env(safe-area-inset-bottom)); }
+.auth-page :is(section,form,[data-slot=card],[data-slot=card-content]) { min-width:0; }
+.auth-page button { min-height:44px; height:auto; white-space:normal; }
+.auth-page [aria-label$="password"] { min-width:44px; }
+.auth-page [data-slot=input-group] { min-height:44px; }
+.auth-page [data-slot=field-error] { overflow-wrap:anywhere; }
+@media (max-height:500px) { .auth-page main > img { max-width:140px; } .auth-page main { padding-top:12px; } }

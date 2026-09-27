@@ -96,15 +96,15 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#faf8f5]">
+    <div className="auth-page min-h-screen bg-[#faf8f5]">
       <Toaster position="top-right" />
       <Header />
-      <main className="mx-auto grid w-full max-w-2xl gap-4 px-3 py-6 sm:px-6 sm:py-10">
+      <main className="mx-auto grid w-full max-w-xl gap-4 px-3 py-6 sm:px-6 sm:py-10">
         {/* logo section */}
         <img
-          className="mx-auto h-auto w-full max-w-[18rem] object-contain sm:max-w-[20rem]"
+          className="mx-auto h-auto w-full max-w-[14rem] object-contain sm:max-w-[18rem]"
           src={makeForm_png}
-          alt="makeForm_png"
+          alt="makeForm"
         />
         <section className="w-full">
           <Card className="mx-auto w-full max-w-lg overflow-hidden shadow-lg border border-[#E2E8E4] bg-white rounded-xl">
