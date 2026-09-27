@@ -55,3 +55,6 @@
 .otp-page button { min-height:44px; height:auto; white-space:normal; }
 .otp-page [data-slot=card] { min-width:0; }
 .otp-page [data-slot=field] > div:first-child { flex-wrap:wrap; gap:8px; }
+
+.app-header { padding-left:max(12px,env(safe-area-inset-left)); padding-right:max(12px,env(safe-area-inset-right)); }
+@media (prefers-reduced-motion:reduce) { .app-shell *, .app-shell *::before, .app-shell *::after { scroll-behavior:auto!important; animation:none!important; transition:none!important; } }
