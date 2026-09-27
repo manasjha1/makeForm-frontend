@@ -18,7 +18,7 @@ export default function FieldCard({ field, index, count, selected, dropTarget, o
     const Icon = fieldIcon(field.type);
     const card = useRef<HTMLElement>(null);
     useEffect(() => {
-        if (!selected || !card.current || !window.matchMedia("(min-width:1024px)").matches) return;
+        if (!selected || !card.current || !window.matchMedia("(min-width:1280px)").matches) return;
         const canvas = card.current.closest(".studio-canvas");
         if (!canvas) return;
         const bounds = card.current.getBoundingClientRect();
