@@ -7,3 +7,9 @@
   .app-shell input:not([type=checkbox]):not([type=radio]),
   .app-shell select, .app-shell textarea { font-size:16px; }
 }
+
+.app-mobile-menu { max-height:calc(100dvh - 88px); overflow-y:auto; overscroll-behavior:contain; padding-bottom:max(8px,env(safe-area-inset-bottom)); }
+.app-mobile-menu button,.app-mobile-menu a { min-height:44px; }
+.app-mobile-menu button[aria-label] { min-width:44px; }
+.app-header > nav > button { min-width:44px; min-height:44px; }
+@media (max-width:479px) { .app-header img { width:112px; height:48px; } }

@@ -45,12 +45,12 @@ export default function Header({ viewPage, count, preview, onPreview, onEdit, on
         <AccountDetails onNavigate={closeMenu} />
     </>;
     return <header onKeyDown={(event) => { if (event.key === "Escape" && open) { setOpen(false); toggle.current?.focus(); } }} className="app-header sticky top-0 z-40 w-full border-b border-[#E2E8E4] bg-[#f9f6f0]/95 px-3 py-2 backdrop-blur sm:px-5">
-        <nav aria-label="Main navigation" className="mx-auto flex min-h-14 w-full items-center justify-between gap-3">
+        <nav aria-label="Main navigation" className="mx-auto flex max-w-[1600px] min-h-14 w-full items-center justify-between gap-3">
             <Link to="/" onClick={closeMenu} className="shrink-0" aria-label="makeForm home"><img className="h-14 w-32 object-contain" src={makeFormLogo} alt="makeForm" /></Link>
-            <div className="hidden items-center gap-1 rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] p-1 lg:flex">{navigation()}</div>
-            <div className="hidden items-center gap-2 lg:flex">{actions}</div>
-            <Button type="button" size="icon" variant="outline" ref={toggle} className="lg:hidden" aria-controls={menuId} aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</Button>
+            <div className="hidden items-center gap-1 rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] p-1 xl:flex">{navigation()}</div>
+            <div className="hidden items-center gap-2 xl:flex">{actions}</div>
+            <Button type="button" size="icon" variant="outline" ref={toggle} className="xl:hidden" aria-controls={menuId} aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</Button>
         </nav>
-        {open && <div id={menuId} className="mt-2 border-t border-[#E2E8E4] pt-2 lg:hidden"><div className="grid gap-1">{navigation()}</div><div className="mt-2 flex flex-wrap items-center gap-2 border-t border-[#E2E8E4] pt-2">{actions}</div></div>}
+        {open && <div id={menuId} className="app-mobile-menu mt-2 border-t border-[#E2E8E4] pt-2 xl:hidden"><div className="grid gap-1">{navigation()}</div><div className="mt-2 flex flex-wrap items-center gap-2 border-t border-[#E2E8E4] pt-2">{actions}</div></div>}
     </header>;
 }
