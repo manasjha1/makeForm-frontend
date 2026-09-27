@@ -76,15 +76,15 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="w-full md:w-[80%] mx-auto my-5">
+        <section className="w-full max-w-6xl mx-auto my-5">
           <img
-            className="w-fit h-fit object-cover overflow-hidden"
+            className="h-auto w-full rounded-xl object-contain"
             src={formImage}
             alt="makeForm studio with field palette, form canvas, and settings"
           />
         </section>
-        <hr className="w-full md:w-[80%] mx-auto my-5" />
-        <section className="w-full md:w-[80%] mx-auto my-5">
+        <hr className="w-full max-w-6xl mx-auto my-5" />
+        <section className="w-full max-w-6xl mx-auto my-5">
           <div className="flex-1 items-center justify-center mx-auto my-10">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1C2925] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
               Start with a prebuilt form
@@ -93,9 +93,9 @@ export default function Home() {
               Choose a ready-to-use template, customize the fields, and preview your form.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             {formTemplates.map((form) => (
-              <Card key={form.id} className="mx-auto w-full min-w-0 p-5 border group hover:border-emerald-700">
+              <Card key={form.id} className="home-template mx-auto w-full min-w-0 p-5 border group hover:border-emerald-700">
                 <CardTitle className="rounded-sm p-2 mb-2 w-fit bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-sm font-bold group-hover:bg-emerald-700 group-hover:text-white">
                   {form.category}
                 </CardTitle>

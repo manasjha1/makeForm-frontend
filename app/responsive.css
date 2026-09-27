@@ -19,3 +19,7 @@
 .home-cta a { min-height:44px; height:auto; white-space:normal; text-align:center; }
 .home-hero svg { flex-shrink:0; }
 @media (max-width:359px) { .home-hero > div:first-child { font-size:10px; padding-inline:8px; } }
+
+.home-template { overflow-wrap:anywhere; }
+.home-template > a { margin-top:auto; min-height:44px; }
+.home-content { padding-bottom:32px; }
