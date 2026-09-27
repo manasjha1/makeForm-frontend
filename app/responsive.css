@@ -23,3 +23,7 @@
 .home-template { overflow-wrap:anywhere; }
 .home-template > a { margin-top:auto; min-height:44px; }
 .home-content { padding-bottom:32px; }
+
+.template-gallery { min-width:0; overflow-wrap:anywhere; }
+.template-gallery button { min-height:44px; height:auto; white-space:normal; }
+.template-gallery [aria-label="Template categories"] { gap:8px; }

@@ -14,17 +14,17 @@ export default function TemplateGallery({ onSelect }: { onSelect: (template: For
     );
 
     return (
-        <section aria-label="Prebuilt form templates" className="space-y-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <section aria-label="Prebuilt form templates" className="template-gallery space-y-6">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end sm:justify-between">
                 <div><p className="text-sm font-semibold text-emerald-700">Start with a template</p><h2 className="mt-1 text-3xl font-bold text-gray-900">A head start for every form.</h2></div>
-                <label className="relative block sm:w-72"><span className="sr-only">Search templates</span><Search aria-hidden="true" className="absolute top-3 left-3 size-4 text-gray-400" /><input className={`${formControlClass} pl-9`} type="search" placeholder="Search templates…" value={search} onChange={(event) => setSearch(event.target.value)} /></label>
+                <label className="relative block w-full lg:w-72 lg:shrink-0"><span className="sr-only">Search templates</span><Search aria-hidden="true" className="absolute top-3 left-3 size-4 text-gray-400" /><input className={`${formControlClass} pl-9`} type="search" placeholder="Search templates…" value={search} onChange={(event) => setSearch(event.target.value)} /></label>
             </div>
             <div className="flex flex-wrap gap-2" aria-label="Template categories">
                 {["All", "Business", "Events", "Feedback", "Personal"].map((item) => <Button key={item} variant={category === item ? "default" : "outline"} aria-pressed={category === item} onClick={() => setCategory(item)}>{item}</Button>)}
             </div>
             <p role="status" className="text-sm text-gray-500">{templates.length} {templates.length === 1 ? "template" : "templates"}</p>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {templates.map((template) => <article key={template.id} className="flex flex-col rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                {templates.map((template) => <article key={template.id} className="flex min-w-0 flex-col rounded-xl border border-gray-200 bg-white p-4 sm:p-6 shadow-sm">
                     <div className="mb-5 flex items-center justify-between"><FileText aria-hidden="true" className="size-10 rounded-lg bg-emerald-50 p-2 text-emerald-700" /><span className="text-xs font-medium text-gray-500">{template.category}</span></div>
                     <h3 className="text-lg font-semibold text-gray-900">{template.title}</h3><p className="mt-2 flex-1 text-sm leading-6 text-gray-500">{template.description}</p>
                     <p className="mt-5 text-xs text-gray-500">{template.fields.length} fields · Fully customizable</p>
