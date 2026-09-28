@@ -17,3 +17,8 @@ test('requests tolerate unavailable or restricted browser storage', async () => 
  Object.defineProperty(globalThis, 'localStorage', { configurable: true, get() { throw new Error('Blocked'); } });
  await apiHandler({ url: '/public' }); assert.equal(get().headers.get('Authorization'), undefined);
 });
+test('requests time out by default and allow explicit overrides including zero', async () => {
+ storage(); const get = capture(); await apiHandler({ url: '/slow' }); assert.equal(get().timeout, 30000);
+ await apiHandler({ url: '/slow', timeout: 5000 }); assert.equal(get().timeout, 5000);
+ await apiHandler({ url: '/slow', timeout: 0 }); assert.equal(get().timeout, 0);
+});

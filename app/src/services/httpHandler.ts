@@ -73,6 +73,7 @@ export interface ApiError {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const apiClient = axios.create({
+  timeout: 30_000,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -151,7 +152,7 @@ export async function apiHandler<T = unknown>(
     responseType,
     signal,
     ...(baseURL && { baseURL }),
-    ...(timeout && { timeout }),
+    ...(timeout !== undefined && { timeout }),
   };
 
   try {
