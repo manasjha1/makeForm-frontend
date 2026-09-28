@@ -51,12 +51,14 @@ export default function OtpForm() {
 
   // Browser storage is only available after hydration.
   useEffect(() => {
-    const pendingEmail = location.state?.email ||
-      localStorage.getItem("pending_verification_email") || "";
+    let storedEmail = "";
+    try { storedEmail = localStorage.getItem("pending_verification_email") ?? ""; } catch { /* Route state can still supply the email. */ }
+    const routeEmail: unknown = location.state?.email;
+    const pendingEmail = (typeof routeEmail === "string" && routeEmail.trim() ? routeEmail : storedEmail).trim().toLowerCase();
     setEmail(pendingEmail);
     if (!pendingEmail) {
       toast.error("Please enter your details to receive an OTP first.");
-      navigate("/create-account");
+      navigate("/create-account", { replace: true });
     }
   }, [location.state?.email, navigate]);
 
@@ -72,7 +74,7 @@ export default function OtpForm() {
 
     if (!email) {
       toast.error("Missing email address. Please register again.");
-      navigate("/create-account");
+      navigate("/create-account", { replace: true });
       return;
     }
 
@@ -118,7 +120,7 @@ export default function OtpForm() {
 
     if (!email) {
       toast.error("No email specified. Please register first.");
-      navigate("/create-account");
+      navigate("/create-account", { replace: true });
       return;
     }
 
