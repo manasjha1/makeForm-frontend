@@ -12,7 +12,6 @@
 import axios, {
   AxiosError,
   type AxiosRequestConfig,
-  type InternalAxiosRequestConfig,
   type Method,
 } from "axios";
 
@@ -85,15 +84,7 @@ export const apiClient = axios.create({
 // Runs before EVERY outgoing request
 // ─────────────────────────────────────────────────────────────────────────────
 
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  return config;
-});
+// Authentication is resolved once in buildHeaders so skipAuth and caller overrides work.
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Response interceptor
