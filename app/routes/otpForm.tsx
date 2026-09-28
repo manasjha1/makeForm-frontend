@@ -61,7 +61,7 @@ export default function OtpForm() {
   const handleVerify = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
 
-    if (isVerifying) return;
+    if (isVerifying || isResending) return;
 
     if (!/^\d{6}$/.test(otp)) {
       toast.error("Please enter a valid 6-digit OTP code.");
@@ -112,7 +112,7 @@ export default function OtpForm() {
   };
 
   const handleResend = () => {
-    if (cooldown > 0 || isResending) return;
+    if (cooldown > 0 || isResending || isVerifying) return;
 
     if (!email) {
       toast.error("No email specified. Please register first.");
@@ -176,7 +176,7 @@ export default function OtpForm() {
                     variant="ghost"
                     size="xs"
                     onClick={handleResend}
-                    disabled={cooldown > 0 || isResending}
+                    disabled={cooldown > 0 || isResending || isVerifying}
                     className="text-xs text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 disabled:text-gray-400 gap-1.5 font-medium transition-colors"
                   >
                     <RefreshCwIcon className={`w-3.5 h-3.5 ${isResending ? "animate-spin" : ""}`} />
@@ -194,7 +194,7 @@ export default function OtpForm() {
                     onChange={setOtp}
                     pattern={REGEXP_ONLY_DIGITS}
                     pasteTransformer={(value) => value.replace(/[\s-]/g, "")}
-                    disabled={isVerifying}
+                    disabled={isVerifying || isResending}
                     autoFocus
                   >
                     <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:font-bold *:data-[slot=input-otp-slot]:border-gray-300 focus-within:*:data-[slot=input-otp-slot]:border-emerald-600">
@@ -222,7 +222,7 @@ export default function OtpForm() {
             <Button
               type="submit"
               form="otp-form"
-              disabled={isVerifying || otp.length !== 6}
+              disabled={isVerifying || isResending || otp.length !== 6}
               className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-lg shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isVerifying ? "Verifying..." : "Verify & Continue"}
