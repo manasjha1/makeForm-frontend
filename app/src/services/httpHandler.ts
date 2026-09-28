@@ -164,6 +164,7 @@ export async function apiHandler<T = unknown>(
       headers: response.headers as Record<string, string>,
     };
   } catch (err) {
+    if (axios.isCancel(err)) throw err;
     const error = err as AxiosError<ApiError>;
 
     // Normalize error shape so callers always get a consistent object

@@ -22,3 +22,7 @@ test('requests time out by default and allow explicit overrides including zero',
  await apiHandler({ url: '/slow', timeout: 5000 }); assert.equal(get().timeout, 5000);
  await apiHandler({ url: '/slow', timeout: 0 }); assert.equal(get().timeout, 0);
 });
+test('aborted requests retain cancellation identity', async () => {
+ storage(); capture(); const controller = new AbortController(); controller.abort();
+ await assert.rejects(apiHandler({ url: '/cancel', signal: controller.signal }), error => axios.isCancel(error));
+});
