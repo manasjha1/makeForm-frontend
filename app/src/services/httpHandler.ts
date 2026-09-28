@@ -118,7 +118,8 @@ const buildHeaders = (cfg: RequestConfig): Record<string, string> => {
 
   // Auth header — skip if explicitly opted out (e.g. login, public endpoints)
   if (!cfg.skipAuth) {
-    const token = localStorage.getItem("token");
+    let token: string | null = null;
+    try { token = globalThis.localStorage?.getItem("token") ?? null; } catch { /* Storage may be blocked by browser settings. */ }
     if (token) defaults["Authorization"] = `Bearer ${token}`;
   }
 

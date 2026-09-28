@@ -12,3 +12,8 @@ test('public requests omit saved tokens and explicit credentials win', async () 
  await apiHandler({ url: '/private', headers: { Authorization: 'Bearer explicit' } }); assert.equal(get().headers.get('Authorization'), 'Bearer explicit');
  await apiHandler({ url: '/private' }); assert.equal(get().headers.get('Authorization'), 'Bearer saved-token');
 });
+test('requests tolerate unavailable or restricted browser storage', async () => {
+ delete globalThis.localStorage; const get = capture(); await apiHandler({ url: '/public' }); assert.equal(get().headers.get('Authorization'), undefined);
+ Object.defineProperty(globalThis, 'localStorage', { configurable: true, get() { throw new Error('Blocked'); } });
+ await apiHandler({ url: '/public' }); assert.equal(get().headers.get('Authorization'), undefined);
+});
