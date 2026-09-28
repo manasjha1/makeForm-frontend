@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { remainingSeconds } from "~/src/lib/cooldown";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useLocation, useNavigate, Link } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
@@ -33,19 +34,20 @@ export default function OtpForm() {
   const [email, setEmail] = useState<string>("");
 
   const [otp, setOtp] = useState<string>("");
+  const [resendAt, setResendAt] = useState(() => Date.now() + 60_000);
   const [cooldown, setCooldown] = useState<number>(60);
 
   const { mutate: verifyOtp, isPending: isVerifying } = useOTP_Verification();
   const { mutate: resendOtp, isPending: isResending } = useResendOTP();
 
-  // Cooldown countdown timer (60s)
+  // Recompute from a deadline after background-tab timer throttling.
   useEffect(() => {
-    if (cooldown <= 0) return;
-    const interval = setInterval(() => {
-      setCooldown((prev) => prev - 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [cooldown]);
+    const update = () => setCooldown(remainingSeconds(resendAt));
+    update();
+    const interval = setInterval(update, 1000);
+    document.addEventListener("visibilitychange", update);
+    return () => { clearInterval(interval); document.removeEventListener("visibilitychange", update); };
+  }, [resendAt]);
 
   // Browser storage is only available after hydration.
   useEffect(() => {
@@ -130,6 +132,7 @@ export default function OtpForm() {
         onSuccess: (response: any) => {
           const resData = response?.data || response;
           toast.success(resData?.message || "A new verification code has been sent!");
+          setResendAt(Date.now() + 60_000);
           setCooldown(60);
           setOtp("");
         },

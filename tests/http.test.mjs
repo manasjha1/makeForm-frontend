@@ -30,3 +30,7 @@ test('malformed API error payloads produce renderable messages and field errors'
  storage(); apiClient.defaults.adapter = async config => { throw new axios.AxiosError('Request failed', 'ERR_BAD_RESPONSE', config, null, { status: 422, data: { message: { nested: true }, errors: { email: ['Invalid'], bad: 42 } } }); };
  await assert.rejects(apiHandler({ url: '/invalid' }), error => { assert.equal(error.message, 'Request failed'); assert.equal(error.statusCode, 422); assert.deepEqual(error.errors, { email: ['Invalid'] }); return true; });
 });
+test('cooldown catches up after background suspension and never becomes negative', async () => {
+ const { remainingSeconds } = await import('../app/src/lib/cooldown.ts');
+ assert.equal(remainingSeconds(60000, 0), 60); assert.equal(remainingSeconds(60000, 59500), 1); assert.equal(remainingSeconds(60000, 90000), 0);
+});
