@@ -9,6 +9,7 @@ export const registerAccount = async ({
   const response = await apiHandler({
     url: `${API_URLS.AUTH.REGISTER_EMAIL}`,
     method: `POST`,
+    skipAuth: true,
     body: register,
   });
   return response.data;
@@ -22,6 +23,7 @@ export const OTP_Verify = async ({
   const response = await apiHandler({
     url: `${API_URLS.AUTH.VERIFY_OTP}`,
     method: `POST`,
+    skipAuth: true,
     body: otp_verification,
   });
   return response.data;
@@ -35,6 +37,7 @@ export const resendOTP = async ({
   const response = await apiHandler({
     url: `${API_URLS.AUTH.RESEND_OTP}`,
     method: `POST`,
+    skipAuth: true,
     body: resend_otp,
   });
   return response.data;
@@ -48,6 +51,7 @@ export const loginAccount = async ({
   const response = await apiHandler({
     url: `${API_URLS.AUTH.LOGIN}`,
     method: `POST`,
+    skipAuth: true,
     body: login,
   });
   return response.data;
