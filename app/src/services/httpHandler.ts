@@ -168,15 +168,14 @@ export async function apiHandler<T = unknown>(
     const error = err as AxiosError<ApiError>;
 
     // Normalize error shape so callers always get a consistent object
-    const serverError = error.response?.data as any;
+    const serverError = error.response?.data as { error?: { message?: unknown }; message?: unknown; errors?: unknown } | undefined;
+    const candidates = [serverError?.error?.message, serverError?.message, error.message];
+    const message = candidates.find((value): value is string => typeof value === "string" && value.trim().length > 0) ?? "Request failed";
+    const errors = Object.fromEntries(Object.entries(serverError?.errors && typeof serverError.errors === "object" ? serverError.errors : {}).filter(([, value]) => Array.isArray(value) && value.every(item => typeof item === "string"))) as Record<string, string[]>;
     throw {
-      message:
-        serverError?.error?.message ??
-        serverError?.message ??
-        error.message ??
-        "Request failed",
+      message,
       statusCode: error.response?.status ?? 0,
-      errors: serverError?.errors ?? {},
+      errors,
     } satisfies ApiError;
   }
 }

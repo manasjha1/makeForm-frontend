@@ -26,3 +26,7 @@ test('aborted requests retain cancellation identity', async () => {
  storage(); capture(); const controller = new AbortController(); controller.abort();
  await assert.rejects(apiHandler({ url: '/cancel', signal: controller.signal }), error => axios.isCancel(error));
 });
+test('malformed API error payloads produce renderable messages and field errors', async () => {
+ storage(); apiClient.defaults.adapter = async config => { throw new axios.AxiosError('Request failed', 'ERR_BAD_RESPONSE', config, null, { status: 422, data: { message: { nested: true }, errors: { email: ['Invalid'], bad: 42 } } }); };
+ await assert.rejects(apiHandler({ url: '/invalid' }), error => { assert.equal(error.message, 'Request failed'); assert.equal(error.statusCode, 422); assert.deepEqual(error.errors, { email: ['Invalid'] }); return true; });
+});
