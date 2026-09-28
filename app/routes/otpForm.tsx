@@ -212,7 +212,7 @@ export default function OtpForm() {
                 </div>
 
                 <p className="text-xs text-center text-gray-500">
-                  Code expires in <span className="font-semibold text-rose-600">60 seconds</span>.
+                  Use the latest code from your email. You can request another code after the resend timer ends.
                 </p>
               </Field>
             </form>
