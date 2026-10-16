@@ -180,8 +180,8 @@ export default function FormBuilder() {
       const result = await saveAndPublishForm(form);
       const slug =
         result?.slug ||
-        (form.title
-          ? form.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+        (form.id
+          ? form.id.replace(/[^a-z0-9]+/g, "-")
           : "form");
       const url = `${window.location.origin}/form/${slug}`;
       setPublishedSlug(slug);
@@ -191,7 +191,7 @@ export default function FormBuilder() {
     } catch (err: any) {
       toast.error(
         err?.message ||
-          "Failed to publish form. Please check your backend connection.",
+        "Failed to publish form. Please check your backend connection.",
       );
     } finally {
       setIsPublishing(false);
@@ -256,6 +256,53 @@ export default function FormBuilder() {
         onRedo={redo}
         canRedo={!!future.length}
       />
+      <div className="studio-status">
+        <span role="status" className="flex items-center gap-2">
+          <CheckCircle2 size={12} />
+          {message ||
+            (saveError ? "Draft not saved" : "Draft saved in this browser tab")}
+        </span>
+        <div className="studio-actions">
+          <button
+            className="studio-button"
+            onClick={() => {
+              setGallery(true);
+              setPreview(false);
+            }}
+          >
+            <LayoutGrid size={12} />
+            Templates
+          </button>
+          <button
+            className="studio-button"
+            disabled={!form}
+            onClick={showPreview}
+          >
+            <Eye size={12} />
+            Preview Form
+          </button>
+          <button
+            className="studio-button"
+            disabled={!form || isPublishing}
+            onClick={handlePublishAndShare}
+            style={{
+              backgroundColor: "#047857",
+              color: "#ffffff",
+              fontWeight: 600,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
+          >
+            {isPublishing ? (
+              <RefreshCw size={12} className="animate-spin" />
+            ) : (
+              <Share2 size={12} />
+            )}
+            Publish &amp; Share
+          </button>
+        </div>
+      </div>
       {saveError && (
         <p role="alert" className="bg-red-50 px-6 py-3 text-sm text-red-800">
           Your browser could not save this draft. Keep this page open to
@@ -354,7 +401,7 @@ export default function FormBuilder() {
               if (selectedId === id)
                 setSelectedId(
                   next.fields[Math.min(index, next.fields.length - 1)]?.id ??
-                    null,
+                  null,
                 );
               setMessage("Field removed. Use Undo to restore it.");
             }}
@@ -367,53 +414,7 @@ export default function FormBuilder() {
           />
         </div>
       )}
-      <div className="studio-status">
-        <span role="status" className="flex items-center gap-2">
-          <CheckCircle2 size={12} />
-          {message ||
-            (saveError ? "Draft not saved" : "Draft saved in this browser tab")}
-        </span>
-        <div className="studio-actions">
-          <button
-            className="studio-button"
-            onClick={() => {
-              setGallery(true);
-              setPreview(false);
-            }}
-          >
-            <LayoutGrid size={12} />
-            Templates
-          </button>
-          <button
-            className="studio-button"
-            disabled={!form}
-            onClick={showPreview}
-          >
-            <Eye size={12} />
-            Preview Form
-          </button>
-          <button
-            className="studio-button"
-            disabled={!form || isPublishing}
-            onClick={handlePublishAndShare}
-            style={{
-              backgroundColor: "#047857",
-              color: "#ffffff",
-              fontWeight: 600,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-            }}
-          >
-            {isPublishing ? (
-              <RefreshCw size={12} className="animate-spin" />
-            ) : (
-              <Share2 size={12} />
-            )}
-            Publish &amp; Share
-          </button>
-        </div>
-      </div>
+
       <StudioFooter
         onTemplates={() => {
           setGallery(true);

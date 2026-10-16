@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { FileText, ArrowUpRight } from "lucide-react";
+import makeFormLogo from "~/assests/makeForm_logo.png";
 
 export default function StudioFooter({
     onTemplates,
@@ -12,14 +13,14 @@ export default function StudioFooter({
         <footer className="studio-footer">
             <div className="studio-footer-grid">
                 <div>
-                    <Link to="/" className="flex items-center gap-2 text-[#1c2925]">
-                        <span className="studio-brand-mark">
-                            <FileText size={20} />
-                        </span>
-                        <strong className="text-base">makeForm</strong>
-                        <span className="studio-badge">Form Studio</span>
+                    <Link to="/" className="shrink-0 w-fit" aria-label="makeForm home">
+                        <img
+                            className="h-14 w-32 object-contain"
+                            src={makeFormLogo}
+                            alt="makeForm"
+                        />
                     </Link>
-                    <p className="studio-muted mt-4 max-w-xs">
+                    <p className="studio-muted max-w-xs">
                         Build thoughtful forms with a visual workspace. Shape every
                         question, fine-tune the details, and test the experience.
                     </p>
@@ -42,11 +43,7 @@ export default function StudioFooter({
                         <Link to="/live-preview">Live Preview</Link>
                     )}
                 </div>
-                <div>
-                    <h3>ACCOUNT</h3>
-                    <Link to="/sign-in">Sign In</Link>
-                    <Link to="/create-account">Create Account</Link>
-                </div>
+
                 <div>
                     <h3>DEVELOPER RESOURCES</h3>
                     <a
@@ -70,6 +67,13 @@ export default function StudioFooter({
                     >
                         Report an Issue <ArrowUpRight size={12} className="inline" />
                     </a>
+                </div>
+                <div>
+                    <h3>CONNECT</h3>
+                    <Link to="https://github.com/manasjha1">GitHub</Link>
+                    <Link to="https://www.linkedin.com/in/manas-jha-0310mk/">
+                        LinkedIn
+                    </Link>
                 </div>
             </div>
             <div className="studio-status mt-7 px-0!">
