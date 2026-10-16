@@ -1,4 +1,4 @@
-import { Eye, Home, LayoutFreeform, Menu, RotateCcw, Redo2, Undo2, X } from "lucide-react";
+import { Eye, Home, LayoutDashboard, LayoutFreeform, Menu, RotateCcw, Redo2, Undo2, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Button } from "./ui/button";
@@ -24,10 +24,11 @@ export default function Header({ viewPage, count, preview, onPreview, onEdit, on
     const menuId = useId();
     const toggle = useRef<HTMLButtonElement>(null);
     useEffect(() => setOpen(false), [key]);
-    const current = viewPage ?? (pathname === "/live-preview" || preview ? "LivePreview" : pathname === "/form-builder" ? "FormBuilder" : pathname === "/" ? "Home" : undefined);
+    const current = viewPage ?? (pathname === "/dashboard" ? "Dashboard" : pathname === "/live-preview" || preview ? "LivePreview" : pathname === "/form-builder" ? "FormBuilder" : pathname === "/" ? "Home" : undefined);
     const closeMenu = () => setOpen(false);
     const links = [
         { label: "Home", page: "Home", to: "/", Icon: Home },
+        { label: "Dashboard", page: "Dashboard", to: "/dashboard", Icon: LayoutDashboard },
         { label: "Form Builder", page: "FormBuilder", to: "/form-builder", Icon: LayoutFreeform, action: onEdit },
         { label: "Live Preview", page: "LivePreview", to: "/live-preview", Icon: Eye, action: onPreview },
     ];

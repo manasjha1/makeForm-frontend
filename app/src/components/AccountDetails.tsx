@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { LogOut, UserRound } from "lucide-react";
+import { LayoutDashboard, LogOut, UserRound } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "./ui/button";
 import {
@@ -110,6 +110,13 @@ export default function AccountDetails({
                             </div>
                         </div>
                     </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild className="cursor-pointer gap-2 px-3 py-2 hover:bg-emerald-50">
+                        <Link to="/dashboard" onClick={onNavigate} className="flex w-full items-center gap-2">
+                            <LayoutDashboard aria-hidden="true" className="size-4 text-emerald-700" />
+                            Admin Dashboard
+                        </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                         onSelect={logout}
