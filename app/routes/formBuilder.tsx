@@ -72,7 +72,11 @@ export default function FormBuilder() {
   useEffect(() => {
     const draft = readDraft();
     const template =
-      templateId === studioForm.id ? studioForm : templateId === blankForm.id ? blankForm : findTemplate(templateId);
+      templateId === studioForm.id
+        ? studioForm
+        : templateId === blankForm.id
+          ? blankForm
+          : findTemplate(templateId);
     const next = template
       ? draft?.id === template.id
         ? draft
@@ -93,7 +97,9 @@ export default function FormBuilder() {
     );
     if (next) setSaveError(!saveDraft(next));
   }, [templateId]);
-  useEffect(() => { if (galleryRequested) setGallery(true); }, [galleryRequested]);
+  useEffect(() => {
+    if (galleryRequested) setGallery(true);
+  }, [galleryRequested]);
   const change = (next: FormTemplate) => {
     if (form) setHistory((current) => [...current.slice(-29), form]);
     setFuture([]);
@@ -128,7 +134,11 @@ export default function FormBuilder() {
     if (form) setFuture((current) => [...current.slice(-29), form]);
     setForm(previous);
     setHistory((current) => current.slice(0, -1));
-    setSelectedId((current) => previous.fields.some((field) => field.id === current) ? current : previous.fields[0]?.id ?? null);
+    setSelectedId((current) =>
+      previous.fields.some((field) => field.id === current)
+        ? current
+        : (previous.fields[0]?.id ?? null),
+    );
     setSaveError(!saveDraft(previous));
     setMessage("Last edit undone.");
   };
@@ -138,7 +148,11 @@ export default function FormBuilder() {
     setHistory((current) => [...current.slice(-29), form]);
     setFuture((current) => current.slice(0, -1));
     setForm(next);
-    setSelectedId((current) => next.fields.some((field) => field.id === current) ? current : next.fields[0]?.id ?? null);
+    setSelectedId((current) =>
+      next.fields.some((field) => field.id === current)
+        ? current
+        : (next.fields[0]?.id ?? null),
+    );
     setSaveError(!saveDraft(next));
     setMessage("Edit reapplied.");
   };
@@ -147,27 +161,38 @@ export default function FormBuilder() {
     if (!form) return;
     const token = localStorage.getItem("token");
     if (!token) {
-      toast.error("Please sign in to publish and generate a permanent public link!");
+      toast.error(
+        "Please sign in to publish and generate a permanent public link!",
+      );
       setTimeout(() => navigate("/sign-in"), 1200);
       return;
     }
 
     if (form.fields.length === 0) {
-      toast.error("Please add at least one field before generating a public link.");
+      toast.error(
+        "Please add at least one field before generating a public link.",
+      );
       return;
     }
 
     setIsPublishing(true);
     try {
       const result = await saveAndPublishForm(form);
-      const slug = result?.slug || (form.title ? form.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") : "form");
+      const slug =
+        result?.slug ||
+        (form.title
+          ? form.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+          : "form");
       const url = `${window.location.origin}/form/${slug}`;
       setPublishedSlug(slug);
       setPublicShareUrl(url);
       setShareModalOpen(true);
       toast.success("Form published! Public share link generated.");
     } catch (err: any) {
-      toast.error(err?.message || "Failed to publish form. Please check your backend connection.");
+      toast.error(
+        err?.message ||
+          "Failed to publish form. Please check your backend connection.",
+      );
     } finally {
       setIsPublishing(false);
     }
@@ -181,11 +206,25 @@ export default function FormBuilder() {
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
       const target = event.target;
-      if (preview || gallery || !(event.ctrlKey || event.metaKey) || event.altKey ||
-          (target instanceof HTMLElement && (target.isContentEditable || target.closest("input, textarea, select")))) return;
+      if (
+        preview ||
+        gallery ||
+        !(event.ctrlKey || event.metaKey) ||
+        event.altKey ||
+        (target instanceof HTMLElement &&
+          (target.isContentEditable ||
+            target.closest("input, textarea, select")))
+      )
+        return;
       const key = event.key.toLowerCase();
-      if (key === "z") { event.preventDefault(); if (event.shiftKey) redo(); else undo(); }
-      else if (key === "y" && event.ctrlKey) { event.preventDefault(); redo(); }
+      if (key === "z") {
+        event.preventDefault();
+        if (event.shiftKey) redo();
+        else undo();
+      } else if (key === "y" && event.ctrlKey) {
+        event.preventDefault();
+        redo();
+      }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
@@ -202,7 +241,10 @@ export default function FormBuilder() {
           setGallery(!form);
         }}
         onReset={() => {
-          const template = form?.id === blankForm.id ? blankForm : findTemplate(form?.id ?? null) ?? studioForm;
+          const template =
+            form?.id === blankForm.id
+              ? blankForm
+              : (findTemplate(form?.id ?? null) ?? studioForm);
           change(createForm(template));
           setSelectedId(template.fields[0]?.id ?? null);
           setPreview(false);
@@ -247,7 +289,24 @@ export default function FormBuilder() {
               setPreview(false);
             }}
           />
-          <section className="studio-quick-add mt-8"><h2 className="text-lg font-semibold">Prefer a blank canvas?</h2><p className="studio-muted my-3">Start from scratch and add only the questions you need.</p><button className="studio-button primary" onClick={() => { change(createForm(blankForm)); setSelectedId(null); setParams({ template: blankForm.id }); setGallery(false); setPreview(false); }}>Start a blank form</button></section>
+          <section className="studio-quick-add mt-8">
+            <h2 className="text-lg font-semibold">Prefer a blank canvas?</h2>
+            <p className="studio-muted my-3">
+              Start from scratch and add only the questions you need.
+            </p>
+            <button
+              className="studio-button primary"
+              onClick={() => {
+                change(createForm(blankForm));
+                setSelectedId(null);
+                setParams({ template: blankForm.id });
+                setGallery(false);
+                setPreview(false);
+              }}
+            >
+              Start a blank form
+            </button>
+          </section>
         </main>
       ) : !form ? (
         <main className="studio-empty" role="status">
@@ -292,7 +351,11 @@ export default function FormBuilder() {
               if (index < 0) return;
               const next = removeField(form, id);
               change(next);
-              if (selectedId === id) setSelectedId(next.fields[Math.min(index, next.fields.length - 1)]?.id ?? null);
+              if (selectedId === id)
+                setSelectedId(
+                  next.fields[Math.min(index, next.fields.length - 1)]?.id ??
+                    null,
+                );
               setMessage("Field removed. Use Undo to restore it.");
             }}
           />
@@ -382,7 +445,8 @@ export default function FormBuilder() {
               Your Form is Live &amp; Ready to Share!
             </h3>
             <p className="mt-1 text-xs text-gray-500">
-              Anyone with this link can fill out your form. After submission, responses and email confirmations will be sent automatically.
+              Anyone with this link can fill out your form. After submission,
+              responses and email confirmations will be sent automatically.
             </p>
 
             <div className="mt-5 space-y-3">
@@ -406,15 +470,15 @@ export default function FormBuilder() {
               </div>
 
               <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-gray-100">
-                <a
-                  href={publicShareUrl}
+                <Link
+                  to={publicShareUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-800"
                 >
                   <ExternalLink size={14} />
                   Open Form in New Tab
-                </a>
+                </Link>
 
                 <Link
                   to="/dashboard"

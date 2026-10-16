@@ -1,143 +1,328 @@
 import { useEffect, useId, useRef, useState } from "react";
 import type { FormTemplate } from "../lib/form-types";
-import { initialAnswers, visibleFields, type Answers } from "../lib/studio-model";
+import {
+  initialAnswers,
+  visibleFields,
+  type Answers,
+} from "../lib/studio-model";
 import { validateAnswers, type UploadInfo } from "../lib/form-validation";
 import { Button } from "./ui/button";
 import PreviewUpload from "./builder/PreviewUpload";
 import PreviewSuccess from "./builder/PreviewSuccess";
 import CustomSelect from "./ui/custom-select";
 
-export const formControlClass = "w-full rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] px-3 py-2.5 text-sm text-[#1C2925] outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 aria-invalid:border-red-500";
+export const formControlClass =
+  "w-full rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] px-3 py-2.5 text-sm text-[#1C2925] outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 aria-invalid:border-red-500";
 
 export default function FormPreview({ form }: { form: FormTemplate }) {
-    const prefix = useId();
-    const formRef = useRef<HTMLFormElement>(null);
-    const restartFocus = useRef(false);
-    const [answers, setAnswers] = useState<Answers>(() => initialAnswers(form.fields));
-    const [files, setFiles] = useState<Record<string, UploadInfo | undefined>>({});
-    const [errors, setErrors] = useState<Record<string, string>>({});
-    const [submitted, setSubmitted] = useState<Record<string, unknown> | null>(null);
-    const [attempt, setAttempt] = useState(0);
-    const [validationStarted, setValidationStarted] = useState(false);
-    const [demoErrors, setDemoErrors] = useState(false);
-    const visible = visibleFields(form.fields, answers);
-    useEffect(() => {
-        if (validationStarted) setErrors(validateAnswers(visibleFields(form.fields, answers), answers, files));
-    }, [answers, files, form.fields, validationStarted]);
-    const displayedErrors: Record<string, string> = demoErrors ? Object.fromEntries(visible.map((field) => [field.id, field.errorMessage || "Example validation error."])) : errors;
-    const visibleErrors = visible.filter((field) => displayedErrors[field.id]);
-    const focusField = (id: string) => {
-        const target = formRef.current?.elements.namedItem(id);
-        if (target instanceof HTMLElement) target.focus();
-        else if (target instanceof RadioNodeList) (target[0] as HTMLElement)?.focus();
-    };
-    useEffect(() => {
-        if (!restartFocus.current) return;
-        restartFocus.current = false;
-        const first = visibleFields(form.fields, initialAnswers(form.fields))[0];
-        if (first) focusField(first.id);
-        else formRef.current?.focus();
-    }, [attempt]);
-    const update = (id: string, value: Answers[string]) => { setAnswers((current) => ({ ...current, [id]: value })); setSubmitted(null); };
+  const prefix = useId();
+  const formRef = useRef<HTMLFormElement>(null);
+  const restartFocus = useRef(false);
+  const [answers, setAnswers] = useState<Answers>(() =>
+    initialAnswers(form.fields),
+  );
+  const [files, setFiles] = useState<Record<string, UploadInfo | undefined>>(
+    {},
+  );
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState<Record<string, unknown> | null>(
+    null,
+  );
+  const [attempt, setAttempt] = useState(0);
+  const [validationStarted, setValidationStarted] = useState(false);
+  const [demoErrors, setDemoErrors] = useState(false);
+  const visible = visibleFields(form.fields, answers);
+  useEffect(() => {
+    if (validationStarted)
+      setErrors(
+        validateAnswers(visibleFields(form.fields, answers), answers, files),
+      );
+  }, [answers, files, form.fields, validationStarted]);
+  const displayedErrors: Record<string, string> = demoErrors
+    ? Object.fromEntries(
+        visible.map((field) => [
+          field.id,
+          field.errorMessage || "Example validation error.",
+        ]),
+      )
+    : errors;
+  const visibleErrors = visible.filter((field) => displayedErrors[field.id]);
+  const focusField = (id: string) => {
+    const target = formRef.current?.elements.namedItem(id);
+    if (target instanceof HTMLElement) target.focus();
+    else if (target instanceof RadioNodeList)
+      (target[0] as HTMLElement)?.focus();
+  };
+  useEffect(() => {
+    if (!restartFocus.current) return;
+    restartFocus.current = false;
+    const first = visibleFields(form.fields, initialAnswers(form.fields))[0];
+    if (first) focusField(first.id);
+    else formRef.current?.focus();
+  }, [attempt]);
+  const update = (id: string, value: Answers[string]) => {
+    setAnswers((current) => ({ ...current, [id]: value }));
+    setSubmitted(null);
+  };
 
-    return <form ref={formRef} tabIndex={-1} noValidate className="form-preview min-w-0 space-y-6 rounded-2xl border border-[#E2E8E4] border-t-4 border-t-emerald-700 bg-white p-4 shadow-sm sm:p-8" onSubmit={(event) => {
+  return (
+    <form
+      ref={formRef}
+      tabIndex={-1}
+      noValidate
+      className="form-preview min-w-0 space-y-6 rounded-2xl border border-[#E2E8E4] border-t-4 border-t-emerald-700 bg-white p-4 shadow-sm sm:p-8"
+      onSubmit={(event) => {
         event.preventDefault();
         setDemoErrors(false);
         setValidationStarted(true);
         const next = validateAnswers(visible, answers, files);
-        setErrors(next); setSubmitted(null);
-        if (Object.keys(next).length) { focusField(Object.keys(next)[0]); return; }
-        setSubmitted(Object.fromEntries(visible.map((field) => [field.id, field.type === "file" ? files[field.id] ?? null : answers[field.id] ?? ""])));
-    }}>
-        <div><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-emerald-700">Live preview</p><h2 className="break-words text-2xl font-bold text-[#1C2925]">{form.title}</h2><p className="mt-2 whitespace-pre-wrap break-words text-sm text-[#6B7872]">{form.description}</p></div>
-        <p className="text-xs text-[#6B7872]">Fields marked * are required. Test responses and files stay in this preview and are not uploaded.</p>
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] p-3"><span className="text-xs text-[#6B7872]">Inspect form states</span><Button type="button" variant="outline" size="sm" aria-pressed={demoErrors} onClick={() => { setDemoErrors(!demoErrors); setSubmitted(null); }}>{demoErrors ? "Hide example errors" : "Show example errors"}</Button></div>
-        {visibleErrors.length > 0 && <section aria-label="Validation summary" className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800">
-            <h3 className="text-sm font-semibold">{demoErrors ? "Example error styling — your answers are unchanged" : `Check ${visibleErrors.length} ${visibleErrors.length === 1 ? "field" : "fields"} before continuing`}</h3>
-            <ul className="mt-2 space-y-1">{visibleErrors.map((field) => <li key={field.id}><button type="button" className="text-left text-xs underline underline-offset-2" onClick={() => focusField(field.id)}>{field.label}: {displayedErrors[field.id]}</button></li>)}</ul>
-        </section>}
-        {visible.map((field) => {
-            const id = `${prefix}-${field.id}`;
-            const props = { id, name: field.id, required: field.required, className: formControlClass, "aria-invalid": !!displayedErrors[field.id], "aria-describedby": `${id}-help ${id}-error` };
-            const value = typeof answers[field.id] === "string" ? answers[field.id] as string : "";
-            const choices = field.type === "radio" || (field.type === "checkbox" && !!field.options?.length);
-            return <div key={field.id} className="space-y-2">
-                {choices ? (
-                  <fieldset className="min-w-0">
-                    <legend className="mb-2 text-sm font-semibold text-[#1C2925]">
-                      {field.label}{field.required && <span className="text-red-600"> *</span>}
-                    </legend>
-                    <div className="grid gap-2">
-                      {field.options?.map((option, index) => {
-                        const isChecked = field.type === "radio" ? value === option : Array.isArray(answers[field.id]) && (answers[field.id] as string[]).includes(option);
-                        return (
-                          <label
-                            key={index}
-                            className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${
-                              isChecked
-                                ? "border-emerald-700 bg-emerald-50/60 text-emerald-950 font-medium ring-1 ring-emerald-700/20"
-                                : "border-[#E2E8E4] bg-[#FAF9F6] text-[#1C2925] hover:border-emerald-400 hover:bg-emerald-50/30"
-                            }`}
-                          >
-                            <input
-                              type={field.type}
-                              name={field.id}
-                              className="size-4 shrink-0 accent-emerald-700 cursor-pointer"
-                              aria-invalid={!!displayedErrors[field.id]}
-                              aria-describedby={`${id}-help ${id}-error`}
-                              checked={isChecked}
-                              onChange={(event) => {
-                                const current = Array.isArray(answers[field.id]) ? answers[field.id] as string[] : [];
-                                update(field.id, field.type === "radio" ? option : event.target.checked ? [...current, option] : current.filter((item) => item !== option));
-                              }}
-                            />
-                            <span className="truncate">{option}</span>
-                          </label>
-                        );
-                      })}
-                    </div>
-                  </fieldset>
-                ) : field.type === "checkbox" ? (
-                  <label className="flex items-center gap-3 rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] p-3 text-sm font-medium hover:border-emerald-400 transition-all cursor-pointer">
-                    <input
-                      {...props}
-                      type="checkbox"
-                      className="size-4 accent-emerald-700 cursor-pointer"
-                      checked={answers[field.id] === true}
-                      onChange={(event) => update(field.id, event.target.checked)}
-                    />
-                    <span>{field.label}{field.required && " *"}</span>
-                  </label>
+        setErrors(next);
+        setSubmitted(null);
+        if (Object.keys(next).length) {
+          focusField(Object.keys(next)[0]);
+          return;
+        }
+        setSubmitted(
+          Object.fromEntries(
+            visible.map((field) => [
+              field.id,
+              field.type === "file"
+                ? (files[field.id] ?? null)
+                : (answers[field.id] ?? ""),
+            ]),
+          ),
+        );
+      }}
+    >
+      <div>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-emerald-700">
+          Live preview
+        </p>
+        <h2 className="wrap-break-word text-2xl font-bold text-[#1C2925]">
+          {form.title}
+        </h2>
+        <p className="mt-2 whitespace-pre-wrap wrap-break-words text-sm text-[#6B7872]">
+          {form.description}
+        </p>
+      </div>
+      <p className="text-xs text-[#6B7872]">
+        Fields marked * are required. Test responses and files stay in this
+        preview and are not uploaded.
+      </p>
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] p-3">
+        <span className="text-xs text-[#6B7872]">Inspect form states</span>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          aria-pressed={demoErrors}
+          onClick={() => {
+            setDemoErrors(!demoErrors);
+            setSubmitted(null);
+          }}
+        >
+          {demoErrors ? "Hide example errors" : "Show example errors"}
+        </Button>
+      </div>
+      {visibleErrors.length > 0 && (
+        <section
+          aria-label="Validation summary"
+          className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800"
+        >
+          <h3 className="text-sm font-semibold">
+            {demoErrors
+              ? "Example error styling — your answers are unchanged"
+              : `Check ${visibleErrors.length} ${visibleErrors.length === 1 ? "field" : "fields"} before continuing`}
+          </h3>
+          <ul className="mt-2 space-y-1">
+            {visibleErrors.map((field) => (
+              <li key={field.id}>
+                <button
+                  type="button"
+                  className="text-left text-xs underline underline-offset-2"
+                  onClick={() => focusField(field.id)}
+                >
+                  {field.label}: {displayedErrors[field.id]}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+      {visible.map((field) => {
+        const id = `${prefix}-${field.id}`;
+        const props = {
+          id,
+          name: field.id,
+          required: field.required,
+          className: formControlClass,
+          "aria-invalid": !!displayedErrors[field.id],
+          "aria-describedby": `${id}-help ${id}-error`,
+        };
+        const value =
+          typeof answers[field.id] === "string"
+            ? (answers[field.id] as string)
+            : "";
+        const choices =
+          field.type === "radio" ||
+          (field.type === "checkbox" && !!field.options?.length);
+        return (
+          <div key={field.id} className="space-y-2">
+            {choices ? (
+              <fieldset className="min-w-0">
+                <legend className="mb-2 text-sm font-semibold text-[#1C2925]">
+                  {field.label}
+                  {field.required && <span className="text-red-600"> *</span>}
+                </legend>
+                <div className="grid gap-2">
+                  {field.options?.map((option, index) => {
+                    const isChecked =
+                      field.type === "radio"
+                        ? value === option
+                        : Array.isArray(answers[field.id]) &&
+                          (answers[field.id] as string[]).includes(option);
+                    return (
+                      <label
+                        key={index}
+                        className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${
+                          isChecked
+                            ? "border-emerald-700 bg-emerald-50/60 text-emerald-950 font-medium ring-1 ring-emerald-700/20"
+                            : "border-[#E2E8E4] bg-[#FAF9F6] text-[#1C2925] hover:border-emerald-400 hover:bg-emerald-50/30"
+                        }`}
+                      >
+                        <input
+                          type={field.type}
+                          name={field.id}
+                          className="size-4 shrink-0 accent-emerald-700 cursor-pointer"
+                          aria-invalid={!!displayedErrors[field.id]}
+                          aria-describedby={`${id}-help ${id}-error`}
+                          checked={isChecked}
+                          onChange={(event) => {
+                            const current = Array.isArray(answers[field.id])
+                              ? (answers[field.id] as string[])
+                              : [];
+                            update(
+                              field.id,
+                              field.type === "radio"
+                                ? option
+                                : event.target.checked
+                                  ? [...current, option]
+                                  : current.filter((item) => item !== option),
+                            );
+                          }}
+                        />
+                        <span className="truncate">{option}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
+            ) : field.type === "checkbox" ? (
+              <label className="flex items-center gap-3 rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] p-3 text-sm font-medium hover:border-emerald-400 transition-all cursor-pointer">
+                <input
+                  {...props}
+                  type="checkbox"
+                  className="size-4 accent-emerald-700 cursor-pointer"
+                  checked={answers[field.id] === true}
+                  onChange={(event) => update(field.id, event.target.checked)}
+                />
+                <span>
+                  {field.label}
+                  {field.required && " *"}
+                </span>
+              </label>
+            ) : (
+              <>
+                <label
+                  htmlFor={id}
+                  className="block wrap-break-word text-sm font-semibold text-[#1C2925]"
+                >
+                  {field.label}
+                  {field.required && <span className="text-red-600"> *</span>}
+                </label>
+                {field.type === "textarea" ? (
+                  <textarea
+                    {...props}
+                    rows={4}
+                    value={value}
+                    placeholder={field.placeholder}
+                    onChange={(event) => update(field.id, event.target.value)}
+                  />
+                ) : field.type === "select" ? (
+                  <CustomSelect
+                    id={id}
+                    name={field.id}
+                    value={value}
+                    onChange={(val) => update(field.id, val)}
+                    options={field.options || []}
+                    placeholder={field.placeholder || "Choose an option"}
+                    error={!!displayedErrors[field.id]}
+                    required={field.required}
+                  />
+                ) : field.type === "file" ? (
+                  <PreviewUpload
+                    key={attempt}
+                    file={files[field.id]}
+                    field={field}
+                    id={id}
+                    invalid={!!displayedErrors[field.id]}
+                    onChange={(file) => {
+                      setFiles((current) => ({ ...current, [field.id]: file }));
+                      update(field.id, file?.name ?? "");
+                    }}
+                  />
                 ) : (
-                  <>
-                    <label htmlFor={id} className="block break-words text-sm font-semibold text-[#1C2925]">
-                      {field.label}{field.required && <span className="text-red-600"> *</span>}
-                    </label>
-                    {field.type === "textarea" ? (
-                      <textarea {...props} rows={4} value={value} placeholder={field.placeholder} onChange={(event) => update(field.id, event.target.value)} />
-                    ) : field.type === "select" ? (
-                      <CustomSelect
-                        id={id}
-                        name={field.id}
-                        value={value}
-                        onChange={(val) => update(field.id, val)}
-                        options={field.options || []}
-                        placeholder={field.placeholder || "Choose an option"}
-                        error={!!displayedErrors[field.id]}
-                        required={field.required}
-                      />
-                    ) : field.type === "file" ? (
-                      <PreviewUpload key={attempt} file={files[field.id]} field={field} id={id} invalid={!!displayedErrors[field.id]} onChange={(file) => { setFiles((current) => ({ ...current, [field.id]: file })); update(field.id, file?.name ?? ""); }} />
-                    ) : (
-                      <input {...props} type={field.type} value={value} step={field.type === "number" ? field.step ?? "any" : undefined} placeholder={field.placeholder} min={field.min} max={field.max} onChange={(event) => update(field.id, event.target.value)} />
-                    )}
-                  </>
+                  <input
+                    {...props}
+                    type={field.type}
+                    value={value}
+                    step={
+                      field.type === "number"
+                        ? (field.step ?? "any")
+                        : undefined
+                    }
+                    placeholder={field.placeholder}
+                    min={field.min}
+                    max={field.max}
+                    onChange={(event) => update(field.id, event.target.value)}
+                  />
                 )}
-                <p id={`${id}-help`} className="text-xs text-[#6B7872]">{field.helpText}</p>
-                <p id={`${id}-error`} role={displayedErrors[field.id] ? "alert" : undefined} className="text-xs text-red-700">{displayedErrors[field.id]}</p>
-            </div>;
-        })}
-        <Button type="submit" className="w-full bg-emerald-700 text-white hover:bg-emerald-800">Test submission</Button>
-        {submitted && <PreviewSuccess response={submitted} onRestart={() => { restartFocus.current = true; setDemoErrors(false); setAnswers(initialAnswers(form.fields)); setFiles({}); setErrors({}); setValidationStarted(false); setSubmitted(null); setAttempt((value) => value + 1); }} />}
-    </form>;
+              </>
+            )}
+            <p id={`${id}-help`} className="text-xs text-[#6B7872]">
+              {field.helpText}
+            </p>
+            <p
+              id={`${id}-error`}
+              role={displayedErrors[field.id] ? "alert" : undefined}
+              className="text-xs text-red-700"
+            >
+              {displayedErrors[field.id]}
+            </p>
+          </div>
+        );
+      })}
+      <Button
+        type="submit"
+        className="w-full bg-emerald-700 text-white hover:bg-emerald-800"
+      >
+        Test submission
+      </Button>
+      {submitted && (
+        <PreviewSuccess
+          response={submitted}
+          onRestart={() => {
+            restartFocus.current = true;
+            setDemoErrors(false);
+            setAnswers(initialAnswers(form.fields));
+            setFiles({});
+            setErrors({});
+            setValidationStarted(false);
+            setSubmitted(null);
+            setAttempt((value) => value + 1);
+          }}
+        />
+      )}
+    </form>
+  );
 }
