@@ -127,7 +127,7 @@ export default function Dashboard() {
   };
 
   const handleCopyLink = (slug: string) => {
-    const publicUrl = `${window.location.origin}/live-preview?slug=${slug}`;
+    const publicUrl = `${window.location.origin}/form/${slug}`;
     navigator.clipboard.writeText(publicUrl);
     toast.success("Public form link copied to clipboard!");
   };
@@ -273,7 +273,7 @@ export default function Dashboard() {
               Submissions & Forms Dashboard
             </h1>
             <p className="text-sm text-gray-600">
-              Welcome back, <span className="font-semibold capitalize">{user?.name}</span> ({user?.email}). Manage your forms and inspect incoming submissions.
+              Welcome back, <span className="font-semibold capitalize">{user?.name}</span>. Manage your forms and inspect incoming submissions.
             </p>
           </div>
 
@@ -305,9 +305,9 @@ export default function Dashboard() {
         {/* 4 Overview Metric Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {/* Total Forms Created */}
-          <Card className="border-[#E2E8E4] bg-white shadow-sm transition-all hover:shadow-md">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-500">
+          <Card className="border-[#E2E8E4] bg-white shadow-sm transition-all hover:shadow-md p-2">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="text-lg font-medium text-gray-900">
                 Total Forms Created
               </CardTitle>
               <div className="rounded-lg bg-emerald-50 p-2 text-emerald-700">
@@ -318,16 +318,16 @@ export default function Dashboard() {
               <div className="text-3xl font-extrabold text-[#1C2925]">
                 {stats?.totalForms ?? 0}
               </div>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="my-1 text-xs text-gray-500">
                 Created in your workspace
               </p>
             </CardContent>
           </Card>
 
           {/* Total Submissions Received */}
-          <Card className="border-[#E2E8E4] bg-white shadow-sm transition-all hover:shadow-md">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-500">
+          <Card className="border-[#E2E8E4] bg-white shadow-sm transition-all hover:shadow-md p-2">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="text-lg font-medium text-gray-900">
                 Total Submissions
               </CardTitle>
               <div className="rounded-lg bg-blue-50 p-2 text-blue-700">
@@ -338,16 +338,16 @@ export default function Dashboard() {
               <div className="text-3xl font-extrabold text-blue-900">
                 {stats?.totalSubmissions ?? 0}
               </div>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="my-1 text-xs text-gray-500">
                 Responses recorded across all forms
               </p>
             </CardContent>
           </Card>
 
           {/* Active / Published Forms */}
-          <Card className="border-[#E2E8E4] bg-white shadow-sm transition-all hover:shadow-md">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-500">
+          <Card className="border-[#E2E8E4] bg-white shadow-sm transition-all hover:shadow-md p-2">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="text-lg font-medium text-gray-900">
                 Active Forms
               </CardTitle>
               <div className="rounded-lg bg-green-50 p-2 text-green-700">
@@ -358,17 +358,17 @@ export default function Dashboard() {
               <div className="text-3xl font-extrabold text-green-800">
                 {stats?.formsByStatus.published ?? 0}
               </div>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="my-1 text-xs text-gray-500">
                 {stats?.formsByStatus.draft ?? 0} draft &bull; {stats?.formsByStatus.closed ?? 0} closed
               </p>
             </CardContent>
           </Card>
 
           {/* Submission Rate / Avg */}
-          <Card className="border-[#E2E8E4] bg-white shadow-sm transition-all hover:shadow-md">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-500">
-                Avg Submissions / Form
+          <Card className="border-[#E2E8E4] bg-white shadow-sm transition-all hover:shadow-md p-2">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="text-lg font-medium text-gray-900">
+                Avg Submissions
               </CardTitle>
               <div className="rounded-lg bg-amber-50 p-2 text-amber-700">
                 <Sparkles className="size-5" />
@@ -377,8 +377,7 @@ export default function Dashboard() {
             <CardContent>
               <div className="text-3xl font-extrabold text-amber-900">
                 {stats && stats.totalForms > 0
-                  ? (stats.totalSubmissions / stats.totalForms).toFixed(1)
-                  : "0.0"}
+                  ? (stats.totalSubmissions / stats.totalForms).toFixed(1) : "0.0"}
               </div>
               <p className="mt-1 text-xs text-gray-500">
                 Average engagement per form
@@ -448,11 +447,10 @@ export default function Dashboard() {
                   return (
                     <div
                       key={form.id}
-                      className={`group relative rounded-xl border p-4 bg-white transition-all shadow-sm ${
-                        isSelected
-                          ? "border-emerald-600 ring-2 ring-emerald-600/20"
-                          : "border-[#E2E8E4] hover:border-emerald-300"
-                      }`}
+                      className={`group relative rounded-xl border p-4 bg-white transition-all shadow-sm ${isSelected
+                        ? "border-emerald-600 ring-2 ring-emerald-600/20"
+                        : "border-[#E2E8E4] hover:border-emerald-300"
+                        }`}
                     >
                       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                         <div className="space-y-1 flex-1">
@@ -461,13 +459,12 @@ export default function Dashboard() {
                               {form.title}
                             </h2>
                             <span
-                              className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-                                form.status === "PUBLISHED"
-                                  ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
-                                  : form.status === "CLOSED"
+                              className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${form.status === "PUBLISHED"
+                                ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                                : form.status === "CLOSED"
                                   ? "bg-red-100 text-red-800 border border-red-300"
                                   : "bg-gray-100 text-gray-700 border border-gray-300"
-                              }`}
+                                }`}
                             >
                               {form.status}
                             </span>
@@ -528,11 +525,10 @@ export default function Dashboard() {
                             size="sm"
                             variant={isSelected ? "default" : "outline"}
                             onClick={() => handleSelectForm(form)}
-                            className={`h-7 px-2.5 text-xs font-semibold ${
-                              isSelected
-                                ? "bg-emerald-700 hover:bg-emerald-800 text-white"
-                                : "border-emerald-700 text-emerald-700 hover:bg-emerald-50"
-                            }`}
+                            className={`h-7 px-2.5 text-xs font-semibold ${isSelected
+                              ? "bg-emerald-700 hover:bg-emerald-800 text-white"
+                              : "border-emerald-700 text-emerald-700 hover:bg-emerald-50"
+                              }`}
                           >
                             <Eye className="size-3 mr-1" />
                             {isSelected ? "Inspecting Submissions" : "View Submissions"}
@@ -710,12 +706,12 @@ export default function Dashboard() {
                                       <p className="font-medium text-gray-700">
                                         {ans.field?.label || `Field (${ans.fieldId})`}
                                       </p>
-                                      <p className="mt-0.5 rounded bg-white p-1.5 text-gray-900 border border-gray-200/80 font-mono text-[11px] break-words">
+                                      <p className="mt-0.5 rounded bg-white p-1.5 text-gray-900 border border-gray-200/80 font-mono text-[11px] wrap-break-word">
                                         {ans.value === null || ans.value === undefined
                                           ? "-"
                                           : typeof ans.value === "object"
-                                          ? JSON.stringify(ans.value, null, 2)
-                                          : String(ans.value)}
+                                            ? JSON.stringify(ans.value, null, 2)
+                                            : String(ans.value)}
                                       </p>
                                     </div>
                                   ))}

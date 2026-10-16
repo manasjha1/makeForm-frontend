@@ -113,3 +113,111 @@ export const closeForm = async (formId: string) => {
   });
   return response.data;
 };
+
+export function mapFrontendTypeToBackend(type: string): any {
+  switch (type?.toLowerCase()) {
+    case "textarea": return "TEXTAREA";
+    case "email": return "EMAIL";
+    case "number": return "NUMBER";
+    case "tel": return "PHONE";
+    case "date": return "DATE";
+    case "select": return "SELECT";
+    case "radio": return "RADIO";
+    case "checkbox": return "CHECKBOX";
+    default: return "TEXT";
+  }
+}
+
+export interface PublicFormDetail {
+  id: string;
+  title: string;
+  description: string | null;
+  slug: string;
+  status: string;
+  publishedAt: string | null;
+  fields: Array<{
+    id: string;
+    type: string;
+    label: string;
+    description: string | null;
+    placeholder: string | null;
+    required: boolean;
+    position: number;
+    config: any;
+  }>;
+}
+
+export const fetchPublicForm = async (slug: string): Promise<PublicFormDetail> => {
+  const response = await apiHandler<{ success: boolean; data: PublicFormDetail }>({
+    url: API_URLS.PUBLIC.FORM(slug),
+    method: "GET",
+    skipAuth: true,
+  });
+  return (response.data as any)?.data || response.data;
+};
+
+export const submitPublicFormResponse = async (
+  slug: string,
+  answers: Array<{ fieldId: string; value: any }>
+) => {
+  const response = await apiHandler({
+    url: API_URLS.PUBLIC.SUBMIT(slug),
+    method: "POST",
+    skipAuth: true,
+    body: { answers },
+  });
+  return response.data;
+};
+
+export const saveAndPublishForm = async (form: {
+  id?: string;
+  title: string;
+  description?: string;
+  slug?: string;
+  fields: any[];
+}) => {
+  const backendFields = form.fields.map((f, i) => ({
+    type: mapFrontendTypeToBackend(f.type),
+    label: f.label || "Untitled Question",
+    description: f.description || f.helpText || null,
+    placeholder: f.placeholder || null,
+    required: Boolean(f.required),
+    position: i,
+    config: {
+      options: f.options || [],
+      min: f.min,
+      max: f.max,
+      minLength: f.minLength,
+      maxLength: f.maxLength,
+    },
+  }));
+
+  const payload = {
+    title: form.title || "Untitled Form",
+    description: form.description || undefined,
+    slug: form.slug || undefined,
+    publish: true,
+    fields: backendFields,
+  };
+
+  if (form.id && !form.id.startsWith("template-") && !form.id.startsWith("blank")) {
+    try {
+      const response = await apiHandler({
+        url: API_URLS.FORMS.DETAIL(form.id),
+        method: "PATCH",
+        body: payload,
+      });
+      return (response.data as any)?.data || response.data;
+    } catch {
+      // If form doesn't exist on server, fallback to creating it
+    }
+  }
+
+  const response = await apiHandler({
+    url: API_URLS.FORMS.BASE,
+    method: "POST",
+    body: payload,
+  });
+  return (response.data as any)?.data || response.data;
+};
+

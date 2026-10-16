@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
-import { CheckCircle2, LayoutGrid, Eye, ArrowLeft } from "lucide-react";
+import { useSearchParams, useNavigate, Link } from "react-router";
+import {
+  CheckCircle2,
+  LayoutGrid,
+  Eye,
+  ArrowLeft,
+  Share2,
+  Copy,
+  ExternalLink,
+  X,
+  RefreshCw,
+  BarChart2,
+} from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 import FormPreview from "~/src/components/FormPreview";
 import TemplateGallery from "~/src/components/TemplateGallery";
 import FieldsPalette from "~/src/components/builder/FieldsPalette";
@@ -26,6 +38,7 @@ import {
   normalizeConditions,
   removeField,
 } from "~/src/lib/studio-model";
+import { saveAndPublishForm } from "~/src/services/forms";
 import "~/src/components/builder/builder.css";
 
 export function meta() {
@@ -39,6 +52,7 @@ export function meta() {
 }
 
 export default function FormBuilder() {
+  const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const templateId = params.get("template");
   const galleryRequested = params.get("view") === "templates";
@@ -50,6 +64,11 @@ export default function FormBuilder() {
   const [history, setHistory] = useState<FormTemplate[]>([]);
   const [future, setFuture] = useState<FormTemplate[]>([]);
   const [message, setMessage] = useState("");
+
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [publicShareUrl, setPublicShareUrl] = useState<string>("");
+  const [publishedSlug, setPublishedSlug] = useState<string>("");
   useEffect(() => {
     const draft = readDraft();
     const template =
@@ -123,6 +142,42 @@ export default function FormBuilder() {
     setSaveError(!saveDraft(next));
     setMessage("Edit reapplied.");
   };
+
+  const handlePublishAndShare = async () => {
+    if (!form) return;
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please sign in to publish and generate a permanent public link!");
+      setTimeout(() => navigate("/sign-in"), 1200);
+      return;
+    }
+
+    if (form.fields.length === 0) {
+      toast.error("Please add at least one field before generating a public link.");
+      return;
+    }
+
+    setIsPublishing(true);
+    try {
+      const result = await saveAndPublishForm(form);
+      const slug = result?.slug || (form.title ? form.title.toLowerCase().replace(/[^a-z0-9]+/g, "-") : "form");
+      const url = `${window.location.origin}/form/${slug}`;
+      setPublishedSlug(slug);
+      setPublicShareUrl(url);
+      setShareModalOpen(true);
+      toast.success("Form published! Public share link generated.");
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to publish form. Please check your backend connection.");
+    } finally {
+      setIsPublishing(false);
+    }
+  };
+
+  const copyShareLink = () => {
+    if (!publicShareUrl) return;
+    navigator.clipboard.writeText(publicShareUrl);
+    toast.success("Public link copied to clipboard!");
+  };
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
       const target = event.target;
@@ -137,6 +192,7 @@ export default function FormBuilder() {
   }, [form, history, future, preview, gallery]);
   return (
     <div className="studio">
+      <Toaster position="top-right" />
       <Header
         count={form?.fields.length ?? 0}
         preview={preview}
@@ -266,12 +322,32 @@ export default function FormBuilder() {
             Templates
           </button>
           <button
-            className="studio-button primary"
+            className="studio-button"
             disabled={!form}
             onClick={showPreview}
           >
             <Eye size={12} />
             Preview Form
+          </button>
+          <button
+            className="studio-button"
+            disabled={!form || isPublishing}
+            onClick={handlePublishAndShare}
+            style={{
+              backgroundColor: "#047857",
+              color: "#ffffff",
+              fontWeight: 600,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
+          >
+            {isPublishing ? (
+              <RefreshCw size={12} className="animate-spin" />
+            ) : (
+              <Share2 size={12} />
+            )}
+            Publish &amp; Share
           </button>
         </div>
       </div>
@@ -283,6 +359,75 @@ export default function FormBuilder() {
         }}
         onPreview={showPreview}
       />
+
+      {/* Share Modal Dialog */}
+      {shareModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl border border-gray-100">
+            <button
+              onClick={() => setShareModalOpen(false)}
+              className="absolute right-4 top-4 text-gray-400 hover:text-gray-700"
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="flex items-center gap-2 mb-2">
+              <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
+                LIVE &amp; PUBLISHED
+              </span>
+            </div>
+
+            <h3 className="text-xl font-black text-gray-900">
+              Your Form is Live &amp; Ready to Share!
+            </h3>
+            <p className="mt-1 text-xs text-gray-500">
+              Anyone with this link can fill out your form. After submission, responses and email confirmations will be sent automatically.
+            </p>
+
+            <div className="mt-5 space-y-3">
+              <label className="text-xs font-semibold text-gray-700 block">
+                Public Form Link:
+              </label>
+              <div className="flex items-center gap-2 rounded-lg border border-gray-200 bg-[#FAF9F6] p-1.5 pl-3">
+                <input
+                  type="text"
+                  readOnly
+                  value={publicShareUrl}
+                  className="w-full bg-transparent text-xs text-gray-900 font-mono focus:outline-none"
+                />
+                <button
+                  onClick={copyShareLink}
+                  className="shrink-0 flex items-center gap-1.5 rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-800 transition-colors"
+                >
+                  <Copy size={13} />
+                  Copy Link
+                </button>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-gray-100">
+                <a
+                  href={publicShareUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-800"
+                >
+                  <ExternalLink size={14} />
+                  Open Form in New Tab
+                </a>
+
+                <Link
+                  to="/dashboard"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-gray-900"
+                >
+                  <BarChart2 size={14} />
+                  View in Admin Dashboard
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
