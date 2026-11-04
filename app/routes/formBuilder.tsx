@@ -444,58 +444,58 @@ export default function FormBuilder() {
       {/* Share Modal Dialog */}
       {shareModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
-          <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl border border-gray-100">
+          <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-[0_25px_50px_-12px_rgba(25,28,29,0.25)] border border-[#e1e3e4]">
             <button
               onClick={() => setShareModalOpen(false)}
-              className="absolute right-4 top-4 text-gray-400 hover:text-gray-700"
+              className="absolute right-4 top-4 text-[#777587] hover:text-[#191c1d]"
               aria-label="Close"
             >
               <X size={20} />
             </button>
 
             <div className="flex items-center gap-2 mb-2">
-              <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
+              <span className="rounded-full bg-[#e2dfff] px-2.5 py-0.5 text-xs font-bold text-[#0f0069] border border-[#c3c0ff]">
                 LIVE &amp; PUBLISHED
               </span>
-              <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 border border-blue-200">
+              <span className="rounded-full bg-[#acedff] px-2.5 py-0.5 text-xs font-semibold text-[#004e5c] border border-[#4cd7f6]">
                 Admin Protected Link
               </span>
             </div>
 
-            <h3 className="text-xl font-black text-gray-900">
+            <h3 className="text-xl font-black text-[#191c1d] font-heading">
               Your Form is Live &amp; Ready to Share!
             </h3>
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-[#464555]">
               Published with your unique Admin ID. Anyone with this link will navigate exclusively
               to your form, preventing any other admin or candidate overlap.
             </p>
 
             <div className="mt-5 space-y-3">
-              <label className="text-xs font-semibold text-gray-700 block">
+              <label className="text-xs font-semibold text-[#191c1d] block">
                 Public Form Link:
               </label>
-              <div className="flex items-center gap-2 rounded-lg border border-gray-200 bg-[#FAF9F6] p-1.5 pl-3">
+              <div className="flex items-center gap-2 rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] p-1.5 pl-3 shadow-xs">
                 <input
                   type="text"
                   readOnly
                   value={publicShareUrl}
-                  className="w-full bg-transparent text-xs text-gray-900 font-mono focus:outline-none"
+                  className="w-full bg-transparent text-xs text-[#191c1d] font-mono focus:outline-none"
                 />
                 <button
                   onClick={copyShareLink}
-                  className="shrink-0 flex items-center gap-1.5 rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-800 transition-colors"
+                  className="shrink-0 flex items-center gap-1.5 rounded-md bg-[#3525cd] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#4f46e5] shadow-xs transition-colors"
                 >
                   <Copy size={13} />
                   Copy Link
                 </button>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-gray-100">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#f3f4f5]">
                 <Link
                   to={publicShareUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-800"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-[#3525cd] hover:text-[#4f46e5]"
                 >
                   <ExternalLink size={14} />
                   Open Form in New Tab
@@ -503,7 +503,7 @@ export default function FormBuilder() {
 
                 <Link
                   to="/dashboard"
-                  className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-gray-900"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-[#464555] hover:text-[#191c1d]"
                 >
                   <BarChart2 size={14} />
                   View in Admin Dashboard
