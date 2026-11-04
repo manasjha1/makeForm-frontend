@@ -274,8 +274,8 @@ export default function FormBuilder() {
         canRedo={!!future.length}
       />
       <div className="studio-status">
-        <span role="status" className="flex items-center gap-2">
-          <CheckCircle2 size={12} />
+        <span role="status" className="flex items-center gap-2 text-sm">
+          <CheckCircle2 size={16} />
           {message ||
             (saveError ? "Draft not saved" : "Draft saved in this browser tab")}
         </span>
@@ -287,23 +287,21 @@ export default function FormBuilder() {
               setPreview(false);
             }}
           >
-            <LayoutGrid size={12} />
-            Templates
+            <LayoutGrid size={16} />
           </button>
           <button
             className="studio-button"
             disabled={!form}
             onClick={showPreview}
           >
-            <Eye size={12} />
-            Preview Form
+            <Eye size={16} />
           </button>
           <button
             className="studio-button"
             disabled={!form || isPublishing}
             onClick={handlePublishAndShare}
             style={{
-              backgroundColor: "#047857",
+              backgroundColor: "#3525cd",
               color: "#ffffff",
               fontWeight: 600,
               display: "inline-flex",
@@ -447,17 +445,17 @@ export default function FormBuilder() {
           <div className="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-[0_25px_50px_-12px_rgba(25,28,29,0.25)] border border-[#e1e3e4]">
             <button
               onClick={() => setShareModalOpen(false)}
-              className="absolute right-4 top-4 text-[#777587] hover:text-[#191c1d]"
+              className="absolute right-4 top-4 text-outline hover:text-[#191c1d]"
               aria-label="Close"
             >
               <X size={20} />
             </button>
 
             <div className="flex items-center gap-2 mb-2">
-              <span className="rounded-full bg-[#e2dfff] px-2.5 py-0.5 text-xs font-bold text-[#0f0069] border border-[#c3c0ff]">
+              <span className="rounded-full bg-primary-fixed px-2.5 py-0.5 text-xs font-bold text-on-primary-fixed border border-[#c3c0ff]">
                 LIVE &amp; PUBLISHED
               </span>
-              <span className="rounded-full bg-[#acedff] px-2.5 py-0.5 text-xs font-semibold text-[#004e5c] border border-[#4cd7f6]">
+              <span className="rounded-full bg-secondary-fixed px-2.5 py-0.5 text-xs font-semibold text-on-secondary-fixed-variant border border-secondary-fixed-dim">
                 Admin Protected Link
               </span>
             </div>
@@ -465,7 +463,7 @@ export default function FormBuilder() {
             <h3 className="text-xl font-black text-[#191c1d] font-heading">
               Your Form is Live &amp; Ready to Share!
             </h3>
-            <p className="mt-1 text-xs text-[#464555]">
+            <p className="mt-1 text-xs text-on-surface-variant">
               Published with your unique Admin ID. Anyone with this link will navigate exclusively
               to your form, preventing any other admin or candidate overlap.
             </p>
@@ -483,19 +481,19 @@ export default function FormBuilder() {
                 />
                 <button
                   onClick={copyShareLink}
-                  className="shrink-0 flex items-center gap-1.5 rounded-md bg-[#3525cd] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#4f46e5] shadow-xs transition-colors"
+                  className="shrink-0 flex items-center gap-1.5 rounded-md bg-[#3525cd] px-3 py-1.5 text-xs font-semibold text-white hover:bg-primary-container shadow-xs transition-colors"
                 >
                   <Copy size={13} />
                   Copy Link
                 </button>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#f3f4f5]">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-surface-container-low">
                 <Link
                   to={publicShareUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-1.5 text-xs font-semibold text-[#3525cd] hover:text-[#4f46e5]"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-[#3525cd] hover:text-primary-container"
                 >
                   <ExternalLink size={14} />
                   Open Form in New Tab
@@ -503,7 +501,7 @@ export default function FormBuilder() {
 
                 <Link
                   to="/dashboard"
-                  className="flex items-center gap-1.5 text-xs font-semibold text-[#464555] hover:text-[#191c1d]"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-on-surface-variant hover:text-[#191c1d]"
                 >
                   <BarChart2 size={14} />
                   View in Admin Dashboard
