@@ -81,7 +81,7 @@ export default function StudioFooter({
                     © {new Date().getFullYear()} makeForm. Build forms with clarity.
                 </span>
                 <span className="flex items-center gap-2">
-                    <span className="size-1.5 rounded-full bg-emerald-600" />
+                    <span className="size-1.5 rounded-full bg-[#4f46e5]" />
                     Local draft workspace
                 </span>
             </div>
