@@ -13,6 +13,7 @@
   min-height:100vh; 
   font-size:13px; 
 }
+.studio.studio-footer-shell { min-height:0; }
 .studio * { box-sizing:border-box; }
 .studio button,.studio a,.studio input,.studio select,.studio textarea { transition:background-color .15s,border-color .15s,box-shadow .15s,transform .15s; }
 .studio :focus-visible { outline:2px solid var(--studio-primary-container); outline-offset:2px; }

@@ -2,12 +2,7 @@ import { CheckCircle, MoveRight, Stars } from "lucide-react";
 
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
-import formImage from "~/assests/formImage.png";
-import {
-  Card,
-  CardDescription,
-  CardTitle,
-} from "~/src/components/ui/card";
+import formImage from "~/assests/formImg.png";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 
@@ -21,11 +16,11 @@ export function meta() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="">
       <Header viewPage="Home" />
       <main className="home-content min-h-full px-4 sm:px-6">
         <section className="home-hero mx-auto w-full max-w-4xl">
-          <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-[#e2dfff] border border-[#c3c0ff] text-[#0f0069] text-xs font-bold mb-6 shadow-xs motion-safe:animate-pulse">
+          <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-primary-fixed border border-[#c3c0ff] text-on-primary-fixed text-xs font-bold mb-6 shadow-xs motion-safe:animate-pulse">
             <Stars className="w-3.5 h-3.5 text-[#3525cd]" />
             <span>Next-Gen Drag & Drop Form Studio</span>
           </div>
@@ -38,41 +33,41 @@ export default function Home() {
           </h1>
 
           {/* Short Description */}
-          <p className="mt-6 text-base sm:text-lg text-[#464555] text-center max-w-2xl mx-auto font-normal leading-relaxed">
+          <p className="mt-6 text-base sm:text-lg text-on-surface-variant text-center max-w-2xl mx-auto font-normal leading-relaxed">
             Design and customize forms with live validation, conditional logic,
             and an interactive preview—no code required.
           </p>
           <div className="home-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 mx-auto my-6">
-            <Button asChild className="bg-gradient-to-r from-[#4f46e5] to-[#06b6d4] hover:from-[#3525cd] hover:to-[#00687a] transition-all flex items-center gap-1 p-5 text-white text-sm font-semibold rounded-lg shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_0_rgba(79,70,229,0.45)] capitalize"><Link to="/form-builder">
+            <Button asChild className="bg-linear-to-r from-primary-container to-[#06b6d4] hover:from-[#3525cd] hover:to-[#00687a] transition-all flex items-center gap-1 p-5 text-white text-sm font-semibold rounded-lg shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_0_rgba(79,70,229,0.45)] capitalize"><Link to="/form-builder">
               Launch your form{" "}
               <MoveRight className="w-3.5 h-3.5 text-white mx-2" />
             </Link></Button>
-            <Button asChild className="bg-white group hover:bg-[#f3f4f5] border border-[#e1e3e4] p-5 text-[#191c1d] text-sm font-medium rounded-lg shadow-xs hover:shadow-sm capitalize transition-all"><Link to="/form-builder?view=templates">
+            <Button asChild className="bg-white group hover:bg-surface-container-low border border-[#e1e3e4] p-5 text-[#191c1d] text-sm font-medium rounded-lg shadow-xs hover:shadow-sm capitalize transition-all"><Link to="/form-builder?view=templates">
               Explore prebuilt templates
             </Link></Button>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
             <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-              <p className="text-xs text-[#464555] font-normal capitalize">
+              <p className="text-xs text-on-surface-variant font-normal capitalize">
                 3-column editing workspace
               </p>
             </div>
             <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-              <p className="text-xs text-[#464555] font-normal capitalize">
+              <p className="text-xs text-on-surface-variant font-normal capitalize">
                 conditional field logic
               </p>
             </div>
             <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-              <p className="text-xs text-[#464555] font-normal capitalize">
+              <p className="text-xs text-on-surface-variant font-normal capitalize">
                 ready-to-use form templates
               </p>
             </div>
             <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-              <p className="text-xs text-[#464555] font-normal capitalize">
+              <p className="text-xs text-on-surface-variant font-normal capitalize">
                 mobile responsive preview
               </p>
             </div>
@@ -91,25 +86,11 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#191c1d] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
               Start with a prebuilt form
             </h2>
-            <p className="mt-2 text-base sm:text-lg text-[#464555] text-center max-w-2xl mx-auto font-normal leading-relaxed">
+            <p className="mt-2 text-base sm:text-lg text-on-surface-variant text-center max-w-2xl mx-auto font-normal leading-relaxed">
               Choose a ready-to-use template, customize the fields, and preview your form.
             </p>
           </div>
-          
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-            {formTemplates.map((form) => (
-              <Card key={form.id} className="home-template mx-auto w-full min-w-0 p-5 border group hover:border-emerald-700">
-                <CardTitle className="rounded-sm p-2 mb-2 w-fit bg-[#D1FAE5] border border-[#065F46] text-[#065F46] text-sm font-bold group-hover:bg-emerald-700 group-hover:text-white">
-                  {form.category}
-                </CardTitle>
-                <CardTitle className="mb-2">{form.title}</CardTitle>
-                <CardDescription>{form.description}</CardDescription>
-                <Button asChild className="bg-white hover:bg-emerald-700 text-emerald-700 hover:text-white border border-emerald-700 capitalize w-full mt-4"><Link to={`/form-builder?template=${form.id}`}>
-                  load template
-                </Link></Button>
-              </Card>
-            ))}
-          </div> */}
+
           <TemplateGallery onSelect={function (template: FormTemplate): void {
             throw new Error("Function not implemented.");
           }} />
