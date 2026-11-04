@@ -179,22 +179,25 @@ export default function Header({
     >
       <nav
         aria-label="Main navigation"
-        className="mx-auto flex max-w-[1600px] min-h-14 w-full items-center justify-between gap-3"
+        className="mx-auto flex max-w-[1600px] min-h-14 w-full md:w-[90%] items-center justify-between gap-3"
       >
-        <Link
-          to="/"
-          onClick={closeMenu}
-          className="shrink-0"
-          aria-label="makeForm home"
-        >
-          <img
-            className="h-14 w-32 object-contain"
-            src={makeFormLogo}
-            alt="makeForm"
-          />
-        </Link>
-        <div className="hidden items-center gap-1 rounded-lg border border-[#e1e3e4] bg-surface-container-low p-1 shadow-2xs xl:flex">
-          {navigation()}
+        <div className="flex items-center justify-between gap-5">
+          <Link
+            to="/"
+            onClick={closeMenu}
+            className="shrink-0"
+            aria-label="makeForm home"
+          >
+            <img
+              className="h-14 w-32 object-contain"
+              src={makeFormLogo}
+              alt="makeForm"
+            />
+          </Link>
+          <span className="text-gray-400/80 text-lg mx-3">|</span>
+          <div className="hidden items-center gap-1 rounded-lg border border-[#e1e3e4] bg-surface-container-low p-1 shadow-2xs xl:flex">
+            {navigation()}
+          </div>
         </div>
         <div className="hidden items-center gap-2 xl:flex">{actions}</div>
         <Button
