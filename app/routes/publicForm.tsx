@@ -208,11 +208,11 @@ export default function PublicForm() {
           </Link>
           <div className="flex items-center gap-2">
             {form?.user?.name && (
-              <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-[#f3f4f5] px-2.5 py-0.5 text-xs text-[#464555] border border-[#e1e3e4]">
+              <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-surface-container-low px-2.5 py-0.5 text-xs text-on-surface-variant border border-[#e1e3e4]">
                 Admin: <strong className="font-semibold text-[#191c1d]">{form.user.name}</strong>
               </span>
             )}
-            <span className="rounded-full bg-[#e2dfff] px-2.5 py-0.5 text-xs font-semibold text-[#0f0069] border border-[#c3c0ff]">
+            <span className="rounded-full bg-primary-fixed px-2.5 py-0.5 text-xs font-semibold text-on-primary-fixed border border-[#c3c0ff]">
               Verified Form
             </span>
           </div>
@@ -225,15 +225,15 @@ export default function PublicForm() {
           <Card className="border-[#e1e3e4] bg-white p-12 text-center shadow-[0_4px_6px_-1px_rgba(25,28,29,0.05),0_2px_4px_-2px_rgba(25,28,29,0.04)] rounded-xl">
             <RefreshCw className="mx-auto size-8 text-[#3525cd] animate-spin mb-3" />
             <h2 className="text-lg font-bold text-[#191c1d] font-heading">Loading form...</h2>
-            <p className="text-xs text-[#464555] mt-1">Please wait while the form is loaded.</p>
+            <p className="text-xs text-on-surface-variant mt-1">Please wait while the form is loaded.</p>
           </Card>
         ) : error ? (
           <Card className="border-[#e1e3e4] bg-white p-8 text-center shadow-[0_4px_6px_-1px_rgba(25,28,29,0.05),0_2px_4px_-2px_rgba(25,28,29,0.04)] rounded-xl">
-            <AlertCircle className="mx-auto size-12 text-[#ba1a1a] mb-3" />
+            <AlertCircle className="mx-auto size-12 text-error mb-3" />
             <h2 className="text-xl font-bold text-[#191c1d] font-heading">Form Unavailable</h2>
-            <p className="mt-2 text-sm text-[#464555] max-w-md mx-auto">{error}</p>
+            <p className="mt-2 text-sm text-on-surface-variant max-w-md mx-auto">{error}</p>
             <div className="mt-6">
-              <Button asChild variant="outline" className="border-[#e1e3e4] hover:bg-[#f3f4f5]">
+              <Button asChild variant="outline" className="border-[#e1e3e4] hover:bg-surface-container-low">
                 <Link to="/">Back to makeForm</Link>
               </Button>
             </div>
@@ -241,26 +241,26 @@ export default function PublicForm() {
         ) : isSubmitted ? (
           /* Submission Success Screen */
           <Card className="border-[#e1e3e4] bg-white shadow-[0_10px_25px_-5px_rgba(25,28,29,0.08),0_4px_10px_-3px_rgba(25,28,29,0.04)] overflow-hidden rounded-2xl animate-in fade-in zoom-in-95 duration-300">
-            <div className="h-2 bg-gradient-to-r from-[#4f46e5] to-[#06b6d4]" />
+            <div className="h-2 bg-linear-to-r from-primary-container to-[#06b6d4]" />
             <CardHeader className="text-center pt-8 pb-4">
-              <div className="mx-auto mb-3 flex size-16 items-center justify-center rounded-full bg-[#e2dfff] text-[#3525cd] ring-8 ring-[#e2dfff]/50">
+              <div className="mx-auto mb-3 flex size-16 items-center justify-center rounded-full bg-primary-fixed text-[#3525cd] ring-8 ring-primary-fixed/50">
                 <CheckCircle2 className="size-10" />
               </div>
               <CardTitle className="text-2xl font-black text-[#191c1d] font-heading">
                 Response Submitted!
               </CardTitle>
-              <CardDescription className="text-sm text-[#464555] max-w-md mx-auto mt-2">
+              <CardDescription className="text-sm text-on-surface-variant max-w-md mx-auto mt-2">
                 Thank you! Your submission for <strong className="text-[#191c1d]">{form?.title}</strong> has been successfully received and recorded.
               </CardDescription>
             </CardHeader>
 
             <CardContent className="px-6 sm:px-8 space-y-6">
               {/* Email notification alert banner */}
-              <div className="rounded-xl border border-[#c3c0ff] bg-[#e2dfff]/40 p-4 text-xs text-[#0f0069] flex items-start gap-3">
+              <div className="rounded-xl border border-[#c3c0ff] bg-primary-fixed/40 p-4 text-xs text-on-primary-fixed flex items-start gap-3">
                 <Mail className="size-5 shrink-0 text-[#3525cd] mt-0.5" />
                 <div className="space-y-1">
-                  <p className="font-semibold text-[#07006c]">Email Confirmation Sent</p>
-                  <p className="text-[#0f0069] leading-relaxed">
+                  <p className="font-semibold text-on-tertiary-fixed">Email Confirmation Sent</p>
+                  <p className="text-on-primary-fixed leading-relaxed">
                     {submittedEmail
                       ? `A copy of your submission has been emailed to ${submittedEmail}. The form organizer has also been notified.`
                       : "A confirmation notification has been dispatched to the registered form organizer."}
@@ -270,14 +270,14 @@ export default function PublicForm() {
 
               {/* Answers Summary Box */}
               <div className="rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] p-4 text-xs space-y-2.5">
-                <p className="font-bold uppercase tracking-wider text-[#464555] text-[11px]">
+                <p className="font-bold uppercase tracking-wider text-on-surface-variant text-[11px]">
                   Submitted Answers Summary
                 </p>
                 <div className="divide-y divide-[#e1e3e4]">
                   {submittedAnswers.map((item, idx) => (
                     <div key={idx} className="py-2 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1">
                       <span className="font-semibold text-[#191c1d] sm:w-1/2">{item.label}</span>
-                      <span className="text-[#464555] font-mono sm:w-1/2 sm:text-right break-words">
+                      <span className="text-on-surface-variant font-mono sm:w-1/2 sm:text-right wrap-break-word">
                         {item.value === null || item.value === undefined || item.value === ""
                           ? "-"
                           : Array.isArray(item.value)
@@ -293,13 +293,13 @@ export default function PublicForm() {
                 <Button
                   onClick={handleResetForm}
                   variant="outline"
-                  className="w-full sm:w-auto border-[#e1e3e4] hover:bg-[#f3f4f5] text-[#191c1d]"
+                  className="w-full sm:w-auto border-[#e1e3e4] hover:bg-surface-container-low text-[#191c1d]"
                 >
                   Submit another response
                 </Button>
                 <Button
                   asChild
-                  className="w-full sm:w-auto bg-[#3525cd] hover:bg-[#4f46e5] text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.35)]"
+                  className="w-full sm:w-auto bg-[#3525cd] hover:bg-primary-container text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.35)]"
                 >
                   <Link to="/">Create your own form on makeForm</Link>
                 </Button>
@@ -309,13 +309,13 @@ export default function PublicForm() {
         ) : (
           /* Active Form Fill-out Form */
           <Card className="border-[#e1e3e4] bg-white shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)] overflow-hidden rounded-2xl">
-            <div className="h-2 bg-gradient-to-r from-[#4f46e5] to-[#06b6d4]" />
+            <div className="h-2 bg-linear-to-r from-primary-container to-[#06b6d4]" />
             <CardHeader className="border-b border-[#e1e3e4] bg-[#f8f9fa] px-6 py-5">
               <CardTitle className="text-2xl sm:text-3xl font-extrabold text-[#191c1d] tracking-tight font-heading">
                 {form?.title}
               </CardTitle>
               {form?.description && (
-                <CardDescription className="text-sm text-[#464555] mt-1.5 leading-relaxed">
+                <CardDescription className="text-sm text-on-surface-variant mt-1.5 leading-relaxed">
                   {form.description}
                 </CardDescription>
               )}
@@ -333,12 +333,12 @@ export default function PublicForm() {
                       <label className="block text-sm font-semibold text-[#191c1d]">
                         {field.label}
                         {field.required && (
-                          <span className="text-[#ba1a1a] ml-1 font-bold" title="Required">*</span>
+                          <span className="text-error ml-1 font-bold" title="Required">*</span>
                         )}
                       </label>
 
                       {field.description && (
-                        <p className="text-xs text-[#464555]">{field.description}</p>
+                        <p className="text-xs text-on-surface-variant">{field.description}</p>
                       )}
 
                       {/* Field Type Specific Controls */}
@@ -350,8 +350,8 @@ export default function PublicForm() {
                           placeholder={field.placeholder || "Enter your response..."}
                           className={`w-full rounded-lg border px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 shadow-xs ${
                             error
-                              ? "border-[#ba1a1a] focus:ring-[#ba1a1a]/20"
-                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-[#4f46e5] focus:ring-[#4f46e5]/20 focus:bg-white"
+                              ? "border-error focus:ring-error/20"
+                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
                           }`}
                         />
                       ) : field.type === "SELECT" ? (
@@ -374,8 +374,8 @@ export default function PublicForm() {
                                 key={i}
                                 className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${
                                   isChecked
-                                    ? "border-[#4f46e5] bg-[#e2dfff]/35 text-[#0f0069] font-medium ring-1 ring-[#4f46e5]/30 shadow-xs"
-                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] hover:bg-white"
+                                    ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
+                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
                                 }`}
                               >
                                 <input
@@ -402,8 +402,8 @@ export default function PublicForm() {
                                 key={i}
                                 className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${
                                   isChecked
-                                    ? "border-[#4f46e5] bg-[#e2dfff]/35 text-[#0f0069] font-medium ring-1 ring-[#4f46e5]/30 shadow-xs"
-                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] hover:bg-white"
+                                    ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
+                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
                                 }`}
                               >
                                 <input
@@ -444,14 +444,14 @@ export default function PublicForm() {
                           maxLength={config.maxLength}
                           className={`w-full rounded-lg border px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 shadow-xs ${
                             error
-                              ? "border-[#ba1a1a] focus:ring-[#ba1a1a]/20"
-                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-[#4f46e5] focus:ring-[#4f46e5]/20 focus:bg-white"
+                              ? "border-error focus:ring-error/20"
+                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
                           }`}
                         />
                       )}
 
                       {error && (
-                        <p className="text-xs font-medium text-[#ba1a1a]">{error}</p>
+                        <p className="text-xs font-medium text-error">{error}</p>
                       )}
                     </div>
                   );
@@ -461,7 +461,7 @@ export default function PublicForm() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto bg-[#3525cd] hover:bg-[#4f46e5] text-white font-semibold py-2.5 px-8 shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] flex items-center justify-center gap-2 rounded-lg"
+                    className="w-full sm:w-auto bg-[#3525cd] hover:bg-primary-container text-white font-semibold py-2.5 px-8 shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] flex items-center justify-center gap-2 rounded-lg"
                   >
                     {isSubmitting ? (
                       <>
@@ -483,7 +483,7 @@ export default function PublicForm() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-[#e1e3e4] bg-white py-4 text-center text-xs text-[#464555]">
+      <footer className="w-full border-t border-[#e1e3e4] bg-white py-4 text-center text-xs text-on-surface-variant">
         <div className="mx-auto flex max-w-2xl items-center justify-center gap-2">
           <span>Powered by</span>
           <Link to="/" className="font-semibold text-[#3525cd] hover:underline">

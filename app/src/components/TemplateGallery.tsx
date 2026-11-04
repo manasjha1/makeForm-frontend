@@ -73,24 +73,24 @@ export default function TemplateGallery({
             <div className="mb-5 flex items-center justify-between">
               <FileText
                 aria-hidden="true"
-                className="size-10 rounded-lg bg-[#e2dfff] p-2 text-[#3525cd]"
+                className="size-10 rounded-lg bg-primary-fixed p-2 text-[#3525cd]"
               />
-              <span className="text-xs font-semibold text-[#464555] bg-[#f3f4f5] px-2 py-0.5 rounded-full border border-[#e1e3e4]">
+              <span className="text-xs font-semibold text-on-surface-variant bg-surface-container-low px-2 py-0.5 rounded-full border border-[#e1e3e4]">
                 {template.category}
               </span>
             </div>
             <h3 className="text-lg font-semibold text-[#191c1d]">
               {template.title}
             </h3>
-            <p className="mt-2 flex-1 text-sm leading-6 text-[#464555]">
+            <p className="mt-2 flex-1 text-sm leading-6 text-on-surface-variant">
               {template.description}
             </p>
-            <p className="mt-5 text-xs text-[#777587]">
+            <p className="mt-5 text-xs text-outline">
               {template.fields.length} fields · Fully customizable
             </p>
             <Button
               onClick={() => onSelect(template)}
-              className="mt-4 bg-[#3525cd] text-white hover:bg-[#4f46e5] shadow-xs font-semibold"
+              className="mt-4 bg-[#3525cd] text-white hover:bg-primary-container shadow-xs font-semibold"
               aria-label={`Use ${template.title} template`}
             >
               Use template

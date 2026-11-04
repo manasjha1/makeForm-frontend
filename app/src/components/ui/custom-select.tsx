@@ -86,10 +86,10 @@ export default function CustomSelect({
         onClick={() => !disabled && setIsOpen((prev) => !prev)}
         className={`flex w-full items-center justify-between gap-2 rounded-lg border bg-[#f8f9fa] px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-3 ${
           isOpen
-            ? "border-[#4f46e5] bg-white ring-3 ring-[#4f46e5]/20 shadow-xs"
+            ? "border-primary-container bg-white ring-3 ring-primary-container/20 shadow-xs"
             : error
-            ? "border-[#ba1a1a] focus:ring-[#ba1a1a]/20"
-            : "border-[#e1e3e4] hover:border-[#c3c0ff] focus:border-[#4f46e5] focus:ring-[#4f46e5]/20"
+            ? "border-error focus:ring-error/20"
+            : "border-[#e1e3e4] hover:border-[#c3c0ff] focus:border-primary-container focus:ring-primary-container/20"
         } ${disabled ? "cursor-not-allowed opacity-60 bg-gray-100" : "cursor-pointer"}`}
       >
         <span
@@ -102,7 +102,7 @@ export default function CustomSelect({
         <ChevronDown
           size={16}
           className={`shrink-0 text-gray-500 transition-transform duration-200 ${
-            isOpen ? "rotate-180 text-[#4f46e5]" : ""
+            isOpen ? "rotate-180 text-primary-container" : ""
           }`}
         />
       </button>
@@ -112,7 +112,7 @@ export default function CustomSelect({
         <div
           role="listbox"
           tabIndex={-1}
-          className="absolute left-0 top-full z-50 mt-1.5 max-h-60 w-full min-w-[180px] overflow-y-auto rounded-xl border border-[#e1e3e4] bg-white p-1.5 shadow-[0_10px_25px_-5px_rgba(25,28,29,0.1),0_4px_10px_-3px_rgba(25,28,29,0.05)] ring-1 ring-black/5 animate-in fade-in-0 zoom-in-95 duration-150"
+          className="absolute left-0 top-full z-50 mt-1.5 max-h-60 w-full min-w-45 overflow-y-auto rounded-xl border border-[#e1e3e4] bg-white p-1.5 shadow-[0_10px_25px_-5px_rgba(25,28,29,0.1),0_4px_10px_-3px_rgba(25,28,29,0.05)] ring-1 ring-black/5 animate-in fade-in-0 zoom-in-95 duration-150"
         >
           {/* Default / Clear choice */}
           <button
@@ -122,7 +122,7 @@ export default function CustomSelect({
             onClick={() => handleSelect("")}
             className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs transition-colors ${
               !value
-                ? "bg-[#e2dfff]/60 text-[#0f0069] font-semibold"
+                ? "bg-primary-fixed/60 text-on-primary-fixed font-semibold"
                 : "text-gray-400 hover:bg-[#f8f9fa] hover:text-gray-700"
             }`}
           >
@@ -145,8 +145,8 @@ export default function CustomSelect({
                 onClick={() => handleSelect(option)}
                 className={`group flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm transition-all ${
                   isSelected
-                    ? "bg-[#e2dfff]/60 text-[#0f0069] font-semibold shadow-2xs"
-                    : "text-[#191c1d] hover:bg-[#e2dfff]/25 hover:text-[#0f0069]"
+                    ? "bg-primary-fixed/60 text-on-primary-fixed font-semibold shadow-2xs"
+                    : "text-[#191c1d] hover:bg-primary-fixed/25 hover:text-on-primary-fixed"
                 }`}
               >
                 <span className="truncate">{option}</span>

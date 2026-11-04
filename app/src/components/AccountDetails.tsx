@@ -78,12 +78,12 @@ export default function AccountDetails({
                 <DropdownMenuTrigger asChild>
                     <Button
                         variant="ghost"
-                        className="h-auto min-w-0 gap-2 px-2 py-1 text-[#191c1d] hover:bg-[#e2dfff]/40 rounded-lg transition-colors"
+                        className="h-auto min-w-0 gap-2 px-2 py-1 text-[#191c1d] hover:bg-primary-fixed/40 rounded-lg transition-colors"
                         aria-label={`Open profile menu for ${profile.name}`}
                     >
                         <UserRound
                             aria-hidden="true"
-                            className="size-8 shrink-0 rounded-full bg-[#e2dfff] p-1.5 text-[#3525cd]"
+                            className="size-8 shrink-0 rounded-full bg-primary-fixed p-1.5 text-[#3525cd]"
                         />
                         <span className="max-w-40 truncate text-sm font-semibold capitalize">
                             {profile.name}
@@ -98,20 +98,20 @@ export default function AccountDetails({
                         <div className="flex items-center justify-between gap-2">
                             <UserRound
                                 aria-hidden="true"
-                                className="size-8 shrink-0 rounded-full bg-[#e2dfff] p-1.5 text-[#3525cd]"
+                                className="size-8 shrink-0 rounded-full bg-primary-fixed p-1.5 text-[#3525cd]"
                             />
                             <div className="flex-1 items-center">
                                 <p className="wrap-break-word text-sm font-semibold text-[#191c1d] capitalize">
                                     {profile.name}
                                 </p>
-                                <p className="break-all text-xs font-normal text-[#464555]">
+                                <p className="break-all text-xs font-normal text-on-surface-variant">
                                     {profile.email}
                                 </p>
                             </div>
                         </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild className="cursor-pointer gap-2 px-3 py-2 hover:bg-[#e2dfff]/40">
+                    <DropdownMenuItem asChild className="cursor-pointer gap-2 px-3 py-2 hover:bg-primary-fixed/40">
                         <Link to="/dashboard" onClick={onNavigate} className="flex w-full items-center gap-2">
                             <LayoutDashboard aria-hidden="true" className="size-4 text-[#3525cd]" />
                             Admin Dashboard
@@ -136,7 +136,7 @@ export default function AccountDetails({
                 asChild
                 variant="outline"
                 size="sm"
-                className="rounded-lg border-[#3525cd] bg-transparent font-medium text-[#3525cd] hover:bg-[#e2dfff]/30 transition-colors"
+                className="rounded-lg border-[#3525cd] bg-transparent font-medium text-[#3525cd] hover:bg-primary-fixed/30 transition-colors"
             >
                 <Link to="/sign-in" onClick={onNavigate}>
                     Sign In
@@ -145,7 +145,7 @@ export default function AccountDetails({
             <Button
                 asChild
                 size="sm"
-                className="rounded-lg border border-[#3525cd] bg-[#3525cd] font-medium text-white hover:bg-[#4f46e5] shadow-xs transition-all"
+                className="rounded-lg border border-[#3525cd] bg-[#3525cd] font-medium text-white hover:bg-primary-container shadow-xs transition-all"
             >
                 <Link to="/create-account" onClick={onNavigate}>
                     <UserRound aria-hidden="true" className="size-4" /> Sign Up

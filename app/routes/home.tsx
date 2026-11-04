@@ -6,12 +6,18 @@ import formImage from "~/assests/formImg.png";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 
-import { formTemplates } from "~/src/data/form-templates";
 import TemplateGallery from "~/src/components/TemplateGallery";
 import type { FormTemplate } from "~/src/lib/form-types";
 
 export function meta() {
-  return [{ title: "makeForm | Visual Form Builder" }, { name: "description", content: "Build forms from templates with validation, conditional logic, and live previews." }];
+  return [
+    { title: "makeForm | Visual Form Builder" },
+    {
+      name: "description",
+      content:
+        "Build forms from templates with validation, conditional logic, and live previews.",
+    },
+  ];
 }
 
 export default function Home() {
@@ -38,13 +44,23 @@ export default function Home() {
             and an interactive preview—no code required.
           </p>
           <div className="home-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 mx-auto my-6">
-            <Button asChild className="bg-linear-to-r from-primary-container to-[#06b6d4] hover:from-[#3525cd] hover:to-[#00687a] transition-all flex items-center gap-1 p-5 text-white text-sm font-semibold rounded-lg shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_0_rgba(79,70,229,0.45)] capitalize"><Link to="/form-builder">
-              Launch your form{" "}
-              <MoveRight className="w-3.5 h-3.5 text-white mx-2" />
-            </Link></Button>
-            <Button asChild className="bg-white group hover:bg-surface-container-low border border-[#e1e3e4] p-5 text-[#191c1d] text-sm font-medium rounded-lg shadow-xs hover:shadow-sm capitalize transition-all"><Link to="/form-builder?view=templates">
-              Explore prebuilt templates
-            </Link></Button>
+            <Button
+              asChild
+              className="bg-linear-to-r from-primary-container to-[#06b6d4] hover:from-[#3525cd] hover:to-[#00687a] transition-all flex items-center gap-1 p-5 text-white text-sm font-semibold rounded-lg shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_0_rgba(79,70,229,0.45)] capitalize"
+            >
+              <Link to="/form-builder">
+                Launch your form{" "}
+                <MoveRight className="w-3.5 h-3.5 text-white mx-2" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              className="bg-white group hover:bg-surface-container-low border border-[#e1e3e4] p-5 text-[#191c1d] text-sm font-medium rounded-lg shadow-xs hover:shadow-sm capitalize transition-all"
+            >
+              <Link to="/form-builder?view=templates">
+                Explore prebuilt templates
+              </Link>
+            </Button>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
             <div className="flex items-center gap-2 min-w-0">
@@ -87,13 +103,16 @@ export default function Home() {
               Start with a prebuilt form
             </h2>
             <p className="mt-2 text-base sm:text-lg text-on-surface-variant text-center max-w-2xl mx-auto font-normal leading-relaxed">
-              Choose a ready-to-use template, customize the fields, and preview your form.
+              Choose a ready-to-use template, customize the fields, and preview
+              your form.
             </p>
           </div>
 
-          <TemplateGallery onSelect={function (template: FormTemplate): void {
-            throw new Error("Function not implemented.");
-          }} />
+          <TemplateGallery
+            onSelect={function (template: FormTemplate): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
         </section>
       </main>
       <Footer />

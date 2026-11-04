@@ -93,7 +93,7 @@ export default function Header({
           <Icon className="size-4" />
           {label}
           {page === "FormBuilder" && count !== undefined && (
-            <span className="rounded bg-[#e2dfff] px-1.5 text-[10px] font-semibold text-[#0f0069]">
+            <span className="rounded bg-primary-fixed px-1.5 text-[10px] font-semibold text-on-primary-fixed">
               {count}
             </span>
           )}
@@ -193,7 +193,7 @@ export default function Header({
             alt="makeForm"
           />
         </Link>
-        <div className="hidden items-center gap-1 rounded-lg border border-[#e1e3e4] bg-[#f3f4f5] p-1 shadow-2xs xl:flex">
+        <div className="hidden items-center gap-1 rounded-lg border border-[#e1e3e4] bg-surface-container-low p-1 shadow-2xs xl:flex">
           {navigation()}
         </div>
         <div className="hidden items-center gap-2 xl:flex">{actions}</div>

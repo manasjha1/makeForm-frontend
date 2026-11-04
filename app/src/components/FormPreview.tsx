@@ -70,7 +70,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
       ref={formRef}
       tabIndex={-1}
       noValidate
-      className="form-preview min-w-0 space-y-6 rounded-2xl border border-[#e1e3e4] border-t-4 border-t-[#4f46e5] bg-white p-4 shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)] sm:p-8"
+      className="form-preview min-w-0 space-y-6 rounded-2xl border border-[#e1e3e4] border-t-4 border-t-primary-container bg-white p-4 shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)] sm:p-8"
       onSubmit={(event) => {
         event.preventDefault();
         setDemoErrors(false);
@@ -95,22 +95,22 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
       }}
     >
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary-container">
           Live preview
         </p>
         <h2 className="wrap-break-word text-2xl font-bold text-[#191c1d]">
           {form.title}
         </h2>
-        <p className="mt-2 whitespace-pre-wrap wrap-break-words text-sm text-[#464555]">
+        <p className="mt-2 whitespace-pre-wrap wrap-break-words text-sm text-on-surface-variant">
           {form.description}
         </p>
       </div>
-      <p className="text-xs text-[#464555]">
+      <p className="text-xs text-on-surface-variant">
         Fields marked * are required. Test responses and files stay in this
         preview and are not uploaded.
       </p>
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] p-3 shadow-xs">
-        <span className="text-xs text-[#464555]">Inspect form states</span>
+        <span className="text-xs text-on-surface-variant">Inspect form states</span>
         <Button
           type="button"
           variant="outline"
@@ -186,14 +186,14 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         key={index}
                         className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer shadow-xs ${
                           isChecked
-                            ? "border-[#4f46e5] bg-[#e2dfff]/40 text-[#0f0069] font-medium ring-1 ring-[#4f46e5]/20"
-                            : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c3c0ff] hover:bg-[#e2dfff]/20"
+                            ? "border-primary-container bg-primary-fixed/40 text-on-primary-fixed font-medium ring-1 ring-primary-container/20"
+                            : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c3c0ff] hover:bg-primary-fixed/20"
                         }`}
                       >
                         <input
                           type={field.type}
                           name={field.id}
-                          className="size-4 shrink-0 accent-[#4f46e5] cursor-pointer"
+                          className="size-4 shrink-0 accent-primary-container cursor-pointer"
                           aria-invalid={!!displayedErrors[field.id]}
                           aria-describedby={`${id}-help ${id}-error`}
                           checked={isChecked}
@@ -222,7 +222,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 <input
                   {...props}
                   type="checkbox"
-                  className="size-4 accent-[#4f46e5] cursor-pointer"
+                  className="size-4 accent-primary-container cursor-pointer"
                   checked={answers[field.id] === true}
                   onChange={(event) => update(field.id, event.target.checked)}
                 />
@@ -289,13 +289,13 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 )}
               </>
             )}
-            <p id={`${id}-help`} className="text-xs text-[#464555]">
+            <p id={`${id}-help`} className="text-xs text-on-surface-variant">
               {field.helpText}
             </p>
             <p
               id={`${id}-error`}
               role={displayedErrors[field.id] ? "alert" : undefined}
-              className="text-xs text-[#ba1a1a]"
+              className="text-xs text-error"
             >
               {displayedErrors[field.id]}
             </p>
@@ -304,7 +304,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
       })}
       <Button
         type="submit"
-        className="w-full bg-[#3525cd] text-white hover:bg-[#4f46e5] shadow-[0_4px_14px_0_rgba(79,70,229,0.3)] transition-all font-semibold"
+        className="w-full bg-[#3525cd] text-white hover:bg-primary-container shadow-[0_4px_14px_0_rgba(79,70,229,0.3)] transition-all font-semibold"
       >
         Test submission
       </Button>

@@ -153,16 +153,16 @@ export default function OtpForm() {
       <main className="flex-1 flex items-center justify-center px-3 py-6 sm:px-4 sm:py-12">
         <Card className="w-full max-w-md shadow-[0_10px_25px_-5px_rgba(25,28,29,0.08),0_4px_10px_-3px_rgba(25,28,29,0.04)] border border-[#e1e3e4] bg-white rounded-2xl overflow-hidden">
           {/* Top Decorative Header */}
-          <div className="h-2 bg-gradient-to-r from-[#4f46e5] to-[#06b6d4]" />
+          <div className="h-2 bg-linear-to-r from-primary-container to-[#06b6d4]" />
 
           <CardHeader className="text-center pt-8 pb-4">
-            <div className="mx-auto w-12 h-12 bg-[#e2dfff] text-[#3525cd] rounded-full flex items-center justify-center mb-3 border border-[#c3c0ff] shadow-xs">
+            <div className="mx-auto w-12 h-12 bg-primary-fixed text-[#3525cd] rounded-full flex items-center justify-center mb-3 border border-[#c3c0ff] shadow-xs">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <CardTitle className="text-2xl font-bold text-[#191c1d] tracking-tight font-heading">
               Verify your email
             </CardTitle>
-            <CardDescription className="text-sm text-[#464555] mt-2 px-2">
+            <CardDescription className="text-sm text-on-surface-variant mt-2 px-2">
               We sent a 6-digit verification code to: <br />
               <span className="font-semibold text-[#3525cd] break-all">{email}</span>
             </CardDescription>
@@ -172,7 +172,7 @@ export default function OtpForm() {
             <form onSubmit={handleVerify} id="otp-form" className="space-y-6">
               <Field className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <FieldLabel htmlFor="otp-input" className="text-xs font-semibold uppercase tracking-wider text-[#464555]">
+                  <FieldLabel htmlFor="otp-input" className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
                     6-Digit Code
                   </FieldLabel>
 
@@ -182,7 +182,7 @@ export default function OtpForm() {
                     size="xs"
                     onClick={handleResend}
                     disabled={cooldown > 0 || isResending || isVerifying}
-                    className="text-xs text-[#3525cd] hover:text-[#4f46e5] hover:bg-[#e2dfff]/40 disabled:text-gray-400 gap-1.5 font-medium transition-colors"
+                    className="text-xs text-[#3525cd] hover:text-primary-container hover:bg-primary-fixed/40 disabled:text-gray-400 gap-1.5 font-medium transition-colors"
                   >
                     <RefreshCwIcon className={`w-3.5 h-3.5 ${isResending ? "animate-spin" : ""}`} />
                     {cooldown > 0 ? `Resend in ${cooldown}s` : isResending ? "Sending..." : "Resend Code"}
@@ -202,13 +202,13 @@ export default function OtpForm() {
                     disabled={isVerifying || isResending}
                     autoFocus
                   >
-                    <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:font-bold *:data-[slot=input-otp-slot]:border-[#e1e3e4] focus-within:*:data-[slot=input-otp-slot]:border-[#4f46e5] focus-within:*:data-[slot=input-otp-slot]:ring-2 focus-within:*:data-[slot=input-otp-slot]:ring-[#4f46e5]/20">
+                    <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:font-bold *:data-[slot=input-otp-slot]:border-[#e1e3e4] focus-within:*:data-[slot=input-otp-slot]:border-primary-container focus-within:*:data-[slot=input-otp-slot]:ring-2 focus-within:*:data-[slot=input-otp-slot]:ring-primary-container/20">
                       <InputOTPSlot index={0} />
                       <InputOTPSlot index={1} />
                       <InputOTPSlot index={2} />
                     </InputOTPGroup>
-                    <InputOTPSeparator className="mx-2 text-[#777587] font-bold" />
-                    <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:font-bold *:data-[slot=input-otp-slot]:border-[#e1e3e4] focus-within:*:data-[slot=input-otp-slot]:border-[#4f46e5] focus-within:*:data-[slot=input-otp-slot]:ring-2 focus-within:*:data-[slot=input-otp-slot]:ring-[#4f46e5]/20">
+                    <InputOTPSeparator className="mx-2 text-outline font-bold" />
+                    <InputOTPGroup className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl *:data-[slot=input-otp-slot]:font-bold *:data-[slot=input-otp-slot]:border-[#e1e3e4] focus-within:*:data-[slot=input-otp-slot]:border-primary-container focus-within:*:data-[slot=input-otp-slot]:ring-2 focus-within:*:data-[slot=input-otp-slot]:ring-primary-container/20">
                       <InputOTPSlot index={3} />
                       <InputOTPSlot index={4} />
                       <InputOTPSlot index={5} />
@@ -216,7 +216,7 @@ export default function OtpForm() {
                   </InputOTP>
                 </div>
 
-                <p className="text-xs text-center text-[#464555]">
+                <p className="text-xs text-center text-on-surface-variant">
                   Use the latest code from your email. You can request another code after the resend timer ends.
                 </p>
               </Field>
@@ -228,21 +228,21 @@ export default function OtpForm() {
               type="submit"
               form="otp-form"
               disabled={isVerifying || isResending || otp.length !== 6}
-              className="w-full bg-[#3525cd] hover:bg-[#4f46e5] text-white font-semibold py-2.5 rounded-lg shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#3525cd] hover:bg-primary-container text-white font-semibold py-2.5 rounded-lg shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isVerifying ? "Verifying..." : "Verify & Continue"}
             </Button>
 
-            <div className="flex flex-wrap gap-3 items-center justify-between w-full text-xs text-[#464555] border-t border-[#f3f4f5] pt-4">
+            <div className="flex flex-wrap gap-3 items-center justify-between w-full text-xs text-on-surface-variant border-t border-surface-container-low pt-4">
               <Link
                 to="/create-account"
-                className="flex items-center gap-1.5 text-[#464555] hover:text-[#3525cd] transition-colors font-medium"
+                className="flex items-center gap-1.5 text-on-surface-variant hover:text-[#3525cd] transition-colors font-medium"
               >
                 <ArrowLeft className="w-3.5 h-3.5" /> Change Email
               </Link>
               <Link
                 to="/sign-in"
-                className="text-[#464555] hover:text-[#3525cd] transition-colors font-medium"
+                className="text-on-surface-variant hover:text-[#3525cd] transition-colors font-medium"
               >
                 Already verified? Sign In
               </Link>
