@@ -27,10 +27,10 @@ export default function TemplateGallery({
     >
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-semibold text-emerald-700">
+          <p className="text-sm font-semibold text-[#3525cd]">
             Start with a template
           </p>
-          <h2 className="mt-1 text-3xl font-bold text-gray-900">
+          <h2 className="mt-1 text-3xl font-bold text-[#191c1d]">
             A head start for every form.
           </h2>
         </div>
@@ -68,29 +68,29 @@ export default function TemplateGallery({
         {templates.map((template) => (
           <article
             key={template.id}
-            className="flex min-w-0 flex-col rounded-xl border border-gray-200 bg-white p-4 sm:p-6 shadow-sm"
+            className="flex min-w-0 flex-col rounded-xl border border-[#e1e3e4] bg-white p-4 sm:p-6 shadow-[0_4px_6px_-1px_rgba(25,28,29,0.05),0_2px_4px_-2px_rgba(25,28,29,0.04)] hover:shadow-[0_10px_20px_-3px_rgba(25,28,29,0.08)] transition-all"
           >
             <div className="mb-5 flex items-center justify-between">
               <FileText
                 aria-hidden="true"
-                className="size-10 rounded-lg bg-emerald-50 p-2 text-emerald-700"
+                className="size-10 rounded-lg bg-[#e2dfff] p-2 text-[#3525cd]"
               />
-              <span className="text-xs font-medium text-gray-500">
+              <span className="text-xs font-semibold text-[#464555] bg-[#f3f4f5] px-2 py-0.5 rounded-full border border-[#e1e3e4]">
                 {template.category}
               </span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-[#191c1d]">
               {template.title}
             </h3>
-            <p className="mt-2 flex-1 text-sm leading-6 text-gray-500">
+            <p className="mt-2 flex-1 text-sm leading-6 text-[#464555]">
               {template.description}
             </p>
-            <p className="mt-5 text-xs text-gray-500">
+            <p className="mt-5 text-xs text-[#777587]">
               {template.fields.length} fields · Fully customizable
             </p>
             <Button
               onClick={() => onSelect(template)}
-              className="mt-4 bg-emerald-700 text-white hover:bg-emerald-800"
+              className="mt-4 bg-[#3525cd] text-white hover:bg-[#4f46e5] shadow-xs font-semibold"
               aria-label={`Use ${template.title} template`}
             >
               Use template
