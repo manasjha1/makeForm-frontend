@@ -86,14 +86,14 @@ export default function Header({
       const className =
         "justify-start rounded-md text-xs " +
         (active
-          ? "bg-white text-emerald-700 shadow-sm"
-          : "text-gray-600 hover:bg-white");
+          ? "bg-white text-[#3525cd] font-semibold shadow-xs"
+          : "text-gray-600 hover:bg-white hover:text-gray-900");
       const content = (
         <>
           <Icon className="size-4" />
           {label}
           {page === "FormBuilder" && count !== undefined && (
-            <span className="rounded bg-emerald-100 px-1.5 text-[10px] text-emerald-800">
+            <span className="rounded bg-[#e2dfff] px-1.5 text-[10px] font-semibold text-[#0f0069]">
               {count}
             </span>
           )}
@@ -175,7 +175,7 @@ export default function Header({
           toggle.current?.focus();
         }
       }}
-      className="app-header sticky top-0 z-40 w-full border-b border-[#E2E8E4] bg-[#f9f6f0]/95 px-3 py-2 backdrop-blur sm:px-5"
+      className="app-header sticky top-0 z-40 w-full border-b border-[#e1e3e4] bg-[#f8f9fa]/95 px-3 py-2 backdrop-blur shadow-[0_1px_3px_0_rgba(25,28,29,0.03)] sm:px-5"
     >
       <nav
         aria-label="Main navigation"
@@ -193,7 +193,7 @@ export default function Header({
             alt="makeForm"
           />
         </Link>
-        <div className="hidden items-center gap-1 rounded-lg border border-[#E2E8E4] bg-[#FAF9F6] p-1 xl:flex">
+        <div className="hidden items-center gap-1 rounded-lg border border-[#e1e3e4] bg-[#f3f4f5] p-1 shadow-2xs xl:flex">
           {navigation()}
         </div>
         <div className="hidden items-center gap-2 xl:flex">{actions}</div>
@@ -214,10 +214,10 @@ export default function Header({
       {open && (
         <div
           id={menuId}
-          className="app-mobile-menu mt-2 border-t border-[#E2E8E4] pt-2 xl:hidden"
+          className="app-mobile-menu mt-2 border-t border-[#e1e3e4] pt-2 xl:hidden"
         >
           <div className="grid gap-1">{navigation()}</div>
-          <div className="mt-2 flex flex-wrap items-center gap-2 border-t border-[#E2E8E4] pt-2">
+          <div className="mt-2 flex flex-wrap items-center gap-2 border-t border-[#e1e3e4] pt-2">
             {actions}
           </div>
         </div>

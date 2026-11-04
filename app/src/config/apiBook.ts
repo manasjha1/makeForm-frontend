@@ -18,8 +18,14 @@ const API_URLS = {
     DELETE_RESPONSE: (formId: string, responseId: string) => `${BASE_URL}/forms/${formId}/responses/${responseId}`,
   },
   PUBLIC: {
-    FORM: (slug: string) => `${BASE_URL}/public/forms/${slug}`,
-    SUBMIT: (slug: string) => `${BASE_URL}/public/forms/${slug}/responses`,
+    FORM: (slug: string, adminId?: string) =>
+      adminId
+        ? `${BASE_URL}/public/forms/${adminId}/${slug}`
+        : `${BASE_URL}/public/forms/${slug}`,
+    SUBMIT: (slug: string, adminId?: string) =>
+      adminId
+        ? `${BASE_URL}/public/forms/${adminId}/${slug}/responses`
+        : `${BASE_URL}/public/forms/${slug}/responses`,
   },
 };
 

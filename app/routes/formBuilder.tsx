@@ -183,11 +183,28 @@ export default function FormBuilder() {
         (form.id
           ? form.id.replace(/[^a-z0-9]+/g, "-")
           : "form");
-      const url = `${window.location.origin}/form/${slug}`;
+
+      let adminId = result?.userId;
+      if (!adminId) {
+        try {
+          const raw = localStorage.getItem("user");
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            adminId = parsed.id;
+          }
+        } catch {
+          // ignore
+        }
+      }
+
+      const url = adminId
+        ? `${window.location.origin}/form/${adminId}/${slug}`
+        : `${window.location.origin}/form/${slug}`;
+
       setPublishedSlug(slug);
       setPublicShareUrl(url);
       setShareModalOpen(true);
-      toast.success("Form published! Public share link generated.");
+      toast.success("Form published with your Admin ID! Public share link generated.");
     } catch (err: any) {
       toast.error(
         err?.message ||
@@ -440,14 +457,17 @@ export default function FormBuilder() {
               <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-800">
                 LIVE &amp; PUBLISHED
               </span>
+              <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 border border-blue-200">
+                Admin Protected Link
+              </span>
             </div>
 
             <h3 className="text-xl font-black text-gray-900">
               Your Form is Live &amp; Ready to Share!
             </h3>
             <p className="mt-1 text-xs text-gray-500">
-              Anyone with this link can fill out your form. After submission,
-              responses and email confirmations will be sent automatically.
+              Published with your unique Admin ID. Anyone with this link will navigate exclusively
+              to your form, preventing any other admin or candidate overlap.
             </p>
 
             <div className="mt-5 space-y-3">

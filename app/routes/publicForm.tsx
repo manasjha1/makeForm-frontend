@@ -34,7 +34,7 @@ export function meta() {
 }
 
 export default function PublicForm() {
-  const { slug } = useParams<{ slug: string }>();
+  const { adminId, slug } = useParams<{ adminId?: string; slug?: string }>();
   const [form, setForm] = useState<PublicFormDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -54,14 +54,14 @@ export default function PublicForm() {
       return;
     }
 
-    loadForm(slug);
-  }, [slug]);
+    loadForm(slug, adminId);
+  }, [slug, adminId]);
 
-  const loadForm = async (formSlug: string) => {
+  const loadForm = async (formSlug: string, formAdminId?: string) => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await fetchPublicForm(formSlug);
+      const data = await fetchPublicForm(formSlug, formAdminId);
       setForm(data);
       // Initialize default values
       const initialAnswers: Record<string, any> = {};
@@ -166,8 +166,8 @@ export default function PublicForm() {
         }
       });
       setSubmittedEmail(userEmail);
-
-      await submitPublicFormResponse(slug, payloadAnswers);
+      const effectiveAdminId = adminId || form?.userId;
+      await submitPublicFormResponse(slug, payloadAnswers, effectiveAdminId);
 
       // Record summary for confirmation screen
       setSubmittedAnswers(
@@ -206,9 +206,16 @@ export default function PublicForm() {
           <Link to="/" className="flex items-center gap-2" aria-label="makeForm home">
             <img className="h-10 w-28 object-contain" src={makeFormLogo} alt="makeForm" />
           </Link>
-          <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
-            Public Form
-          </span>
+          <div className="flex items-center gap-2">
+            {form?.user?.name && (
+              <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-gray-50 px-2.5 py-0.5 text-xs text-gray-600 border border-gray-200">
+                Admin: <strong className="font-semibold text-gray-900">{form.user.name}</strong>
+              </span>
+            )}
+            <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
+              Verified Form
+            </span>
+          </div>
         </div>
       </header>
 
@@ -348,51 +355,56 @@ export default function PublicForm() {
                           }`}
                         />
                       ) : field.type === "SELECT" ? (
-                        <select
+                        <CustomSelect
+                          id={`field-${field.id}`}
+                          name={field.id}
                           value={answers[field.id] || ""}
-                          onChange={(e) => handleInputChange(field.id, e.target.value)}
-                          className={`w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 ${
-                            error
-                              ? "border-red-400 focus:ring-red-300"
-                              : "border-gray-200 focus:border-emerald-600 focus:ring-emerald-100"
-                          }`}
-                        >
-                          <option value="">
-                            {field.placeholder || "Select an option..."}
-                          </option>
-                          {options.map((opt, i) => (
-                            <option key={i} value={opt}>
-                              {opt}
-                            </option>
-                          ))}
-                        </select>
+                          onChange={(val) => handleInputChange(field.id, val)}
+                          options={options}
+                          placeholder={field.placeholder || "Select an option..."}
+                          error={!!error}
+                          required={field.required}
+                        />
                       ) : field.type === "RADIO" ? (
-                        <div className="space-y-2 pt-1">
-                          {options.map((opt, i) => (
-                            <label
-                              key={i}
-                              className="flex items-center gap-2.5 text-sm text-gray-700 cursor-pointer"
-                            >
-                              <input
-                                type="radio"
-                                name={`radio-${field.id}`}
-                                value={opt}
-                                checked={answers[field.id] === opt}
-                                onChange={(e) => handleInputChange(field.id, e.target.value)}
-                                className="size-4 text-emerald-700 focus:ring-emerald-500"
-                              />
-                              <span>{opt}</span>
-                            </label>
-                          ))}
-                        </div>
-                      ) : field.type === "CHECKBOX" ? (
-                        <div className="space-y-2 pt-1">
+                        <div className="grid gap-2 pt-1">
                           {options.map((opt, i) => {
-                            const isChecked = Array.isArray(answers[field.id]) && answers[field.id].includes(opt);
+                            const isChecked = answers[field.id] === opt;
                             return (
                               <label
                                 key={i}
-                                className="flex items-center gap-2.5 text-sm text-gray-700 cursor-pointer"
+                                className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${
+                                  isChecked
+                                    ? "border-emerald-600 bg-emerald-50/70 text-emerald-950 font-medium ring-1 ring-emerald-600/20"
+                                    : "border-gray-200 bg-[#FAF9F6] text-gray-800 hover:border-emerald-400 hover:bg-emerald-50/30"
+                                }`}
+                              >
+                                <input
+                                  type="radio"
+                                  name={`radio-${field.id}`}
+                                  value={opt}
+                                  checked={isChecked}
+                                  onChange={(e) => handleInputChange(field.id, e.target.value)}
+                                  className="size-4 shrink-0 accent-emerald-600 cursor-pointer"
+                                />
+                                <span className="truncate">{opt}</span>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      ) : field.type === "CHECKBOX" ? (
+                        <div className="grid gap-2 pt-1">
+                          {options.map((opt, i) => {
+                            const isChecked =
+                              Array.isArray(answers[field.id]) &&
+                              answers[field.id].includes(opt);
+                            return (
+                              <label
+                                key={i}
+                                className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${
+                                  isChecked
+                                    ? "border-emerald-600 bg-emerald-50/70 text-emerald-950 font-medium ring-1 ring-emerald-600/20"
+                                    : "border-gray-200 bg-[#FAF9F6] text-gray-800 hover:border-emerald-400 hover:bg-emerald-50/30"
+                                }`}
                               >
                                 <input
                                   type="checkbox"
@@ -401,9 +413,9 @@ export default function PublicForm() {
                                   onChange={(e) =>
                                     handleCheckboxChange(field.id, opt, e.target.checked)
                                   }
-                                  className="size-4 rounded text-emerald-700 focus:ring-emerald-500"
+                                  className="size-4 shrink-0 rounded accent-emerald-600 cursor-pointer"
                                 />
-                                <span>{opt}</span>
+                                <span className="truncate">{opt}</span>
                               </label>
                             );
                           })}

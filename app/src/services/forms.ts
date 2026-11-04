@@ -3,6 +3,7 @@ import { apiHandler } from "./httpHandler";
 
 export interface FormStatsSummary {
   id: string;
+  userId?: string;
   title: string;
   description: string | null;
   slug: string;
@@ -130,11 +131,16 @@ export function mapFrontendTypeToBackend(type: string): any {
 
 export interface PublicFormDetail {
   id: string;
+  userId?: string;
   title: string;
   description: string | null;
   slug: string;
   status: string;
   publishedAt: string | null;
+  user?: {
+    id?: string;
+    name?: string;
+  };
   fields: Array<{
     id: string;
     type: string;
@@ -147,9 +153,12 @@ export interface PublicFormDetail {
   }>;
 }
 
-export const fetchPublicForm = async (slug: string): Promise<PublicFormDetail> => {
+export const fetchPublicForm = async (
+  slug: string,
+  adminId?: string
+): Promise<PublicFormDetail> => {
   const response = await apiHandler<{ success: boolean; data: PublicFormDetail }>({
-    url: API_URLS.PUBLIC.FORM(slug),
+    url: API_URLS.PUBLIC.FORM(slug, adminId),
     method: "GET",
     skipAuth: true,
   });
@@ -158,10 +167,11 @@ export const fetchPublicForm = async (slug: string): Promise<PublicFormDetail> =
 
 export const submitPublicFormResponse = async (
   slug: string,
-  answers: Array<{ fieldId: string; value: any }>
+  answers: Array<{ fieldId: string; value: any }>,
+  adminId?: string
 ) => {
   const response = await apiHandler({
-    url: API_URLS.PUBLIC.SUBMIT(slug),
+    url: API_URLS.PUBLIC.SUBMIT(slug, adminId),
     method: "POST",
     skipAuth: true,
     body: { answers },

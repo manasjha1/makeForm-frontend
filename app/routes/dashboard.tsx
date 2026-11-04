@@ -56,7 +56,7 @@ export function meta() {
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [user, setUser] = useState<{ id?: string; name: string; email: string } | null>(null);
   const [stats, setStats] = useState<DashboardStatsResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -126,10 +126,17 @@ export default function Dashboard() {
     }
   };
 
-  const handleCopyLink = (slug: string) => {
-    const publicUrl = `${window.location.origin}/form/${slug}`;
+  const getPublicUrl = (formItem: FormStatsSummary) => {
+    const adminId = formItem.userId || user?.id;
+    return adminId
+      ? `${window.location.origin}/form/${adminId}/${formItem.slug}`
+      : `${window.location.origin}/form/${formItem.slug}`;
+  };
+
+  const handleCopyLink = (formItem: FormStatsSummary) => {
+    const publicUrl = getPublicUrl(formItem);
     navigator.clipboard.writeText(publicUrl);
-    toast.success("Public form link copied to clipboard!");
+    toast.success("Public link with your unique Admin ID copied to clipboard!");
   };
 
   const handleToggleStatus = async (form: FormStatsSummary) => {
@@ -477,8 +484,11 @@ export default function Dashboard() {
                           )}
 
                           <div className="flex flex-wrap items-center gap-3 pt-2 text-xs text-gray-500">
-                            <span className="flex items-center gap-1 font-mono text-[11px] bg-gray-50 px-2 py-0.5 rounded border border-gray-200">
-                              /{form.slug}
+                            <span
+                              className="flex items-center gap-1 font-mono text-[11px] bg-gray-50 px-2 py-0.5 rounded border border-gray-200"
+                              title="Unique Admin-Scoped Path"
+                            >
+                              /{(form.userId || user?.id) ? `${(form.userId || user?.id)?.slice(0, 8)}.../` : ""}{form.slug}
                             </span>
                             <span className="flex items-center gap-1">
                               <Layers className="size-3 text-gray-400" />
@@ -537,7 +547,7 @@ export default function Dashboard() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            onClick={() => handleCopyLink(form.slug)}
+                            onClick={() => handleCopyLink(form)}
                             title="Copy public link"
                             className="h-7 px-2 text-xs text-gray-600 hover:text-gray-900"
                           >
@@ -626,7 +636,7 @@ export default function Dashboard() {
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => handleCopyLink(selectedForm.slug)}
+                      onClick={() => handleCopyLink(selectedForm)}
                       className="mt-4 text-xs gap-1"
                     >
                       <Copy className="size-3" /> Copy Share Link
