@@ -47,7 +47,11 @@ export default function PublicForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedAnswers, setSubmittedAnswers] = useState<Array<{ label: string; value: any }>>([]);
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
+  const [uploadingFields, setUploadingFields] = useState<Record<string, boolean>>({});
+  const [draftInitializedFor, setDraftInitializedFor] = useState<string | null>(null);
+  const [draftStorageError, setDraftStorageError] = useState<string | null>(null);
   const formElementRef = useRef<HTMLFormElement>(null);
+  const draftKey = form ? `makeform-public-draft:${form.id}` : null;
 
   useEffect(() => {
     if (!slug) {
@@ -74,7 +78,31 @@ export default function PublicForm() {
           initialAnswers[f.id] = "";
         }
       });
+      try {
+        const savedDraft = sessionStorage.getItem(`makeform-public-draft:${data.id}`);
+        if (savedDraft) {
+          const parsedDraft: unknown = JSON.parse(savedDraft);
+          if (parsedDraft && typeof parsedDraft === "object" && !Array.isArray(parsedDraft)) {
+            for (const field of data.fields) {
+              const savedValue = (parsedDraft as Record<string, unknown>)[field.id];
+              if (field.type === "CHECKBOX" && Array.isArray(savedValue)) {
+                initialAnswers[field.id] = savedValue.filter((value): value is string => typeof value === "string");
+              } else if (field.type === "FILE" && savedValue && typeof savedValue === "object") {
+                const fileAnswer = savedValue as { url?: unknown; name?: unknown; size?: unknown };
+                if (typeof fileAnswer.url === "string" && typeof fileAnswer.name === "string" && typeof fileAnswer.size === "number") {
+                  initialAnswers[field.id] = fileAnswer;
+                }
+              } else if (typeof savedValue === "string") {
+                initialAnswers[field.id] = savedValue;
+              }
+            }
+          }
+        }
+      } catch {
+        setDraftStorageError("This browser could not restore your saved form answers. Avoid refreshing while completing this form.");
+      }
       setAnswers(initialAnswers);
+      setDraftInitializedFor(data.id);
     } catch (err: any) {
       setError(
         err?.message || "This form could not be found or is no longer accepting responses."
@@ -83,6 +111,31 @@ export default function PublicForm() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!form || !draftKey || draftInitializedFor !== form.id || isSubmitted) return;
+    try {
+      sessionStorage.setItem(draftKey, JSON.stringify(answers));
+      setDraftStorageError(null);
+    } catch {
+      setDraftStorageError("This browser could not save your form answers. Avoid refreshing while completing this form.");
+    }
+  }, [answers, draftInitializedFor, draftKey, form, isSubmitted]);
+
+  const hasAnswers = Object.values(answers).some((value) =>
+    Array.isArray(value) ? value.length > 0 : value !== "" && value !== null && value !== undefined,
+  );
+  const hasActiveUpload = Object.values(uploadingFields).some(Boolean);
+
+  useEffect(() => {
+    if ((!hasAnswers && !hasActiveUpload) || isSubmitted) return;
+    const warnBeforeLeaving = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warnBeforeLeaving);
+    return () => window.removeEventListener("beforeunload", warnBeforeLeaving);
+  }, [hasActiveUpload, hasAnswers, isSubmitted]);
 
   const handleInputChange = (fieldId: string, value: any) => {
     setAnswers((prev) => ({ ...prev, [fieldId]: value }));
@@ -93,6 +146,49 @@ export default function PublicForm() {
         delete next[fieldId];
         return next;
       });
+    }
+  };
+
+  const handleFileChange = async (fieldId: string, file?: File) => {
+    if (!file || !form || !slug) {
+      handleInputChange(fieldId, "");
+      return;
+    }
+
+    const field = form.fields.find((item) => item.id === fieldId);
+    if (!field) return;
+    const maxFileSize = Number(field.config?.maxFileSize);
+    const acceptedExtensions = typeof field.config?.accept === "string"
+      ? field.config.accept.split(",").map((item: string) => item.trim().toLowerCase()).filter((item: string) => item.startsWith("."))
+      : [];
+    const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
+    if (maxFileSize > 0 && file.size > maxFileSize * 1024 * 1024) {
+      setFieldErrors((current) => ({ ...current, [fieldId]: `File must be no larger than ${maxFileSize} MB` }));
+      return;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      setFieldErrors((current) => ({ ...current, [fieldId]: "File must be no larger than 25 MB" }));
+      return;
+    }
+    if (acceptedExtensions.length > 0 && !acceptedExtensions.includes(extension)) {
+      setFieldErrors((current) => ({ ...current, [fieldId]: "Please choose a file in an accepted format" }));
+      return;
+    }
+
+    setFieldErrors((current) => {
+      const next = { ...current };
+      delete next[fieldId];
+      return next;
+    });
+    handleInputChange(fieldId, "");
+    setUploadingFields((current) => ({ ...current, [fieldId]: true }));
+    try {
+      const uploadedFile = await uploadPublicFormFile(slug, fieldId, file, adminId || form.userId);
+      handleInputChange(fieldId, uploadedFile);
+    } catch (err: any) {
+      toast.error(err?.message || "File upload failed. Please try again.");
+    } finally {
+      setUploadingFields((current) => ({ ...current, [fieldId]: false }));
     }
   };
 
@@ -122,22 +218,6 @@ export default function PublicForm() {
       }
 
       if (!isMissing) {
-        if (field.type === "FILE" && val instanceof File) {
-          const maxFileSize = Number(field.config?.maxFileSize);
-          if (maxFileSize > 0 && val.size > maxFileSize * 1024 * 1024) {
-            errors[field.id] = `File must be no larger than ${maxFileSize} MB`;
-          }
-          const acceptedExtensions = typeof field.config?.accept === "string"
-            ? field.config.accept.split(",").map((item: string) => item.trim().toLowerCase()).filter((item: string) => item.startsWith("."))
-            : [];
-          const extension = val.name.slice(val.name.lastIndexOf(".")).toLowerCase();
-          if (acceptedExtensions.length > 0 && !acceptedExtensions.includes(extension)) {
-            errors[field.id] = "Please choose a file in an accepted format";
-          }
-          if (val.size > 25 * 1024 * 1024) {
-            errors[field.id] = "File must be no larger than 25 MB";
-          }
-        }
         if (field.type === "EMAIL" && typeof val === "string") {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(val.trim())) {
@@ -166,15 +246,20 @@ export default function PublicForm() {
       return;
     }
 
+    if (Object.values(uploadingFields).some(Boolean)) {
+      toast.error("Please wait for file uploads to finish.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      const payloadAnswers = await Promise.all(form.fields.map(async (field) => {
+      const payloadAnswers = form.fields.map((field) => {
         const answer = answers[field.id];
-        const value = field.type === "FILE" && answer instanceof File
-          ? (await uploadPublicFormFile(slug, field.id, answer, adminId || form.userId)).url
+        const value = field.type === "FILE" && answer && typeof answer === "object"
+          ? answer.url
           : answer ?? null;
         return { fieldId: field.id, value };
-      }));
+      });
 
       // Find respondent email if provided
       let userEmail: string | null = null;
@@ -194,11 +279,18 @@ export default function PublicForm() {
       setSubmittedAnswers(
         form.fields.map((f) => ({
           label: f.label,
-          value: f.type === "FILE" && answers[f.id] instanceof File
+          value: f.type === "FILE" && answers[f.id] && typeof answers[f.id] === "object"
             ? answers[f.id].name
             : answers[f.id],
         }))
       );
+      if (draftKey) {
+        try {
+          sessionStorage.removeItem(draftKey);
+        } catch {
+          setDraftStorageError("Your response was submitted, but this browser could not clear its saved draft.");
+        }
+      }
       setIsSubmitted(true);
       toast.success("Response recorded successfully!");
     } catch (err: any) {
@@ -210,6 +302,13 @@ export default function PublicForm() {
 
   const handleResetForm = () => {
     if (!form) return;
+    if (draftKey) {
+      try {
+        sessionStorage.removeItem(draftKey);
+      } catch {
+        setDraftStorageError("This browser could not clear the saved draft.");
+      }
+    }
     formElementRef.current?.reset();
     const initialAnswers: Record<string, any> = {};
     form.fields.forEach((f) => {
@@ -218,6 +317,7 @@ export default function PublicForm() {
     setAnswers(initialAnswers);
     setFieldErrors({});
     setIsSubmitted(false);
+    setDraftInitializedFor(form.id);
   };
 
   return (
@@ -345,6 +445,17 @@ export default function PublicForm() {
               )}
             </CardHeader>
 
+            <div className="mx-4 mt-4 flex items-start gap-3 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950 sm:mx-6 lg:mx-8">
+              <AlertCircle className="mt-0.5 size-4 shrink-0" />
+              <div>
+                <p className="font-semibold">Please do not refresh this page while filling out the form.</p>
+                <p className="mt-0.5 text-xs">
+                  Answers and uploaded files are saved in this browser tab and restored if the page reloads.
+                </p>
+                {draftStorageError && <p className="mt-1 text-xs font-medium">{draftStorageError}</p>}
+              </div>
+            </div>
+
             <CardContent className="p-4 sm:p-6 lg:p-8">
               <form ref={formElementRef} noValidate onSubmit={handleSubmit} className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
                 {form?.fields.map((field) => {
@@ -375,7 +486,8 @@ export default function PublicForm() {
                             accept={config.accept || undefined}
                             aria-invalid={!!error}
                             aria-describedby={error ? `field-${field.id}-error` : undefined}
-                            onChange={(e) => handleInputChange(field.id, e.target.files?.[0] || "")}
+                            disabled={uploadingFields[field.id]}
+                            onChange={(e) => handleFileChange(field.id, e.target.files?.[0])}
                             className="w-full min-w-0 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-primary-fixed file:px-3 file:py-2 file:font-medium file:text-on-primary-fixed"
                           />
                           {!field.description && (config.accept || config.maxFileSize) && (
@@ -384,9 +496,12 @@ export default function PublicForm() {
                               {config.maxFileSize ? ` up to ${config.maxFileSize}MB` : ""}
                             </p>
                           )}
-                          {answers[field.id] instanceof File && (
+                          {uploadingFields[field.id] && (
+                            <p className="mt-2 text-xs font-medium text-[#3525cd]">Uploading file...</p>
+                          )}
+                          {answers[field.id] && typeof answers[field.id] === "object" && (
                             <p className="mt-2 break-all text-xs text-on-surface-variant">
-                              Selected: {answers[field.id].name} ({(answers[field.id].size / 1024).toFixed(1)} KB)
+                              Uploaded: {answers[field.id].name} ({(answers[field.id].size / 1024).toFixed(1)} KB)
                             </p>
                           )}
                         </div>
@@ -504,7 +619,7 @@ export default function PublicForm() {
                 <div className="border-t border-[#e1e3e4] pt-4 lg:col-span-2">
                   <Button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || Object.values(uploadingFields).some(Boolean)}
                     className="w-full sm:w-auto bg-[#3525cd] hover:bg-primary-container text-white font-semibold py-2.5 px-8 shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] flex items-center justify-center gap-2 rounded-lg"
                   >
                     {isSubmitting ? (
