@@ -437,29 +437,29 @@ export default function PublicForm() {
           <Card className="border-[#e1e3e4] bg-white shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)] overflow-hidden rounded-2xl">
             <div className="h-2 bg-linear-to-r from-primary-container to-[#06b6d4]" />
             <CardHeader className="border-b border-[#e1e3e4] bg-[#f8f9fa] px-6 py-5">
-              <CardTitle className="text-2xl sm:text-3xl font-extrabold text-[#191c1d] tracking-tight font-heading">
+              <CardTitle className="text-xl font-extrabold text-[#191c1d] tracking-tight font-heading sm:text-2xl lg:text-3xl">
                 {form?.title}
               </CardTitle>
               {form?.description && (
-                <CardDescription className="text-sm text-on-surface-variant mt-1.5 leading-relaxed">
+                <CardDescription className="mt-1.5 text-sm leading-relaxed text-on-surface-variant sm:text-base lg:text-lg">
                   {form.description}
                 </CardDescription>
               )}
             </CardHeader>
 
-            <div className="mx-4 mt-4 flex items-start gap-3 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950 sm:mx-6 lg:mx-8">
+            <div className="mx-3 mt-4 flex items-start gap-2 rounded-lg border border-amber-300 bg-amber-50 px-3 py-3 text-xs leading-snug text-amber-950 sm:mx-6 sm:gap-3 sm:px-4 sm:text-sm lg:mx-8">
               <AlertCircle className="mt-0.5 size-4 shrink-0" />
               <div>
                 <p className="font-semibold">Please do not refresh this page while filling out the form.</p>
-                <p className="mt-0.5 text-xs">
+                <p className="mt-1 text-xs sm:text-sm">
                   Answers and uploaded files are saved in this browser tab and restored if the page reloads.
                 </p>
-                {draftStorageError && <p className="mt-1 text-xs font-medium">{draftStorageError}</p>}
+                {draftStorageError && <p className="mt-1 text-[0.8em] font-medium">{draftStorageError}</p>}
               </div>
             </div>
 
             <CardContent className="p-4 sm:p-6 lg:p-8">
-              <form ref={formElementRef} noValidate onSubmit={handleSubmit} className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
+              <form ref={formElementRef} noValidate onSubmit={handleSubmit} className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-5 sm:gap-y-6 lg:grid-cols-2">
                 {form?.fields.map((field) => {
                   const error = fieldErrors[field.id];
                   const config = field.config || {};
@@ -467,7 +467,7 @@ export default function PublicForm() {
 
                   return (
                     <div key={field.id} className="min-w-0 space-y-1.5">
-                      <label className="block text-sm font-semibold text-[#191c1d]">
+                      <label className="block text-sm font-semibold leading-snug text-[#191c1d] sm:text-[15px] lg:text-base">
                         {field.label}
                         {field.required && (
                           <span className="text-error ml-1 font-bold" title="Required">*</span>
@@ -475,7 +475,7 @@ export default function PublicForm() {
                       </label>
 
                       {field.description && (
-                        <p className="text-xs text-on-surface-variant">{field.description}</p>
+                        <p className="text-xs leading-relaxed text-on-surface-variant sm:text-sm lg:text-base">{field.description}</p>
                       )}
 
                       {/* Field Type Specific Controls */}
@@ -491,20 +491,20 @@ export default function PublicForm() {
                             aria-describedby={error ? `field-${field.id}-error` : undefined}
                             disabled={uploadingFields[field.id]}
                             onChange={(e) => handleFileChange(field.id, e.target.files?.[0])}
-                            className="w-full min-w-0 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-primary-fixed file:px-3 file:py-2 file:font-medium file:text-on-primary-fixed"
+                            className="w-full min-w-0 text-sm file:mr-2 file:rounded-md file:border-0 file:bg-primary-fixed file:px-2.5 file:py-2 file:text-sm file:font-medium file:text-on-primary-fixed sm:file:mr-3 sm:file:px-3 sm:text-base sm:file:text-base"
                           />
                           {!field.description && (config.accept || config.maxFileSize) && (
-                            <p className="mt-2 text-xs text-on-surface-variant">
+                            <p className="mt-2 text-xs leading-relaxed text-on-surface-variant sm:text-sm">
                               {config.accept ? `Accepted formats: ${config.accept}` : "Any file type"}
                               {config.maxFileSize ? ` up to ${config.maxFileSize}MB` : ""}
                             </p>
                           )}
                           {uploadingFields[field.id] && (
-                            <p className="mt-2 text-xs font-medium text-[#3525cd]">Uploading file...</p>
+                            <p className="mt-2 text-sm font-medium text-[#3525cd]">Uploading file...</p>
                           )}
                           {answers[field.id] && typeof answers[field.id] === "object" && (
                             <div className="mt-2 flex items-center justify-between gap-3 rounded-md border border-[#e1e3e4] bg-white p-2.5">
-                              <p className="min-w-0 break-all text-xs text-on-surface-variant">
+                              <p className="min-w-0 break-all text-xs text-on-surface-variant sm:text-sm">
                                 Uploaded: {answers[field.id].name} ({(answers[field.id].size / 1024).toFixed(1)} KB)
                               </p>
                               <button
@@ -516,7 +516,7 @@ export default function PublicForm() {
                                   if (input) input.value = "";
                                   handleInputChange(field.id, "");
                                 }}
-                                className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-md px-2 text-xs font-medium text-error transition-colors hover:bg-error/10 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-md px-2 text-xs font-medium text-error transition-colors hover:bg-error/10 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
                               >
                                 <Trash2 className="size-4" />
                                 Remove
@@ -530,7 +530,7 @@ export default function PublicForm() {
                           value={answers[field.id] || ""}
                           onChange={(e) => handleInputChange(field.id, e.target.value)}
                           placeholder={field.placeholder || "Enter your response..."}
-                          className={`w-full rounded-lg border px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 shadow-xs ${error
+                          className={`w-full rounded-lg border px-3.5 py-2.5 text-base transition-all focus:outline-none focus:ring-2 shadow-xs sm:text-sm lg:text-base ${error
                             ? "border-error focus:ring-error/20"
                             : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
                             }`}
@@ -545,6 +545,7 @@ export default function PublicForm() {
                           placeholder={field.placeholder || "Select an option..."}
                           error={!!error}
                           required={field.required}
+                          className="[&>button]:text-base sm:[&>button]:text-sm lg:[&>button]:text-base"
                         />
                       ) : field.type === "RADIO" ? (
                         <div className="grid gap-2 pt-1">
@@ -553,7 +554,7 @@ export default function PublicForm() {
                             return (
                               <label
                                 key={i}
-                                className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${isChecked
+                                className={`flex items-start gap-2.5 rounded-lg border p-2.5 text-sm leading-snug transition-all cursor-pointer sm:items-center sm:gap-3 sm:p-3 sm:text-[15px] lg:text-base ${isChecked
                                   ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
                                   : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
                                   }`}
@@ -566,7 +567,7 @@ export default function PublicForm() {
                                   onChange={(e) => handleInputChange(field.id, e.target.value)}
                                   className="size-4 shrink-0 accent-[#3525cd] cursor-pointer"
                                 />
-                                <span className="truncate">{opt}</span>
+                                <span className="min-w-0 flex-1 whitespace-normal break-words">{opt}</span>
                               </label>
                             );
                           })}
@@ -580,7 +581,7 @@ export default function PublicForm() {
                             return (
                               <label
                                 key={i}
-                                className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${isChecked
+                                className={`flex items-start gap-2.5 rounded-lg border p-2.5 text-sm leading-snug transition-all cursor-pointer sm:items-center sm:gap-3 sm:p-3 sm:text-[15px] lg:text-base ${isChecked
                                   ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
                                   : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
                                   }`}
@@ -594,7 +595,7 @@ export default function PublicForm() {
                                   }
                                   className="size-4 shrink-0 rounded accent-[#3525cd] cursor-pointer"
                                 />
-                                <span className="truncate">{opt}</span>
+                                <span className="min-w-0 flex-1 whitespace-normal break-words">{opt}</span>
                               </label>
                             );
                           })}
@@ -621,7 +622,7 @@ export default function PublicForm() {
                           max={config.max}
                           minLength={config.minLength}
                           maxLength={config.maxLength}
-                          className={`w-full rounded-lg border px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 shadow-xs ${error
+                          className={`w-full rounded-lg border px-3.5 py-2.5 text-base transition-all focus:outline-none focus:ring-2 shadow-xs sm:text-sm lg:text-base ${error
                             ? "border-error focus:ring-error/20"
                             : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
                             }`}
@@ -629,7 +630,7 @@ export default function PublicForm() {
                       )}
 
                       {error && (
-                        <p id={field.type === "FILE" ? `field-${field.id}-error` : undefined} className="text-xs font-medium text-error">{error}</p>
+                        <p id={field.type === "FILE" ? `field-${field.id}-error` : undefined} className="text-xs font-medium leading-relaxed text-error sm:text-sm">{error}</p>
                       )}
                     </div>
                   );
@@ -639,7 +640,7 @@ export default function PublicForm() {
                   <Button
                     type="submit"
                     disabled={isSubmitting || Object.values(uploadingFields).some(Boolean)}
-                    className="w-full sm:w-auto bg-[#3525cd] hover:bg-primary-container text-white font-semibold py-2.5 px-8 shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] flex items-center justify-center gap-2 rounded-lg"
+                    className="w-full rounded-lg bg-[#3525cd] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:bg-primary-container sm:w-auto sm:px-8 sm:text-[15px] lg:text-base"
                   >
                     {isSubmitting ? (
                       <>
@@ -661,8 +662,8 @@ export default function PublicForm() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-[#e1e3e4] bg-white py-4 text-center text-xs text-on-surface-variant">
-        <div className="mx-auto flex max-w-5xl items-center justify-center gap-2">
+      <footer className="w-full border-t border-[#e1e3e4] bg-white px-3 py-4 text-center text-[11px] leading-relaxed text-on-surface-variant sm:px-4 sm:text-xs lg:text-sm">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-2 gap-y-1">
           <span>Powered by</span>
           <Link to="/" className="font-semibold text-[#3525cd] hover:underline">
             makeForm
