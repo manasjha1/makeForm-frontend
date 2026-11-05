@@ -8,6 +8,7 @@ import {
   Send,
   RefreshCw,
   Sparkles,
+  Trash2,
 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { Button } from "~/src/components/ui/button";
@@ -51,6 +52,7 @@ export default function PublicForm() {
   const [draftInitializedFor, setDraftInitializedFor] = useState<string | null>(null);
   const [draftStorageError, setDraftStorageError] = useState<string | null>(null);
   const formElementRef = useRef<HTMLFormElement>(null);
+  const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const draftKey = form ? `makeform-public-draft:${form.id}` : null;
 
   useEffect(() => {
@@ -482,6 +484,7 @@ export default function PublicForm() {
                           <input
                             id={`field-${field.id}`}
                             name={field.id}
+                            ref={(element) => { fileInputRefs.current[field.id] = element; }}
                             type="file"
                             accept={config.accept || undefined}
                             aria-invalid={!!error}
@@ -500,9 +503,25 @@ export default function PublicForm() {
                             <p className="mt-2 text-xs font-medium text-[#3525cd]">Uploading file...</p>
                           )}
                           {answers[field.id] && typeof answers[field.id] === "object" && (
-                            <p className="mt-2 break-all text-xs text-on-surface-variant">
-                              Uploaded: {answers[field.id].name} ({(answers[field.id].size / 1024).toFixed(1)} KB)
-                            </p>
+                            <div className="mt-2 flex items-center justify-between gap-3 rounded-md border border-[#e1e3e4] bg-white p-2.5">
+                              <p className="min-w-0 break-all text-xs text-on-surface-variant">
+                                Uploaded: {answers[field.id].name} ({(answers[field.id].size / 1024).toFixed(1)} KB)
+                              </p>
+                              <button
+                                type="button"
+                                disabled={isSubmitting || uploadingFields[field.id]}
+                                aria-label={`Remove uploaded file ${answers[field.id].name}`}
+                                onClick={() => {
+                                  const input = fileInputRefs.current[field.id];
+                                  if (input) input.value = "";
+                                  handleInputChange(field.id, "");
+                                }}
+                                className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-md px-2 text-xs font-medium text-error transition-colors hover:bg-error/10 disabled:cursor-not-allowed disabled:opacity-50"
+                              >
+                                <Trash2 className="size-4" />
+                                Remove
+                              </button>
+                            </div>
                           )}
                         </div>
                       ) : field.type === "TEXTAREA" ? (
