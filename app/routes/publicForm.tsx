@@ -567,7 +567,7 @@ export default function PublicForm() {
                                   onChange={(e) => handleInputChange(field.id, e.target.value)}
                                   className="size-4 shrink-0 accent-[#3525cd] cursor-pointer"
                                 />
-                                <span className="min-w-0 flex-1 whitespace-normal break-words">{opt}</span>
+                                <span className="min-w-0 flex-1 whitespace-normal wrap-break-word">{opt}</span>
                               </label>
                             );
                           })}
@@ -595,7 +595,7 @@ export default function PublicForm() {
                                   }
                                   className="size-4 shrink-0 rounded accent-[#3525cd] cursor-pointer"
                                 />
-                                <span className="min-w-0 flex-1 whitespace-normal break-words">{opt}</span>
+                                <span className="min-w-0 flex-1 whitespace-normal wrap-break-word">{opt}</span>
                               </label>
                             );
                           })}
