@@ -26,8 +26,13 @@ const API_URLS = {
       adminId
         ? `${BASE_URL}/public/forms/${adminId}/${slug}/responses`
         : `${BASE_URL}/public/forms/${slug}/responses`,
+    UPLOAD: (slug: string, fieldId: string, adminId?: string) =>
+      adminId
+        ? `${BASE_URL}/public/forms/${adminId}/${slug}/uploads/${fieldId}`
+        : `${BASE_URL}/public/forms/${slug}/uploads/${fieldId}`,
+    UPLOADED_FILE: (fileId: string) =>
+      `${BASE_URL}/public/uploads/${encodeURIComponent(fileId)}`,
   },
 };
 
 export default API_URLS;
-

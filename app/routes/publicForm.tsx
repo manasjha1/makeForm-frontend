@@ -21,6 +21,7 @@ import {
 import {
   fetchPublicForm,
   submitPublicFormResponse,
+  uploadPublicFormFile,
   type PublicFormDetail,
 } from "~/src/services/forms";
 import makeFormLogo from "~/assests/makeForm_indigo_logo.png";
@@ -120,6 +121,22 @@ export default function PublicForm() {
       }
 
       if (!isMissing) {
+        if (field.type === "FILE" && val instanceof File) {
+          const maxFileSize = Number(field.config?.maxFileSize);
+          if (maxFileSize > 0 && val.size > maxFileSize * 1024 * 1024) {
+            errors[field.id] = `File must be no larger than ${maxFileSize} MB`;
+          }
+          const acceptedExtensions = typeof field.config?.accept === "string"
+            ? field.config.accept.split(",").map((item: string) => item.trim().toLowerCase()).filter((item: string) => item.startsWith("."))
+            : [];
+          const extension = val.name.slice(val.name.lastIndexOf(".")).toLowerCase();
+          if (acceptedExtensions.length > 0 && !acceptedExtensions.includes(extension)) {
+            errors[field.id] = "Please choose a file in an accepted format";
+          }
+          if (val.size > 25 * 1024 * 1024) {
+            errors[field.id] = "File must be no larger than 25 MB";
+          }
+        }
         if (field.type === "EMAIL" && typeof val === "string") {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(val.trim())) {
@@ -150,9 +167,12 @@ export default function PublicForm() {
 
     setIsSubmitting(true);
     try {
-      const payloadAnswers = form.fields.map((f) => ({
-        fieldId: f.id,
-        value: answers[f.id] ?? null,
+      const payloadAnswers = await Promise.all(form.fields.map(async (field) => {
+        const answer = answers[field.id];
+        const value = field.type === "FILE" && answer instanceof File
+          ? (await uploadPublicFormFile(slug, field.id, answer, adminId || form.userId)).url
+          : answer ?? null;
+        return { fieldId: field.id, value };
       }));
 
       // Find respondent email if provided
@@ -173,7 +193,9 @@ export default function PublicForm() {
       setSubmittedAnswers(
         form.fields.map((f) => ({
           label: f.label,
-          value: answers[f.id],
+          value: f.type === "FILE" && answers[f.id] instanceof File
+            ? answers[f.id].name
+            : answers[f.id],
         }))
       );
       setIsSubmitted(true);
@@ -342,7 +364,27 @@ export default function PublicForm() {
                       )}
 
                       {/* Field Type Specific Controls */}
-                      {field.type === "TEXTAREA" ? (
+                      {field.type === "FILE" ? (
+                        <div className={`rounded-lg border bg-[#f8f9fa] p-3 ${error ? "border-error" : "border-[#e1e3e4]"}`}>
+                          <input
+                            type="file"
+                            accept={config.accept || undefined}
+                            onChange={(e) => handleInputChange(field.id, e.target.files?.[0] || "")}
+                            className="w-full min-w-0 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-primary-fixed file:px-3 file:py-2 file:font-medium file:text-on-primary-fixed"
+                          />
+                          {(config.accept || config.maxFileSize) && (
+                            <p className="mt-2 text-xs text-on-surface-variant">
+                              {config.accept ? `Accepted formats: ${config.accept}` : "Any file type"}
+                              {config.maxFileSize ? ` up to ${config.maxFileSize}MB` : ""}
+                            </p>
+                          )}
+                          {answers[field.id] instanceof File && (
+                            <p className="mt-2 break-all text-xs text-on-surface-variant">
+                              Selected: {answers[field.id].name} ({(answers[field.id].size / 1024).toFixed(1)} KB)
+                            </p>
+                          )}
+                        </div>
+                      ) : field.type === "TEXTAREA" ? (
                         <textarea
                           rows={4}
                           value={answers[field.id] || ""}

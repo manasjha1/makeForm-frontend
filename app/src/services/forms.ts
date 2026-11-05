@@ -125,6 +125,7 @@ export function mapFrontendTypeToBackend(type: string): any {
     case "select": return "SELECT";
     case "radio": return "RADIO";
     case "checkbox": return "CHECKBOX";
+    case "file": return "FILE";
     default: return "TEXT";
   }
 }
@@ -179,6 +180,34 @@ export const submitPublicFormResponse = async (
   return response.data;
 };
 
+export const uploadPublicFormFile = async (
+  slug: string,
+  fieldId: string,
+  file: File,
+  adminId?: string
+): Promise<{ url: string; name: string; size: number }> => {
+  const response = await apiHandler<{
+    success: boolean;
+    data: { fileId: string; name: string; size: number };
+  }>({
+    url: API_URLS.PUBLIC.UPLOAD(slug, fieldId, adminId),
+    method: "POST",
+    skipAuth: true,
+    body: file,
+    headers: {
+      "Content-Type": "application/octet-stream",
+      "X-File-Name": encodeURIComponent(file.name),
+    },
+    timeout: 60_000,
+  });
+  const data = (response.data as any)?.data || response.data;
+  return {
+    url: API_URLS.PUBLIC.UPLOADED_FILE(data.fileId),
+    name: data.name,
+    size: data.size,
+  };
+};
+
 export const saveAndPublishForm = async (form: {
   id?: string;
   title: string;
@@ -199,6 +228,8 @@ export const saveAndPublishForm = async (form: {
       max: f.max,
       minLength: f.minLength,
       maxLength: f.maxLength,
+      accept: f.accept,
+      maxFileSize: f.maxFileSize,
     },
   }));
 
@@ -230,4 +261,3 @@ export const saveAndPublishForm = async (form: {
   });
   return (response.data as any)?.data || response.data;
 };
-
