@@ -202,7 +202,7 @@ export default function PublicForm() {
 
       {/* Top Brand Bar */}
       <header className="w-full border-b border-[#e1e3e4] bg-white px-4 py-3 shadow-[0_1px_3px_0_rgba(25,28,29,0.04)]">
-        <div className="mx-auto flex max-w-2xl items-center justify-between">
+        <div className="mx-auto flex max-w-5xl items-center justify-between">
           <Link to="/" className="flex items-center gap-2" aria-label="makeForm home">
             <img className="h-10 w-28 object-contain" src={makeFormLogo} alt="makeForm" />
           </Link>
@@ -220,15 +220,15 @@ export default function PublicForm() {
       </header>
 
       {/* Form Content */}
-      <main className="mx-auto w-full max-w-2xl px-4 py-8 sm:py-12 flex-1">
+      <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:py-12 flex-1">
         {isLoading ? (
-          <Card className="border-[#e1e3e4] bg-white p-12 text-center shadow-[0_4px_6px_-1px_rgba(25,28,29,0.05),0_2px_4px_-2px_rgba(25,28,29,0.04)] rounded-xl">
+          <Card className="mx-auto max-w-2xl border-[#e1e3e4] bg-white p-12 text-center shadow-[0_4px_6px_-1px_rgba(25,28,29,0.05),0_2px_4px_-2px_rgba(25,28,29,0.04)] rounded-xl">
             <RefreshCw className="mx-auto size-8 text-[#3525cd] animate-spin mb-3" />
             <h2 className="text-lg font-bold text-[#191c1d] font-heading">Loading form...</h2>
             <p className="text-xs text-on-surface-variant mt-1">Please wait while the form is loaded.</p>
           </Card>
         ) : error ? (
-          <Card className="border-[#e1e3e4] bg-white p-8 text-center shadow-[0_4px_6px_-1px_rgba(25,28,29,0.05),0_2px_4px_-2px_rgba(25,28,29,0.04)] rounded-xl">
+          <Card className="mx-auto max-w-2xl border-[#e1e3e4] bg-white p-8 text-center shadow-[0_4px_6px_-1px_rgba(25,28,29,0.05),0_2px_4px_-2px_rgba(25,28,29,0.04)] rounded-xl">
             <AlertCircle className="mx-auto size-12 text-error mb-3" />
             <h2 className="text-xl font-bold text-[#191c1d] font-heading">Form Unavailable</h2>
             <p className="mt-2 text-sm text-on-surface-variant max-w-md mx-auto">{error}</p>
@@ -240,7 +240,7 @@ export default function PublicForm() {
           </Card>
         ) : isSubmitted ? (
           /* Submission Success Screen */
-          <Card className="border-[#e1e3e4] bg-white shadow-[0_10px_25px_-5px_rgba(25,28,29,0.08),0_4px_10px_-3px_rgba(25,28,29,0.04)] overflow-hidden rounded-2xl animate-in fade-in zoom-in-95 duration-300">
+          <Card className="mx-auto max-w-2xl border-[#e1e3e4] bg-white shadow-[0_10px_25px_-5px_rgba(25,28,29,0.08),0_4px_10px_-3px_rgba(25,28,29,0.04)] overflow-hidden rounded-2xl animate-in fade-in zoom-in-95 duration-300">
             <div className="h-2 bg-linear-to-r from-primary-container to-[#06b6d4]" />
             <CardHeader className="text-center pt-8 pb-4">
               <div className="mx-auto mb-3 flex size-16 items-center justify-center rounded-full bg-primary-fixed text-[#3525cd] ring-8 ring-primary-fixed/50">
@@ -321,15 +321,15 @@ export default function PublicForm() {
               )}
             </CardHeader>
 
-            <CardContent className="p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 ">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <CardContent className="p-4 sm:p-6 lg:p-8">
+              <form onSubmit={handleSubmit} className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
                 {form?.fields.map((field) => {
                   const error = fieldErrors[field.id];
                   const config = field.config || {};
                   const options: string[] = Array.isArray(config.options) ? config.options : [];
 
                   return (
-                    <div key={field.id} className="space-y-1.5">
+                    <div key={field.id} className="min-w-0 space-y-1.5">
                       <label className="block text-sm font-semibold text-[#191c1d]">
                         {field.label}
                         {field.required && (
@@ -453,7 +453,7 @@ export default function PublicForm() {
                   );
                 })}
 
-                <div className="pt-4 border-t border-[#e1e3e4]">
+                <div className="border-t border-[#e1e3e4] pt-4 lg:col-span-2">
                   <Button
                     type="submit"
                     disabled={isSubmitting}
@@ -480,7 +480,7 @@ export default function PublicForm() {
 
       {/* Footer */}
       <footer className="w-full border-t border-[#e1e3e4] bg-white py-4 text-center text-xs text-on-surface-variant">
-        <div className="mx-auto flex max-w-2xl items-center justify-center gap-2">
+        <div className="mx-auto flex max-w-5xl items-center justify-center gap-2">
           <span>Powered by</span>
           <Link to="/" className="font-semibold text-[#3525cd] hover:underline">
             makeForm
