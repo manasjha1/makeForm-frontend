@@ -636,7 +636,7 @@ export default function PublicForm() {
                   );
                 })}
 
-                <div className="border-t border-[#e1e3e4] pt-4 lg:col-span-2">
+                <div className="flex flex-col gap-3 border-t border-[#e1e3e4] pt-4 sm:flex-row sm:items-center sm:gap-4 lg:col-span-2">
                   <Button
                     type="submit"
                     disabled={isSubmitting || Object.values(uploadingFields).some(Boolean)}
@@ -653,6 +653,16 @@ export default function PublicForm() {
                         Submit Response
                       </>
                     )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isSubmitting || Object.values(uploadingFields).some(Boolean)}
+                    onClick={handleResetForm}
+                    className="w-full gap-2 rounded-lg border-error/30 px-5 py-2.5 text-sm font-semibold text-error hover:border-error/50 hover:bg-error/10 sm:w-auto sm:text-[15px] lg:text-base"
+                  >
+                    <Trash2 className="size-4" />
+                    Clear form
                   </Button>
                 </div>
               </form>
