@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router";
 import {
   CheckCircle2,
@@ -47,6 +47,7 @@ export default function PublicForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedAnswers, setSubmittedAnswers] = useState<Array<{ label: string; value: any }>>([]);
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
+  const formElementRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (!slug) {
@@ -209,6 +210,7 @@ export default function PublicForm() {
 
   const handleResetForm = () => {
     if (!form) return;
+    formElementRef.current?.reset();
     const initialAnswers: Record<string, any> = {};
     form.fields.forEach((f) => {
       initialAnswers[f.id] = f.type === "CHECKBOX" ? [] : "";
@@ -344,7 +346,7 @@ export default function PublicForm() {
             </CardHeader>
 
             <CardContent className="p-4 sm:p-6 lg:p-8">
-              <form onSubmit={handleSubmit} className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
+              <form ref={formElementRef} noValidate onSubmit={handleSubmit} className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
                 {form?.fields.map((field) => {
                   const error = fieldErrors[field.id];
                   const config = field.config || {};
@@ -367,12 +369,16 @@ export default function PublicForm() {
                       {field.type === "FILE" ? (
                         <div className={`rounded-lg border bg-[#f8f9fa] p-3 ${error ? "border-error" : "border-[#e1e3e4]"}`}>
                           <input
+                            id={`field-${field.id}`}
+                            name={field.id}
                             type="file"
                             accept={config.accept || undefined}
+                            aria-invalid={!!error}
+                            aria-describedby={error ? `field-${field.id}-error` : undefined}
                             onChange={(e) => handleInputChange(field.id, e.target.files?.[0] || "")}
                             className="w-full min-w-0 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-primary-fixed file:px-3 file:py-2 file:font-medium file:text-on-primary-fixed"
                           />
-                          {(config.accept || config.maxFileSize) && (
+                          {!field.description && (config.accept || config.maxFileSize) && (
                             <p className="mt-2 text-xs text-on-surface-variant">
                               {config.accept ? `Accepted formats: ${config.accept}` : "Any file type"}
                               {config.maxFileSize ? ` up to ${config.maxFileSize}MB` : ""}
@@ -489,7 +495,7 @@ export default function PublicForm() {
                       )}
 
                       {error && (
-                        <p className="text-xs font-medium text-error">{error}</p>
+                        <p id={field.type === "FILE" ? `field-${field.id}-error` : undefined} className="text-xs font-medium text-error">{error}</p>
                       )}
                     </div>
                   );
