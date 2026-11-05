@@ -13,7 +13,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Button } from "./ui/button";
 import AccountDetails from "./AccountDetails";
-import makeFormLogo from "~/assests/makeForm_logo.png";
+import makeFormLogo from "~/assests/makeForm_indigo_logo.png";
 
 type HeaderProps = {
   viewPage?: toggleBtn;

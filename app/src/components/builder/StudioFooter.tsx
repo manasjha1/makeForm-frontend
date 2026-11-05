@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { FileText, ArrowUpRight } from "lucide-react";
-import makeFormLogo from "~/assests/makeForm_logo.png";
+import makeFormLogo from "~/assests/makeForm_indigo_logo.png";
 
 export default function StudioFooter({
     onTemplates,
