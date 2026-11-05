@@ -23,7 +23,7 @@ import {
   submitPublicFormResponse,
   type PublicFormDetail,
 } from "~/src/services/forms";
-import makeFormLogo from "~/assests/makeForm_logo.png";
+import makeFormLogo from "~/assests/makeForm_indigo_logo.png";
 import CustomSelect from "~/src/components/ui/custom-select";
 
 export function meta() {
@@ -281,15 +281,15 @@ export default function PublicForm() {
                         {item.value === null || item.value === undefined || item.value === ""
                           ? "-"
                           : Array.isArray(item.value)
-                          ? item.value.join(", ")
-                          : String(item.value)}
+                            ? item.value.join(", ")
+                            : String(item.value)}
                       </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 p-2">
                 <Button
                   onClick={handleResetForm}
                   variant="outline"
@@ -299,7 +299,7 @@ export default function PublicForm() {
                 </Button>
                 <Button
                   asChild
-                  className="w-full sm:w-auto bg-[#3525cd] hover:bg-primary-container text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.35)]"
+                  className="w-full sm:w-auto bg-[#3525cd] hover:bg-primary-container text-white shadow-sm"
                 >
                   <Link to="/">Create your own form on makeForm</Link>
                 </Button>
@@ -321,7 +321,7 @@ export default function PublicForm() {
               )}
             </CardHeader>
 
-            <CardContent className="p-6 sm:p-8">
+            <CardContent className="p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 ">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {form?.fields.map((field) => {
                   const error = fieldErrors[field.id];
@@ -348,11 +348,10 @@ export default function PublicForm() {
                           value={answers[field.id] || ""}
                           onChange={(e) => handleInputChange(field.id, e.target.value)}
                           placeholder={field.placeholder || "Enter your response..."}
-                          className={`w-full rounded-lg border px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 shadow-xs ${
-                            error
-                              ? "border-error focus:ring-error/20"
-                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
-                          }`}
+                          className={`w-full rounded-lg border px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 shadow-xs ${error
+                            ? "border-error focus:ring-error/20"
+                            : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
+                            }`}
                         />
                       ) : field.type === "SELECT" ? (
                         <CustomSelect
@@ -372,11 +371,10 @@ export default function PublicForm() {
                             return (
                               <label
                                 key={i}
-                                className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${
-                                  isChecked
-                                    ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
-                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
-                                }`}
+                                className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${isChecked
+                                  ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
+                                  : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
+                                  }`}
                               >
                                 <input
                                   type="radio"
@@ -400,11 +398,10 @@ export default function PublicForm() {
                             return (
                               <label
                                 key={i}
-                                className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${
-                                  isChecked
-                                    ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
-                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
-                                }`}
+                                className={`flex items-center gap-3 rounded-lg border p-3 text-sm transition-all cursor-pointer ${isChecked
+                                  ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
+                                  : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
+                                  }`}
                               >
                                 <input
                                   type="checkbox"
@@ -426,14 +423,14 @@ export default function PublicForm() {
                             field.type === "EMAIL"
                               ? "email"
                               : field.type === "NUMBER"
-                              ? "number"
-                              : field.type === "PHONE"
-                              ? "tel"
-                              : field.type === "DATE"
-                              ? "date"
-                              : field.type === "URL"
-                              ? "url"
-                              : "text"
+                                ? "number"
+                                : field.type === "PHONE"
+                                  ? "tel"
+                                  : field.type === "DATE"
+                                    ? "date"
+                                    : field.type === "URL"
+                                      ? "url"
+                                      : "text"
                           }
                           value={answers[field.id] || ""}
                           onChange={(e) => handleInputChange(field.id, e.target.value)}
@@ -442,11 +439,10 @@ export default function PublicForm() {
                           max={config.max}
                           minLength={config.minLength}
                           maxLength={config.maxLength}
-                          className={`w-full rounded-lg border px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 shadow-xs ${
-                            error
-                              ? "border-error focus:ring-error/20"
-                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
-                          }`}
+                          className={`w-full rounded-lg border px-3.5 py-2.5 text-sm transition-all focus:outline-none focus:ring-2 shadow-xs ${error
+                            ? "border-error focus:ring-error/20"
+                            : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
+                            }`}
                         />
                       )}
 
