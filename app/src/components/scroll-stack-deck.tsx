@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useRef, type ReactNode, type RefObject } from "react";
 import {
   motion,
   useScroll,
@@ -80,6 +80,7 @@ interface AnimatedCardProps {
   index: number;
   totalCards: number;
   smoothProgress: MotionValue<number>;
+  renderCard?: (project: ProjectItem, index: number) => ReactNode;
 }
 
 function buildCardKeyframes(index: number, totalCards: number) {
@@ -151,6 +152,7 @@ function AnimatedCard({
   index,
   totalCards,
   smoothProgress,
+  renderCard,
 }: AnimatedCardProps) {
   const keyframes = buildCardKeyframes(index, totalCards);
   const y = useTransform(smoothProgress, keyframes.steps, keyframes.y);
@@ -169,48 +171,52 @@ function AnimatedCard({
       }}
       className="absolute inset-x-0 top-0 w-full select-none"
     >
-      <a
-        href={project.link ?? "#"}
-        target={project.link ? "_blank" : undefined}
-        rel={project.link ? "noopener noreferrer" : undefined}
-        className="group block cursor-pointer text-inherit no-underline outline-none"
-        aria-label={`Open ${project.title}`}
-      >
-        <article className="relative box-border w-full pt-14">
-          <div
-            style={{ backgroundColor: project.color }}
-            className="absolute left-0 top-0 flex h-12 w-44 items-center rounded-t-2xl px-4 text-base font-semibold tracking-tight text-black shadow-[inset_0_-1px_0_rgba(0,0,0,0.04)] sm:h-14 sm:w-60 sm:px-6"
-          >
-            <span className="truncate">{project.tabTitle}</span>
-          </div>
-
-          <div
-            style={{ backgroundColor: project.color }}
-            className="relative grid min-h-112 grid-cols-1 items-center gap-6 overflow-hidden rounded-b-2xl rounded-tr-2xl p-6 shadow-[0_4px_8px_-4px_rgba(0,0,0,0.12),inset_0_-2px_4px_-2px_rgba(0,0,0,0.25)] sm:p-8 md:min-h-132 md:grid-cols-[minmax(0,1.12fr)_minmax(16rem,0.88fr)] md:gap-14 md:p-8"
-          >
-            <div className="z-10 flex flex-col items-start gap-3.5">
-              <h3 className="m-0 text-2xl font-medium leading-tight tracking-tight text-black sm:text-3xl">
-                {project.title}
-              </h3>
-
-              <p className="m-0 text-base font-normal leading-snug tracking-normal text-black/60 sm:text-lg">
-                {project.description}
-              </p>
+      {renderCard ? (
+        renderCard(project, index)
+      ) : (
+        <a
+          href={project.link ?? "#"}
+          target={project.link ? "_blank" : undefined}
+          rel={project.link ? "noopener noreferrer" : undefined}
+          className="group block cursor-pointer text-inherit no-underline outline-none"
+          aria-label={`Open ${project.title}`}
+        >
+          <article className="relative box-border w-full pt-14">
+            <div
+              style={{ backgroundColor: project.color }}
+              className="absolute left-0 top-0 flex h-12 w-44 items-center rounded-t-2xl px-4 text-base font-semibold tracking-tight text-black shadow-[inset_0_-1px_0_rgba(0,0,0,0.04)] sm:h-14 sm:w-60 sm:px-6"
+            >
+              <span className="truncate">{project.tabTitle}</span>
             </div>
 
-            <div className="relative h-60 w-full overflow-hidden rounded-xl bg-white/25 sm:h-72 md:h-96 lg:h-100">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={project.image}
-                alt={project.title}
-                decoding="async"
-                loading={index === 0 ? "eager" : "lazy"}
-                className="block h-full w-full rounded-xl object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
-              />
+            <div
+              style={{ backgroundColor: project.color }}
+              className="relative grid min-h-112 grid-cols-1 items-center gap-6 overflow-hidden rounded-b-2xl rounded-tr-2xl p-6 shadow-[0_4px_8px_-4px_rgba(0,0,0,0.12),inset_0_-2px_4px_-2px_rgba(0,0,0,0.25)] sm:p-8 md:min-h-132 md:grid-cols-[minmax(0,1.12fr)_minmax(16rem,0.88fr)] md:gap-14 md:p-8"
+            >
+              <div className="z-10 flex flex-col items-start gap-3.5">
+                <h3 className="m-0 text-2xl font-medium leading-tight tracking-tight text-black sm:text-3xl">
+                  {project.title}
+                </h3>
+
+                <p className="m-0 text-base font-normal leading-snug tracking-normal text-black/60 sm:text-lg">
+                  {project.description}
+                </p>
+              </div>
+
+              <div className="relative h-60 w-full overflow-hidden rounded-xl bg-white/25 sm:h-72 md:h-96 lg:h-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  decoding="async"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  className="block h-full w-full rounded-xl object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
+                />
+              </div>
             </div>
-          </div>
-        </article>
-      </a>
+          </article>
+        </a>
+      )}
     </motion.div>
   );
 }
@@ -223,6 +229,7 @@ export interface ScrollStackDeckProps {
   className?: string;
   showFooter?: boolean;
   enableLenis?: boolean;
+  renderCard?: (project: ProjectItem, index: number) => ReactNode;
   /** Nested overflow parent. Omit on a full-page landing (window + Lenis). */
   container?: RefObject<HTMLElement | null>;
 }
@@ -235,6 +242,7 @@ export function ScrollStackDeck({
   className = "",
   showFooter = true,
   enableLenis = true,
+  renderCard,
   container,
 }: ScrollStackDeckProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -287,9 +295,9 @@ export function ScrollStackDeck({
         <section className="flex w-full flex-col items-center justify-center px-4 py-16 text-center">
           <div className="flex max-w-3xl flex-col items-center gap-5">
             <div className="flex flex-col items-center gap-2.5">
-              <h1 className="m-0 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+              <h2 className="m-0 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
                 {title}
-              </h1>
+              </h2>
               <p className="m-0 max-w-2xl text-xl font-normal leading-relaxed tracking-tight text-neutral-600 sm:text-2xl">
                 {subtitle}
               </p>
@@ -336,6 +344,7 @@ export function ScrollStackDeck({
                 index={index}
                 totalCards={projects.length}
                 smoothProgress={smoothProgress}
+                renderCard={renderCard}
               />
             ))}
           </div>

@@ -1,4 +1,4 @@
-import { CheckCircle, MoveRight, Stars } from "lucide-react";
+import { CheckCircle, FileText, MoveRight, Stars } from "lucide-react";
 
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
@@ -7,8 +7,10 @@ import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 import DotField from "~/src/components/DotField";
 
-import TemplateGallery from "~/src/components/TemplateGallery";
-import type { FormTemplate } from "~/src/lib/form-types";
+import ScrollStackDeck, {
+  type ProjectItem,
+} from "~/src/components/scroll-stack-deck";
+import { formTemplates } from "~/src/data/form-templates";
 
 export function meta() {
   return [
@@ -22,6 +24,17 @@ export function meta() {
 }
 
 export default function Home() {
+  const templateProjects: ProjectItem[] = formTemplates.map(
+    (template, index) => ({
+      id: template.id,
+      tabTitle: `${String(index + 1).padStart(2, "0")} · ${template.category}`,
+      title: template.title,
+      description: template.description,
+      image: "",
+      color: "#f1f0ff",
+    }),
+  );
+
   return (
     <div className="relative min-h-screen">
       <Header viewPage="Home" />
@@ -118,21 +131,90 @@ export default function Home() {
           </section>
           <hr className="w-full max-w-6xl mx-auto my-5 border-[#e1e3e4]" />
           <section className="w-full max-w-6xl mx-auto my-5">
-            <div className="flex-1 items-center justify-center mx-auto my-10">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#191c1d] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
-                Start with a prebuilt form
-              </h2>
-              <p className="mt-2 text-base sm:text-lg text-on-surface-variant text-center max-w-2xl mx-auto font-normal leading-relaxed">
-                Choose a ready-to-use template, customize the fields, and preview
-                your form.
-              </p>
-            </div>
+            <ScrollStackDeck
+              projects={templateProjects}
+              title="Start with a prebuilt form"
+              subtitle="Browse ready-to-use forms, then customize the fields and preview your form."
+              scrollIndicatorText="Scroll to explore templates"
+              showFooter={false}
+              enableLenis={false}
+              className="min-h-0! bg-transparent!"
+              renderCard={(project, index) => {
+                const template = formTemplates[index];
+                if (!template) return null;
 
-            <TemplateGallery
-              onSelect={function (template: FormTemplate): void {
-                throw new Error("Function not implemented.");
+                return (
+                  <article className="relative w-full pt-12 sm:pt-14">
+                    <div className="absolute left-0 top-0 flex h-12 w-48 items-center gap-2 rounded-t-2xl bg-[#e7e5ff] px-4 text-sm font-semibold text-[#3525cd] sm:h-14 sm:w-60 sm:px-6">
+                      <FileText aria-hidden="true" className="size-4" />
+                      <span className="truncate">{project.tabTitle}</span>
+                    </div>
+                    <div className="grid min-h-112 gap-6 overflow-hidden rounded-b-2xl rounded-tr-2xl border border-[#e1e3e4] bg-white p-5 shadow-[0_16px_40px_-20px_rgba(25,28,29,0.28)] sm:p-8 md:min-h-132 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.85fr)] md:items-center md:gap-10">
+                      <div className="flex flex-col items-start">
+                        <span className="rounded-full border border-[#e1e3e4] bg-[#f8f9fa] px-3 py-1 text-xs font-semibold text-[#5b5e60]">
+                          {template.category} · {template.fields.length} fields
+                        </span>
+                        <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#191c1d] sm:text-3xl">
+                          {template.title}
+                        </h3>
+                        <p className="mt-3 text-sm leading-6 text-[#5b5e60] sm:text-base">
+                          {template.description}
+                        </p>
+                        <Button
+                          asChild
+                          className="mt-6 min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary-container"
+                        >
+                          <Link to={`/form-builder?template=${encodeURIComponent(template.id)}`}>
+                            Use this template
+                            <MoveRight aria-hidden="true" className="ml-2 size-4" />
+                          </Link>
+                        </Button>
+                      </div>
+                      <div
+                        aria-hidden="true"
+                        className="space-y-3 rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] p-4 sm:p-5"
+                      >
+                        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#777a7c]">
+                          Form preview
+                        </p>
+                        {template.fields.slice(0, 3).map((field) => (
+                          <div key={field.id} className="space-y-1.5">
+                            <p className="text-xs font-medium text-[#383b3c]">
+                              {field.label}
+                              {field.required && (
+                                <span className="text-[#b42318]"> *</span>
+                              )}
+                            </p>
+                            <div className="flex h-9 items-center rounded-md border border-[#d6d9da] bg-white px-3 text-xs text-[#9a9d9e]">
+                              {field.placeholder ||
+                                (field.options?.[0] ??
+                                  `Enter ${field.label.toLowerCase()}`)}
+                            </div>
+                          </div>
+                        ))}
+                        {template.fields.length > 3 && (
+                          <p className="pt-1 text-xs text-[#777a7c]">
+                            + {template.fields.length - 3} more fields
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                );
               }}
             />
+            <div className="mt-8 flex justify-center">
+              <Button
+                asChild
+                variant="outline"
+                className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d]"
+              >
+                <Link to="/form-builder?view=templates">
+                  Browse all templates
+                  <MoveRight aria-hidden="true" className="ml-2 size-4" />
+                </Link>
+              </Button>
+            </div>
           </section>
         </div>
       </main>
