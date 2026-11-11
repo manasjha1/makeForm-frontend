@@ -11,8 +11,8 @@ import {
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
 import appointmentFormImage from "~/assests/appointmentForm.png";
-import eventFormImage from "~/assests/eventForm.jpeg";
-import feedbackFormImage from "~/assests/feedbackForm.jpeg";
+import eventFormImage from "~/assests/eventForm.png";
+import feedbackFormImage from "~/assests/feedbackForm.png";
 import formImage from "~/assests/formImg.png";
 import onboardingFormImage from "~/assests/onboardingForm.png";
 import { Link } from "react-router";
@@ -240,7 +240,7 @@ export default function Home() {
                         <img
                           src={image}
                           alt={imageAlt}
-                          className="block h-auto max-h-[360px] w-full object-contain"
+                          className="block h-100 w-100 object-contain"
                           loading="lazy"
                           decoding="async"
                         />
