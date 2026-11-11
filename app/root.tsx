@@ -14,7 +14,6 @@ import "./app.css";
 import "./responsive.css";
 import { StrictMode } from "react";
 import { queryClient } from "./src/lib/queryCleint";
-import DotField from "./src/components/DotField";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -48,25 +47,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <div className="app-shell relative min-h-screen">
-        <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
-          <DotField
-            dotRadius={2}
-            dotSpacing={16}
-            bulgeStrength={36}
-            glowRadius={0}
-            sparkle={false}
-            waveAmplitude={0}
-          />
-        </div>
-        <div className="relative z-10">
+  return (
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <div className="app-shell relative min-h-screen">
           <Outlet />
         </div>
-      </div>
-    </QueryClientProvider>
-  </StrictMode>;
+      </QueryClientProvider>
+    </StrictMode>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
