@@ -10,7 +10,11 @@ import {
 
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
+import appointmentFormImage from "~/assests/appointmentForm.png";
+import eventFormImage from "~/assests/eventForm.jpeg";
+import feedbackFormImage from "~/assests/feedbackForm.jpeg";
 import formImage from "~/assests/formImg.png";
+import onboardingFormImage from "~/assests/onboardingForm.png";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 import DotField from "~/src/components/DotField";
@@ -23,28 +27,36 @@ import { findTemplate } from "~/src/data/form-templates";
 const featuredTemplates = [
   {
     id: "client-onboarding",
+    image: onboardingFormImage,
+    imageAlt: "Client onboarding form with a welcome message and project detail fields",
     description:
       "Gather a new client’s goals, timeline, and budget before your first project meeting.",
   },
   {
     id: "event-registration",
+    image: eventFormImage,
+    imageAlt: "Event registration form with attendee details and an event date",
     description:
       "Collect attendee details, session preferences, and dietary needs in one quick sign-up.",
   },
   {
     id: "customer-feedback",
+    image: feedbackFormImage,
+    imageAlt: "Customer feedback form with a star rating and experience field",
     description:
       "Measure customer satisfaction and give people room to share what could be better.",
   },
   {
     id: "appointment-request",
+    image: appointmentFormImage,
+    imageAlt: "Appointment request form with name, email, and preferred date fields",
     description:
       "Let people request a convenient date and time, with space to explain what they need.",
   },
 ]
-  .map(({ id, description }) => {
+  .map(({ id, image, imageAlt, description }) => {
     const template = findTemplate(id);
-    return template ? { template, description } : null;
+    return template ? { template, description, image, imageAlt } : null;
   })
   .filter((item) => item !== null);
 
@@ -68,12 +80,12 @@ export function meta() {
 
 export default function Home() {
   const templateProjects: ProjectItem[] = featuredTemplates.map(
-    ({ template, description }, index) => ({
+    ({ template, description, image }, index) => ({
       id: template.id,
       tabTitle: `${String(index + 1).padStart(2, "0")} · ${template.category}`,
       title: template.title,
       description,
-      image: "",
+      image,
       color: "#f1f0ff",
     }),
   );
@@ -185,7 +197,7 @@ export default function Home() {
               renderCard={(project, index) => {
                 const featured = featuredTemplates[index];
                 if (!featured) return null;
-                const { template, description } = featured;
+                const { template, description, image, imageAlt } = featured;
                 const CategoryIcon = categoryIcons[template.category];
 
                 return (
@@ -224,60 +236,14 @@ export default function Home() {
                           </Link>
                         </Button>
                       </div>
-                      <div
-                        role="img"
-                        aria-label={`Image preview of the ${template.title} form`}
-                        className="rounded-xl border border-[#d6d9da] bg-[#f8f9fa] p-3 shadow-inner sm:p-5"
-                      >
-                        <div
-                          aria-hidden="true"
-                          className="mx-auto max-w-sm rounded-lg border border-[#e1e3e4] bg-white p-4 shadow-sm sm:p-5"
-                        >
-                          <div className="mb-4 border-b border-[#e1e3e4] pb-3">
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#3525cd]">
-                              makeForm
-                            </p>
-                            <p className="mt-1 text-base font-bold text-[#191c1d]">
-                              {template.title}
-                            </p>
-                            <p className="mt-1 text-xs leading-5 text-[#5b5e60]">
-                              {template.description}
-                            </p>
-                          </div>
-                          <div className="space-y-3">
-                            {template.fields.slice(0, 3).map((field) => (
-                              <div key={field.id} className="space-y-1">
-                                <p className="text-[11px] font-medium text-[#383b3c]">
-                                  {field.label}
-                                  {field.required && (
-                                    <span className="text-[#b42318]"> *</span>
-                                  )}
-                                </p>
-                                <div
-                                  className={`flex items-center rounded-md border border-[#d6d9da] bg-white px-2.5 text-[10px] text-[#9a9d9e] ${
-                                    field.type === "textarea"
-                                      ? "h-12 items-start py-2"
-                                      : "h-7"
-                                  }`}
-                                >
-                                  <span className="truncate">
-                                    {field.placeholder ||
-                                      (field.options?.[0] ??
-                                        `Enter ${field.label.toLowerCase()}`)}
-                                  </span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                          <div className="mt-4 flex h-8 items-center justify-center rounded-md bg-[#3525cd] text-[10px] font-semibold text-white">
-                            Submit form
-                          </div>
-                          {template.fields.length > 3 && (
-                            <p className="mt-2 text-center text-[10px] text-[#777a7c]">
-                              + {template.fields.length - 3} more fields
-                            </p>
-                          )}
-                        </div>
+                      <div className="overflow-hidden rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] shadow-inner">
+                        <img
+                          src={image}
+                          alt={imageAlt}
+                          className="block h-auto max-h-[360px] w-full object-contain"
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </div>
                     </div>
                   </article>
