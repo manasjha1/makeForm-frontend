@@ -29,7 +29,7 @@ export default function Home() {
         {/* Hero section with interactive DotField background */}
         <section className="relative overflow-hidden px-4 sm:px-6">
           <div
-            className="pointer-events-none absolute inset-0 z-0 [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]"
+            className="pointer-events-none absolute inset-0 z-0 mask-[linear-gradient(to_bottom,black_80%,transparent_100%)]"
             aria-hidden="true"
           >
             <DotField
