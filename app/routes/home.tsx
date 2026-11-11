@@ -1,4 +1,12 @@
-import { CheckCircle, FileText, MoveRight, Stars } from "lucide-react";
+import {
+  CalendarDays,
+  CheckCircle,
+  FileText,
+  MessageSquareText,
+  MoveRight,
+  Stars,
+  UsersRound,
+} from "lucide-react";
 
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
@@ -10,7 +18,42 @@ import DotField from "~/src/components/DotField";
 import ScrollStackDeck, {
   type ProjectItem,
 } from "~/src/components/scroll-stack-deck";
-import { formTemplates } from "~/src/data/form-templates";
+import { findTemplate } from "~/src/data/form-templates";
+
+const featuredTemplates = [
+  {
+    id: "client-onboarding",
+    description:
+      "Gather a new client’s goals, timeline, and budget before your first project meeting.",
+  },
+  {
+    id: "event-registration",
+    description:
+      "Collect attendee details, session preferences, and dietary needs in one quick sign-up.",
+  },
+  {
+    id: "customer-feedback",
+    description:
+      "Measure customer satisfaction and give people room to share what could be better.",
+  },
+  {
+    id: "appointment-request",
+    description:
+      "Let people request a convenient date and time, with space to explain what they need.",
+  },
+]
+  .map(({ id, description }) => {
+    const template = findTemplate(id);
+    return template ? { template, description } : null;
+  })
+  .filter((item) => item !== null);
+
+const categoryIcons = {
+  Business: UsersRound,
+  Events: CalendarDays,
+  Feedback: MessageSquareText,
+  Personal: CalendarDays,
+} as const;
 
 export function meta() {
   return [
@@ -24,12 +67,12 @@ export function meta() {
 }
 
 export default function Home() {
-  const templateProjects: ProjectItem[] = formTemplates.map(
-    (template, index) => ({
+  const templateProjects: ProjectItem[] = featuredTemplates.map(
+    ({ template, description }, index) => ({
       id: template.id,
       tabTitle: `${String(index + 1).padStart(2, "0")} · ${template.category}`,
       title: template.title,
-      description: template.description,
+      description,
       image: "",
       color: "#f1f0ff",
     }),
@@ -140,8 +183,10 @@ export default function Home() {
               enableLenis={false}
               className="min-h-0! bg-transparent!"
               renderCard={(project, index) => {
-                const template = formTemplates[index];
-                if (!template) return null;
+                const featured = featuredTemplates[index];
+                if (!featured) return null;
+                const { template, description } = featured;
+                const CategoryIcon = categoryIcons[template.category];
 
                 return (
                   <article className="relative w-full pt-12 sm:pt-14">
@@ -151,52 +196,88 @@ export default function Home() {
                     </div>
                     <div className="grid min-h-112 gap-6 overflow-hidden rounded-b-2xl rounded-tr-2xl border border-[#e1e3e4] bg-white p-5 shadow-[0_16px_40px_-20px_rgba(25,28,29,0.28)] sm:p-8 md:min-h-132 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.85fr)] md:items-center md:gap-10">
                       <div className="flex flex-col items-start">
-                        <span className="rounded-full border border-[#e1e3e4] bg-[#f8f9fa] px-3 py-1 text-xs font-semibold text-[#5b5e60]">
-                          {template.category} · {template.fields.length} fields
+                        <span className="flex items-center gap-1.5 rounded-full border border-[#e1e3e4] bg-[#f8f9fa] px-3 py-1 text-xs font-semibold text-[#5b5e60]">
+                          <CategoryIcon aria-hidden="true" className="size-3.5" />
+                          {template.category} template
                         </span>
                         <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#191c1d] sm:text-3xl">
                           {template.title}
                         </h3>
                         <p className="mt-3 text-sm leading-6 text-[#5b5e60] sm:text-base">
-                          {template.description}
+                          {description}
+                        </p>
+                        <p className="mt-3 text-xs font-medium text-[#777a7c]">
+                          {template.fields.length} ready-to-customize fields
                         </p>
                         <Button
                           asChild
                           className="mt-6 min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary-container"
                         >
-                          <Link to={`/form-builder?template=${encodeURIComponent(template.id)}`}>
+                          <Link
+                            to={`/form-builder?template=${encodeURIComponent(template.id)}`}
+                          >
                             Use this template
-                            <MoveRight aria-hidden="true" className="ml-2 size-4" />
+                            <MoveRight
+                              aria-hidden="true"
+                              className="ml-2 size-4"
+                            />
                           </Link>
                         </Button>
                       </div>
                       <div
-                        aria-hidden="true"
-                        className="space-y-3 rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] p-4 sm:p-5"
+                        role="img"
+                        aria-label={`Image preview of the ${template.title} form`}
+                        className="rounded-xl border border-[#d6d9da] bg-[#f8f9fa] p-3 shadow-inner sm:p-5"
                       >
-                        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#777a7c]">
-                          Form preview
-                        </p>
-                        {template.fields.slice(0, 3).map((field) => (
-                          <div key={field.id} className="space-y-1.5">
-                            <p className="text-xs font-medium text-[#383b3c]">
-                              {field.label}
-                              {field.required && (
-                                <span className="text-[#b42318]"> *</span>
-                              )}
+                        <div
+                          aria-hidden="true"
+                          className="mx-auto max-w-sm rounded-lg border border-[#e1e3e4] bg-white p-4 shadow-sm sm:p-5"
+                        >
+                          <div className="mb-4 border-b border-[#e1e3e4] pb-3">
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#3525cd]">
+                              makeForm
                             </p>
-                            <div className="flex h-9 items-center rounded-md border border-[#d6d9da] bg-white px-3 text-xs text-[#9a9d9e]">
-                              {field.placeholder ||
-                                (field.options?.[0] ??
-                                  `Enter ${field.label.toLowerCase()}`)}
-                            </div>
+                            <p className="mt-1 text-base font-bold text-[#191c1d]">
+                              {template.title}
+                            </p>
+                            <p className="mt-1 text-xs leading-5 text-[#5b5e60]">
+                              {template.description}
+                            </p>
                           </div>
-                        ))}
-                        {template.fields.length > 3 && (
-                          <p className="pt-1 text-xs text-[#777a7c]">
-                            + {template.fields.length - 3} more fields
-                          </p>
-                        )}
+                          <div className="space-y-3">
+                            {template.fields.slice(0, 3).map((field) => (
+                              <div key={field.id} className="space-y-1">
+                                <p className="text-[11px] font-medium text-[#383b3c]">
+                                  {field.label}
+                                  {field.required && (
+                                    <span className="text-[#b42318]"> *</span>
+                                  )}
+                                </p>
+                                <div
+                                  className={`flex items-center rounded-md border border-[#d6d9da] bg-white px-2.5 text-[10px] text-[#9a9d9e] ${
+                                    field.type === "textarea"
+                                      ? "h-12 items-start py-2"
+                                      : "h-7"
+                                  }`}
+                                >
+                                  <span className="truncate">
+                                    {field.placeholder ||
+                                      (field.options?.[0] ??
+                                        `Enter ${field.label.toLowerCase()}`)}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="mt-4 flex h-8 items-center justify-center rounded-md bg-[#3525cd] text-[10px] font-semibold text-white">
+                            Submit form
+                          </div>
+                          {template.fields.length > 3 && (
+                            <p className="mt-2 text-center text-[10px] text-[#777a7c]">
+                              + {template.fields.length - 3} more fields
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </article>
