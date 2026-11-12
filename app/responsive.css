@@ -94,6 +94,8 @@
 }
 
 .form-preview {
+  width: 100%;
+  max-width: none;
   overflow-wrap: anywhere;
 }
 .form-preview fieldset,
@@ -119,13 +121,6 @@
   width: 18px;
   height: 18px;
 }
-@media (max-width: 479px) {
-  .studio-preview {
-    width: 100%;
-    padding: 20px 12px;
-  }
-}
-
 .preview-upload input[type="file"] {
   display: block;
   width: 100%;
