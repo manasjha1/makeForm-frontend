@@ -1,20 +1,24 @@
 import {
   CalendarDays,
   CheckCircle,
+  Dot,
+  Eye,
   FileText,
+  Layers,
   MessageSquareText,
   MoveRight,
+  SlidersHorizontal,
   Stars,
   UsersRound,
 } from "lucide-react";
 
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
-import appointmentFormImage from "~/assests/appointmentForm.png";
-import eventFormImage from "~/assests/eventForm.png";
-import feedbackFormImage from "~/assests/feedbackForm.png";
+import appointmentFormImage from "~/assests/appointmentForm2.jpeg";
+import eventFormImage from "~/assests/eventForm2.jpeg";
+import feedbackFormImage from "~/assests/feedbackForm2.jpeg";
 import formImage from "~/assests/formImg.png";
-import onboardingFormImage from "~/assests/onboardingForm.png";
+import onboardingFormImage from "~/assests/onboardingForm2.jpeg";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 import DotField from "~/src/components/DotField";
@@ -201,46 +205,58 @@ export default function Home() {
                 const CategoryIcon = categoryIcons[template.category];
 
                 return (
-                  <article className="relative w-full pt-12 sm:pt-14">
-                    <div className="absolute left-0 top-0 flex h-12 w-48 items-center gap-2 rounded-t-2xl bg-[#e7e5ff] px-4 text-sm font-semibold text-[#3525cd] sm:h-14 sm:w-60 sm:px-6">
+                  <article className="relative rounded-xl w-full">
+                    {/* <div className="absolute left-0 top-0 flex h-12 w-48 items-center gap-2 rounded-t-2xl bg-[#e7e5ff] px-4 text-sm font-semibold text-[#3525cd] sm:h-14 sm:w-60 sm:px-6">
                       <FileText aria-hidden="true" className="size-4" />
                       <span className="truncate">{project.tabTitle}</span>
-                    </div>
-                    <div className="grid min-h-112 gap-6 overflow-hidden rounded-b-2xl rounded-tr-2xl border border-[#e1e3e4] bg-white p-5 shadow-[0_16px_40px_-20px_rgba(25,28,29,0.28)] sm:p-8 md:min-h-132 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.85fr)] md:items-center md:gap-10">
+                    </div> */}
+                    <div className="grid min-h-112 gap-6 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white p-4 shadow-[0_16px_40px_-20px_rgba(25,28,29,0.28)] sm:p-8 md:min-h-112 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.85fr)] md:items-center md:gap-10">
                       <div className="flex flex-col items-start">
-                        <span className="flex items-center gap-1.5 rounded-full border border-[#e1e3e4] bg-[#f8f9fa] px-3 py-1 text-xs font-semibold text-[#5b5e60]">
+                        <span className="flex items-center gap-1.5 rounded-full border border-[#4f23a6] bg-[#d3c5f6] px-3 py-1 text-xs font-semibold text-[#4f23a6]">
                           <CategoryIcon aria-hidden="true" className="size-3.5" />
                           {template.category} template
                         </span>
-                        <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#191c1d] sm:text-3xl">
+                        <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#191c1d] sm:text-5xl">
                           {template.title}
                         </h3>
-                        <p className="mt-3 text-sm leading-6 text-[#5b5e60] sm:text-base">
+                        <p className="mt-3 text-sm leading-6 text-[#505254] sm:text-base">
                           {description}
                         </p>
-                        <p className="mt-3 text-xs font-medium text-[#777a7c]">
-                          {template.fields.length} ready-to-customize fields
+                        <p className="flex items-center gap-1 mt-3 text-xs font-medium text-[#505253]">
+                          <Layers className="size-4" /> {template.fields.length} fields <Dot className="p-0" /> <SlidersHorizontal className="size-4" /> Fully cutomizable
                         </p>
-                        <Button
-                          asChild
-                          className="mt-6 min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary-container"
-                        >
-                          <Link
-                            to={`/form-builder?template=${encodeURIComponent(template.id)}`}
+                        <div className="mt-6 flex items-center gap-2">
+                          <Button
+                            asChild
+                            variant="outline"
+                            className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-lg"
                           >
-                            Use this template
-                            <MoveRight
-                              aria-hidden="true"
-                              className="ml-2 size-4"
-                            />
-                          </Link>
-                        </Button>
+                            <Link to="/live-preview?view=templates">
+                              <Eye aria-hidden="true" className="ml-2 size-4" />
+                              Preview
+                            </Link>
+                          </Button>
+                          <Button
+                            asChild
+                            className="min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary rounded-lg"
+                          >
+                            <Link
+                              to={`/form-builder?template=${encodeURIComponent(template.id)}`}
+                            >
+                              Use this template
+                              <MoveRight
+                                aria-hidden="true"
+                                className="transition-all size-4"
+                              />
+                            </Link>
+                          </Button>
+                        </div>
                       </div>
                       <div className="overflow-hidden rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] shadow-inner">
                         <img
                           src={image}
                           alt={imageAlt}
-                          className="block h-100 w-100 object-contain"
+                          className="block h-full w-full object-contain"
                           loading="lazy"
                           decoding="async"
                         />
@@ -251,6 +267,7 @@ export default function Home() {
               }}
             />
             <div className="mt-8 flex justify-center">
+
               <Button
                 asChild
                 variant="outline"
