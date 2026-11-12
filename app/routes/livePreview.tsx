@@ -27,8 +27,10 @@ export default function LivePreview() {
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-[#191c1d]">
       <Header viewPage="LivePreview" />
-      <main className="mx-auto w-full max-w-5xl space-y-6 px-4 py-8 sm:py-12">
-        <h1 className="text-2xl font-bold text-[#191c1d] font-heading">Live preview</h1>
+      <main className="mx-auto w-full space-y-5 px-3 py-6 sm:space-y-6 sm:px-5 sm:py-8 lg:px-8 lg:py-10">
+        <h1 className="font-heading text-xl font-bold text-[#191c1d] sm:text-2xl lg:text-3xl">
+          Live preview
+        </h1>
         {!ready ? (
           <p role="status" className="text-[#464555]">Loading draft…</p>
         ) : form ? (
@@ -37,7 +39,7 @@ export default function LivePreview() {
               <Button asChild variant="outline" className="border-[#e1e3e4] hover:bg-[#f3f4f5] shadow-xs">
                 <Link to="/form-builder">Back to editor</Link>
               </Button>
-              <p className="text-xs text-[#464555]">
+              <p className="text-xs text-[#464555] sm:text-sm">
                 Draft saved for this browser tab
               </p>
             </div>

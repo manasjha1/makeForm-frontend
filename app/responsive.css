@@ -1,60 +1,215 @@
 /* Shared responsive defaults; component rules below keep overflow local. */
-.app-shell { min-width:0; min-height:100dvh; }
-.app-shell main { min-width:0; }
-.app-shell img { max-width:100%; }
-.app-shell :where(input,select,textarea) { min-width:0; max-width:100%; }
-@media (max-width:767px), (pointer:coarse) {
-  .app-shell input:not([type=checkbox]):not([type=radio]),
-  .app-shell select, .app-shell textarea { font-size:16px; }
+.app-shell {
+  min-width: 0;
+  min-height: 100dvh;
+}
+.app-shell main {
+  min-width: 0;
+}
+.app-shell img {
+  max-width: 100%;
+}
+.app-shell :where(input, select, textarea) {
+  min-width: 0;
+  max-width: 100%;
+}
+@media (max-width: 767px), (pointer: coarse) {
+  .app-shell input:not([type="checkbox"]):not([type="radio"]),
+  .app-shell select,
+  .app-shell textarea {
+    font-size: 16px;
+  }
 }
 
-.app-mobile-menu { max-height:calc(100dvh - 88px); overflow-y:auto; overscroll-behavior:contain; padding-bottom:max(8px,env(safe-area-inset-bottom)); }
-.app-mobile-menu button,.app-mobile-menu a { min-height:44px; }
-.app-mobile-menu button[aria-label] { min-width:44px; }
-.app-header > nav > button { min-width:44px; min-height:44px; }
-@media (max-width:479px) { .app-header img { width:112px; height:48px; } }
+.app-mobile-menu {
+  max-height: calc(100dvh - 88px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+}
+.app-mobile-menu button,
+.app-mobile-menu a {
+  min-height: 44px;
+}
+.app-mobile-menu button[aria-label] {
+  min-width: 44px;
+}
+.app-header > nav > button {
+  min-width: 44px;
+  min-height: 44px;
+}
+@media (max-width: 479px) {
+  .app-header img {
+    width: 112px;
+    height: 48px;
+  }
+}
 
-.home-hero { padding-block:clamp(32px,7vw,96px) 24px; }
-.home-title { font-size:clamp(2rem,5vw,3.75rem); text-wrap:balance; overflow-wrap:anywhere; }
-.home-cta a { min-height:44px; height:auto; white-space:normal; text-align:center; }
-.home-hero svg { flex-shrink:0; }
-@media (max-width:359px) { .home-hero > div:first-child { font-size:10px; padding-inline:8px; } }
+.home-hero {
+  padding-block: clamp(32px, 7vw, 96px) 24px;
+}
+.home-title {
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.home-cta a {
+  min-height: 44px;
+  height: auto;
+  white-space: normal;
+  text-align: center;
+}
+.home-hero svg {
+  flex-shrink: 0;
+}
+@media (max-width: 359px) {
+  .home-hero > div:first-child {
+    font-size: 10px;
+    padding-inline: 8px;
+  }
+}
 
-.home-template { overflow-wrap:anywhere; }
-.home-template > a { margin-top:auto; min-height:44px; }
-.home-content { padding-bottom:32px; }
+.home-template {
+  overflow-wrap: anywhere;
+}
+.home-template > a {
+  margin-top: auto;
+  min-height: 44px;
+}
+.home-content {
+  padding-bottom: 32px;
+}
 
-.template-gallery { min-width:0; overflow-wrap:anywhere; }
-.template-gallery button { min-height:44px; height:auto; white-space:normal; }
-.template-gallery [aria-label="Template categories"] { gap:8px; }
+.template-gallery {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.template-gallery button {
+  min-height: 44px;
+  height: auto;
+  white-space: normal;
+}
+.template-gallery [aria-label="Template categories"] {
+  gap: 8px;
+}
 
-.form-preview { overflow-wrap:anywhere; }
-.form-preview fieldset,.form-preview legend { min-width:0; max-width:100%; }
-.form-preview button { max-width:100%; height:auto; min-height:44px; white-space:normal; }
-.form-preview :is(input,select,textarea) { scroll-margin-block:100px; }
-.form-preview label:has(input[type=radio]),.form-preview label:has(input[type=checkbox]) { min-height:44px; padding-block:8px; }
-.form-preview input:is([type=radio],[type=checkbox]) { width:18px; height:18px; }
-@media (max-width:479px) { .studio-preview { width:100%; padding:20px 12px; } }
+.form-preview {
+  overflow-wrap: anywhere;
+}
+.form-preview fieldset,
+.form-preview legend {
+  min-width: 0;
+  max-width: 100%;
+}
+.form-preview button {
+  max-width: 100%;
+  height: auto;
+  min-height: 44px;
+  white-space: normal;
+}
+.form-preview :is(input, select, textarea) {
+  scroll-margin-block: 100px;
+}
+.form-preview label:has(input[type="radio"]),
+.form-preview label:has(input[type="checkbox"]) {
+  min-height: 44px;
+  padding-block: 8px;
+}
+.form-preview input:is([type="radio"], [type="checkbox"]) {
+  width: 18px;
+  height: 18px;
+}
+@media (max-width: 479px) {
+  .studio-preview {
+    width: 100%;
+    padding: 20px 12px;
+  }
+}
 
-.preview-upload input[type=file] { display:block; width:100%; max-width:100%; overflow:hidden; }
-.preview-upload input[type=file]::file-selector-button { min-height:44px; max-width:100%; }
-.preview-upload p { overflow-wrap:anywhere; }
+.preview-upload input[type="file"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.preview-upload input[type="file"]::file-selector-button {
+  min-height: 44px;
+  max-width: 100%;
+}
+.preview-upload p {
+  overflow-wrap: anywhere;
+}
 
-.auth-page main { padding-bottom:max(32px,env(safe-area-inset-bottom)); }
-.auth-page :is(section,form,[data-slot=card],[data-slot=card-content]) { min-width:0; }
-.auth-page button { min-height:44px; height:auto; white-space:normal; }
-.auth-page [aria-label$="password"] { min-width:44px; }
-.auth-page [data-slot=input-group] { min-height:44px; }
-.auth-page [data-slot=field-error] { overflow-wrap:anywhere; }
-@media (max-height:500px) { .auth-page main > img { max-width:140px; } .auth-page main { padding-top:12px; } }
+.auth-page main {
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+}
+.auth-page :is(section, form, [data-slot="card"], [data-slot="card-content"]) {
+  min-width: 0;
+}
+.auth-page button {
+  min-height: 44px;
+  height: auto;
+  white-space: normal;
+}
+.auth-page [aria-label$="password"] {
+  min-width: 44px;
+}
+.auth-page [data-slot="input-group"] {
+  min-height: 44px;
+}
+.auth-page [data-slot="field-error"] {
+  overflow-wrap: anywhere;
+}
+@media (max-height: 500px) {
+  .auth-page main > img {
+    max-width: 140px;
+  }
+  .auth-page main {
+    padding-top: 12px;
+  }
+}
 
-.otp-entry > div { width:100%; min-width:0; gap:4px; }
-.otp-entry > div > div:not([role=separator]) { flex:1; min-width:0; }
-.otp-entry [data-slot=input-otp-slot] { flex:1; min-width:0; width:auto; }
-.otp-entry [role=separator] { flex:none; margin-inline:4px; }
-.otp-page button { min-height:44px; height:auto; white-space:normal; }
-.otp-page [data-slot=card] { min-width:0; }
-.otp-page [data-slot=field] > div:first-child { flex-wrap:wrap; gap:8px; }
+.otp-entry > div {
+  width: 100%;
+  min-width: 0;
+  gap: 4px;
+}
+.otp-entry > div > div:not([role="separator"]) {
+  flex: 1;
+  min-width: 0;
+}
+.otp-entry [data-slot="input-otp-slot"] {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+}
+.otp-entry [role="separator"] {
+  flex: none;
+  margin-inline: 4px;
+}
+.otp-page button {
+  min-height: 44px;
+  height: auto;
+  white-space: normal;
+}
+.otp-page [data-slot="card"] {
+  min-width: 0;
+}
+.otp-page [data-slot="field"] > div:first-child {
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
-.app-header { padding-left:max(12px,env(safe-area-inset-left)); padding-right:max(12px,env(safe-area-inset-right)); }
-@media (prefers-reduced-motion:reduce) { .app-shell *, .app-shell *::before, .app-shell *::after { scroll-behavior:auto!important; animation:none!important; transition:none!important; } }
+.app-header {
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-shell *,
+  .app-shell *::before,
+  .app-shell *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -12,7 +12,7 @@ import PreviewSuccess from "./builder/PreviewSuccess";
 import CustomSelect from "./ui/custom-select";
 
 export const formControlClass =
-  "w-full rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] px-3.5 py-2.5 text-sm text-[#191c1d] outline-none transition-all focus:border-[#4f46e5] focus:bg-white focus:ring-3 focus:ring-[#4f46e5]/20 aria-invalid:border-[#ba1a1a]";
+  "w-full rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] px-3.5 py-2.5 text-base text-[#191c1d] outline-none transition-all focus:border-[#4f46e5] focus:bg-white focus:ring-3 focus:ring-[#4f46e5]/20 aria-invalid:border-[#ba1a1a] sm:text-base lg:text-lg";
 
 export default function FormPreview({ form }: { form: FormTemplate }) {
   const prefix = useId();
@@ -40,11 +40,11 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
   }, [answers, files, form.fields, validationStarted]);
   const displayedErrors: Record<string, string> = demoErrors
     ? Object.fromEntries(
-        visible.map((field) => [
-          field.id,
-          field.errorMessage || "Example validation error.",
-        ]),
-      )
+      visible.map((field) => [
+        field.id,
+        field.errorMessage || "Example validation error.",
+      ]),
+    )
     : errors;
   const visibleErrors = visible.filter((field) => displayedErrors[field.id]);
   const focusField = (id: string) => {
@@ -70,7 +70,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
       ref={formRef}
       tabIndex={-1}
       noValidate
-      className="form-preview min-w-0 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)]"
+      className="form-preview min-w-0 overflow-hidden rounded-2xl border border-[#e1e3e4] shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)]"
       onSubmit={(event) => {
         event.preventDefault();
         setDemoErrors(false);
@@ -94,22 +94,21 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
         );
       }}
     >
-      <div className="h-2 bg-linear-to-r from-primary-container to-[#06b6d4]" />
-      <div className="border-b border-[#e1e3e4] bg-[#f8f9fa] px-6 py-5">
+      <div className="border-b border-[#e1e3e4] bg-[#dfebf7] px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary-container">
           Live preview
         </p>
-        <h2 className="wrap-break-word text-xl font-extrabold tracking-tight text-[#191c1d] sm:text-2xl lg:text-3xl">
+        <h2 className="wrap-break-word text-xl font-extrabold tracking-tight text-[#191c1d] sm:text-2xl lg:text-4xl">
           {form.title}
         </h2>
         {form.description && (
-          <p className="mt-1.5 whitespace-pre-wrap wrap-break-words text-sm leading-relaxed text-on-surface-variant sm:text-base lg:text-lg">
+          <p className="mt-1.5 whitespace-pre-wrap wrap-break-words text-sm leading-relaxed text-on-surface-variant sm:text-base lg:text-xl">
             {form.description}
           </p>
         )}
       </div>
-      <div className="space-y-5 p-4 sm:p-6 lg:p-8">
-        <div className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-3 text-xs leading-snug text-amber-950 sm:px-4 sm:text-sm">
+      <div className="space-y-5 p-3 sm:space-y-6 sm:p-5 lg:space-y-8 lg:p-8">
+        <div className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-3 text-sm leading-snug text-amber-950 sm:px-4 lg:text-base">
           <p className="font-semibold">This is a test preview.</p>
           <p className="mt-1">
             Fields marked * are required. Answers and files stay in this
@@ -117,7 +116,9 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
           </p>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] p-3 shadow-xs">
-          <span className="text-xs text-on-surface-variant">Inspect form states</span>
+          <span className="text-xs text-on-surface-variant sm:text-sm lg:text-base">
+            Inspect form states
+          </span>
           <Button
             type="button"
             variant="outline"
@@ -156,7 +157,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
             </ul>
           </section>
         )}
-        <div className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-5 sm:gap-y-6 lg:grid-cols-2">
+        <div className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-5 sm:gap-y-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-8">
           {visible.map((field) => {
             const id = `${prefix}-${field.id}`;
             const props = {
@@ -183,7 +184,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               <div key={field.id} className="min-w-0 space-y-1.5">
                 {choices ? (
                   <fieldset className="min-w-0">
-                    <legend className="mb-2 block text-sm font-semibold leading-snug text-[#191c1d] sm:text-[15px] lg:text-base">
+                    <legend className="mb-2 block text-sm font-semibold leading-snug text-[#191c1d] sm:text-base lg:text-lg">
                       {field.label}
                       {field.required && (
                         <span className="text-red-600"> *</span>
@@ -195,15 +196,14 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                           field.type === "radio"
                             ? value === option
                             : Array.isArray(answers[field.id]) &&
-                              (answers[field.id] as string[]).includes(option);
+                            (answers[field.id] as string[]).includes(option);
                         return (
                           <label
                             key={index}
-                            className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm shadow-xs transition-all ${
-                              isChecked
-                                ? "border-primary-container bg-primary-fixed/40 font-medium text-on-primary-fixed ring-1 ring-primary-container/20"
-                                : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c3c0ff] hover:bg-primary-fixed/20"
-                            }`}
+                            className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm shadow-xs transition-all ${isChecked
+                              ? "border-primary-container bg-primary-fixed/40 font-medium text-on-primary-fixed ring-1 ring-primary-container/20"
+                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c3c0ff] hover:bg-primary-fixed/20"
+                              }`}
                           >
                             <input
                               type={field.type}
@@ -223,19 +223,21 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                                     : event.target.checked
                                       ? [...current, option]
                                       : current.filter(
-                                          (item) => item !== option,
-                                        ),
+                                        (item) => item !== option,
+                                      ),
                                 );
                               }}
                             />
-                            <span className="truncate">{option}</span>
+                            <span className="min-w-0 flex-1 whitespace-normal wrap-break-word">
+                              {option}
+                            </span>
                           </label>
                         );
                       })}
                     </div>
                   </fieldset>
                 ) : field.type === "checkbox" ? (
-                  <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] p-3 text-sm font-medium shadow-xs transition-all hover:border-[#c3c0ff]">
+                  <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] p-3 text-sm font-medium shadow-xs transition-all hover:border-[#c3c0ff] sm:text-base lg:text-lg">
                     <input
                       {...props}
                       type="checkbox"
@@ -254,7 +256,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                   <>
                     <label
                       htmlFor={id}
-                      className="block wrap-break-word text-sm font-semibold leading-snug text-[#191c1d] sm:text-[15px] lg:text-base"
+                      className="block wrap-break-word text-sm font-semibold leading-snug text-[#191c1d] sm:text-base lg:text-lg"
                     >
                       {field.label}
                       {field.required && (
@@ -264,7 +266,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                     {field.helpText && (
                       <p
                         id={`${id}-help`}
-                        className="text-xs leading-relaxed text-on-surface-variant sm:text-sm"
+                        className="text-xs leading-relaxed text-on-surface-variant sm:text-sm lg:text-base"
                       >
                         {field.helpText}
                       </p>
@@ -345,7 +347,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
           })}
           <Button
             type="submit"
-            className="w-full bg-[#3525cd] text-white hover:bg-primary-container shadow-[0_4px_14px_0_rgba(79,70,229,0.3)] transition-all font-semibold lg:col-span-2"
+            className="w-full bg-[#3525cd] text-white hover:bg-primary-container shadow-[0_4px_14px_0_rgba(79,70,229,0.3)] transition-all font-semibold md:col-span-2 sm:text-base lg:py-3 lg:text-lg"
           >
             Test submission
           </Button>
