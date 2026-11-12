@@ -27,7 +27,7 @@ export default function LivePreview() {
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-[#191c1d]">
       <Header viewPage="LivePreview" />
-      <main className="mx-auto max-w-2xl space-y-6 px-4 py-10">
+      <main className="mx-auto w-full max-w-5xl space-y-6 px-4 py-8 sm:py-12">
         <h1 className="text-2xl font-bold text-[#191c1d] font-heading">Live preview</h1>
         {!ready ? (
           <p role="status" className="text-[#464555]">Loading draft…</p>
