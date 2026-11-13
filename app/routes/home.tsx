@@ -11,6 +11,8 @@ import {
   Stars,
   UsersRound,
 } from "lucide-react";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
@@ -83,6 +85,13 @@ export function meta() {
 }
 
 export default function Home() {
+  const showcaseRef = useRef<HTMLElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: showcaseRef,
+    offset: ["start 85%", "start 25%"],
+  });
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
   const templateProjects: ProjectItem[] = featuredTemplates.map(
     ({ template, description, image }, index) => ({
       id: template.id,
@@ -181,12 +190,18 @@ export default function Home() {
         </section>
 
         <div className="px-4 sm:px-6">
-          <section className="w-full max-w-6xl mx-auto my-5">
-            <img
-              className="h-auto w-full rounded-xl object-contain border border-[#e1e3e4] shadow-[0_20px_40px_-15px_rgba(25,28,29,0.12),0_4px_12px_-2px_rgba(25,28,29,0.04)]"
-              src={formImage}
-              alt="makeForm studio with field palette, form canvas, and settings"
-            />
+          <section
+            ref={showcaseRef}
+            className="home-showcase w-full max-w-6xl mx-auto my-5"
+          >
+            <div className="home-showcase-frame overflow-hidden rounded-xl">
+              <motion.img
+                className="home-showcase-image block h-auto w-full rounded-xl object-contain border border-[#e1e3e4] shadow-[0_20px_40px_-15px_rgba(25,28,29,0.12),0_4px_12px_-2px_rgba(25,28,29,0.04)]"
+                src={formImage}
+                alt="makeForm studio with field palette, form canvas, and settings"
+                style={{ scale: prefersReducedMotion ? 1 : imageScale }}
+              />
+            </div>
           </section>
           <hr className="w-full max-w-6xl mx-auto my-5 border-[#e1e3e4]" />
           <section className="w-full max-w-6xl mx-auto my-5">

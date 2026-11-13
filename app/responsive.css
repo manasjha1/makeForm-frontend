@@ -62,6 +62,10 @@
 .home-hero svg {
   flex-shrink: 0;
 }
+.home-showcase-image {
+  transform-origin: center;
+  will-change: transform;
+}
 @media (max-width: 359px) {
   .home-hero > div:first-child {
     font-size: 10px;
