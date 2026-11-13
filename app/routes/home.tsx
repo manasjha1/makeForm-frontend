@@ -4,12 +4,15 @@ import {
   Dot,
   Eye,
   FileText,
+  GitBranch,
   Layers,
   MessageSquareText,
   MoveRight,
+  Smartphone,
   SlidersHorizontal,
   Stars,
   UsersRound,
+  ShieldCheck,
 } from "lucide-react";
 
 import Header from "~/src/components/Headers";
@@ -70,6 +73,51 @@ const categoryIcons = {
   Feedback: MessageSquareText,
   Personal: CalendarDays,
 } as const;
+
+const featureStats = [
+  {
+    icon: SlidersHorizontal,
+    stat: "No code",
+    title: "Visual form builder",
+    description:
+      "Create polished forms with an intuitive drag-and-drop editing workspace.",
+  },
+  {
+    icon: Eye,
+    stat: "Live",
+    title: "Preview as you build",
+    description:
+      "See how your form looks while you shape its fields and layout.",
+  },
+  {
+    icon: GitBranch,
+    stat: "If / then",
+    title: "Conditional logic",
+    description:
+      "Show relevant questions based on each respondent’s answers.",
+  },
+  {
+    icon: ShieldCheck,
+    stat: "Built in",
+    title: "Field validation",
+    description:
+      "Use configurable validation to help keep form submissions complete.",
+  },
+  {
+    icon: Layers,
+    stat: `${featuredTemplates.length} featured`,
+    title: "Ready-to-use templates",
+    description:
+      "Start with a template and customize its fields to fit your needs.",
+  },
+  {
+    icon: Smartphone,
+    stat: "Responsive",
+    title: "Mobile-friendly forms",
+    description:
+      "Give respondents a comfortable form experience on any screen size.",
+  },
+];
 
 export function meta() {
   return [
@@ -281,6 +329,50 @@ export default function Home() {
             </div>
           </section>
         </div>
+        <section
+          className="mx-auto my-16 w-full max-w-6xl px-4 sm:px-6 lg:my-24"
+          aria-labelledby="home-features-title"
+        >
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#3525cd] sm:text-sm">
+              Made for better forms
+            </p>
+            <h2
+              id="home-features-title"
+              className="mt-3 text-2xl font-extrabold tracking-tight text-[#191c1d] sm:text-3xl lg:text-4xl"
+            >
+              Everything you need to build with confidence
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-[#505254] sm:text-base sm:leading-7">
+              From a quick start to a polished final form, makeForm keeps the
+              tools you need in one simple workspace.
+            </p>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+            {featureStats.map(({ icon: Icon, stat, title, description }) => (
+              <article
+                key={title}
+                className="rounded-2xl border border-[#e1e3e4] bg-white p-5 shadow-[0_8px_24px_-18px_rgba(25,28,29,0.28)] sm:p-6"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="grid size-11 place-items-center rounded-xl bg-primary-fixed text-[#3525cd]">
+                    <Icon aria-hidden="true" className="size-5" />
+                  </span>
+                  <span className="rounded-full bg-[#f1f0ff] px-3 py-1 text-xs font-bold text-[#3525cd] sm:text-sm">
+                    {stat}
+                  </span>
+                </div>
+                <h3 className="mt-5 text-lg font-bold tracking-tight text-[#191c1d] sm:text-xl">
+                  {title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-[#505254] sm:text-base sm:leading-7">
+                  {description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
