@@ -17,6 +17,12 @@ import {
 
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~/src/components/ui/accordion";
 import appointmentFormImage from "~/assests/appointmentForm2.jpeg";
 import eventFormImage from "~/assests/eventForm2.jpeg";
 import feedbackFormImage from "~/assests/feedbackForm2.jpeg";
@@ -386,7 +392,7 @@ export default function Home() {
                   ({ icon: Icon, image, imageAlt, stat, title, description }) => (
                     <article
                       key={title}
-                      className="grid min-h-48 grid-cols-[minmax(5.5rem,0.78fr)_minmax(0,1.22fr)] items-center gap-3 rounded-2xl border border-white/80 bg-white/80 p-3 shadow-[0_8px_24px_-12px_rgba(74,61,163,0.2)] backdrop-blur-[2px] transition-colors hover:border-[#9b8cff] sm:min-h-52 sm:gap-4 sm:p-4"
+                      className="grid min-h-48 grid-cols-[minmax(5.5rem,0.78fr)_minmax(0,1.22fr)] items-center gap-3 rounded-2xl border border-white/80 bg-white/80 px-3 shadow-[0_8px_24px_-12px_rgba(74,61,163,0.2)] backdrop-blur-[2px] transition-colors hover:border-[#9b8cff] sm:min-h-52 sm:gap-4 sm:px-4"
                     >
                       <img
                         src={image}
@@ -396,10 +402,8 @@ export default function Home() {
                         decoding="async"
                       />
                       <div className="min-w-0 py-2">
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#e7e5ff] text-[#4933e6] sm:size-12">
-                            <Icon aria-hidden="true" className="size-5 sm:size-6" />
-                          </span>
+                        <div className="flex items-center justify-end gap-2">
+
                           <span className="rounded-full bg-[#eeecff] px-2.5 py-1 text-[0.65rem] font-bold leading-tight text-[#4933e6] sm:px-3 sm:text-xs">
                             {stat}
                           </span>
@@ -417,6 +421,68 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+        <section
+          className="mx-auto my-16 w-full max-w-4xl px-4 sm:px-6 lg:my-24"
+          aria-labelledby="home-faq-title"
+        >
+          <div className="text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#3525cd] sm:text-sm">
+              Frequently asked questions
+            </p>
+            <h2
+              id="home-faq-title"
+              className="mt-3 text-2xl font-extrabold tracking-tight text-[#191c1d] sm:text-3xl lg:text-4xl"
+            >
+              Questions about makeForm
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#505778] sm:text-base sm:leading-7">
+              Learn how to build, customize, and preview your forms.
+            </p>
+          </div>
+
+          <Accordion
+            type="single"
+            collapsible
+            className="mt-8 rounded-2xl border border-[#e1e3e4] bg-white px-5 shadow-[0_8px_24px_-18px_rgba(25,28,29,0.28)] sm:mt-10 sm:px-7"
+          >
+            <AccordionItem value="create-forms">
+              <AccordionTrigger>What can I create with makeForm?</AccordionTrigger>
+              <AccordionContent>
+                Build custom forms for things like client onboarding, event
+                registration, feedback, and appointment requests. Start from a
+                blank form or customize a ready-to-use template.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="coding">
+              <AccordionTrigger>Do I need coding experience?</AccordionTrigger>
+              <AccordionContent>
+                No. The visual form builder lets you add and arrange fields in
+                an editing workspace without writing code.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="preview">
+              <AccordionTrigger>Can I preview my form while I build it?</AccordionTrigger>
+              <AccordionContent>
+                Yes. Use the live preview to see how your form looks as you
+                adjust its fields and layout.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="conditional-logic">
+              <AccordionTrigger>Can forms show different questions based on answers?</AccordionTrigger>
+              <AccordionContent>
+                Yes. Add conditional logic to show relevant questions based on
+                the answers a respondent selects.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="validation">
+              <AccordionTrigger>How do I help ensure form responses are complete?</AccordionTrigger>
+              <AccordionContent>
+                Configure field validation to guide respondents and help keep
+                submissions complete.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </section>
       </main>
       <Footer />
