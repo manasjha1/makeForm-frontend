@@ -148,10 +148,19 @@ export default function Home() {
       <Header viewPage="Home" />
       <main className="home-content min-h-full">
         {/* Hero section with interactive DotField background */}
-        <section className="relative overflow-hidden px-4 sm:px-6">
+        <section className="relative overflow-hidden px-4 sm:px-6"
+
+        >
           <div
             className="pointer-events-none absolute inset-0 z-0 mask-[linear-gradient(to_bottom,black_80%,transparent_100%)]"
             aria-hidden="true"
+            style={{
+
+              backgroundImage: `url(${statsBackground})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
           >
             <DotField
               dotRadius={2}
@@ -331,7 +340,7 @@ export default function Home() {
           </section>
         </div>
         <section
-          className="relative mx-auto my-16 w-full max-w-6xl overflow-hidden rounded-[2rem] px-4 py-12 sm:px-6 lg:my-24 lg:px-8"
+          className="relative mx-auto my-16 w-full max-w-6xl lg:max-w-full overflow-hidden rounded-[2rem] lg:rounded-none px-4 py-12 sm:px-6 lg:my-24 lg:px-8"
           aria-labelledby="home-features-title"
           style={{
             backgroundImage: `url(${statsBackground})`,
