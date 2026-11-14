@@ -154,13 +154,6 @@ export default function Home() {
           <div
             className="pointer-events-none absolute inset-0 z-0 mask-[linear-gradient(to_bottom,black_80%,transparent_100%)]"
             aria-hidden="true"
-            style={{
-
-              backgroundImage: `url(${statsBackground})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
           >
             <DotField
               dotRadius={2}
