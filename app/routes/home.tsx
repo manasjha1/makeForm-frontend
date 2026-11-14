@@ -23,6 +23,12 @@ import feedbackFormImage from "~/assests/feedbackForm2.jpeg";
 import formImage from "~/assests/formImg.png";
 import onboardingFormImage from "~/assests/onboardingForm2.jpeg";
 import statsBackground from "~/assests/stats_background.png";
+import statImage1 from "~/assests/stat_img1.jpeg";
+import statImage2 from "~/assests/stat_img2.jpeg";
+import statImage3 from "~/assests/stat_img3.jpeg";
+import statImage4 from "~/assests/stat_img4.jpeg";
+import statImage5 from "~/assests/stat_img5.jpeg";
+import statImage6 from "~/assests/stat-img6.jpeg";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 import DotField from "~/src/components/DotField";
@@ -78,6 +84,8 @@ const categoryIcons = {
 const featureStats = [
   {
     icon: SlidersHorizontal,
+    image: statImage1,
+    imageAlt: "Illustration of a form with a cursor",
     stat: "No code",
     title: "Visual form builder",
     description:
@@ -85,6 +93,8 @@ const featureStats = [
   },
   {
     icon: Eye,
+    image: statImage2,
+    imageAlt: "Illustration of a form preview on a screen",
     stat: "Live",
     title: "Preview as you build",
     description:
@@ -92,6 +102,8 @@ const featureStats = [
   },
   {
     icon: GitBranch,
+    image: statImage3,
+    imageAlt: "Illustration of a branching form workflow",
     stat: "If / then",
     title: "Conditional logic",
     description:
@@ -99,6 +111,8 @@ const featureStats = [
   },
   {
     icon: ShieldCheck,
+    image: statImage4,
+    imageAlt: "Illustration of a shield with a check mark",
     stat: "Built in",
     title: "Field validation",
     description:
@@ -106,6 +120,8 @@ const featureStats = [
   },
   {
     icon: Layers,
+    image: statImage5,
+    imageAlt: "Illustration of stacked form templates",
     stat: `${featuredTemplates.length} featured`,
     title: "Ready-to-use templates",
     description:
@@ -113,6 +129,8 @@ const featureStats = [
   },
   {
     icon: Smartphone,
+    image: statImage6,
+    imageAlt: "Illustration of a completed form on a phone",
     stat: "Responsive",
     title: "Mobile-friendly forms",
     description:
@@ -333,7 +351,7 @@ export default function Home() {
           </section>
         </div>
         <section
-          className="relative mx-auto my-16 w-full max-w-6xl lg:max-w-full overflow-hidden rounded-[2rem] lg:rounded-none px-4 py-12 sm:px-6 lg:my-24 lg:px-8"
+          className="relative my-16 w-full overflow-hidden px-4 py-12 sm:px-6 sm:py-14 lg:my-24 lg:px-8 lg:py-16"
           aria-labelledby="home-features-title"
           style={{
             backgroundImage: `url(${statsBackground})`,
@@ -343,44 +361,60 @@ export default function Home() {
           }}
         >
           <div className="relative z-10">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#3525cd] sm:text-sm">
-                Made for better forms
-              </p>
-              <h2
-                id="home-features-title"
-                className="mt-3 text-2xl font-extrabold tracking-tight text-[#191c1d] sm:text-3xl lg:text-4xl"
-              >
-                Everything you need to build with confidence
-              </h2>
-              <p className="mt-4 text-sm leading-6 text-[#505254] sm:text-base sm:leading-7">
-                From a quick start to a polished final form, makeForm keeps the
-                tools you need in one simple workspace.
-              </p>
-            </div>
-
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-              {featureStats.map(({ icon: Icon, stat, title, description }) => (
-                <article
-                  key={title}
-                  className="rounded-2xl border border-[#e1e3e4] bg-white/90 p-5 shadow-[0_8px_24px_-18px_rgba(25,28,29,0.28)] backdrop-blur-[1px] sm:p-6"
+            <div className="mx-auto max-w-7xl">
+              <div className="mx-auto max-w-4xl text-center">
+                <p className="inline-flex items-center gap-3 rounded-full bg-[#e7e5ff]/90 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#3525cd] sm:gap-5 sm:px-5 sm:text-sm">
+                  <span className="hidden h-px w-8 bg-[#c3c0ff] sm:block" />
+                  Made for better forms
+                  <span className="hidden h-px w-8 bg-[#c3c0ff] sm:block" />
+                </p>
+                <h2
+                  id="home-features-title"
+                  className="mt-4 text-2xl font-extrabold tracking-tight text-[#191c1d] sm:text-3xl lg:text-4xl"
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="grid size-11 place-items-center rounded-xl bg-primary-fixed text-[#3525cd]">
-                      <Icon aria-hidden="true" className="size-5" />
-                    </span>
-                    <span className="rounded-full bg-[#f1f0ff] px-3 py-1 text-xs font-bold text-[#3525cd] sm:text-sm">
-                      {stat}
-                    </span>
-                  </div>
-                  <h3 className="mt-5 text-lg font-bold tracking-tight text-[#191c1d] sm:text-xl">
-                    {title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-[#505254] sm:text-base sm:leading-7">
-                    {description}
-                  </p>
-                </article>
-              ))}
+                  Everything you need to build with{" "}
+                  <span className="text-[#4933e6]">confidence</span>
+                </h2>
+                <p className="mx-auto mt-4 max-w-4xl text-sm leading-6 text-[#505778] sm:text-base sm:leading-7">
+                  From a quick start to a polished final form, makeForm keeps the
+                  tools you need in one simple workspace.
+                </p>
+              </div>
+
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+                {featureStats.map(
+                  ({ icon: Icon, image, imageAlt, stat, title, description }) => (
+                    <article
+                      key={title}
+                      className="grid min-h-48 grid-cols-[minmax(5.5rem,0.78fr)_minmax(0,1.22fr)] items-center gap-3 rounded-2xl border border-white/80 bg-white/80 p-3 shadow-[0_8px_24px_-12px_rgba(74,61,163,0.2)] backdrop-blur-[2px] transition-colors hover:border-[#9b8cff] sm:min-h-52 sm:gap-4 sm:p-4"
+                    >
+                      <img
+                        src={image}
+                        alt={imageAlt}
+                        className="w-full min-w-0 object-contain mix-blend-multiply"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="min-w-0 py-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#e7e5ff] text-[#4933e6] sm:size-12">
+                            <Icon aria-hidden="true" className="size-5 sm:size-6" />
+                          </span>
+                          <span className="rounded-full bg-[#eeecff] px-2.5 py-1 text-[0.65rem] font-bold leading-tight text-[#4933e6] sm:px-3 sm:text-xs">
+                            {stat}
+                          </span>
+                        </div>
+                        <h3 className="mt-4 text-base font-bold leading-snug tracking-tight text-[#191c1d] sm:mt-5 sm:text-lg">
+                          {title}
+                        </h3>
+                        <p className="mt-2 text-xs leading-5 text-[#505778] sm:text-sm sm:leading-6">
+                          {description}
+                        </p>
+                      </div>
+                    </article>
+                  ),
+                )}
+              </div>
             </div>
           </div>
         </section>
