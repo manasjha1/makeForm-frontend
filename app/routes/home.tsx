@@ -22,6 +22,7 @@ import eventFormImage from "~/assests/eventForm2.jpeg";
 import feedbackFormImage from "~/assests/feedbackForm2.jpeg";
 import formImage from "~/assests/formImg.png";
 import onboardingFormImage from "~/assests/onboardingForm2.jpeg";
+import statsBackground from "~/assests/stats_background.png";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 import DotField from "~/src/components/DotField";
@@ -330,47 +331,55 @@ export default function Home() {
           </section>
         </div>
         <section
-          className="mx-auto my-16 w-full max-w-6xl px-4 sm:px-6 lg:my-24"
+          className="relative mx-auto my-16 w-full max-w-6xl overflow-hidden rounded-[2rem] px-4 py-12 sm:px-6 lg:my-24 lg:px-8"
           aria-labelledby="home-features-title"
+          style={{
+            backgroundImage: `url(${statsBackground})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
         >
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#3525cd] sm:text-sm">
-              Made for better forms
-            </p>
-            <h2
-              id="home-features-title"
-              className="mt-3 text-2xl font-extrabold tracking-tight text-[#191c1d] sm:text-3xl lg:text-4xl"
-            >
-              Everything you need to build with confidence
-            </h2>
-            <p className="mt-4 text-sm leading-6 text-[#505254] sm:text-base sm:leading-7">
-              From a quick start to a polished final form, makeForm keeps the
-              tools you need in one simple workspace.
-            </p>
-          </div>
-
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-            {featureStats.map(({ icon: Icon, stat, title, description }) => (
-              <article
-                key={title}
-                className="rounded-2xl border border-[#e1e3e4] bg-white p-5 shadow-[0_8px_24px_-18px_rgba(25,28,29,0.28)] sm:p-6"
+          <div className="relative z-10">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#3525cd] sm:text-sm">
+                Made for better forms
+              </p>
+              <h2
+                id="home-features-title"
+                className="mt-3 text-2xl font-extrabold tracking-tight text-[#191c1d] sm:text-3xl lg:text-4xl"
               >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="grid size-11 place-items-center rounded-xl bg-primary-fixed text-[#3525cd]">
-                    <Icon aria-hidden="true" className="size-5" />
-                  </span>
-                  <span className="rounded-full bg-[#f1f0ff] px-3 py-1 text-xs font-bold text-[#3525cd] sm:text-sm">
-                    {stat}
-                  </span>
-                </div>
-                <h3 className="mt-5 text-lg font-bold tracking-tight text-[#191c1d] sm:text-xl">
-                  {title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-[#505254] sm:text-base sm:leading-7">
-                  {description}
-                </p>
-              </article>
-            ))}
+                Everything you need to build with confidence
+              </h2>
+              <p className="mt-4 text-sm leading-6 text-[#505254] sm:text-base sm:leading-7">
+                From a quick start to a polished final form, makeForm keeps the
+                tools you need in one simple workspace.
+              </p>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+              {featureStats.map(({ icon: Icon, stat, title, description }) => (
+                <article
+                  key={title}
+                  className="rounded-2xl border border-[#e1e3e4] bg-white/90 p-5 shadow-[0_8px_24px_-18px_rgba(25,28,29,0.28)] backdrop-blur-[1px] sm:p-6"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="grid size-11 place-items-center rounded-xl bg-primary-fixed text-[#3525cd]">
+                      <Icon aria-hidden="true" className="size-5" />
+                    </span>
+                    <span className="rounded-full bg-[#f1f0ff] px-3 py-1 text-xs font-bold text-[#3525cd] sm:text-sm">
+                      {stat}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 text-lg font-bold tracking-tight text-[#191c1d] sm:text-xl">
+                    {title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-[#505254] sm:text-base sm:leading-7">
+                    {description}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       </main>
