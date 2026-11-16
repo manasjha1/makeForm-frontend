@@ -43,6 +43,8 @@ import ScrollStackDeck, {
   type ProjectItem,
 } from "~/src/components/scroll-stack-deck";
 import { findTemplate } from "~/src/data/form-templates";
+import { InteractiveHoverButton } from "~/src/components/interactive-hover-button";
+import { RippleButton } from "~/src/components/ripple-button";
 
 const featuredTemplates = [
   {
@@ -208,23 +210,20 @@ export default function Home() {
               and an interactive preview—no code required.
             </p>
             <div className="home-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 mx-auto my-6">
-              <Button
-                asChild
-                className="bg-primary hover:bg-primary-container transition-all flex items-center gap-1 p-5 text-white text-sm font-semibold rounded-lg shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:shadow-[0_6px_20px_0_rgba(79,70,229,0.45)] capitalize"
-              >
+              <InteractiveHoverButton className="px-6 py-4">
+
                 <Link to="/form-builder">
                   Launch your form{" "}
-                  <MoveRight className="w-3.5 h-3.5 text-white mx-2" />
                 </Link>
-              </Button>
-              <Button
-                asChild
-                className="bg-white group hover:bg-surface-container-low border border-[#e1e3e4] p-5 text-[#191c1d] text-sm font-medium rounded-lg shadow-xs hover:shadow-sm capitalize transition-all"
-              >
+              </InteractiveHoverButton>
+
+
+              <RippleButton>
                 <Link to="/form-builder?view=templates">
                   Explore prebuilt templates
                 </Link>
-              </Button>
+              </RippleButton>
+
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
               <div className="flex items-center gap-2 min-w-0">
