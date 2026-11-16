@@ -430,15 +430,6 @@ export default function FormBuilder() {
         </div>
       )}
 
-      <StudioFooter
-        onTemplates={() => {
-          setGallery(true);
-          setPreview(false);
-          window.scrollTo({ top: 0 });
-        }}
-        onPreview={showPreview}
-      />
-
       {/* Share Modal Dialog */}
       {shareModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
