@@ -45,12 +45,14 @@ import ScrollStackDeck, {
 import { findTemplate } from "~/src/data/form-templates";
 import { InteractiveHoverButton } from "~/src/components/interactive-hover-button";
 import { RippleButton } from "~/src/components/ripple-button";
+import { ShinyButton } from "~/src/components/shiny-button";
 
 const featuredTemplates = [
   {
     id: "client-onboarding",
     image: onboardingFormImage,
-    imageAlt: "Client onboarding form with a welcome message and project detail fields",
+    imageAlt:
+      "Client onboarding form with a welcome message and project detail fields",
     description:
       "Gather a new client’s goals, timeline, and budget before your first project meeting.",
   },
@@ -71,7 +73,8 @@ const featuredTemplates = [
   {
     id: "appointment-request",
     image: appointmentFormImage,
-    imageAlt: "Appointment request form with name, email, and preferred date fields",
+    imageAlt:
+      "Appointment request form with name, email, and preferred date fields",
     description:
       "Let people request a convenient date and time, with space to explain what they need.",
   },
@@ -114,8 +117,7 @@ const featureStats = [
     imageAlt: "Illustration of a branching form workflow",
     stat: "If / then",
     title: "Conditional logic",
-    description:
-      "Show relevant questions based on each respondent’s answers.",
+    description: "Show relevant questions based on each respondent’s answers.",
   },
   {
     icon: ShieldCheck,
@@ -174,9 +176,7 @@ export default function Home() {
       <Header viewPage="Home" />
       <main className="home-content min-h-full">
         {/* Hero section with interactive DotField background */}
-        <section className="relative overflow-hidden px-4 sm:px-6"
-
-        >
+        <section className="relative overflow-hidden px-4 sm:px-6">
           <div
             className="pointer-events-none absolute inset-0 z-0 mask-[linear-gradient(to_bottom,black_80%,transparent_100%)]"
             aria-hidden="true"
@@ -206,24 +206,18 @@ export default function Home() {
 
             {/* Short Description */}
             <p className="mt-6 text-base sm:text-lg text-on-surface-variant text-center max-w-2xl mx-auto font-normal leading-relaxed">
-              Design and customize forms with live validation, conditional logic,
-              and an interactive preview—no code required.
+              Design and customize forms with live validation, conditional
+              logic, and an interactive preview—no code required.
             </p>
             <div className="home-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 mx-auto my-6">
               <InteractiveHoverButton className="px-6 py-4">
-
-                <Link to="/form-builder">
-                  Launch your form{" "}
-                </Link>
+                <Link to="/form-builder">Launch your form </Link>
               </InteractiveHoverButton>
-
-
-              <RippleButton>
+              <ShinyButton className="px-6 py-4 rounded-full">
                 <Link to="/form-builder?view=templates">
                   Explore prebuilt templates
                 </Link>
-              </RippleButton>
-
+              </ShinyButton>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
               <div className="flex items-center gap-2 min-w-0">
@@ -284,7 +278,10 @@ export default function Home() {
                     <div className="grid min-h-112 gap-6 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white p-4 shadow-[0_16px_40px_-20px_rgba(25,28,29,0.28)] sm:p-8 md:min-h-112 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.85fr)] md:items-center md:gap-10">
                       <div className="flex flex-col items-start">
                         <span className="flex items-center gap-1.5 rounded-full border border-[#4f23a6] bg-[#d3c5f6] px-3 py-1 text-xs font-semibold text-[#4f23a6]">
-                          <CategoryIcon aria-hidden="true" className="size-3.5" />
+                          <CategoryIcon
+                            aria-hidden="true"
+                            className="size-3.5"
+                          />
                           {template.category} template
                         </span>
                         <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#191c1d] sm:text-5xl">
@@ -294,7 +291,10 @@ export default function Home() {
                           {description}
                         </p>
                         <p className="flex items-center gap-1 mt-3 text-xs font-medium text-[#505253]">
-                          <Layers className="size-4" /> {template.fields.length} fields <Dot className="p-0" /> <SlidersHorizontal className="size-4" /> Fully cutomizable
+                          <Layers className="size-4" /> {template.fields.length}{" "}
+                          fields <Dot className="p-0" />{" "}
+                          <SlidersHorizontal className="size-4" /> Fully
+                          cutomizable
                         </p>
                         <div className="mt-6 flex items-center gap-2">
                           <Button
@@ -377,14 +377,21 @@ export default function Home() {
                   <span className="text-[#4933e6]">confidence</span>
                 </h2>
                 <p className="mx-auto mt-4 max-w-4xl text-sm leading-6 text-[#505778] sm:text-base sm:leading-7">
-                  From a quick start to a polished final form, makeForm keeps the
-                  tools you need in one simple workspace.
+                  From a quick start to a polished final form, makeForm keeps
+                  the tools you need in one simple workspace.
                 </p>
               </div>
 
               <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
                 {featureStats.map(
-                  ({ icon: Icon, image, imageAlt, stat, title, description }) => (
+                  ({
+                    icon: Icon,
+                    image,
+                    imageAlt,
+                    stat,
+                    title,
+                    description,
+                  }) => (
                     <article
                       key={title}
                       className="grid min-h-48 grid-cols-[minmax(5.5rem,0.78fr)_minmax(0,1.22fr)] items-center gap-3 rounded-2xl border border-white/80 bg-white/80 px-3 shadow-[0_8px_24px_-12px_rgba(74,61,163,0.2)] backdrop-blur-[2px] transition-colors hover:border-[#9b8cff] sm:min-h-52 sm:gap-4 sm:px-4"
@@ -398,7 +405,6 @@ export default function Home() {
                       />
                       <div className="min-w-0 py-2">
                         <div className="flex items-center justify-end gap-2">
-
                           <span className="rounded-full bg-[#eeecff] px-2.5 py-1 text-[0.65rem] font-bold leading-tight text-[#4933e6] sm:px-3 sm:text-xs">
                             {stat}
                           </span>
@@ -442,7 +448,9 @@ export default function Home() {
             className="mt-8 rounded-2xl border border-[#e1e3e4] bg-white px-5 shadow-[0_8px_24px_-18px_rgba(25,28,29,0.28)] sm:mt-10 sm:px-7"
           >
             <AccordionItem value="create-forms">
-              <AccordionTrigger>What can I create with makeForm?</AccordionTrigger>
+              <AccordionTrigger>
+                What can I create with makeForm?
+              </AccordionTrigger>
               <AccordionContent>
                 Build custom forms for things like client onboarding, event
                 registration, feedback, and appointment requests. Start from a
@@ -457,21 +465,27 @@ export default function Home() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="preview">
-              <AccordionTrigger>Can I preview my form while I build it?</AccordionTrigger>
+              <AccordionTrigger>
+                Can I preview my form while I build it?
+              </AccordionTrigger>
               <AccordionContent>
                 Yes. Use the live preview to see how your form looks as you
                 adjust its fields and layout.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="conditional-logic">
-              <AccordionTrigger>Can forms show different questions based on answers?</AccordionTrigger>
+              <AccordionTrigger>
+                Can forms show different questions based on answers?
+              </AccordionTrigger>
               <AccordionContent>
                 Yes. Add conditional logic to show relevant questions based on
                 the answers a respondent selects.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="validation">
-              <AccordionTrigger>How do I help ensure form responses are complete?</AccordionTrigger>
+              <AccordionTrigger>
+                How do I help ensure form responses are complete?
+              </AccordionTrigger>
               <AccordionContent>
                 Configure field validation to guide respondents and help keep
                 submissions complete.
