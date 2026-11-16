@@ -292,19 +292,19 @@ export function ScrollStackDeck({
       className={`min-h-screen w-full bg-[#F4F6F8] font-sans text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white ${className}`}
     >
       {showIntro ? (
-        <section className="flex w-full flex-col items-center justify-center px-4 py-16 text-center">
+        <section className="flex w-full flex-col items-center justify-center px-4 py-5 text-center">
           <div className="flex max-w-3xl flex-col items-center gap-5">
             <div className="flex flex-col items-center gap-2.5">
-              <h2 className="m-0 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+              <h2 className="m-0 text-3xl font-bold tracking-tight text-neutral-900 sm:text-5xl">
                 {title}
               </h2>
-              <p className="m-0 max-w-2xl text-xl font-normal leading-relaxed tracking-tight text-neutral-600 sm:text-2xl">
+              <p className="m-0 max-w-2xl text-lg font-normal leading-relaxed tracking-tight text-neutral-600 sm:text-xl">
                 {subtitle}
               </p>
             </div>
 
             <div className="mt-2 flex items-center justify-center gap-2.5">
-              <span className="text-lg font-normal leading-relaxed tracking-tight text-neutral-600 sm:text-xl">
+              <span className="text-md font-normal leading-relaxed tracking-tight text-neutral-600 sm:text-lg">
                 {scrollIndicatorText}
               </span>
               <motion.svg
@@ -335,7 +335,7 @@ export function ScrollStackDeck({
         className="relative w-full"
         style={{ height: `${projects.length * 110}vh` }}
       >
-        <div className="pointer-events-none sticky top-0 grid h-screen min-h-screen w-full place-items-center px-4">
+        <div className="pointer-events-none sticky top-20 grid h-screen min-h-screen w-full place-items-center px-4">
           <div className="pointer-events-auto relative h-148 min-h-148 w-[min(calc(100%-2rem),62.5rem)] overflow-visible">
             {projects.map((project, index) => (
               <AnimatedCard

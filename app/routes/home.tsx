@@ -263,7 +263,7 @@ export default function Home() {
               alt="makeForm studio with field palette, form canvas, and settings"
             />
           </section>
-          <hr className="w-full max-w-6xl mx-auto my-5 border-[#e1e3e4]" />
+          <hr className="w-full max-w-6xl mx-auto my-10 border-[#e1e3e4]" />
           <section className="w-full max-w-6xl mx-auto my-5">
             <ScrollStackDeck
               projects={templateProjects}
@@ -280,11 +280,8 @@ export default function Home() {
                 const CategoryIcon = categoryIcons[template.category];
 
                 return (
+                  // template cards
                   <article className="relative rounded-xl w-full">
-                    {/* <div className="absolute left-0 top-0 flex h-12 w-48 items-center gap-2 rounded-t-2xl bg-[#e7e5ff] px-4 text-sm font-semibold text-[#3525cd] sm:h-14 sm:w-60 sm:px-6">
-                      <FileText aria-hidden="true" className="size-4" />
-                      <span className="truncate">{project.tabTitle}</span>
-                    </div> */}
                     <div className="grid min-h-112 gap-6 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white p-4 shadow-[0_16px_40px_-20px_rgba(25,28,29,0.28)] sm:p-8 md:min-h-112 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.85fr)] md:items-center md:gap-10">
                       <div className="flex flex-col items-start">
                         <span className="flex items-center gap-1.5 rounded-full border border-[#4f23a6] bg-[#d3c5f6] px-3 py-1 text-xs font-semibold text-[#4f23a6]">
@@ -341,8 +338,7 @@ export default function Home() {
                 );
               }}
             />
-            <div className="mt-8 flex justify-center">
-
+            <div className="flex justify-center">
               <Button
                 asChild
                 variant="outline"
@@ -350,7 +346,7 @@ export default function Home() {
               >
                 <Link to="/form-builder?view=templates">
                   Browse all templates
-                  <MoveRight aria-hidden="true" className="ml-2 size-4" />
+                  {/* <MoveRight aria-hidden="true" className="ml-2 size-4" /> */}
                 </Link>
               </Button>
             </div>
