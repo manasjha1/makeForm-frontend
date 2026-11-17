@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router";
 import {
   CheckCircle2,
@@ -31,6 +31,7 @@ import {
   type FormTemplate,
 } from "~/src/lib/form-types";
 import { readDraft, saveDraft } from "~/src/lib/form-draft";
+import { inspectFormLayout } from "~/src/lib/form-layout";
 import {
   duplicateField,
   updateFormField,
@@ -69,6 +70,8 @@ export default function FormBuilder() {
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [publicShareUrl, setPublicShareUrl] = useState<string>("");
   const [publishedSlug, setPublishedSlug] = useState<string>("");
+
+  const previewLayout = useMemo(() => (form ? inspectFormLayout(form.fields) : null), [form]);
   useEffect(() => {
     const draft = readDraft();
     const template =
@@ -376,12 +379,21 @@ export default function FormBuilder() {
         </main>
       ) : preview ? (
         <main className="studio-preview">
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-            <button className="studio-button" onClick={() => setPreview(false)}>
-              <ArrowLeft size={14} />
-              Back to editor
-            </button>
-            <span className="studio-muted">Test your form before sharing</span>
+          <div className={`${previewLayout?.brandBarClass || "mx-auto max-w-4xl"} mb-5`}>
+            <div className="flex w-full flex-wrap items-center justify-between gap-3">
+              <button className="studio-button" onClick={() => setPreview(false)}>
+                <ArrowLeft size={14} />
+                Back to editor
+              </button>
+              <div className="flex items-center gap-2">
+                {previewLayout && (
+                  <span className="studio-badge">
+                    {previewLayout.badgeLabel} &bull; {previewLayout.fieldsCount} {previewLayout.fieldsCount === 1 ? "field" : "fields"}
+                  </span>
+                )}
+                <span className="studio-muted text-xs">Test your form before sharing</span>
+              </div>
+            </div>
           </div>
           <FormPreview key={JSON.stringify(form)} form={form} />
         </main>
