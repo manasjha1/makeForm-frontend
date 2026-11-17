@@ -14,11 +14,17 @@ const { inspectFormLayout } = await import("../app/src/lib/form-layout.ts");
 const field = (id, extra = {}) => ({ id, type: "text", label: id, required: false, ...extra });
 
 test("form layouts follow field-count thresholds", () => {
-    assert.equal(inspectFormLayout(Array.from({ length: 4 }, (_, i) => field(String(i)))).tier, "small");
+    const compactLayout = inspectFormLayout(Array.from({ length: 4 }, (_, i) => field(String(i))));
+    assert.equal(compactLayout.tier, "small");
+    assert.match(compactLayout.cardClass, /max-w-xl/);
     for (const count of [5, 6, 8]) {
-        assert.equal(inspectFormLayout(Array.from({ length: count }, (_, i) => field(String(i)))).tier, "medium");
+        const standardLayout = inspectFormLayout(Array.from({ length: count }, (_, i) => field(String(i))));
+        assert.equal(standardLayout.tier, "medium");
+        assert.match(standardLayout.cardClass, /max-w-4xl/);
     }
-    assert.equal(inspectFormLayout(Array.from({ length: 9 }, (_, i) => field(String(i)))).tier, "large");
+    const wideLayout = inspectFormLayout(Array.from({ length: 9 }, (_, i) => field(String(i))));
+    assert.equal(wideLayout.tier, "large");
+    assert.match(wideLayout.cardClass, /max-w-7xl/);
 });
 test("advanced fields occupy one column in multi-column layouts", () => {
     for (const count of [5, 9]) {
