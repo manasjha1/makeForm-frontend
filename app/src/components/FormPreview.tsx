@@ -11,7 +11,7 @@ import { Button } from "./ui/button";
 import PreviewUpload from "./builder/PreviewUpload";
 import PreviewSuccess from "./builder/PreviewSuccess";
 import CustomSelect from "./ui/custom-select";
-import { RotateCcw, Send } from "lucide-react";
+import { RotateCcw, Send, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 export const formControlClass =
@@ -131,7 +131,8 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
             Live preview
           </p>
           <span className="rounded-full border border-primary-container/20 bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold text-primary-container shadow-2xs">
-            {layout.badgeLabel} &bull; {layout.fieldsCount} {layout.fieldsCount === 1 ? "field" : "fields"}
+            {layout.badgeLabel} &bull; {layout.fieldsCount}{" "}
+            {layout.fieldsCount === 1 ? "field" : "fields"}
           </span>
         </div>
         <h2 className="wrap-break-word text-xl font-extrabold tracking-tight text-[#191c1d] sm:text-2xl lg:text-4xl">
@@ -147,8 +148,8 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
         <div className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-3 text-sm leading-snug text-amber-950 sm:px-4 lg:text-base">
           <p className="font-semibold">This is a test preview.</p>
           <p className="mt-1">
-            Fields marked * are required. Answers and files stay in this
-            preview and are not uploaded or saved.
+            Fields marked * are required. Answers and files stay in this preview
+            and are not uploaded or saved.
           </p>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] p-3 shadow-xs">
@@ -202,12 +203,13 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               required: field.required,
               className: formControlClass,
               "aria-invalid": !!displayedErrors[field.id],
-              "aria-describedby": [
-                field.helpText ? `${id}-help` : null,
-                displayedErrors[field.id] ? `${id}-error` : null,
-              ]
-                .filter(Boolean)
-                .join(" ") || undefined,
+              "aria-describedby":
+                [
+                  field.helpText ? `${id}-help` : null,
+                  displayedErrors[field.id] ? `${id}-error` : null,
+                ]
+                  .filter(Boolean)
+                  .join(" ") || undefined,
             };
             const value =
               typeof answers[field.id] === "string"
@@ -217,7 +219,10 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               field.type === "radio" ||
               (field.type === "checkbox" && !!field.options?.length);
             return (
-              <div key={field.id} className={`min-w-0 space-y-1.5 ${layout.getFieldSpanClass(field)}`}>
+              <div
+                key={field.id}
+                className={`min-w-0 space-y-1.5 ${layout.getFieldSpanClass(field)}`}
+              >
                 {choices ? (
                   <fieldset className="min-w-0">
                     <legend className="mb-2 block text-sm font-semibold leading-snug text-[#191c1d] sm:text-base lg:text-lg">
@@ -394,10 +399,10 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               variant="outline"
               disabled={!isFormDirty}
               onClick={() => setIsResetModalOpen(true)}
-              className="w-full gap-2 rounded-lg border-[#e1e3e4] px-5 py-2.5 text-sm font-semibold text-[#464555] hover:border-error/40 hover:bg-error/5 hover:text-error disabled:opacity-40 disabled:cursor-not-allowed sm:w-auto sm:text-[15px] lg:text-base cursor-pointer transition-all"
+              className="w-full gap-2 rounded-lg border-[#e1e3e4] px-5 py-2.5 text-sm font-semibold text-on-surface-variant hover:border-error/40 hover:bg-error/5 hover:text-error disabled:opacity-40 disabled:cursor-not-allowed sm:w-auto sm:text-[15px] lg:text-base cursor-pointer transition-all"
             >
-              <RotateCcw className="size-4" />
-              Reset Form
+              <Trash2 className="size-4" />
+              Clear form
             </Button>
           </div>
           {submitted && (
@@ -430,15 +435,19 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
         >
           <div className="w-full max-w-md rounded-2xl border border-[#e1e3e4] bg-white p-6 shadow-[0_20px_50px_rgba(25,28,29,0.15)] animate-in zoom-in-95 duration-150">
             <div className="flex items-start gap-3.5">
-              <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-[#ba1a1a] border border-red-100">
+              {/* <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-error border border-red-100">
                 <RotateCcw className="size-5" />
-              </div>
+              </div> */}
               <div className="flex-1 min-w-0">
-                <h3 id="preview-reset-modal-title" className="text-lg font-bold text-[#191c1d] font-heading">
-                  Reset Form?
+                <h3
+                  id="preview-reset-modal-title"
+                  className="text-lg font-bold text-[#191c1d] font-heading"
+                >
+                  Are you sure you want to clear all inputs?
                 </h3>
                 <p className="mt-1.5 text-sm text-on-surface-variant leading-relaxed">
-                  Are you sure you want to clear all filled inputs? Any responses and uploaded files will be removed.
+                  Your form information and attached files will be lost if you
+                  continue.
                 </p>
               </div>
             </div>
@@ -447,7 +456,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 type="button"
                 variant="outline"
                 onClick={() => setIsResetModalOpen(false)}
-                className="w-full sm:w-auto border-[#e1e3e4] text-[#191c1d] hover:bg-[#f3f4f5] font-medium"
+                className="w-full sm:w-auto border-[#e1e3e4] text-[#191c1d] hover:bg-surface-container-low font-medium"
               >
                 Cancel
               </Button>
@@ -458,7 +467,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                   setIsResetModalOpen(false);
                   toast.success("All filled inputs have been reset.");
                 }}
-                className="w-full sm:w-auto bg-[#ba1a1a] text-white hover:bg-[#93000a] shadow-xs font-semibold"
+                className="w-full sm:w-auto bg-error text-white hover:bg-on-error-container shadow-xs font-semibold"
               >
                 Yes, Reset Form
               </Button>
