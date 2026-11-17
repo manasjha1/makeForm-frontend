@@ -297,16 +297,14 @@ export default function Home() {
                           cutomizable
                         </p>
                         <div className="mt-6 flex items-center gap-2">
-                          <Button
-                            asChild
-                            variant="outline"
-                            className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-lg"
+                          <ShinyButton
+                            className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-lg flex items-center"
                           >
                             <Link to="/live-preview?view=templates">
                               <Eye aria-hidden="true" className="ml-2 size-4" />
                               Preview
                             </Link>
-                          </Button>
+                          </ShinyButton>
                           <Button
                             asChild
                             className="min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary rounded-lg"
