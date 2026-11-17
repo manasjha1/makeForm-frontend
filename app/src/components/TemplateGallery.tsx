@@ -93,7 +93,7 @@ export default function TemplateGallery({
               <Button
                 asChild
                 variant="outline"
-                className="flex-1 border-[#e1e3e4] text-[#191c1d] hover:bg-[#f3f4f5] shadow-2xs font-medium cursor-pointer"
+                className="flex-1 border-[#e1e3e4] text-[#191c1d] hover:bg-surface-container-low shadow-2xs font-medium cursor-pointer"
               >
                 <Link to={`/live-preview?template=${encodeURIComponent(template.id)}`}>
                   <Eye className="size-4" />

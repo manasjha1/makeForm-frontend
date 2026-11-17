@@ -10,7 +10,23 @@ const { validateAnswers } = await import("../app/src/lib/form-validation.ts");
 const { saveDraft, readDraft } = await import("../app/src/lib/form-draft.ts");
 const { dropTargetIndex } = await import("../app/src/lib/studio-model.ts");
 const { nextOptionLabel, renameOption } = await import("../app/src/lib/field-options.ts");
+const { inspectFormLayout } = await import("../app/src/lib/form-layout.ts");
 const field = (id, extra = {}) => ({ id, type: "text", label: id, required: false, ...extra });
+
+test("form layouts follow field-count thresholds", () => {
+    assert.equal(inspectFormLayout(Array.from({ length: 4 }, (_, i) => field(String(i)))).tier, "small");
+    for (const count of [5, 6, 8]) {
+        assert.equal(inspectFormLayout(Array.from({ length: count }, (_, i) => field(String(i)))).tier, "medium");
+    }
+    assert.equal(inspectFormLayout(Array.from({ length: 9 }, (_, i) => field(String(i)))).tier, "large");
+});
+test("advanced fields occupy one column in multi-column layouts", () => {
+    for (const count of [5, 9]) {
+        const layout = inspectFormLayout(Array.from({ length: count }, (_, i) => field(String(i))));
+        assert.equal(layout.getFieldSpanClass(field("description", { type: "textarea" })), "col-span-1");
+        assert.equal(layout.getFieldSpanClass(field("upload", { type: "file" })), "col-span-1");
+    }
+});
 
 test("numeric step validation handles decimals and a minimum offset", () => {
     const number = field("n", { type: "number", min: 0.1, step: 0.2 });

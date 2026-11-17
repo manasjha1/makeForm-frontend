@@ -26,12 +26,10 @@ export interface FormLayoutConfig {
  * Inspects a form's fields to determine its optimal responsive layout.
  *
  * Rules:
- * - Small Form (<= 4 fields): Compact width (max-w-xl) and 1 column so fields
- *   are not awkwardly stretched across the screen.
+ * - Small Form (< 5 fields): Compact width (max-w-xl) and 1 column.
  * - Medium Form (5 to 8 fields): Standard balanced width (max-w-4xl) with 2 columns.
- * - Big Form (>= 9 fields OR >= 6 fields with >= 5 diverse types):
- *   Expands to full screen device width (max-w-7xl / screen-2xl) with a multi-column
- *   adaptive grid where wide fields (textarea, file, choice groups) span multiple columns.
+ * - Big Form (> 8 fields): Full screen device width with a 3-column grid.
+ * - Advanced fields (textarea and file uploads) occupy a single column.
  */
 export function inspectFormLayout(fields: FormFieldLike[] = []): FormLayoutConfig {
   const fieldsCount = fields.length;
@@ -47,19 +45,8 @@ export function inspectFormLayout(fields: FormFieldLike[] = []): FormLayoutConfi
     return t === "textarea" || t === "file" || (t === "radio" && hasManyOptions) || (t === "checkbox" && hasManyOptions);
   });
 
-  let tier: FormLayoutTier = "medium";
-
-  if (fieldsCount <= 4) {
-    tier = "small";
-  } else if (
-    fieldsCount >= 9 ||
-    (fieldsCount >= 6 && distinctTypesCount >= 5) ||
-    (fieldsCount >= 7 && hasWideFields && distinctTypesCount >= 4)
-  ) {
-    tier = "large";
-  } else {
-    tier = "medium";
-  }
+  const tier: FormLayoutTier =
+    fieldsCount < 5 ? "small" : fieldsCount > 8 ? "large" : "medium";
 
   if (tier === "small") {
     return {
@@ -94,15 +81,12 @@ export function inspectFormLayout(fields: FormFieldLike[] = []): FormLayoutConfi
         const opts = field.options || field.config?.options;
         const optionsCount = Array.isArray(opts) ? opts.length : 0;
 
-        // Textarea & File uploads span full row across all columns
         if (t === "textarea" || t === "file") {
-          return "col-span-1 md:col-span-2 lg:col-span-3";
+          return "col-span-1";
         }
-        // Choice blocks with 3+ options span 2 columns for better layout
         if ((t === "radio" || t === "checkbox") && optionsCount >= 3) {
           return "col-span-1 md:col-span-2 lg:col-span-2";
         }
-        // Standard compact inputs sit in single grid column
         return "col-span-1";
       },
     };
@@ -125,7 +109,10 @@ export function inspectFormLayout(fields: FormFieldLike[] = []): FormLayoutConfi
       const opts = field.options || field.config?.options;
       const optionsCount = Array.isArray(opts) ? opts.length : 0;
 
-      if (t === "textarea" || t === "file" || ((t === "radio" || t === "checkbox") && optionsCount >= 3)) {
+      if (t === "textarea" || t === "file") {
+        return "col-span-1";
+      }
+      if ((t === "radio" || t === "checkbox") && optionsCount >= 3) {
         return "col-span-1 md:col-span-2";
       }
       return "col-span-1";
