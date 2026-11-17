@@ -9,6 +9,7 @@ import {
   RefreshCw,
   Sparkles,
   Trash2,
+  RotateCcw,
 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { Button } from "~/src/components/ui/button";
@@ -56,6 +57,16 @@ export default function PublicForm() {
   const formElementRef = useRef<HTMLFormElement>(null);
   const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const draftKey = form ? `makeform-public-draft:${form.id}` : null;
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+
+  const isFormDirty = useMemo(() => {
+    return Object.values(answers).some((val) => {
+      if (val === null || val === undefined || val === "") return false;
+      if (Array.isArray(val)) return val.length > 0;
+      if (typeof val === "object") return true;
+      return String(val).trim().length > 0;
+    });
+  }, [answers]);
 
   useEffect(() => {
     if (!slug) {
@@ -314,6 +325,9 @@ export default function PublicForm() {
       }
     }
     formElementRef.current?.reset();
+    Object.values(fileInputRefs.current).forEach((el) => {
+      if (el) el.value = "";
+    });
     const initialAnswers: Record<string, any> = {};
     form.fields.forEach((f) => {
       initialAnswers[f.id] = f.type === "CHECKBOX" ? [] : "";
@@ -652,7 +666,7 @@ export default function PublicForm() {
                   <Button
                     type="submit"
                     disabled={isSubmitting || Object.values(uploadingFields).some(Boolean)}
-                    className="w-full rounded-lg bg-[#3525cd] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:bg-primary-container sm:w-auto sm:px-8 sm:text-[15px] lg:text-base"
+                    className="w-full rounded-lg bg-[#3525cd] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:bg-primary-container sm:w-auto sm:px-8 sm:text-[15px] lg:text-base cursor-pointer"
                   >
                     {isSubmitting ? (
                       <>
@@ -662,24 +676,71 @@ export default function PublicForm() {
                     ) : (
                       <>
                         <Send className="size-4" />
-                        Submit Response
+                        Submit Form
                       </>
                     )}
                   </Button>
                   <Button
                     type="button"
                     variant="outline"
-                    disabled={isSubmitting || Object.values(uploadingFields).some(Boolean)}
-                    onClick={handleResetForm}
-                    className="w-full gap-2 rounded-lg border-error/30 px-5 py-2.5 text-sm font-semibold text-error hover:border-error/50 hover:bg-error/10 sm:w-auto sm:text-[15px] lg:text-base"
+                    disabled={isSubmitting || !isFormDirty || Object.values(uploadingFields).some(Boolean)}
+                    onClick={() => setIsResetModalOpen(true)}
+                    className="w-full gap-2 rounded-lg border-[#e1e3e4] px-5 py-2.5 text-sm font-semibold text-[#464555] hover:border-error/40 hover:bg-error/5 hover:text-error disabled:opacity-40 disabled:cursor-not-allowed sm:w-auto sm:text-[15px] lg:text-base cursor-pointer transition-all"
                   >
-                    <Trash2 className="size-4" />
-                    Clear form
+                    <RotateCcw className="size-4" />
+                    Reset Form
                   </Button>
                 </div>
               </form>
             </CardContent>
           </Card>
+        )}
+
+        {/* Reset Form Confirmation Modal */}
+        {isResetModalOpen && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="reset-modal-title"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-xs animate-in fade-in duration-150"
+          >
+            <div className="w-full max-w-md rounded-2xl border border-[#e1e3e4] bg-white p-6 shadow-[0_20px_50px_rgba(25,28,29,0.15)] animate-in zoom-in-95 duration-150">
+              <div className="flex items-start gap-3.5">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-[#ba1a1a] border border-red-100">
+                  <RotateCcw className="size-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 id="reset-modal-title" className="text-lg font-bold text-[#191c1d] font-heading">
+                    Reset Form?
+                  </h3>
+                  <p className="mt-1.5 text-sm text-on-surface-variant leading-relaxed">
+                    Are you sure you want to clear all filled inputs? Any responses and uploaded files will be removed.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsResetModalOpen(false)}
+                  className="w-full sm:w-auto border-[#e1e3e4] text-[#191c1d] hover:bg-[#f3f4f5] font-medium"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    handleResetForm();
+                    setIsResetModalOpen(false);
+                    toast.success("All filled inputs have been reset.");
+                  }}
+                  className="w-full sm:w-auto bg-[#ba1a1a] text-white hover:bg-[#93000a] shadow-xs font-semibold"
+                >
+                  Yes, Reset Form
+                </Button>
+              </div>
+            </div>
+          </div>
         )}
       </main>
 

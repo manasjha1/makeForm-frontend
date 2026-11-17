@@ -11,6 +11,8 @@ import { Button } from "./ui/button";
 import PreviewUpload from "./builder/PreviewUpload";
 import PreviewSuccess from "./builder/PreviewSuccess";
 import CustomSelect from "./ui/custom-select";
+import { RotateCcw, Send } from "lucide-react";
+import toast from "react-hot-toast";
 
 export const formControlClass =
   "w-full rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] px-3.5 py-2.5 text-base text-[#191c1d] outline-none transition-all focus:border-[#4f46e5] focus:bg-white focus:ring-3 focus:ring-[#4f46e5]/20 aria-invalid:border-[#ba1a1a] sm:text-base lg:text-lg";
@@ -19,6 +21,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
   const prefix = useId();
   const formRef = useRef<HTMLFormElement>(null);
   const restartFocus = useRef(false);
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [answers, setAnswers] = useState<Answers>(() =>
     initialAnswers(form.fields),
   );
@@ -67,6 +70,31 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
   };
 
   const layout = useMemo(() => inspectFormLayout(form.fields), [form.fields]);
+
+  const isFormDirty = useMemo(() => {
+    const init = initialAnswers(form.fields);
+    const hasAnswerChanged = Object.entries(answers).some(([key, val]) => {
+      const defaultVal = init[key];
+      if (Array.isArray(val)) {
+        return val.length > 0;
+      }
+      return val !== defaultVal && val !== "" && val !== false;
+    });
+    const hasFiles = Object.values(files).some(Boolean);
+    return hasAnswerChanged || hasFiles;
+  }, [answers, files, form.fields]);
+
+  const handleResetForm = () => {
+    restartFocus.current = true;
+    setDemoErrors(false);
+    setAnswers(initialAnswers(form.fields));
+    setFiles({});
+    setErrors({});
+    setValidationStarted(false);
+    setSubmitted(null);
+    setAttempt((value) => value + 1);
+    formRef.current?.reset();
+  };
 
   return (
     <form
@@ -353,12 +381,23 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               </div>
             );
           })}
-          <div className="col-span-full pt-2">
+          <div className="col-span-full flex flex-col gap-3 border-t border-[#e1e3e4] pt-4 sm:flex-row sm:items-center sm:gap-4">
             <Button
               type="submit"
-              className="w-full bg-[#3525cd] text-white hover:bg-primary-container shadow-[0_4px_14px_0_rgba(79,70,229,0.3)] transition-all font-semibold sm:text-base lg:py-3 lg:text-lg"
+              className="w-full rounded-lg bg-[#3525cd] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:bg-primary-container sm:w-auto sm:px-8 sm:text-[15px] lg:text-base cursor-pointer"
             >
-              Test submission
+              <Send className="size-4" />
+              Submit Form
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={!isFormDirty}
+              onClick={() => setIsResetModalOpen(true)}
+              className="w-full gap-2 rounded-lg border-[#e1e3e4] px-5 py-2.5 text-sm font-semibold text-[#464555] hover:border-error/40 hover:bg-error/5 hover:text-error disabled:opacity-40 disabled:cursor-not-allowed sm:w-auto sm:text-[15px] lg:text-base cursor-pointer transition-all"
+            >
+              <RotateCcw className="size-4" />
+              Reset Form
             </Button>
           </div>
           {submitted && (
@@ -380,6 +419,53 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
           )}
         </div>
       </div>
+
+      {/* Reset Form Confirmation Modal */}
+      {isResetModalOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="preview-reset-modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-xs animate-in fade-in duration-150"
+        >
+          <div className="w-full max-w-md rounded-2xl border border-[#e1e3e4] bg-white p-6 shadow-[0_20px_50px_rgba(25,28,29,0.15)] animate-in zoom-in-95 duration-150">
+            <div className="flex items-start gap-3.5">
+              <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-[#ba1a1a] border border-red-100">
+                <RotateCcw className="size-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 id="preview-reset-modal-title" className="text-lg font-bold text-[#191c1d] font-heading">
+                  Reset Form?
+                </h3>
+                <p className="mt-1.5 text-sm text-on-surface-variant leading-relaxed">
+                  Are you sure you want to clear all filled inputs? Any responses and uploaded files will be removed.
+                </p>
+              </div>
+            </div>
+            <div className="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsResetModalOpen(false)}
+                className="w-full sm:w-auto border-[#e1e3e4] text-[#191c1d] hover:bg-[#f3f4f5] font-medium"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                onClick={() => {
+                  handleResetForm();
+                  setIsResetModalOpen(false);
+                  toast.success("All filled inputs have been reset.");
+                }}
+                className="w-full sm:w-auto bg-[#ba1a1a] text-white hover:bg-[#93000a] shadow-xs font-semibold"
+              >
+                Yes, Reset Form
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 }

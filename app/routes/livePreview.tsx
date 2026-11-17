@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
+import { Toaster } from "react-hot-toast";
 import Footer from "~/src/components/Footer";
 import Header from "~/src/components/Headers";
 import FormPreview from "~/src/components/FormPreview";
@@ -30,6 +31,7 @@ export default function LivePreview() {
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] text-[#191c1d] flex flex-col">
+      <Toaster position="top-right" />
       <Header viewPage="LivePreview" />
       <main className={`${layout?.containerClass || "mx-auto w-full max-w-4xl"} flex-1 space-y-5 px-3 py-6 sm:space-y-6 sm:px-5 sm:py-8 lg:px-8 lg:py-10`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
