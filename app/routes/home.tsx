@@ -210,7 +210,7 @@ export default function Home() {
               logic, and an interactive preview—no code required.
             </p>
             <div className="home-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 mx-auto my-6">
-              <InteractiveHoverButton className="px-6 py-4">
+              <InteractiveHoverButton className="px-6 py-4 bg-primary text-white">
                 <Link to="/form-builder">Launch your form </Link>
               </InteractiveHoverButton>
               <ShinyButton className="px-6 py-4 rounded-full">
@@ -298,19 +298,19 @@ export default function Home() {
                         </p>
                         <div className="mt-6 flex items-center gap-2">
                           <ShinyButton
-                            className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-lg flex items-center"
+                            className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-lg"
                           >
-                            <Link to="/live-preview?view=templates">
+                            <Link to="/live-preview?view=templates" className="flex items-center gap-2 text-black capitalize">
                               <Eye aria-hidden="true" className="ml-2 size-4" />
                               Preview
                             </Link>
                           </ShinyButton>
-                          <Button
-                            asChild
+                          <RippleButton
                             className="min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary rounded-lg"
                           >
                             <Link
                               to={`/form-builder?template=${encodeURIComponent(template.id)}`}
+                              className="flex items-center gap-2 text-white capitalize"
                             >
                               Use this template
                               <MoveRight
@@ -318,7 +318,7 @@ export default function Home() {
                                 className="transition-all size-4"
                               />
                             </Link>
-                          </Button>
+                          </RippleButton>
                         </div>
                       </div>
                       <div className="overflow-hidden rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] shadow-inner">

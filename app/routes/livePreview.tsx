@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 import Header from "~/src/components/Headers";
 import FormPreview from "~/src/components/FormPreview";
 import { Button } from "~/src/components/ui/button";
 import { readDraft } from "~/src/lib/form-draft";
+import { inspectFormLayout } from "~/src/lib/form-layout";
 import type { FormTemplate } from "~/src/lib/form-types";
 
 export function meta() {
@@ -24,13 +25,23 @@ export default function LivePreview() {
     setForm(readDraft());
     setReady(true);
   }, []);
+
+  const layout = useMemo(() => (form ? inspectFormLayout(form.fields) : null), [form]);
+
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-[#191c1d]">
+    <div className="min-h-screen bg-[#f8f9fa] text-[#191c1d] flex flex-col">
       <Header viewPage="LivePreview" />
-      <main className="mx-auto w-full space-y-5 px-3 py-6 sm:space-y-6 sm:px-5 sm:py-8 lg:px-8 lg:py-10">
-        <h1 className="font-heading text-xl font-bold text-[#191c1d] sm:text-2xl lg:text-3xl">
-          Live preview
-        </h1>
+      <main className={`${layout?.containerClass || "mx-auto w-full max-w-4xl"} flex-1 space-y-5 px-3 py-6 sm:space-y-6 sm:px-5 sm:py-8 lg:px-8 lg:py-10`}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="font-heading text-xl font-bold text-[#191c1d] sm:text-2xl lg:text-3xl">
+            Live preview
+          </h1>
+          {layout && (
+            <span className="rounded-full bg-surface-container-high px-2.5 py-1 text-xs font-semibold text-on-surface-variant border border-[#e1e3e4]">
+              {layout.badgeLabel} &bull; {layout.fieldsCount} {layout.fieldsCount === 1 ? "field" : "fields"}
+            </span>
+          )}
+        </div>
         {!ready ? (
           <p role="status" className="text-[#464555]">Loading draft…</p>
         ) : form ? (

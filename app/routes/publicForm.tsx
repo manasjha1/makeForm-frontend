@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, Link } from "react-router";
 import {
   CheckCircle2,
@@ -27,6 +27,7 @@ import {
 } from "~/src/services/forms";
 import makeFormLogo from "~/assests/makeForm_indigo_logo.png";
 import CustomSelect from "~/src/components/ui/custom-select";
+import { inspectFormLayout } from "~/src/lib/form-layout";
 
 export function meta() {
   return [
@@ -38,6 +39,7 @@ export function meta() {
 export default function PublicForm() {
   const { adminId, slug } = useParams<{ adminId?: string; slug?: string }>();
   const [form, setForm] = useState<PublicFormDetail | null>(null);
+  const layout = useMemo(() => inspectFormLayout(form?.fields || []), [form?.fields]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -328,7 +330,7 @@ export default function PublicForm() {
 
       {/* Top Brand Bar */}
       <header className="w-full border-b border-[#e1e3e4] bg-white px-4 py-3 shadow-[0_1px_3px_0_rgba(25,28,29,0.04)]">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
+        <div className={layout.brandBarClass}>
           <Link to="/" className="flex items-center gap-2" aria-label="makeForm home">
             <img className="h-10 w-28 object-contain" src={makeFormLogo} alt="makeForm" />
           </Link>
@@ -341,12 +343,17 @@ export default function PublicForm() {
             <span className="rounded-full bg-primary-fixed px-2.5 py-0.5 text-xs font-semibold text-on-primary-fixed border border-[#c3c0ff]">
               Verified Form
             </span>
+            {form && (
+              <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-surface-container-high px-2 py-0.5 text-[11px] font-medium text-on-surface-variant border border-[#e1e3e4]">
+                {layout.badgeLabel}
+              </span>
+            )}
           </div>
         </div>
       </header>
 
       {/* Form Content */}
-      <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:py-12 flex-1">
+      <main className={`${layout.containerClass} px-4 py-8 sm:py-12 flex-1`}>
         {isLoading ? (
           <Card className="mx-auto max-w-2xl border-[#e1e3e4] bg-white p-12 text-center shadow-[0_4px_6px_-1px_rgba(25,28,29,0.05),0_2px_4px_-2px_rgba(25,28,29,0.04)] rounded-xl">
             <RefreshCw className="mx-auto size-8 text-[#3525cd] animate-spin mb-3" />
@@ -434,12 +441,17 @@ export default function PublicForm() {
           </Card>
         ) : (
           /* Active Form Fill-out Form */
-          <Card className="border-[#e1e3e4] bg-white shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)] overflow-hidden rounded-2xl">
+          <Card className={`border-[#e1e3e4] bg-white shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)] overflow-hidden rounded-2xl ${layout.cardClass}`}>
             <div className="h-2 bg-linear-to-r from-primary-container to-[#06b6d4]" />
             <CardHeader className="border-b border-[#e1e3e4] bg-[#f8f9fa] px-6 py-5">
-              <CardTitle className="text-xl font-extrabold text-[#191c1d] tracking-tight font-heading sm:text-2xl lg:text-3xl">
-                {form?.title}
-              </CardTitle>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <CardTitle className="text-xl font-extrabold text-[#191c1d] tracking-tight font-heading sm:text-2xl lg:text-3xl">
+                  {form?.title}
+                </CardTitle>
+                <span className="rounded-full bg-surface-container-high px-2.5 py-0.5 text-[11px] font-semibold text-on-surface-variant border border-[#e1e3e4]">
+                  {layout.badgeLabel} &bull; {layout.fieldsCount} {layout.fieldsCount === 1 ? "field" : "fields"}
+                </span>
+              </div>
               {form?.description && (
                 <CardDescription className="mt-1.5 text-sm leading-relaxed text-on-surface-variant sm:text-base lg:text-lg">
                   {form.description}
@@ -459,14 +471,14 @@ export default function PublicForm() {
             </div>
 
             <CardContent className="p-4 sm:p-6 lg:p-8">
-              <form ref={formElementRef} noValidate onSubmit={handleSubmit} className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-5 sm:gap-y-6 lg:grid-cols-2">
+              <form ref={formElementRef} noValidate onSubmit={handleSubmit} className={layout.gridClass}>
                 {form?.fields.map((field) => {
                   const error = fieldErrors[field.id];
                   const config = field.config || {};
                   const options: string[] = Array.isArray(config.options) ? config.options : [];
 
                   return (
-                    <div key={field.id} className="min-w-0 space-y-1.5">
+                    <div key={field.id} className={`min-w-0 space-y-1.5 ${layout.getFieldSpanClass(field)}`}>
                       <label className="block text-sm font-semibold leading-snug text-[#191c1d] sm:text-[15px] lg:text-base">
                         {field.label}
                         {field.required && (
@@ -636,7 +648,7 @@ export default function PublicForm() {
                   );
                 })}
 
-                <div className="flex flex-col gap-3 border-t border-[#e1e3e4] pt-4 sm:flex-row sm:items-center sm:gap-4 lg:col-span-2">
+                <div className="col-span-full flex flex-col gap-3 border-t border-[#e1e3e4] pt-4 sm:flex-row sm:items-center sm:gap-4">
                   <Button
                     type="submit"
                     disabled={isSubmitting || Object.values(uploadingFields).some(Boolean)}

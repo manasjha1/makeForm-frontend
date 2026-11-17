@@ -1,0 +1,134 @@
+export type FormLayoutTier = "small" | "medium" | "large";
+
+export interface FormFieldLike {
+  type?: string;
+  options?: any[];
+  config?: {
+    options?: any[];
+  };
+}
+
+export interface FormLayoutConfig {
+  tier: FormLayoutTier;
+  fieldsCount: number;
+  distinctTypesCount: number;
+  hasWideFields: boolean;
+  containerClass: string;
+  brandBarClass: string;
+  gridClass: string;
+  cardClass: string;
+  isFullScreen: boolean;
+  badgeLabel: string;
+  getFieldSpanClass: (field: FormFieldLike) => string;
+}
+
+/**
+ * Inspects a form's fields to determine its optimal responsive layout.
+ *
+ * Rules:
+ * - Small Form (<= 4 fields): Compact width (max-w-xl) and 1 column so fields
+ *   are not awkwardly stretched across the screen.
+ * - Medium Form (5 to 8 fields): Standard balanced width (max-w-4xl) with 2 columns.
+ * - Big Form (>= 9 fields OR >= 6 fields with >= 5 diverse types):
+ *   Expands to full screen device width (max-w-7xl / screen-2xl) with a multi-column
+ *   adaptive grid where wide fields (textarea, file, choice groups) span multiple columns.
+ */
+export function inspectFormLayout(fields: FormFieldLike[] = []): FormLayoutConfig {
+  const fieldsCount = fields.length;
+
+  const normalizedTypes = fields.map((f) => (f.type || "").toLowerCase());
+  const distinctTypes = new Set(normalizedTypes.filter(Boolean));
+  const distinctTypesCount = distinctTypes.size;
+
+  const hasWideFields = fields.some((f) => {
+    const t = (f.type || "").toLowerCase();
+    const opts = f.options || f.config?.options;
+    const hasManyOptions = Array.isArray(opts) && opts.length > 2;
+    return t === "textarea" || t === "file" || (t === "radio" && hasManyOptions) || (t === "checkbox" && hasManyOptions);
+  });
+
+  let tier: FormLayoutTier = "medium";
+
+  if (fieldsCount <= 4) {
+    tier = "small";
+  } else if (
+    fieldsCount >= 9 ||
+    (fieldsCount >= 6 && distinctTypesCount >= 5) ||
+    (fieldsCount >= 7 && hasWideFields && distinctTypesCount >= 4)
+  ) {
+    tier = "large";
+  } else {
+    tier = "medium";
+  }
+
+  if (tier === "small") {
+    return {
+      tier,
+      fieldsCount,
+      distinctTypesCount,
+      hasWideFields,
+      containerClass: "mx-auto w-full max-w-xl transition-all duration-300",
+      brandBarClass: "mx-auto flex max-w-xl items-center justify-between transition-all duration-300",
+      gridClass: "grid min-w-0 grid-cols-1 gap-y-5",
+      cardClass: "mx-auto w-full max-w-xl",
+      isFullScreen: false,
+      badgeLabel: "Compact Layout",
+      getFieldSpanClass: () => "col-span-1",
+    };
+  }
+
+  if (tier === "large") {
+    return {
+      tier,
+      fieldsCount,
+      distinctTypesCount,
+      hasWideFields,
+      containerClass: "mx-auto w-full max-w-7xl xl:max-w-screen-2xl px-2 sm:px-4 lg:px-6 transition-all duration-300",
+      brandBarClass: "mx-auto flex w-full max-w-7xl xl:max-w-screen-2xl items-center justify-between px-2 sm:px-4 lg:px-6 transition-all duration-300",
+      gridClass: "grid min-w-0 grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3",
+      cardClass: "mx-auto w-full max-w-7xl xl:max-w-screen-2xl",
+      isFullScreen: true,
+      badgeLabel: "Full-Width Layout",
+      getFieldSpanClass: (field: FormFieldLike) => {
+        const t = (field.type || "").toLowerCase();
+        const opts = field.options || field.config?.options;
+        const optionsCount = Array.isArray(opts) ? opts.length : 0;
+
+        // Textarea & File uploads span full row across all columns
+        if (t === "textarea" || t === "file") {
+          return "col-span-1 md:col-span-2 lg:col-span-3";
+        }
+        // Choice blocks with 3+ options span 2 columns for better layout
+        if ((t === "radio" || t === "checkbox") && optionsCount >= 3) {
+          return "col-span-1 md:col-span-2 lg:col-span-2";
+        }
+        // Standard compact inputs sit in single grid column
+        return "col-span-1";
+      },
+    };
+  }
+
+  // Medium tier
+  return {
+    tier,
+    fieldsCount,
+    distinctTypesCount,
+    hasWideFields,
+    containerClass: "mx-auto w-full max-w-4xl transition-all duration-300",
+    brandBarClass: "mx-auto flex max-w-4xl items-center justify-between transition-all duration-300",
+    gridClass: "grid min-w-0 grid-cols-1 gap-x-6 gap-y-5 sm:gap-y-6 md:grid-cols-2",
+    cardClass: "mx-auto w-full max-w-4xl",
+    isFullScreen: false,
+    badgeLabel: "Standard Layout",
+    getFieldSpanClass: (field: FormFieldLike) => {
+      const t = (field.type || "").toLowerCase();
+      const opts = field.options || field.config?.options;
+      const optionsCount = Array.isArray(opts) ? opts.length : 0;
+
+      if (t === "textarea" || t === "file" || ((t === "radio" || t === "checkbox") && optionsCount >= 3)) {
+        return "col-span-1 md:col-span-2";
+      }
+      return "col-span-1";
+    },
+  };
+}

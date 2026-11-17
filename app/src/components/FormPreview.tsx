@@ -1,5 +1,6 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import type { FormTemplate } from "../lib/form-types";
+import { inspectFormLayout } from "../lib/form-layout";
 import {
   initialAnswers,
   visibleFields,
@@ -65,12 +66,14 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
     setSubmitted(null);
   };
 
+  const layout = useMemo(() => inspectFormLayout(form.fields), [form.fields]);
+
   return (
     <form
       ref={formRef}
       tabIndex={-1}
       noValidate
-      className="form-preview min-w-0 overflow-hidden rounded-2xl border border-[#e1e3e4] shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)]"
+      className={`form-preview ${layout.cardClass} min-w-0 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)] transition-all duration-300`}
       onSubmit={(event) => {
         event.preventDefault();
         setDemoErrors(false);
@@ -95,9 +98,14 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
       }}
     >
       <div className="border-b border-[#e1e3e4] bg-[#dfebf7] px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary-container">
-          Live preview
-        </p>
+        <div className="mb-2 flex items-center justify-between gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-primary-container">
+            Live preview
+          </p>
+          <span className="rounded-full border border-primary-container/20 bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold text-primary-container shadow-2xs">
+            {layout.badgeLabel} &bull; {layout.fieldsCount} {layout.fieldsCount === 1 ? "field" : "fields"}
+          </span>
+        </div>
         <h2 className="wrap-break-word text-xl font-extrabold tracking-tight text-[#191c1d] sm:text-2xl lg:text-4xl">
           {form.title}
         </h2>
@@ -157,7 +165,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
             </ul>
           </section>
         )}
-        <div className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-5 sm:gap-y-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-8">
+        <div className={layout.gridClass}>
           {visible.map((field) => {
             const id = `${prefix}-${field.id}`;
             const props = {
@@ -181,7 +189,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               field.type === "radio" ||
               (field.type === "checkbox" && !!field.options?.length);
             return (
-              <div key={field.id} className="min-w-0 space-y-1.5">
+              <div key={field.id} className={`min-w-0 space-y-1.5 ${layout.getFieldSpanClass(field)}`}>
                 {choices ? (
                   <fieldset className="min-w-0">
                     <legend className="mb-2 block text-sm font-semibold leading-snug text-[#191c1d] sm:text-base lg:text-lg">
@@ -345,14 +353,16 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               </div>
             );
           })}
-          <Button
-            type="submit"
-            className="w-full bg-[#3525cd] text-white hover:bg-primary-container shadow-[0_4px_14px_0_rgba(79,70,229,0.3)] transition-all font-semibold md:col-span-2 sm:text-base lg:py-3 lg:text-lg"
-          >
-            Test submission
-          </Button>
+          <div className="col-span-full pt-2">
+            <Button
+              type="submit"
+              className="w-full bg-[#3525cd] text-white hover:bg-primary-container shadow-[0_4px_14px_0_rgba(79,70,229,0.3)] transition-all font-semibold sm:text-base lg:py-3 lg:text-lg"
+            >
+              Test submission
+            </Button>
+          </div>
           {submitted && (
-            <div className="lg:col-span-2">
+            <div className="col-span-full">
               <PreviewSuccess
                 response={submitted}
                 onRestart={() => {
