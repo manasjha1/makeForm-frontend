@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FileText, Search } from "lucide-react";
+import { Link } from "react-router";
+import { Eye, FileText, Search } from "lucide-react";
 import { formTemplates } from "../data/form-templates";
 import type { FormTemplate } from "../lib/form-types";
 import { Button } from "./ui/button";
@@ -88,13 +89,25 @@ export default function TemplateGallery({
             <p className="mt-5 text-xs text-outline">
               {template.fields.length} fields · Fully customizable
             </p>
-            <Button
-              onClick={() => onSelect(template)}
-              className="mt-4 bg-[#3525cd] text-white hover:bg-primary-container shadow-xs font-semibold"
-              aria-label={`Use ${template.title} template`}
-            >
-              Use template
-            </Button>
+            <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+              <Button
+                asChild
+                variant="outline"
+                className="flex-1 border-[#e1e3e4] text-[#191c1d] hover:bg-[#f3f4f5] shadow-2xs font-medium cursor-pointer"
+              >
+                <Link to={`/live-preview?template=${encodeURIComponent(template.id)}`}>
+                  <Eye className="size-4" />
+                  Preview
+                </Link>
+              </Button>
+              <Button
+                onClick={() => onSelect(template)}
+                className="flex-1 bg-[#3525cd] text-white hover:bg-primary-container shadow-xs font-semibold cursor-pointer"
+                aria-label={`Use ${template.title} template`}
+              >
+                Use template
+              </Button>
+            </div>
           </article>
         ))}
       </div>

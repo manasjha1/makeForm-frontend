@@ -297,28 +297,27 @@ export default function Home() {
                           cutomizable
                         </p>
                         <div className="mt-6 flex items-center gap-2">
-                          <ShinyButton
-                            className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-lg"
+                          <Link
+                            to={`/live-preview?template=${encodeURIComponent(template.id)}`}
+                            className="flex items-center gap-2 text-black capitalize"
                           >
-                            <Link to="/live-preview?view=templates" className="flex items-center gap-2 text-black capitalize">
+                            <ShinyButton className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-lg">
                               <Eye aria-hidden="true" className="ml-2 size-4" />
                               Preview
-                            </Link>
-                          </ShinyButton>
-                          <RippleButton
-                            className="min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary rounded-lg"
+                            </ShinyButton>
+                          </Link>
+                          <Link
+                            to={`/form-builder?template=${encodeURIComponent(template.id)}`}
+                            className="flex items-center gap-2 text-white capitalize"
                           >
-                            <Link
-                              to={`/form-builder?template=${encodeURIComponent(template.id)}`}
-                              className="flex items-center gap-2 text-white capitalize"
-                            >
+                            <RippleButton className="min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary rounded-lg">
                               Use this template
                               <MoveRight
                                 aria-hidden="true"
                                 className="transition-all size-4"
                               />
-                            </Link>
-                          </RippleButton>
+                            </RippleButton>
+                          </Link>
                         </div>
                       </div>
                       <div className="overflow-hidden rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] shadow-inner">
