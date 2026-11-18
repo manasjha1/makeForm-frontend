@@ -41,7 +41,7 @@ const formSchema = z.object({
 });
 
 export function meta() {
-    return [{ title: "Sign In | makeForm" }, { name: "description", content: "Sign in to your makeForm account." }];
+  return [{ title: "Sign In | makeForm" }, { name: "description", content: "Sign in to your makeForm account." }];
 }
 
 export default function Login() {
