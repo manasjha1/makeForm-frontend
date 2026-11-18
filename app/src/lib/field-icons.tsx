@@ -139,7 +139,7 @@ export function FieldLabelHeader({
   const Icon = getFieldIcon(field);
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-1.5 mb-2">
+    <div className="flex flex-wrap items-center gap-1.5 mb-2">
       <label
         htmlFor={htmlFor}
         className="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-[#191c1d] sm:text-[15px]"
@@ -151,12 +151,12 @@ export function FieldLabelHeader({
       </label>
 
       {field.required ? (
-        <span className="text-xs font-semibold text-[#ba1a1a] select-none">
-          Required *
+        <span className="text-xs font-semibold text-error select-none">
+          *
         </span>
       ) : (
-        <span className="text-xs font-medium text-[#777587] select-none">
-          Optional
+        <span className="text-xs font-medium text-outline select-none">
+          (Optional)
         </span>
       )}
     </div>
