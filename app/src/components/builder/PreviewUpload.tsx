@@ -26,7 +26,13 @@ export default function PreviewUpload({
   };
   return (
     <div
-      className={`preview-upload min-w-0 rounded-xl border border-dashed p-3 sm:p-5 text-center transition-colors ${invalid ? "border-red-500 bg-red-50" : dragging ? "border-emerald-700 bg-emerald-50" : "border-[#cbd5ce] bg-[#FAF9F6]"}`}
+      className={`preview-upload min-w-0 rounded-xl border border-dashed p-4 sm:p-5 text-center transition-all ${
+        invalid
+          ? "border-[#ba1a1a] bg-red-50/70"
+          : dragging
+          ? "border-[#4f46e5] bg-[#e2dfff]/25 ring-2 ring-[#4f46e5]/20"
+          : "border-[#c7c4d8] bg-[#f8f9fa] hover:border-[#3525cd]/50 hover:bg-[#e2dfff]/10"
+      }`}
       onDragOver={(event) => {
         if (event.dataTransfer.types.includes("Files")) {
           event.preventDefault();
@@ -47,17 +53,17 @@ export default function PreviewUpload({
       }}
     >
       {file ? (
-        <FileCheck2 size={24} className="mx-auto mb-3 text-emerald-700" />
+        <FileCheck2 size={24} className="mx-auto mb-2 text-[#3525cd]" />
       ) : (
-        <Upload size={24} className="mx-auto mb-3 text-emerald-700" />
+        <Upload size={24} className="mx-auto mb-2 text-[#3525cd]" />
       )}
       <label
         htmlFor={id}
-        className="block cursor-pointer text-sm font-medium text-[#1C2925]"
+        className="block cursor-pointer text-sm font-semibold text-[#191c1d]"
       >
         {file ? "Replace selected file" : "Drop a file here or click to upload"}
       </label>
-      <p className="mt-1 text-xs text-[#6B7872]">
+      <p className="mt-1 text-xs text-[#464555]">
         {field.accept || "Any file type"}
         {field.maxFileSize ? ` · Up to ${field.maxFileSize} MB` : ""}
       </p>
@@ -71,29 +77,29 @@ export default function PreviewUpload({
         type="file"
         required={field.required}
         accept={field.accept}
-        className="mt-3 w-full min-w-0 rounded-lg text-xs file:mr-3 file:rounded-md file:border-0 file:bg-emerald-100 file:px-3 file:py-2 file:text-emerald-800"
+        className="mt-3 w-full min-w-0 text-xs file:mr-3 file:rounded-lg file:border-0 file:bg-primary-fixed file:px-3 file:py-1.5 file:font-semibold file:text-on-primary-fixed hover:file:bg-[#c3c0ff] cursor-pointer"
         onChange={(event) => select(event.target.files?.[0])}
       />
       {file && (
-        <div className="mt-4 flex items-center justify-between gap-3 rounded-lg border border-emerald-100 bg-white p-3 text-left">
+        <div className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-[#e1e3e4] bg-white p-3 text-left shadow-2xs">
           <span className="min-w-0">
-            <span className="block break-all text-xs font-medium">
+            <span className="block break-all text-xs font-semibold text-[#191c1d]">
               {file.name}
             </span>
-            <span className="text-xs text-[#6B7872]">
+            <span className="text-xs text-[#464555]">
               {(file.size / 1024).toFixed(1)} KB · Local preview only
             </span>
           </span>
           <button
             type="button"
-            className="min-h-11 min-w-11 shrink-0 rounded p-2 text-[#6B7872] hover:bg-red-50 hover:text-red-700"
+            className="size-8 shrink-0 rounded-lg p-1 text-[#464555] hover:bg-red-50 hover:text-[#ba1a1a] transition-colors flex items-center justify-center cursor-pointer"
             aria-label={"Remove " + file.name}
             onClick={() => {
               if (input.current) input.current.value = "";
               onChange(undefined);
             }}
           >
-            <X size={15} />
+            <X size={16} />
           </button>
         </div>
       )}

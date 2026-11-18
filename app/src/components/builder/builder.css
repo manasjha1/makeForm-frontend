@@ -551,6 +551,10 @@
   max-width: none;
   padding: 32px clamp(12px, 2vw, 32px);
   margin: 0;
+  background-color: #f8f9fb;
+  background-image: 
+    radial-gradient(circle at 95% 5%, rgba(226, 223, 255, 0.5) 0%, transparent 35%),
+    radial-gradient(circle at 5% 95%, rgba(237, 234, 255, 0.6) 0%, transparent 35%);
 }
 .studio-error {
   color: #ba1a1a;

@@ -10,6 +10,7 @@ import {
   Sparkles,
   Trash2,
   RotateCcw,
+  SlidersHorizontal,
 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { Button } from "~/src/components/ui/button";
@@ -29,6 +30,7 @@ import {
 import makeFormLogo from "~/assests/makeForm_indigo_logo.png";
 import CustomSelect from "~/src/components/ui/custom-select";
 import { inspectFormLayout } from "~/src/lib/form-layout";
+import { FieldLabelHeader } from "~/src/lib/field-icons";
 
 export function meta() {
   return [
@@ -339,11 +341,18 @@ export default function PublicForm() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-[#191c1d] flex flex-col justify-between">
+    <div className="relative min-h-screen bg-[#f8f9fb] text-[#191c1d] flex flex-col justify-between overflow-hidden">
+      {/* Ambient background accents matching reference image */}
+      <div className="pointer-events-none absolute -top-48 -right-48 size-[520px] rounded-full bg-[#e2dfff]/40 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-48 -left-48 size-[520px] rounded-full bg-[#edeaff]/50 blur-3xl" aria-hidden="true" />
+      <svg className="pointer-events-none absolute inset-0 size-full stroke-[#c7c4d8]/25" aria-hidden="true" fill="none">
+        <path d="M-100,180 Q350,-80 850,260 T1850,180" strokeDasharray="6 8" strokeWidth="1.5" />
+      </svg>
+
       <Toaster position="top-right" />
 
       {/* Top Brand Bar */}
-      <header className="w-full border-b border-[#e1e3e4] bg-white px-4 py-3 shadow-[0_1px_3px_0_rgba(25,28,29,0.04)]">
+      <header className="relative z-10 w-full border-b border-[#e1e3e4] bg-white/90 backdrop-blur-xs px-4 py-3 shadow-[0_1px_3px_0_rgba(25,28,29,0.04)]">
         <div className={layout.brandBarClass}>
           <Link to="/" className="flex items-center gap-2" aria-label="makeForm home">
             <img className="h-10 w-28 object-contain" src={makeFormLogo} alt="makeForm" />
@@ -367,7 +376,7 @@ export default function PublicForm() {
       </header>
 
       {/* Form Content */}
-      <main className={`${layout.containerClass} px-4 py-8 sm:py-12 flex-1`}>
+      <main className={`relative z-10 ${layout.containerClass} px-4 py-8 sm:py-12 flex-1`}>
         {isLoading ? (
           <Card className="mx-auto max-w-2xl border-[#e1e3e4] bg-white p-12 text-center shadow-[0_4px_6px_-1px_rgba(25,28,29,0.05),0_2px_4px_-2px_rgba(25,28,29,0.04)] rounded-xl">
             <RefreshCw className="mx-auto size-8 text-[#3525cd] animate-spin mb-3" />
@@ -455,36 +464,51 @@ export default function PublicForm() {
           </Card>
         ) : (
           /* Active Form Fill-out Form */
-          <Card className={`border-[#e1e3e4] bg-white shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)] overflow-hidden rounded-2xl ${layout.cardClass}`}>
-            <div className="h-2 bg-linear-to-r from-primary-container to-[#06b6d4]" />
-            <CardHeader className="border-b border-[#e1e3e4] bg-[#f8f9fa] px-6 py-5">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <CardTitle className="text-xl font-extrabold text-[#191c1d] tracking-tight font-heading sm:text-2xl lg:text-3xl">
-                  {form?.title}
-                </CardTitle>
-                <span className="rounded-full bg-surface-container-high px-2.5 py-0.5 text-[11px] font-semibold text-on-surface-variant border border-[#e1e3e4]">
-                  {layout.badgeLabel} &bull; {layout.fieldsCount} {layout.fieldsCount === 1 ? "field" : "fields"}
-                </span>
-              </div>
-              {form?.description && (
-                <CardDescription className="mt-1.5 text-sm leading-relaxed text-on-surface-variant sm:text-base lg:text-lg">
-                  {form.description}
-                </CardDescription>
-              )}
-            </CardHeader>
+          <Card className={`border border-[#e1e3e4] bg-white shadow-[0_25px_60px_-15px_rgba(53,37,205,0.08),0_8px_20px_-6px_rgba(25,28,29,0.04)] overflow-hidden rounded-3xl ${layout.cardClass}`}>
+            {/* Redesigned Premium Header matching reference image */}
+            <div className="border-b border-[#e1e3e4] bg-white px-6 py-6 sm:px-8 sm:py-7">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#e2dfff]/70 border border-[#c3c0ff] text-[#3525cd] shadow-2xs">
+                    <SlidersHorizontal className="size-6" />
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <h1 className="font-heading text-xl font-bold tracking-tight text-[#191c1d] sm:text-2xl">
+                        {form?.title}
+                      </h1>
+                      <span className="rounded-full border border-[#c3c0ff] bg-[#e2dfff]/40 px-2.5 py-0.5 text-[11px] font-semibold text-[#3525cd]">
+                        {layout.badgeLabel} &bull; {layout.fieldsCount} {layout.fieldsCount === 1 ? "field" : "fields"}
+                      </span>
+                    </div>
+                    {form?.description && (
+                      <p className="mt-1 text-sm text-[#464555] leading-relaxed">
+                        {form.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
 
-            <div className="mx-3 mt-4 flex items-start gap-2 rounded-lg border border-amber-300 bg-amber-50 px-3 py-3 text-xs leading-snug text-amber-950 sm:mx-6 sm:gap-3 sm:px-4 sm:text-sm lg:mx-8">
-              <AlertCircle className="mt-0.5 size-4 shrink-0" />
-              <div>
-                <p className="font-semibold">Please do not refresh this page while filling out the form.</p>
-                <p className="mt-1 text-xs sm:text-sm">
-                  Answers and uploaded files are saved in this browser tab and restored if the page reloads.
-                </p>
-                {draftStorageError && <p className="mt-1 text-[0.8em] font-medium">{draftStorageError}</p>}
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full bg-primary-fixed px-3 py-1 text-xs font-semibold text-on-primary-fixed border border-[#c3c0ff]">
+                    Verified Form
+                  </span>
+                </div>
               </div>
             </div>
 
-            <CardContent className="p-4 sm:p-6 lg:p-8">
+            <div className="mx-4 mt-5 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50/80 px-4 py-3.5 text-xs leading-snug text-amber-950 sm:mx-8">
+              <AlertCircle className="mt-0.5 size-4 shrink-0 text-amber-700" />
+              <div>
+                <p className="font-semibold text-amber-900">Please do not refresh this page while filling out the form.</p>
+                <p className="mt-0.5 text-xs text-amber-800">
+                  Answers and uploaded files are saved in this browser tab and restored if the page reloads.
+                </p>
+                {draftStorageError && <p className="mt-1 text-[0.8em] font-medium text-amber-900">{draftStorageError}</p>}
+              </div>
+            </div>
+
+            <CardContent className="p-6 sm:p-8 lg:p-10">
               <form ref={formElementRef} noValidate onSubmit={handleSubmit} className={layout.gridClass}>
                 {form?.fields.map((field) => {
                   const error = fieldErrors[field.id];
@@ -493,20 +517,15 @@ export default function PublicForm() {
 
                   return (
                     <div key={field.id} className={`min-w-0 space-y-1.5 ${layout.getFieldSpanClass(field)}`}>
-                      <label className="block text-sm font-semibold leading-snug text-[#191c1d] sm:text-[15px] lg:text-base">
-                        {field.label}
-                        {field.required && (
-                          <span className="text-error ml-1 font-bold" title="Required">*</span>
-                        )}
-                      </label>
+                      <FieldLabelHeader field={field} htmlFor={`field-${field.id}`} />
 
                       {field.description && (
-                        <p className="text-xs leading-relaxed text-on-surface-variant sm:text-sm lg:text-base">{field.description}</p>
+                        <p className="text-xs leading-relaxed text-[#464555] mb-1.5">{field.description}</p>
                       )}
 
                       {/* Field Type Specific Controls */}
                       {field.type === "FILE" ? (
-                        <div className={`rounded-lg border bg-[#f8f9fa] p-3 ${error ? "border-error" : "border-[#e1e3e4]"}`}>
+                        <div className={`rounded-xl border bg-[#f8f9fa] p-3.5 transition-all ${error ? "border-[#ba1a1a]" : "border-[#e1e3e4] hover:border-[#c7c4d8]"}`}>
                           <input
                             id={`field-${field.id}`}
                             name={field.id}
@@ -517,20 +536,20 @@ export default function PublicForm() {
                             aria-describedby={error ? `field-${field.id}-error` : undefined}
                             disabled={uploadingFields[field.id]}
                             onChange={(e) => handleFileChange(field.id, e.target.files?.[0])}
-                            className="w-full min-w-0 text-sm file:mr-2 file:rounded-md file:border-0 file:bg-primary-fixed file:px-2.5 file:py-2 file:text-sm file:font-medium file:text-on-primary-fixed sm:file:mr-3 sm:file:px-3 sm:text-base sm:file:text-base"
+                            className="w-full min-w-0 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-primary-fixed file:px-3 file:py-2 file:text-xs file:font-semibold file:text-on-primary-fixed hover:file:bg-[#c3c0ff] cursor-pointer"
                           />
                           {!field.description && (config.accept || config.maxFileSize) && (
-                            <p className="mt-2 text-xs leading-relaxed text-on-surface-variant sm:text-sm">
+                            <p className="mt-2 text-xs leading-relaxed text-[#464555]">
                               {config.accept ? `Accepted formats: ${config.accept}` : "Any file type"}
                               {config.maxFileSize ? ` up to ${config.maxFileSize}MB` : ""}
                             </p>
                           )}
                           {uploadingFields[field.id] && (
-                            <p className="mt-2 text-sm font-medium text-[#3525cd]">Uploading file...</p>
+                            <p className="mt-2 text-xs font-semibold text-[#3525cd]">Uploading file...</p>
                           )}
                           {answers[field.id] && typeof answers[field.id] === "object" && (
-                            <div className="mt-2 flex items-center justify-between gap-3 rounded-md border border-[#e1e3e4] bg-white p-2.5">
-                              <p className="min-w-0 break-all text-xs text-on-surface-variant sm:text-sm">
+                            <div className="mt-2.5 flex items-center justify-between gap-3 rounded-lg border border-[#e1e3e4] bg-white p-2.5 shadow-2xs">
+                              <p className="min-w-0 break-all text-xs text-[#191c1d] font-medium">
                                 Uploaded: {answers[field.id].name} ({(answers[field.id].size / 1024).toFixed(1)} KB)
                               </p>
                               <button
@@ -542,9 +561,9 @@ export default function PublicForm() {
                                   if (input) input.value = "";
                                   handleInputChange(field.id, "");
                                 }}
-                                className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-md px-2 text-xs font-medium text-error transition-colors hover:bg-error/10 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
+                                className="inline-flex min-h-8 shrink-0 items-center gap-1 rounded-md px-2 text-xs font-medium text-[#ba1a1a] transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
                               >
-                                <Trash2 className="size-4" />
+                                <Trash2 className="size-3.5" />
                                 Remove
                               </button>
                             </div>
@@ -555,11 +574,12 @@ export default function PublicForm() {
                           rows={4}
                           value={answers[field.id] || ""}
                           onChange={(e) => handleInputChange(field.id, e.target.value)}
-                          placeholder={field.placeholder || "Enter your response..."}
-                          className={`w-full rounded-lg border px-3.5 py-2.5 text-base transition-all focus:outline-none focus:ring-2 shadow-xs sm:text-sm lg:text-base ${error
-                            ? "border-error focus:ring-error/20"
-                            : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
-                            }`}
+                          placeholder={field.placeholder || "Share your suggestions..."}
+                          className={`w-full min-h-[120px] rounded-xl border p-4 text-sm sm:text-base transition-all duration-150 focus:outline-none focus:ring-3 shadow-2xs resize-y ${
+                            error
+                              ? "border-[#ba1a1a] focus:ring-red-200/50 bg-[#fffbfa]"
+                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] focus:border-[#4f46e5] focus:bg-white focus:ring-[#4f46e5]/15"
+                          }`}
                         />
                       ) : field.type === "SELECT" ? (
                         <CustomSelect
@@ -568,22 +588,22 @@ export default function PublicForm() {
                           value={answers[field.id] || ""}
                           onChange={(val) => handleInputChange(field.id, val)}
                           options={options}
-                          placeholder={field.placeholder || "Select an option..."}
+                          placeholder={field.placeholder || "Choose an option"}
                           error={!!error}
                           required={field.required}
-                          className="[&>button]:text-base sm:[&>button]:text-sm lg:[&>button]:text-base"
                         />
                       ) : field.type === "RADIO" ? (
-                        <div className="grid gap-2 pt-1">
+                        <div className="grid gap-2.5 pt-1">
                           {options.map((opt, i) => {
                             const isChecked = answers[field.id] === opt;
                             return (
                               <label
                                 key={i}
-                                className={`flex items-start gap-2.5 rounded-lg border p-2.5 text-sm leading-snug transition-all cursor-pointer sm:items-center sm:gap-3 sm:p-3 sm:text-[15px] lg:text-base ${isChecked
-                                  ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
-                                  : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
-                                  }`}
+                                className={`flex min-h-[46px] items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base transition-all cursor-pointer shadow-2xs ${
+                                  isChecked
+                                    ? "border-[#4f46e5] bg-[#e2dfff]/25 text-[#191c1d] font-medium ring-1 ring-[#4f46e5]/30"
+                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] hover:bg-[#e2dfff]/10"
+                                }`}
                               >
                                 <input
                                   type="radio"
@@ -599,7 +619,7 @@ export default function PublicForm() {
                           })}
                         </div>
                       ) : field.type === "CHECKBOX" ? (
-                        <div className="grid gap-2 pt-1">
+                        <div className="grid gap-2.5 pt-1">
                           {options.map((opt, i) => {
                             const isChecked =
                               Array.isArray(answers[field.id]) &&
@@ -607,10 +627,11 @@ export default function PublicForm() {
                             return (
                               <label
                                 key={i}
-                                className={`flex items-start gap-2.5 rounded-lg border p-2.5 text-sm leading-snug transition-all cursor-pointer sm:items-center sm:gap-3 sm:p-3 sm:text-[15px] lg:text-base ${isChecked
-                                  ? "border-primary-container bg-primary-fixed/35 text-on-primary-fixed font-medium ring-1 ring-primary-container/30 shadow-xs"
-                                  : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-white"
-                                  }`}
+                                className={`flex min-h-[46px] items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base transition-all cursor-pointer shadow-2xs ${
+                                  isChecked
+                                    ? "border-[#4f46e5] bg-[#e2dfff]/25 text-[#191c1d] font-medium ring-1 ring-[#4f46e5]/30"
+                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] hover:bg-[#e2dfff]/10"
+                                }`}
                               >
                                 <input
                                   type="checkbox"
@@ -619,7 +640,7 @@ export default function PublicForm() {
                                   onChange={(e) =>
                                     handleCheckboxChange(field.id, opt, e.target.checked)
                                   }
-                                  className="size-4 shrink-0 rounded accent-[#3525cd] cursor-pointer"
+                                  className="size-4.5 shrink-0 rounded-md accent-[#3525cd] cursor-pointer"
                                 />
                                 <span className="min-w-0 flex-1 whitespace-normal wrap-break-word">{opt}</span>
                               </label>
@@ -643,30 +664,40 @@ export default function PublicForm() {
                           }
                           value={answers[field.id] || ""}
                           onChange={(e) => handleInputChange(field.id, e.target.value)}
-                          placeholder={field.placeholder || ""}
+                          placeholder={
+                            field.placeholder ||
+                            (field.type === "NUMBER"
+                              ? "Enter number"
+                              : field.type === "EMAIL"
+                              ? "Enter your email"
+                              : "Enter text")
+                          }
                           min={config.min}
                           max={config.max}
                           minLength={config.minLength}
                           maxLength={config.maxLength}
-                          className={`w-full rounded-lg border px-3.5 py-2.5 text-base transition-all focus:outline-none focus:ring-2 shadow-xs sm:text-sm lg:text-base ${error
-                            ? "border-error focus:ring-error/20"
-                            : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] focus:border-primary-container focus:ring-primary-container/20 focus:bg-white"
-                            }`}
+                          className={`w-full min-h-[48px] rounded-xl border px-4 py-3 text-sm sm:text-base transition-all duration-150 focus:outline-none focus:ring-3 shadow-2xs ${
+                            error
+                              ? "border-[#ba1a1a] focus:ring-red-200/50 bg-[#fffbfa]"
+                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] focus:border-[#4f46e5] focus:bg-white focus:ring-[#4f46e5]/15"
+                          }`}
                         />
                       )}
 
                       {error && (
-                        <p id={field.type === "FILE" ? `field-${field.id}-error` : undefined} className="text-xs font-medium leading-relaxed text-error sm:text-sm">{error}</p>
+                        <p id={field.type === "FILE" ? `field-${field.id}-error` : undefined} className="text-xs font-semibold leading-relaxed text-[#ba1a1a] pt-0.5">
+                          {error}
+                        </p>
                       )}
                     </div>
                   );
                 })}
 
-                <div className="col-span-full flex flex-col gap-3 border-t border-[#e1e3e4] pt-4 sm:flex-row sm:items-center sm:gap-4">
+                <div className="col-span-full flex flex-col gap-3 pt-6 border-t border-[#e1e3e4] sm:flex-row sm:items-center sm:gap-4">
                   <Button
                     type="submit"
                     disabled={isSubmitting || Object.values(uploadingFields).some(Boolean)}
-                    className="w-full rounded-lg bg-[#3525cd] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:bg-primary-container sm:w-auto sm:px-8 sm:text-[15px] lg:text-base cursor-pointer"
+                    className="rounded-xl bg-linear-to-r from-[#3525cd] to-[#4f46e5] px-7 py-3 text-sm sm:text-base font-semibold text-white shadow-[0_8px_20px_-4px_rgba(53,37,205,0.35)] hover:shadow-[0_10px_24px_-4px_rgba(53,37,205,0.45)] hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer min-h-[46px]"
                   >
                     {isSubmitting ? (
                       <>
@@ -685,12 +716,16 @@ export default function PublicForm() {
                     variant="outline"
                     disabled={isSubmitting || !isFormDirty || Object.values(uploadingFields).some(Boolean)}
                     onClick={() => setIsResetModalOpen(true)}
-                    className="w-full gap-2 rounded-lg border-[#e1e3e4] px-5 py-2.5 text-sm font-semibold text-[#464555] hover:border-error/40 hover:bg-error/5 hover:text-error disabled:opacity-40 disabled:cursor-not-allowed sm:w-auto sm:text-[15px] lg:text-base cursor-pointer transition-all"
+                    className="rounded-xl border border-[#e1e3e4] bg-white px-5 py-3 text-sm sm:text-base font-medium text-[#464555] hover:border-red-200 hover:bg-red-50/50 hover:text-[#ba1a1a] shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed min-h-[46px]"
                   >
-                    <RotateCcw className="size-4" />
-                    Reset Form
+                    <Trash2 className="size-4" />
+                    Clear form
                   </Button>
                 </div>
+              </form>
+            </CardContent>
+          </Card>
+        )}
               </form>
             </CardContent>
           </Card>

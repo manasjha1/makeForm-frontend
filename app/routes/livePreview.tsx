@@ -46,10 +46,16 @@ export default function LivePreview() {
   const layout = useMemo(() => (form ? inspectFormLayout(form.fields) : null), [form]);
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] text-[#191c1d] flex flex-col">
+    <div className="relative min-h-screen bg-[#f8f9fb] text-[#191c1d] flex flex-col justify-between overflow-hidden">
+      {/* Soft ambient lavender glow accents matching reference screenshot */}
+      <div className="pointer-events-none absolute -top-40 -right-40 size-[500px] rounded-full bg-[#e2dfff]/45 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 size-[500px] rounded-full bg-[#edeaff]/55 blur-3xl" aria-hidden="true" />
+      <svg className="pointer-events-none absolute inset-0 size-full stroke-[#c7c4d8]/25" aria-hidden="true" fill="none">
+        <path d="M-100,160 Q350,-80 850,240 T1850,160" strokeDasharray="6 8" strokeWidth="1.5" />
+      </svg>
       <Toaster position="top-right" />
       <Header viewPage="LivePreview" />
-      <main className={`${layout?.containerClass || "mx-auto w-full max-w-4xl"} flex-1 space-y-5 px-3 py-6 sm:space-y-6 sm:px-5 sm:py-8 lg:px-8 lg:py-10`}>
+      <main className={`relative z-10 ${layout?.containerClass || "mx-auto w-full max-w-4xl"} flex-1 space-y-6 px-3 py-6 sm:space-y-7 sm:px-5 sm:py-8 lg:px-8 lg:py-10`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="font-heading text-xl font-bold text-[#191c1d] sm:text-2xl lg:text-3xl">
             {isTemplatePreview ? "Template preview" : "Live preview"}

@@ -11,11 +11,12 @@ import { Button } from "./ui/button";
 import PreviewUpload from "./builder/PreviewUpload";
 import PreviewSuccess from "./builder/PreviewSuccess";
 import CustomSelect from "./ui/custom-select";
-import { RotateCcw, Send, Trash2 } from "lucide-react";
+import { RotateCcw, Send, Trash2, SlidersHorizontal, Sparkles } from "lucide-react";
 import toast from "react-hot-toast";
+import { FieldLabelHeader } from "../lib/field-icons";
 
 export const formControlClass =
-  "w-full rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] px-3.5 py-2.5 text-base text-[#191c1d] outline-none transition-all focus:border-[#4f46e5] focus:bg-white focus:ring-3 focus:ring-[#4f46e5]/20 aria-invalid:border-[#ba1a1a] sm:text-base lg:text-lg";
+  "w-full min-h-[48px] rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] px-4 py-3 text-sm sm:text-base text-[#191c1d] placeholder:text-[#8d8ba0] outline-none transition-all duration-150 hover:border-[#c7c4d8] focus:border-[#4f46e5] focus:bg-white focus:ring-3 focus:ring-[#4f46e5]/15 aria-invalid:border-[#ba1a1a]";
 
 export default function FormPreview({ form }: { form: FormTemplate }) {
   const prefix = useId();
@@ -101,7 +102,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
       ref={formRef}
       tabIndex={-1}
       noValidate
-      className={`form-preview ${layout.cardClass} min-w-0 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white shadow-[0_4px_20px_-2px_rgba(25,28,29,0.06),0_2px_6px_-1px_rgba(25,28,29,0.04)] transition-all duration-300`}
+      className={`form-preview ${layout.cardClass} min-w-0 overflow-hidden rounded-3xl border border-[#e1e3e4] bg-white shadow-[0_25px_60px_-15px_rgba(53,37,205,0.08),0_8px_20px_-6px_rgba(25,28,29,0.04)] transition-all duration-300`}
       onSubmit={(event) => {
         event.preventDefault();
         setDemoErrors(false);
@@ -125,37 +126,29 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
         );
       }}
     >
-      <div className="border-b border-[#e1e3e4] bg-[#dfebf7] px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
-        <div className="mb-2 flex items-center justify-between gap-2">
-          <p className="text-xs font-semibold uppercase tracking-widest text-primary-container">
-            Live preview
-          </p>
-          <span className="rounded-full border border-primary-container/20 bg-white/80 px-2.5 py-0.5 text-[11px] font-semibold text-primary-container shadow-2xs">
-            {layout.badgeLabel} &bull; {layout.fieldsCount}{" "}
-            {layout.fieldsCount === 1 ? "field" : "fields"}
-          </span>
-        </div>
-        <h2 className="wrap-break-word text-xl font-extrabold tracking-tight text-[#191c1d] sm:text-2xl lg:text-4xl">
-          {form.title}
-        </h2>
-        {form.description && (
-          <p className="mt-1.5 whitespace-pre-wrap wrap-break-words text-sm leading-relaxed text-on-surface-variant sm:text-base lg:text-xl">
-            {form.description}
-          </p>
-        )}
-      </div>
-      <div className="space-y-5 p-3 sm:space-y-6 sm:p-5 lg:space-y-8 lg:p-8">
-        <div className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-3 text-sm leading-snug text-amber-950 sm:px-4 lg:text-base">
-          <p className="font-semibold">This is a test preview.</p>
-          <p className="mt-1">
-            Fields marked * are required. Answers and files stay in this preview
-            and are not uploaded or saved.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] p-3 shadow-xs">
-          <span className="text-xs text-on-surface-variant sm:text-sm lg:text-base">
-            Inspect form states
-          </span>
+      {/* Redesigned Premium Header matching reference image */}
+      <div className="border-b border-[#e1e3e4] bg-white px-6 py-6 sm:px-8 sm:py-7">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#e2dfff]/70 border border-[#c3c0ff] text-[#3525cd] shadow-2xs">
+              <SlidersHorizontal className="size-6" />
+            </div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h2 className="font-heading text-xl font-bold tracking-tight text-[#191c1d] sm:text-2xl">
+                  {form.title || "Inspect Form States"}
+                </h2>
+                <span className="hidden sm:inline-flex rounded-full border border-[#c3c0ff] bg-[#e2dfff]/40 px-2.5 py-0.5 text-[11px] font-semibold text-[#3525cd]">
+                  {layout.badgeLabel} &bull; {layout.fieldsCount}{" "}
+                  {layout.fieldsCount === 1 ? "field" : "fields"}
+                </span>
+              </div>
+              <p className="mt-1 text-sm text-[#464555]">
+                {form.description || "Preview and manage how your form looks and behaves."}
+              </p>
+            </div>
+          </div>
+
           <Button
             type="button"
             variant="outline"
@@ -165,14 +158,19 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               setDemoErrors(!demoErrors);
               setSubmitted(null);
             }}
+            className="self-start sm:self-auto gap-2 rounded-xl border-[#c3c0ff] bg-white px-4 py-2.5 text-xs font-semibold text-[#3525cd] hover:bg-[#e2dfff]/30 hover:border-[#3525cd] shadow-2xs transition-all cursor-pointer"
           >
-            {demoErrors ? "Hide example errors" : "Show example errors"}
+            <Sparkles className="size-3.5 text-[#3525cd]" />
+            {demoErrors ? "Hide Example Errors" : "Show Example Errors"}
           </Button>
         </div>
+      </div>
+
+      <div className="space-y-6 p-6 sm:p-8 lg:p-10">
         {visibleErrors.length > 0 && (
           <section
             aria-label="Validation summary"
-            className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800"
+            className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800"
           >
             <h3 className="text-sm font-semibold">
               {demoErrors
@@ -184,7 +182,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 <li key={field.id}>
                   <button
                     type="button"
-                    className="text-left text-xs underline underline-offset-2"
+                    className="text-left text-xs underline underline-offset-2 hover:text-red-900 cursor-pointer"
                     onClick={() => focusField(field.id)}
                   >
                     {field.label}: {displayedErrors[field.id]}
@@ -194,6 +192,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
             </ul>
           </section>
         )}
+
         <div className={layout.gridClass}>
           {visible.map((field) => {
             const id = `${prefix}-${field.id}`;
@@ -218,20 +217,16 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
             const choices =
               field.type === "radio" ||
               (field.type === "checkbox" && !!field.options?.length);
+
             return (
               <div
                 key={field.id}
                 className={`min-w-0 space-y-1.5 ${layout.getFieldSpanClass(field)}`}
               >
                 {choices ? (
-                  <fieldset className="min-w-0">
-                    <legend className="mb-2 block text-sm font-semibold leading-snug text-[#191c1d] sm:text-base lg:text-lg">
-                      {field.label}
-                      {field.required && (
-                        <span className="text-red-600"> *</span>
-                      )}
-                    </legend>
-                    <div className="grid gap-2">
+                  <div className="min-w-0">
+                    <FieldLabelHeader field={field} />
+                    <div className="grid gap-2.5">
                       {field.options?.map((option, index) => {
                         const isChecked =
                           field.type === "radio"
@@ -241,15 +236,16 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         return (
                           <label
                             key={index}
-                            className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm shadow-xs transition-all ${isChecked
-                              ? "border-primary-container bg-primary-fixed/40 font-medium text-on-primary-fixed ring-1 ring-primary-container/20"
-                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c3c0ff] hover:bg-primary-fixed/20"
-                              }`}
+                            className={`flex min-h-[46px] cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base shadow-2xs transition-all ${
+                              isChecked
+                                ? "border-[#4f46e5] bg-[#e2dfff]/25 font-medium text-[#191c1d] ring-1 ring-[#4f46e5]/30"
+                                : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] hover:bg-[#e2dfff]/10"
+                            }`}
                           >
                             <input
                               type={field.type}
                               name={field.id}
-                              className="size-4 shrink-0 cursor-pointer accent-primary-container"
+                              className="size-4 shrink-0 cursor-pointer accent-[#3525cd]"
                               aria-invalid={!!displayedErrors[field.id]}
                               aria-describedby={props["aria-describedby"]}
                               checked={isChecked}
@@ -276,38 +272,32 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         );
                       })}
                     </div>
-                  </fieldset>
+                  </div>
                 ) : field.type === "checkbox" ? (
-                  <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-[#e1e3e4] bg-[#f8f9fa] p-3 text-sm font-medium shadow-xs transition-all hover:border-[#c3c0ff] sm:text-base lg:text-lg">
-                    <input
-                      {...props}
-                      type="checkbox"
-                      className="size-4 cursor-pointer accent-primary-container"
-                      checked={answers[field.id] === true}
-                      onChange={(event) =>
-                        update(field.id, event.target.checked)
-                      }
-                    />
-                    <span>
-                      {field.label}
-                      {field.required && " *"}
-                    </span>
-                  </label>
+                  <div className="min-w-0">
+                    <FieldLabelHeader field={field} htmlFor={id} />
+                    <label className="flex min-h-[48px] cursor-pointer items-center gap-3 rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] px-4 py-3 text-sm sm:text-base font-medium shadow-2xs transition-all hover:border-[#c7c4d8] hover:bg-[#e2dfff]/10">
+                      <input
+                        {...props}
+                        type="checkbox"
+                        className="size-4.5 rounded-md border-[#c7c4d8] text-[#3525cd] accent-[#3525cd] cursor-pointer"
+                        checked={answers[field.id] === true}
+                        onChange={(event) =>
+                          update(field.id, event.target.checked)
+                        }
+                      />
+                      <span className="text-[#191c1d]">
+                        {field.placeholder || field.label}
+                      </span>
+                    </label>
+                  </div>
                 ) : (
                   <>
-                    <label
-                      htmlFor={id}
-                      className="block wrap-break-word text-sm font-semibold leading-snug text-[#191c1d] sm:text-base lg:text-lg"
-                    >
-                      {field.label}
-                      {field.required && (
-                        <span className="text-red-600"> *</span>
-                      )}
-                    </label>
+                    <FieldLabelHeader field={field} htmlFor={id} />
                     {field.helpText && (
                       <p
                         id={`${id}-help`}
-                        className="text-xs leading-relaxed text-on-surface-variant sm:text-sm lg:text-base"
+                        className="text-xs leading-relaxed text-[#464555] mb-1.5"
                       >
                         {field.helpText}
                       </p>
@@ -317,10 +307,11 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         {...props}
                         rows={4}
                         value={value}
-                        placeholder={field.placeholder}
+                        placeholder={field.placeholder || "Share your suggestions..."}
                         onChange={(event) =>
                           update(field.id, event.target.value)
                         }
+                        className="w-full min-h-[120px] rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] p-4 text-sm sm:text-base text-[#191c1d] placeholder:text-[#8d8ba0] outline-none transition-all duration-150 hover:border-[#c7c4d8] focus:border-[#4f46e5] focus:bg-white focus:ring-3 focus:ring-[#4f46e5]/15 resize-y aria-invalid:border-[#ba1a1a]"
                       />
                     ) : field.type === "select" ? (
                       <CustomSelect
@@ -358,7 +349,14 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                             ? (field.step ?? "any")
                             : undefined
                         }
-                        placeholder={field.placeholder}
+                        placeholder={
+                          field.placeholder ||
+                          (field.type === "number"
+                            ? "Enter number"
+                            : field.type === "email"
+                            ? "Enter your email"
+                            : "Enter text")
+                        }
                         min={field.min}
                         max={field.max}
                         onChange={(event) =>
@@ -368,10 +366,10 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                     )}
                   </>
                 )}
-                {(choices || field.type === "checkbox") && field.helpText && (
+                {field.helpText && choices && (
                   <p
                     id={`${id}-help`}
-                    className="text-xs leading-relaxed text-on-surface-variant"
+                    className="text-xs leading-relaxed text-[#464555]"
                   >
                     {field.helpText}
                   </p>
@@ -379,17 +377,17 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 <p
                   id={`${id}-error`}
                   role={displayedErrors[field.id] ? "alert" : undefined}
-                  className="text-xs text-error"
+                  className="text-xs text-[#ba1a1a] font-medium"
                 >
                   {displayedErrors[field.id]}
                 </p>
               </div>
             );
           })}
-          <div className="col-span-full flex flex-col gap-3 border-t border-[#e1e3e4] pt-4 sm:flex-row sm:items-center sm:gap-4">
+          <div className="col-span-full flex flex-col gap-3 pt-6 border-t border-[#e1e3e4] sm:flex-row sm:items-center sm:gap-4">
             <Button
               type="submit"
-              className="w-full rounded-lg bg-[#3525cd] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] hover:bg-primary-container sm:w-auto sm:px-8 sm:text-[15px] lg:text-base cursor-pointer"
+              className="rounded-xl bg-linear-to-r from-[#3525cd] to-[#4f46e5] px-7 py-3 text-sm sm:text-base font-semibold text-white shadow-[0_8px_20px_-4px_rgba(53,37,205,0.35)] hover:shadow-[0_10px_24px_-4px_rgba(53,37,205,0.45)] hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer min-h-[46px]"
             >
               <Send className="size-4" />
               Submit Form
@@ -399,7 +397,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               variant="outline"
               disabled={!isFormDirty}
               onClick={() => setIsResetModalOpen(true)}
-              className="w-full gap-2 rounded-lg border-[#e1e3e4] px-5 py-2.5 text-sm font-semibold text-on-surface-variant hover:border-error/40 hover:bg-error/5 hover:text-error disabled:opacity-40 disabled:cursor-not-allowed sm:w-auto sm:text-[15px] lg:text-base cursor-pointer transition-all"
+              className="rounded-xl border border-[#e1e3e4] bg-white px-5 py-3 text-sm sm:text-base font-medium text-[#464555] hover:border-red-200 hover:bg-red-50/50 hover:text-[#ba1a1a] shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed min-h-[46px]"
             >
               <Trash2 className="size-4" />
               Clear form
