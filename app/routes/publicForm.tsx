@@ -343,9 +343,9 @@ export default function PublicForm() {
   return (
     <div className="relative min-h-screen bg-[#f8f9fb] text-[#191c1d] flex flex-col justify-between overflow-hidden">
       {/* Ambient background accents matching reference image */}
-      <div className="pointer-events-none absolute -top-48 -right-48 size-[520px] rounded-full bg-[#e2dfff]/40 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute -bottom-48 -left-48 size-[520px] rounded-full bg-[#edeaff]/50 blur-3xl" aria-hidden="true" />
-      <svg className="pointer-events-none absolute inset-0 size-full stroke-[#c7c4d8]/25" aria-hidden="true" fill="none">
+      <div className="pointer-events-none absolute -top-48 -right-48 size-130 rounded-full bg-primary-fixed/40 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-48 -left-48 size-130 rounded-full bg-[#edeaff]/50 blur-3xl" aria-hidden="true" />
+      <svg className="pointer-events-none absolute inset-0 size-full stroke-outline-variant/25" aria-hidden="true" fill="none">
         <path d="M-100,180 Q350,-80 850,260 T1850,180" strokeDasharray="6 8" strokeWidth="1.5" />
       </svg>
 
@@ -469,7 +469,7 @@ export default function PublicForm() {
             <div className="border-b border-[#e1e3e4] bg-white px-6 py-6 sm:px-8 sm:py-7">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#e2dfff]/70 border border-[#c3c0ff] text-[#3525cd] shadow-2xs">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary-fixed/70 border border-[#c3c0ff] text-[#3525cd] shadow-2xs">
                     <SlidersHorizontal className="size-6" />
                   </div>
                   <div>
@@ -477,12 +477,12 @@ export default function PublicForm() {
                       <h1 className="font-heading text-xl font-bold tracking-tight text-[#191c1d] sm:text-2xl">
                         {form?.title}
                       </h1>
-                      <span className="rounded-full border border-[#c3c0ff] bg-[#e2dfff]/40 px-2.5 py-0.5 text-[11px] font-semibold text-[#3525cd]">
+                      <span className="rounded-full border border-[#c3c0ff] bg-primary-fixed/40 px-2.5 py-0.5 text-[11px] font-semibold text-[#3525cd]">
                         {layout.badgeLabel} &bull; {layout.fieldsCount} {layout.fieldsCount === 1 ? "field" : "fields"}
                       </span>
                     </div>
                     {form?.description && (
-                      <p className="mt-1 text-sm text-[#464555] leading-relaxed">
+                      <p className="mt-1 text-sm text-on-surface-variant leading-relaxed">
                         {form.description}
                       </p>
                     )}
@@ -520,12 +520,12 @@ export default function PublicForm() {
                       <FieldLabelHeader field={field} htmlFor={`field-${field.id}`} />
 
                       {field.description && (
-                        <p className="text-xs leading-relaxed text-[#464555] mb-1.5">{field.description}</p>
+                        <p className="text-xs leading-relaxed text-on-surface-variant mb-1.5">{field.description}</p>
                       )}
 
                       {/* Field Type Specific Controls */}
                       {field.type === "FILE" ? (
-                        <div className={`rounded-xl border bg-[#f8f9fa] p-3.5 transition-all ${error ? "border-[#ba1a1a]" : "border-[#e1e3e4] hover:border-[#c7c4d8]"}`}>
+                        <div className={`rounded-xl border bg-[#f8f9fa] p-3.5 transition-all ${error ? "border-error" : "border-[#e1e3e4] hover:border-outline-variant"}`}>
                           <input
                             id={`field-${field.id}`}
                             name={field.id}
@@ -539,7 +539,7 @@ export default function PublicForm() {
                             className="w-full min-w-0 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-primary-fixed file:px-3 file:py-2 file:text-xs file:font-semibold file:text-on-primary-fixed hover:file:bg-[#c3c0ff] cursor-pointer"
                           />
                           {!field.description && (config.accept || config.maxFileSize) && (
-                            <p className="mt-2 text-xs leading-relaxed text-[#464555]">
+                            <p className="mt-2 text-xs leading-relaxed text-on-surface-variant">
                               {config.accept ? `Accepted formats: ${config.accept}` : "Any file type"}
                               {config.maxFileSize ? ` up to ${config.maxFileSize}MB` : ""}
                             </p>
@@ -561,7 +561,7 @@ export default function PublicForm() {
                                   if (input) input.value = "";
                                   handleInputChange(field.id, "");
                                 }}
-                                className="inline-flex min-h-8 shrink-0 items-center gap-1 rounded-md px-2 text-xs font-medium text-[#ba1a1a] transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                                className="inline-flex min-h-8 shrink-0 items-center gap-1 rounded-md px-2 text-xs font-medium text-error transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
                               >
                                 <Trash2 className="size-3.5" />
                                 Remove
@@ -575,10 +575,10 @@ export default function PublicForm() {
                           value={answers[field.id] || ""}
                           onChange={(e) => handleInputChange(field.id, e.target.value)}
                           placeholder={field.placeholder || "Share your suggestions..."}
-                          className={`w-full min-h-[120px] rounded-xl border p-4 text-sm sm:text-base transition-all duration-150 focus:outline-none focus:ring-3 shadow-2xs resize-y ${
+                          className={`w-full min-h-30 rounded-xl border p-4 text-sm sm:text-base transition-all duration-150 focus:outline-none focus:ring-3 shadow-2xs resize-y ${
                             error
-                              ? "border-[#ba1a1a] focus:ring-red-200/50 bg-[#fffbfa]"
-                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] focus:border-[#4f46e5] focus:bg-white focus:ring-[#4f46e5]/15"
+                              ? "border-error focus:ring-red-200/50 bg-[#fffbfa]"
+                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant focus:border-primary-container focus:bg-white focus:ring-primary-container/15"
                           }`}
                         />
                       ) : field.type === "SELECT" ? (
@@ -599,10 +599,10 @@ export default function PublicForm() {
                             return (
                               <label
                                 key={i}
-                                className={`flex min-h-[46px] items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base transition-all cursor-pointer shadow-2xs ${
+                                className={`flex min-h-11.5 items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base transition-all cursor-pointer shadow-2xs ${
                                   isChecked
-                                    ? "border-[#4f46e5] bg-[#e2dfff]/25 text-[#191c1d] font-medium ring-1 ring-[#4f46e5]/30"
-                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] hover:bg-[#e2dfff]/10"
+                                    ? "border-primary-container bg-primary-fixed/25 text-[#191c1d] font-medium ring-1 ring-primary-container/30"
+                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-primary-fixed/10"
                                 }`}
                               >
                                 <input
@@ -627,10 +627,10 @@ export default function PublicForm() {
                             return (
                               <label
                                 key={i}
-                                className={`flex min-h-[46px] items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base transition-all cursor-pointer shadow-2xs ${
+                                className={`flex min-h-11.5 items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base transition-all cursor-pointer shadow-2xs ${
                                   isChecked
-                                    ? "border-[#4f46e5] bg-[#e2dfff]/25 text-[#191c1d] font-medium ring-1 ring-[#4f46e5]/30"
-                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] hover:bg-[#e2dfff]/10"
+                                    ? "border-primary-container bg-primary-fixed/25 text-[#191c1d] font-medium ring-1 ring-primary-container/30"
+                                    : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-primary-fixed/10"
                                 }`}
                               >
                                 <input
@@ -676,16 +676,16 @@ export default function PublicForm() {
                           max={config.max}
                           minLength={config.minLength}
                           maxLength={config.maxLength}
-                          className={`w-full min-h-[48px] rounded-xl border px-4 py-3 text-sm sm:text-base transition-all duration-150 focus:outline-none focus:ring-3 shadow-2xs ${
+                          className={`w-full min-h-12 rounded-xl border px-4 py-3 text-sm sm:text-base transition-all duration-150 focus:outline-none focus:ring-3 shadow-2xs ${
                             error
-                              ? "border-[#ba1a1a] focus:ring-red-200/50 bg-[#fffbfa]"
-                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] focus:border-[#4f46e5] focus:bg-white focus:ring-[#4f46e5]/15"
+                              ? "border-error focus:ring-red-200/50 bg-[#fffbfa]"
+                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant focus:border-primary-container focus:bg-white focus:ring-primary-container/15"
                           }`}
                         />
                       )}
 
                       {error && (
-                        <p id={field.type === "FILE" ? `field-${field.id}-error` : undefined} className="text-xs font-semibold leading-relaxed text-[#ba1a1a] pt-0.5">
+                        <p id={field.type === "FILE" ? `field-${field.id}-error` : undefined} className="text-xs font-semibold leading-relaxed text-error pt-0.5">
                           {error}
                         </p>
                       )}
@@ -697,7 +697,7 @@ export default function PublicForm() {
                   <Button
                     type="submit"
                     disabled={isSubmitting || Object.values(uploadingFields).some(Boolean)}
-                    className="rounded-xl bg-linear-to-r from-[#3525cd] to-[#4f46e5] px-7 py-3 text-sm sm:text-base font-semibold text-white shadow-[0_8px_20px_-4px_rgba(53,37,205,0.35)] hover:shadow-[0_10px_24px_-4px_rgba(53,37,205,0.45)] hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer min-h-[46px]"
+                    className="rounded-xl bg-linear-to-r from-[#3525cd] to-primary-container px-7 py-3 text-sm sm:text-base font-semibold text-white shadow-[0_8px_20px_-4px_rgba(53,37,205,0.35)] hover:shadow-[0_10px_24px_-4px_rgba(53,37,205,0.45)] hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer min-h-11.5"
                   >
                     {isSubmitting ? (
                       <>
@@ -716,16 +716,12 @@ export default function PublicForm() {
                     variant="outline"
                     disabled={isSubmitting || !isFormDirty || Object.values(uploadingFields).some(Boolean)}
                     onClick={() => setIsResetModalOpen(true)}
-                    className="rounded-xl border border-[#e1e3e4] bg-white px-5 py-3 text-sm sm:text-base font-medium text-[#464555] hover:border-red-200 hover:bg-red-50/50 hover:text-[#ba1a1a] shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed min-h-[46px]"
+                    className="rounded-xl border border-[#e1e3e4] bg-white px-5 py-3 text-sm sm:text-base font-medium text-on-surface-variant hover:border-red-200 hover:bg-red-50/50 hover:text-error shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed min-h-11.5"
                   >
                     <Trash2 className="size-4" />
                     Clear form
                   </Button>
                 </div>
-              </form>
-            </CardContent>
-          </Card>
-        )}
               </form>
             </CardContent>
           </Card>
@@ -741,7 +737,7 @@ export default function PublicForm() {
           >
             <div className="w-full max-w-md rounded-2xl border border-[#e1e3e4] bg-white p-6 shadow-[0_20px_50px_rgba(25,28,29,0.15)] animate-in zoom-in-95 duration-150">
               <div className="flex items-start gap-3.5">
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-[#ba1a1a] border border-red-100">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-error border border-red-100">
                   <RotateCcw className="size-5" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -758,7 +754,7 @@ export default function PublicForm() {
                   type="button"
                   variant="outline"
                   onClick={() => setIsResetModalOpen(false)}
-                  className="w-full sm:w-auto border-[#e1e3e4] text-[#191c1d] hover:bg-[#f3f4f5] font-medium"
+                  className="w-full sm:w-auto border-[#e1e3e4] text-[#191c1d] hover:bg-surface-container-low font-medium"
                 >
                   Cancel
                 </Button>
@@ -769,7 +765,7 @@ export default function PublicForm() {
                     setIsResetModalOpen(false);
                     toast.success("All filled inputs have been reset.");
                   }}
-                  className="w-full sm:w-auto bg-[#ba1a1a] text-white hover:bg-[#93000a] shadow-xs font-semibold"
+                  className="w-full sm:w-auto bg-error text-white hover:bg-on-error-container shadow-xs font-semibold"
                 >
                   Yes, Reset Form
                 </Button>
