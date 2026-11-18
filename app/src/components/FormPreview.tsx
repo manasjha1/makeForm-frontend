@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 import { FieldLabelHeader } from "../lib/field-icons";
 
 export const formControlClass =
-  "w-full min-h-[48px] rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] px-4 py-3 text-sm sm:text-base text-[#191c1d] placeholder:text-[#8d8ba0] outline-none transition-all duration-150 hover:border-[#c7c4d8] focus:border-[#4f46e5] focus:bg-white focus:ring-3 focus:ring-[#4f46e5]/15 aria-invalid:border-[#ba1a1a]";
+  "w-full min-h-12 rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] px-4 py-3 text-sm sm:text-base text-[#191c1d] placeholder:text-[#8d8ba0] outline-none transition-all duration-150 hover:border-outline-variant focus:border-primary-container focus:bg-white focus:ring-3 focus:ring-primary-container/15 aria-invalid:border-error";
 
 export default function FormPreview({ form }: { form: FormTemplate }) {
   const prefix = useId();
@@ -130,7 +130,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
       <div className="border-b border-[#e1e3e4] bg-white px-6 py-6 sm:px-8 sm:py-7">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#e2dfff]/70 border border-[#c3c0ff] text-[#3525cd] shadow-2xs">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary-fixed/70 border border-[#c3c0ff] text-[#3525cd] shadow-2xs">
               <SlidersHorizontal className="size-6" />
             </div>
             <div>
@@ -138,12 +138,12 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 <h2 className="font-heading text-xl font-bold tracking-tight text-[#191c1d] sm:text-2xl">
                   {form.title || "Inspect Form States"}
                 </h2>
-                <span className="hidden sm:inline-flex rounded-full border border-[#c3c0ff] bg-[#e2dfff]/40 px-2.5 py-0.5 text-[11px] font-semibold text-[#3525cd]">
+                <span className="hidden sm:inline-flex rounded-full border border-[#c3c0ff] bg-primary-fixed/40 px-2.5 py-0.5 text-[11px] font-semibold text-[#3525cd]">
                   {layout.badgeLabel} &bull; {layout.fieldsCount}{" "}
                   {layout.fieldsCount === 1 ? "field" : "fields"}
                 </span>
               </div>
-              <p className="mt-1 text-sm text-[#464555]">
+              <p className="mt-1 text-sm text-on-surface-variant">
                 {form.description || "Preview and manage how your form looks and behaves."}
               </p>
             </div>
@@ -158,7 +158,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               setDemoErrors(!demoErrors);
               setSubmitted(null);
             }}
-            className="self-start sm:self-auto gap-2 rounded-xl border-[#c3c0ff] bg-white px-4 py-2.5 text-xs font-semibold text-[#3525cd] hover:bg-[#e2dfff]/30 hover:border-[#3525cd] shadow-2xs transition-all cursor-pointer"
+            className="self-start sm:self-auto gap-2 rounded-xl border-[#c3c0ff] bg-white px-4 py-2.5 text-xs font-semibold text-[#3525cd] hover:bg-primary-fixed/30 hover:border-[#3525cd] shadow-2xs transition-all cursor-pointer"
           >
             <Sparkles className="size-3.5 text-[#3525cd]" />
             {demoErrors ? "Hide Example Errors" : "Show Example Errors"}
@@ -236,10 +236,10 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         return (
                           <label
                             key={index}
-                            className={`flex min-h-[46px] cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base shadow-2xs transition-all ${
+                            className={`flex min-h-11.5 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base shadow-2xs transition-all ${
                               isChecked
-                                ? "border-[#4f46e5] bg-[#e2dfff]/25 font-medium text-[#191c1d] ring-1 ring-[#4f46e5]/30"
-                                : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-[#c7c4d8] hover:bg-[#e2dfff]/10"
+                                ? "border-primary-container bg-primary-fixed/25 font-medium text-[#191c1d] ring-1 ring-primary-container/30"
+                                : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-primary-fixed/10"
                             }`}
                           >
                             <input
@@ -276,11 +276,11 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 ) : field.type === "checkbox" ? (
                   <div className="min-w-0">
                     <FieldLabelHeader field={field} htmlFor={id} />
-                    <label className="flex min-h-[48px] cursor-pointer items-center gap-3 rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] px-4 py-3 text-sm sm:text-base font-medium shadow-2xs transition-all hover:border-[#c7c4d8] hover:bg-[#e2dfff]/10">
+                    <label className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] px-4 py-3 text-sm sm:text-base font-medium shadow-2xs transition-all hover:border-outline-variant hover:bg-primary-fixed/10">
                       <input
                         {...props}
                         type="checkbox"
-                        className="size-4.5 rounded-md border-[#c7c4d8] text-[#3525cd] accent-[#3525cd] cursor-pointer"
+                        className="size-4.5 rounded-md border-outline-variant text-[#3525cd] accent-[#3525cd] cursor-pointer"
                         checked={answers[field.id] === true}
                         onChange={(event) =>
                           update(field.id, event.target.checked)
@@ -297,7 +297,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                     {field.helpText && (
                       <p
                         id={`${id}-help`}
-                        className="text-xs leading-relaxed text-[#464555] mb-1.5"
+                        className="text-xs leading-relaxed text-on-surface-variant mb-1.5"
                       >
                         {field.helpText}
                       </p>
@@ -311,7 +311,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         onChange={(event) =>
                           update(field.id, event.target.value)
                         }
-                        className="w-full min-h-[120px] rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] p-4 text-sm sm:text-base text-[#191c1d] placeholder:text-[#8d8ba0] outline-none transition-all duration-150 hover:border-[#c7c4d8] focus:border-[#4f46e5] focus:bg-white focus:ring-3 focus:ring-[#4f46e5]/15 resize-y aria-invalid:border-[#ba1a1a]"
+                        className="w-full min-h-30 rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] p-4 text-sm sm:text-base text-[#191c1d] placeholder:text-[#8d8ba0] outline-none transition-all duration-150 hover:border-outline-variant focus:border-primary-container focus:bg-white focus:ring-3 focus:ring-primary-container/15 resize-y aria-invalid:border-error"
                       />
                     ) : field.type === "select" ? (
                       <CustomSelect
@@ -369,7 +369,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 {field.helpText && choices && (
                   <p
                     id={`${id}-help`}
-                    className="text-xs leading-relaxed text-[#464555]"
+                    className="text-xs leading-relaxed text-on-surface-variant"
                   >
                     {field.helpText}
                   </p>
@@ -377,7 +377,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 <p
                   id={`${id}-error`}
                   role={displayedErrors[field.id] ? "alert" : undefined}
-                  className="text-xs text-[#ba1a1a] font-medium"
+                  className="text-xs text-error font-medium"
                 >
                   {displayedErrors[field.id]}
                 </p>
@@ -387,7 +387,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
           <div className="col-span-full flex flex-col gap-3 pt-6 border-t border-[#e1e3e4] sm:flex-row sm:items-center sm:gap-4">
             <Button
               type="submit"
-              className="rounded-xl bg-linear-to-r from-[#3525cd] to-[#4f46e5] px-7 py-3 text-sm sm:text-base font-semibold text-white shadow-[0_8px_20px_-4px_rgba(53,37,205,0.35)] hover:shadow-[0_10px_24px_-4px_rgba(53,37,205,0.45)] hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer min-h-[46px]"
+              className="rounded-xl bg-linear-to-r from-[#3525cd] to-primary-container px-7 py-3 text-sm sm:text-base font-semibold text-white shadow-[0_8px_20px_-4px_rgba(53,37,205,0.35)] hover:shadow-[0_10px_24px_-4px_rgba(53,37,205,0.45)] hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer min-h-11.5"
             >
               <Send className="size-4" />
               Submit Form
@@ -397,7 +397,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
               variant="outline"
               disabled={!isFormDirty}
               onClick={() => setIsResetModalOpen(true)}
-              className="rounded-xl border border-[#e1e3e4] bg-white px-5 py-3 text-sm sm:text-base font-medium text-[#464555] hover:border-red-200 hover:bg-red-50/50 hover:text-[#ba1a1a] shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed min-h-[46px]"
+              className="rounded-xl border border-[#e1e3e4] bg-white px-5 py-3 text-sm sm:text-base font-medium text-on-surface-variant hover:border-red-200 hover:bg-red-50/50 hover:text-error shadow-2xs transition-all flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed min-h-11.5"
             >
               <Trash2 className="size-4" />
               Clear form
