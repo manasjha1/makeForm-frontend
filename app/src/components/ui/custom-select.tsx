@@ -84,12 +84,12 @@ export default function CustomSelect({
         aria-expanded={isOpen}
         disabled={disabled}
         onClick={() => !disabled && setIsOpen((prev) => !prev)}
-        className={`flex w-full min-h-[48px] items-center justify-between gap-2 rounded-xl border bg-[#f8f9fa] px-4 py-3 text-sm sm:text-base transition-all duration-150 focus:outline-none focus:ring-3 ${
+        className={`flex w-full min-h-12 items-center justify-between gap-2 rounded-xl border bg-[#f8f9fa] px-4 py-3 text-sm sm:text-base transition-all duration-150 focus:outline-none focus:ring-3 ${
           isOpen
             ? "border-primary-container bg-white ring-3 ring-primary-container/20 shadow-xs"
             : error
             ? "border-error focus:ring-error/20"
-            : "border-[#e1e3e4] hover:border-[#c7c4d8] focus:border-primary-container focus:ring-primary-container/20"
+            : "border-[#e1e3e4] hover:border-outline-variant focus:border-primary-container focus:ring-primary-container/20"
         } ${disabled ? "cursor-not-allowed opacity-60 bg-gray-100" : "cursor-pointer"}`}
       >
         <span

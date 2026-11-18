@@ -28,10 +28,10 @@ export default function PreviewUpload({
     <div
       className={`preview-upload min-w-0 rounded-xl border border-dashed p-4 sm:p-5 text-center transition-all ${
         invalid
-          ? "border-[#ba1a1a] bg-red-50/70"
+          ? "border-error bg-red-50/70"
           : dragging
-          ? "border-[#4f46e5] bg-[#e2dfff]/25 ring-2 ring-[#4f46e5]/20"
-          : "border-[#c7c4d8] bg-[#f8f9fa] hover:border-[#3525cd]/50 hover:bg-[#e2dfff]/10"
+          ? "border-primary-container bg-primary-fixed/25 ring-2 ring-primary-container/20"
+          : "border-outline-variant bg-[#f8f9fa] hover:border-[#3525cd]/50 hover:bg-primary-fixed/10"
       }`}
       onDragOver={(event) => {
         if (event.dataTransfer.types.includes("Files")) {
@@ -63,7 +63,7 @@ export default function PreviewUpload({
       >
         {file ? "Replace selected file" : "Drop a file here or click to upload"}
       </label>
-      <p className="mt-1 text-xs text-[#464555]">
+      <p className="mt-1 text-xs text-on-surface-variant">
         {field.accept || "Any file type"}
         {field.maxFileSize ? ` · Up to ${field.maxFileSize} MB` : ""}
       </p>
@@ -86,13 +86,13 @@ export default function PreviewUpload({
             <span className="block break-all text-xs font-semibold text-[#191c1d]">
               {file.name}
             </span>
-            <span className="text-xs text-[#464555]">
+            <span className="text-xs text-on-surface-variant">
               {(file.size / 1024).toFixed(1)} KB · Local preview only
             </span>
           </span>
           <button
             type="button"
-            className="size-8 shrink-0 rounded-lg p-1 text-[#464555] hover:bg-red-50 hover:text-[#ba1a1a] transition-colors flex items-center justify-center cursor-pointer"
+            className="size-8 shrink-0 rounded-lg p-1 text-on-surface-variant hover:bg-red-50 hover:text-error transition-colors flex items-center justify-center cursor-pointer"
             aria-label={"Remove " + file.name}
             onClick={() => {
               if (input.current) input.current.value = "";

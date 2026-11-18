@@ -151,11 +151,11 @@ export function FieldLabelHeader({
       </label>
 
       {field.required ? (
-        <span className="inline-flex items-center gap-0.5 rounded-md bg-red-50/80 px-1.5 py-0.5 text-[11px] font-semibold text-[#ba1a1a] border border-red-200/50">
+        <span className="inline-flex items-center gap-0.5 rounded-md bg-red-50/80 px-1.5 py-0.5 text-[11px] font-semibold text-error border border-red-200/50">
           Required *
         </span>
       ) : (
-        <span className="inline-flex items-center rounded-md bg-gray-100 px-1.5 py-0.5 text-[11px] font-medium text-[#777587] border border-[#e1e3e4]">
+        <span className="inline-flex items-center rounded-md bg-gray-100 px-1.5 py-0.5 text-[11px] font-medium text-outline border border-[#e1e3e4]">
           Optional
         </span>
       )}
