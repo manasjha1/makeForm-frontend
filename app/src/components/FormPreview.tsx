@@ -126,7 +126,7 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
         );
       }}
     >
-      {/* Redesigned Premium Header matching reference image */}
+      {/* Redesigned Premium Header */}
       <div className="border-b border-[#e1e3e4] bg-white px-6 py-6 sm:px-8 sm:py-7">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
