@@ -102,7 +102,7 @@ export default function Login() {
       <main className="mx-auto grid w-full max-w-xl gap-4 px-3 py-6 sm:px-6 sm:py-10">
         {/* logo section */}
         <img
-          className="mx-auto h-auto w-full max-w-[14rem] object-contain sm:max-w-[18rem]"
+          className="mx-auto h-auto w-full max-w-56 object-contain sm:max-w-[18rem]"
           src={makeForm_png}
           alt="makeForm"
         />
@@ -110,15 +110,15 @@ export default function Login() {
           <Card className="mx-auto w-full max-w-lg overflow-hidden shadow-[0_10px_25px_-5px_rgba(25,28,29,0.08),0_4px_10px_-3px_rgba(25,28,29,0.04)] border border-[#e1e3e4] bg-white rounded-2xl">
             <CardContent className="p-4 sm:p-6">
               <section className="mb-5">
-                <div className="mb-4 flex w-full items-center rounded-lg border border-[#e1e3e4] bg-[#f3f4f5] p-1">
+                <div className="mb-4 flex w-full items-center rounded-lg border border-[#e1e3e4] bg-surface-container-low p-1">
                   <Button asChild variant="ghost" className="min-w-0 flex-1 rounded-md text-xs bg-white text-[#3525cd] shadow-xs font-semibold">
                     <Link to="/sign-in" aria-current="page">Sign In</Link>
                   </Button>
-                  <Button asChild variant="ghost" className="min-w-0 flex-1 rounded-md text-xs text-[#464555] hover:text-[#191c1d]">
+                  <Button asChild variant="ghost" className="min-w-0 flex-1 rounded-md text-xs text-on-surface-variant hover:text-[#191c1d]">
                     <Link to="/create-account">Create Account</Link>
                   </Button>
                 </div>
-                <Button disabled type="button" title="Google sign-in is not configured" className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#e1e3e4] bg-white text-sm font-medium text-[#464555] hover:bg-[#f3f4f5]">
+                <Button disabled type="button" title="Google sign-in is not configured" className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#e1e3e4] bg-white text-sm font-medium text-on-surface-variant hover:bg-surface-container-low">
                   <FaGoogle /> Google sign-in unavailable
                 </Button>
               </section>
@@ -127,7 +127,7 @@ export default function Login() {
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-[#e1e3e4]" />
                 </div>
-                <span className="relative bg-white px-3 text-[11px] font-semibold uppercase text-[#464555]">
+                <span className="relative bg-white px-3 text-[11px] font-semibold uppercase text-on-surface-variant">
                   Or with work email
                 </span>
               </div>
@@ -143,7 +143,7 @@ export default function Login() {
                           <FieldLabel htmlFor="login-form-email">
                             Email Address
                           </FieldLabel>
-                          <InputGroup className="rounded-lg border-[#e1e3e4] focus-within:border-[#4f46e5] focus-within:ring-2 focus-within:ring-[#4f46e5]/20">
+                          <InputGroup className="rounded-lg border-[#e1e3e4] focus-within:border-primary-container focus-within:ring-2 focus-within:ring-primary-container/20">
                             <InputGroupInput
                               {...field}
                               id="login-form-email"
@@ -173,7 +173,7 @@ export default function Login() {
                           <FieldLabel htmlFor="login-form-password">
                             Password
                           </FieldLabel>
-                          <InputGroup className="rounded-lg border-[#e1e3e4] focus-within:border-[#4f46e5] focus-within:ring-2 focus-within:ring-[#4f46e5]/20">
+                          <InputGroup className="rounded-lg border-[#e1e3e4] focus-within:border-primary-container focus-within:ring-2 focus-within:ring-primary-container/20">
                             <InputGroupInput
                               type={viewPassword ? "text" : "password"}
                               {...field}
@@ -183,7 +183,7 @@ export default function Login() {
                               autoComplete="current-password"
                             />
                             <InputGroupAddon>
-                              <button type="button" className="rounded p-1 focus-visible:outline-2 focus-visible:outline-[#4f46e5]" aria-label={viewPassword ? "Hide password" : "Show password"} aria-pressed={viewPassword} onClick={() => setViewPassword((visible) => !visible)}>{viewPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}</button>
+                              <button type="button" className="rounded p-1 focus-visible:outline-2 focus-visible:outline-primary-container" aria-label={viewPassword ? "Hide password" : "Show password"} aria-pressed={viewPassword} onClick={() => setViewPassword((visible) => !visible)}>{viewPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}</button>
                             </InputGroupAddon>
                           </InputGroup>
                           {fieldState.invalid && (
@@ -200,7 +200,7 @@ export default function Login() {
             <CardFooter className="p-4 pt-0 sm:p-6 sm:pt-0">
               <Field orientation="horizontal" className="w-full">
                 <Button
-                  className="rounded-lg w-full bg-[#3525cd] text-white hover:bg-[#4f46e5] disabled:opacity-60 shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] font-semibold py-2.5"
+                  className="rounded-lg w-full bg-[#3525cd] text-white hover:bg-primary-container disabled:opacity-60 shadow-[0_4px_14px_0_rgba(79,70,229,0.35)] font-semibold py-2.5"
                   type="submit"
                   form="login-form"
                   disabled={isPending}
