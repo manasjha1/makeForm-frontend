@@ -296,26 +296,27 @@ export default function Home() {
                           <SlidersHorizontal className="size-4" /> Fully
                           cutomizable
                         </p>
-                        <div className="mt-6 flex items-center gap-2">
+                        <div className="mt-6 flex w-full items-center gap-2">
                           <Link
                             to={`/live-preview?template=${encodeURIComponent(template.id)}`}
-                            className="flex items-center gap-2 text-black capitalize"
+                            className="flex items-center gap-2 capitalize "
                           >
-                            <ShinyButton className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-lg">
-                              <Eye aria-hidden="true" className="ml-2 size-4" />
+                            <ShinyButton className="capitalized min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-full">
                               Preview
                             </ShinyButton>
                           </Link>
                           <Link
                             to={`/form-builder?template=${encodeURIComponent(template.id)}`}
-                            className="flex items-center gap-2 text-white capitalize"
+                            className="min-w-0 flex-1"
                           >
-                            <RippleButton className="min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary rounded-lg">
-                              Use this template
-                              <MoveRight
-                                aria-hidden="true"
-                                className="transition-all size-4"
-                              />
+                            <RippleButton className="flex w-fit items-center justify-center px-5 text-center min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary rounded-full">
+                              <span className="inline-flex items-center gap-2 whitespace-nowrap">
+                                Use this template
+                                <MoveRight
+                                  aria-hidden="true"
+                                  className="transition-all size-4"
+                                />
+                              </span>
                             </RippleButton>
                           </Link>
                         </div>
