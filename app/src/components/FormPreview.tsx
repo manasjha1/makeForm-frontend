@@ -138,10 +138,6 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                 <h2 className="font-heading text-xl font-bold tracking-tight text-[#191c1d] sm:text-2xl">
                   {form.title || "Inspect Form States"}
                 </h2>
-                <span className="hidden sm:inline-flex rounded-full border border-[#c3c0ff] bg-primary-fixed/40 px-2.5 py-0.5 text-[11px] font-semibold text-[#3525cd]">
-                  {layout.badgeLabel} &bull; {layout.fieldsCount}{" "}
-                  {layout.fieldsCount === 1 ? "field" : "fields"}
-                </span>
               </div>
               <p className="mt-1 text-sm text-on-surface-variant">
                 {form.description || "Preview and manage how your form looks and behaves."}
@@ -236,11 +232,10 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                         return (
                           <label
                             key={index}
-                            className={`flex min-h-11.5 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base shadow-2xs transition-all ${
-                              isChecked
-                                ? "border-primary-container bg-primary-fixed/25 font-medium text-[#191c1d] ring-1 ring-primary-container/30"
-                                : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-primary-fixed/10"
-                            }`}
+                            className={`flex min-h-11.5 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm sm:text-base shadow-2xs transition-all ${isChecked
+                              ? "border-primary-container bg-primary-fixed/25 font-medium text-[#191c1d] ring-1 ring-primary-container/30"
+                              : "border-[#e1e3e4] bg-[#f8f9fa] text-[#191c1d] hover:border-outline-variant hover:bg-primary-fixed/10"
+                              }`}
                           >
                             <input
                               type={field.type}
@@ -354,8 +349,8 @@ export default function FormPreview({ form }: { form: FormTemplate }) {
                           (field.type === "number"
                             ? "Enter number"
                             : field.type === "email"
-                            ? "Enter your email"
-                            : "Enter text")
+                              ? "Enter your email"
+                              : "Enter text")
                         }
                         min={field.min}
                         max={field.max}
