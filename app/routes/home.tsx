@@ -181,7 +181,7 @@ export default function Home() {
               <span>Next-Gen Drag & Drop Form Studio</span>
             </div>
             <h1 className="home-title text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#191c1d] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
-              Build intelligent, high-converting forms with{" "}
+              Build high-converting forms with{" "}
               <span className="text-[#3525cd] underline decoration-[#c3c0ff] underline-offset-8">
                 effortless elegance
               </span>
@@ -189,19 +189,23 @@ export default function Home() {
             </h1>
 
             {/* Short Description */}
-            <p className="mt-6 text-base sm:text-lg text-on-surface-variant text-center max-w-2xl mx-auto font-normal leading-relaxed">
+            <p className="mt-8 text-base sm:text-lg text-on-surface-variant text-center max-w-2xl mx-auto font-normal leading-relaxed">
               Design and customize forms with live validation, conditional
               logic, and an interactive preview—no code required.
             </p>
-            <div className="home-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 mx-auto my-6">
-              <InteractiveHoverButton className="px-6 py-4 bg-primary text-white">
-                <Link to="/form-builder">Launch your form </Link>
-              </InteractiveHoverButton>
-              <ShinyButton className="px-6 py-4 rounded-full">
-                <Link to="/form-builder?view=templates">
+            <div className="home-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 mx-auto my-8">
+              <Link to="/form-builder">
+                <ShinyButton className="px-6 py-4 rounded-full text-gray-900 text-sm hover:text-primary font-medium capitalize">
+                  Launch your form
+                </ShinyButton>
+              </Link>
+              <Link to="/form-builder?view=templates">
+                <InteractiveHoverButton className="px-6 py-4 bg-primary text-white text-sm font-normal">
+
                   Explore prebuilt templates
-                </Link>
-              </ShinyButton>
+
+                </InteractiveHoverButton>
+              </Link>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
               <div className="flex items-center gap-2 min-w-0">
