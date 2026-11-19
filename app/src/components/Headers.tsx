@@ -84,7 +84,7 @@ export default function Header({
     links.map(({ label, page, to, Icon, action }) => {
       const active = current === page;
       const className =
-        "justify-start rounded-md text-xs " +
+        "justify-start rounded-md text-xs transition-all duration-200 " +
         (active
           ? "bg-white text-[#3525cd] font-semibold shadow-xs"
           : "text-gray-600 hover:bg-white hover:text-gray-900");
@@ -175,11 +175,11 @@ export default function Header({
           toggle.current?.focus();
         }
       }}
-      className="app-header sticky top-0 z-40 w-full border-b border-[#e1e3e4] bg-[#f8f9fa]/95 px-3 py-2 backdrop-blur shadow-[0_1px_3px_0_rgba(25,28,29,0.03)] sm:px-5"
+      className="app-header sticky top-0 z-40 w-full border-b border-[#e1e3e4] bg-white px-3 py-2 backdrop-blur shadow-[0_1px_3px_0_rgba(25,28,29,0.03)] sm:px-5"
     >
       <nav
         aria-label="Main navigation"
-        className="mx-auto flex max-w-[1600px] min-h-14 w-full md:w-[90%] items-center justify-between gap-3"
+        className="mx-auto flex min-h-14 w-full items-center justify-between gap-3 md:w-[80%]"
       >
         <div className="flex items-center justify-between gap-5">
           <Link
@@ -205,26 +205,34 @@ export default function Header({
           size="icon"
           variant="outline"
           ref={toggle}
-          className="xl:hidden"
+          className="relative xl:hidden transition-all duration-200"
           aria-controls={menuId}
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={open}
           onClick={() => setOpen(!open)}
         >
-          {open ? <X /> : <Menu />}
+          <Menu
+            className={`absolute size-5 transition-all duration-200 ${open ? "rotate-90 scale-75 opacity-0" : "rotate-0 scale-100 opacity-100"
+              }`}
+          />
+          <X
+            className={`absolute size-5 transition-all duration-200 ${open ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-75 opacity-0"
+              }`}
+          />
         </Button>
       </nav>
-      {open && (
-        <div
-          id={menuId}
-          className="app-mobile-menu mt-2 border-t border-[#e1e3e4] pt-2 xl:hidden"
-        >
-          <div className="grid gap-1">{navigation()}</div>
-          <div className="mt-2 flex flex-wrap items-center gap-2 border-t border-[#e1e3e4] pt-2">
-            {actions}
-          </div>
+      <div
+        id={menuId}
+        className={`app-mobile-menu grid overflow-hidden transition-all duration-300 ease-out xl:hidden ${open
+          ? "mt-2 max-h-128 border-t border-[#e1e3e4] pt-2 opacity-100"
+          : "max-h-0 border-t-0 pt-0 opacity-0"
+          }`}
+      >
+        <div className="grid gap-1">{navigation()}</div>
+        <div className="mt-2 flex flex-wrap items-center gap-2 border-t border-[#e1e3e4] pt-2">
+          {actions}
         </div>
-      )}
+      </div>
     </header>
   );
 }
