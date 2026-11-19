@@ -154,7 +154,11 @@ export default function Header({
     </>
   );
   return (
-    <header className="app-header sticky top-0 z-40 w-full border-b border-[#e1e3e4] bg-white px-3 py-2 backdrop-blur shadow-[0_1px_3px_0_rgba(25,28,29,0.03)] sm:px-5">
+    <header
+      className={`app-header sticky top-0 z-40 w-full border-b border-[#e1e3e4] bg-white px-3 py-2 backdrop-blur sm:px-5 ${
+        pathname === "/" ? "" : "shadow-[0_1px_3px_0_rgba(25,28,29,0.03)]"
+      }`}
+    >
       <nav
         aria-label="Main navigation"
         className="relative mx-auto flex min-h-14 w-full items-center justify-between gap-3 lg:w-[80%]"
