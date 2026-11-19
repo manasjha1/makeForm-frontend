@@ -11,6 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { RippleButton } from "./ripple-button";
 
 type Profile = { name: string; email: string };
 
@@ -111,9 +112,19 @@ export default function AccountDetails({
                         </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild className="cursor-pointer gap-2 px-3 py-2 hover:bg-primary-fixed/40">
-                        <Link to="/dashboard" onClick={onNavigate} className="flex w-full items-center gap-2">
-                            <LayoutDashboard aria-hidden="true" className="size-4 text-[#3525cd]" />
+                    <DropdownMenuItem
+                        asChild
+                        className="cursor-pointer gap-2 px-3 py-2 hover:bg-primary-fixed/40"
+                    >
+                        <Link
+                            to="/dashboard"
+                            onClick={onNavigate}
+                            className="flex w-full items-center gap-2"
+                        >
+                            <LayoutDashboard
+                                aria-hidden="true"
+                                className="size-4 text-[#3525cd]"
+                            />
                             Admin Dashboard
                         </Link>
                     </DropdownMenuItem>
@@ -132,25 +143,20 @@ export default function AccountDetails({
 
     return (
         <>
-            <Button
-                asChild
-                variant="outline"
-                size="sm"
-                className="rounded-lg border-[#3525cd] bg-transparent font-medium text-[#3525cd] hover:bg-primary-fixed/30 transition-colors"
-            >
-                <Link to="/sign-in" onClick={onNavigate}>
-                    Sign In
-                </Link>
-            </Button>
-            <Button
-                asChild
-                size="sm"
-                className="rounded-lg border border-[#3525cd] bg-[#3525cd] font-medium text-white hover:bg-primary-container shadow-xs transition-all"
-            >
-                <Link to="/create-account" onClick={onNavigate}>
-                    <UserRound aria-hidden="true" className="size-4" /> Sign Up
-                </Link>
-            </Button>
+            <Link to="/sign-in" onClick={onNavigate}>
+                <RippleButton className="bg-transparent text-gray-900 hover:text-gray-500 text-sm font-medium transition-colors">
+                    Sign in
+                </RippleButton>
+            </Link>
+            <Link to="/create-account" onClick={onNavigate}>
+
+                <RippleButton
+                    className="rounded-lg bg-gray-900 hover:bg-[#3525cd] font-medium text-white text-sm shadow-xs transition-all"
+                >
+                    Start for free
+                </RippleButton>
+            </Link>
+
         </>
     );
 }
