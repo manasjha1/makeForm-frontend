@@ -37,7 +37,6 @@ import statImage5 from "~/assests/stat_img5.jpeg";
 import statImage6 from "~/assests/stat-img6.jpeg";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
-import DotField from "~/src/components/DotField";
 
 import ScrollStackDeck, {
   type ProjectItem,
@@ -172,25 +171,10 @@ export default function Home() {
   );
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen bg-white">
       <Header viewPage="Home" />
-      <main className="home-content min-h-full">
-        {/* Hero section with interactive DotField background */}
+      <main className="home-content min-h-full bg-white">
         <section className="relative overflow-hidden px-4 sm:px-6">
-          <div
-            className="pointer-events-none absolute inset-0 z-0 mask-[linear-gradient(to_bottom,black_80%,transparent_100%)]"
-            aria-hidden="true"
-          >
-            <DotField
-              dotRadius={2}
-              dotSpacing={16}
-              bulgeStrength={36}
-              glowRadius={0}
-              sparkle={false}
-              waveAmplitude={0}
-            />
-          </div>
-
           <div className="home-hero relative z-10 mx-auto w-full max-w-4xl">
             <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-primary-fixed border border-[#c3c0ff] text-on-primary-fixed text-xs font-bold mb-6 shadow-xs motion-safe:animate-pulse">
               <Stars className="w-3.5 h-3.5 text-[#3525cd]" />
