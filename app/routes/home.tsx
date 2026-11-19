@@ -176,9 +176,9 @@ export default function Home() {
       <main className="home-content min-h-full bg-white">
         <section className="relative overflow-hidden px-4 sm:px-6">
           <div className="home-hero relative z-10 mx-auto w-full max-w-4xl">
-            <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-primary-fixed border border-[#c3c0ff] text-on-primary-fixed text-xs font-bold mb-6 shadow-xs motion-safe:animate-pulse">
+            <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-white border text-gray-900 text-sm font-normal mb-6 shadow-xs">
               <Stars className="w-3.5 h-3.5 text-[#3525cd]" />
-              <span>Next-Gen Drag & Drop Form Studio</span>
+              <span>Next-gen drag & drop form studio </span>
             </div>
             <h1 className="home-title text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#191c1d] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
               Build high-converting forms with{" "}
@@ -201,38 +201,11 @@ export default function Home() {
               </Link>
               <Link to="/form-builder?view=templates">
                 <InteractiveHoverButton className="px-6 py-4 bg-primary text-white text-sm font-normal">
-
                   Explore prebuilt templates
-
                 </InteractiveHoverButton>
               </Link>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
-              <div className="flex items-center gap-2 min-w-0">
-                <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-                <p className="text-xs text-on-surface-variant font-normal capitalize">
-                  3-column editing workspace
-                </p>
-              </div>
-              <div className="flex items-center gap-2 min-w-0">
-                <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-                <p className="text-xs text-on-surface-variant font-normal capitalize">
-                  conditional field logic
-                </p>
-              </div>
-              <div className="flex items-center gap-2 min-w-0">
-                <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-                <p className="text-xs text-on-surface-variant font-normal capitalize">
-                  ready-to-use form templates
-                </p>
-              </div>
-              <div className="flex items-center gap-2 min-w-0">
-                <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-                <p className="text-xs text-on-surface-variant font-normal capitalize">
-                  mobile responsive preview
-                </p>
-              </div>
-            </div>
+
           </div>
         </section>
 
@@ -244,6 +217,32 @@ export default function Home() {
               alt="makeForm studio with field palette, form canvas, and settings"
             />
           </section>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
+            <div className="flex items-center gap-2 min-w-0">
+              <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
+              <p className="text-xs text-on-surface-variant font-normal capitalize">
+                3-column editing workspace
+              </p>
+            </div>
+            <div className="flex items-center gap-2 min-w-0">
+              <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
+              <p className="text-xs text-on-surface-variant font-normal capitalize">
+                conditional field logic
+              </p>
+            </div>
+            <div className="flex items-center gap-2 min-w-0">
+              <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
+              <p className="text-xs text-on-surface-variant font-normal capitalize">
+                ready-to-use form templates
+              </p>
+            </div>
+            <div className="flex items-center gap-2 min-w-0">
+              <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
+              <p className="text-xs text-on-surface-variant font-normal capitalize">
+                mobile responsive preview
+              </p>
+            </div>
+          </div>
           <hr className="w-full max-w-6xl mx-auto my-10 border-[#e1e3e4]" />
           <section className="w-full max-w-6xl mx-auto my-5">
             <ScrollStackDeck
