@@ -177,7 +177,7 @@ export default function Home() {
       <main className="home-content min-h-full bg-white">
         <section className="relative overflow-hidden px-4 sm:px-6">
           <div className="home-hero relative z-10 mx-auto w-full max-w-4xl">
-            <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-white border text-gray-900 text-sm font-normal mb-6 shadow-xs">
+            <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-white border text-gray-900 text-sm font-normal mb-6">
               <Stars className="w-3.5 h-3.5 text-[#3525cd]" />
               <span>Next-gen drag & drop form studio </span>
             </div>
@@ -213,7 +213,7 @@ export default function Home() {
         <div className="px-4 sm:px-6">
           <section className="w-full max-w-6xl mx-auto my-5">
             <img
-              className="h-auto w-full rounded-xl object-contain border border-[#e1e3e4] shadow-[0_20px_40px_-15px_rgba(25,28,29,0.12),0_4px_12px_-2px_rgba(25,28,29,0.04)]"
+              className="h-auto w-full rounded-xl object-contain border border-[#e1e3e4]"
               src={formImage}
               alt="makeForm studio with field palette, form canvas, and settings"
             />
@@ -264,7 +264,7 @@ export default function Home() {
                 return (
                   // template cards
                   <article className="relative rounded-xl w-full">
-                    <div className="grid min-h-112 gap-6 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white p-4 shadow-[0_16px_40px_-20px_rgba(25,28,29,0.28)] sm:p-8 md:min-h-112 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.85fr)] md:items-center md:gap-10">
+                    <div className="grid min-h-112 gap-6 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white p-4 sm:p-8 md:min-h-112 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.85fr)] md:items-center md:gap-10">
                       <div className="flex flex-col items-start">
                         <span className="flex items-center gap-1.5 rounded-full border border-[#4f23a6] bg-[#d3c5f6] px-3 py-1 text-xs font-semibold text-[#4f23a6]">
                           <CategoryIcon
@@ -310,7 +310,7 @@ export default function Home() {
                           </Link>
                         </div>
                       </div>
-                      <div className="overflow-hidden rounded-xl border border-[#e1e3e4] bg-[#f8f9fa] shadow-inner">
+                      <div className="overflow-hidden rounded-xl border border-[#e1e3e4] bg-[#f8f9fa]">
                         <img
                           src={image}
                           alt={imageAlt}
@@ -381,7 +381,7 @@ export default function Home() {
                   }) => (
                     <article
                       key={title}
-                      className="grid min-h-48 grid-cols-[minmax(5.5rem,0.78fr)_minmax(0,1.22fr)] items-center gap-3 rounded-2xl border border-white/80 bg-white/80 px-3 shadow-[0_8px_24px_-12px_rgba(74,61,163,0.2)] backdrop-blur-[2px] transition-colors hover:border-[#9b8cff] sm:min-h-52 sm:gap-4 sm:px-4"
+                      className="grid min-h-48 grid-cols-[minmax(5.5rem,0.78fr)_minmax(0,1.22fr)] items-center gap-3 rounded-2xl border border-white/80 bg-white/80 px-3 backdrop-blur-[2px] transition-colors hover:border-[#9b8cff] sm:min-h-52 sm:gap-4 sm:px-4"
                     >
                       <img
                         src={image}
@@ -432,7 +432,7 @@ export default function Home() {
           <Accordion
             type="single"
             collapsible
-            className="mt-8 rounded-2xl border border-[#e1e3e4] bg-white px-5 shadow-[0_8px_24px_-18px_rgba(25,28,29,0.28)] sm:mt-10 sm:px-7"
+            className="mt-8 rounded-2xl border border-[#e1e3e4] bg-white px-5 sm:mt-10 sm:px-7"
           >
             <AccordionItem value="create-forms">
               <AccordionTrigger>
