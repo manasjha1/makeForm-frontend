@@ -218,8 +218,8 @@ export default function Home() {
               alt="makeForm studio with field palette, form canvas, and settings"
             />
           </section>
-          <Logos19 className="border-b border-[#e1e3e4]" />
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
+          <Logos19 className="w-full md:w-[80%] mx-auto" />
+          {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
             <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
               <p className="text-xs text-on-surface-variant font-normal capitalize">
@@ -244,7 +244,7 @@ export default function Home() {
                 mobile responsive preview
               </p>
             </div>
-          </div>
+          </div> */}
           <hr className="w-full max-w-6xl mx-auto my-10 border-[#e1e3e4]" />
           <section className="w-full max-w-6xl mx-auto my-5">
             <ScrollStackDeck

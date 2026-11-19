@@ -1,5 +1,3 @@
-"use client";
-
 import Marquee from "react-fast-marquee";
 import type { ElementType } from "react";
 import {
