@@ -1,127 +1,87 @@
 "use client";
 
 import Marquee from "react-fast-marquee";
+import type { ElementType } from "react";
+import {
+  GitBranch,
+  Grip,
+  Layers,
+  Eye,
+  ShieldCheck,
+  Smartphone,
+  WandSparkles,
+  Share2,
+  type LucideIcon,
+} from "lucide-react";
 import { cn } from "cn";
 
-type LogosSimpleStaticLogo = Logo & {
-  href?: string;
+const resolveMarqueeComponent = (moduleValue: unknown): ElementType => {
+  let resolved = moduleValue;
+
+  for (
+    let depth = 0;
+    depth < 3 && typeof resolved === "object" && resolved !== null;
+    depth++
+  ) {
+    if (!("default" in resolved)) break;
+    resolved = (resolved as { default: unknown }).default;
+  }
+
+  return resolved as ElementType;
 };
-interface Logo {
-  src: string;
-  alt: string;
-  srcDark?: string;
-  className?: string;
-}
+
+const MarqueeComponent = resolveMarqueeComponent(Marquee);
 
 interface LogosSimpleStaticProps {
-  logos: LogosSimpleStaticLogo[];
+  features: { label: string; Icon: LucideIcon }[];
   className?: string;
 }
 
 type Props = Partial<LogosSimpleStaticProps>;
 
 const defaultProps: LogosSimpleStaticProps = {
-  logos: [
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-1.svg",
-      alt: "Company logo 1",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-2.svg",
-      alt: "Company logo 2",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-3.svg",
-      alt: "Company logo 3",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-4.svg",
-      alt: "Company logo 4",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-5.svg",
-      alt: "Company logo 5",
-      className: "h-5 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-6.svg",
-      alt: "Company logo 6",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-7.svg",
-      alt: "Company logo 7",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-8.svg",
-      alt: "Company logo 8",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-9.svg",
-      alt: "Company logo 9",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-10.svg",
-      alt: "Company logo 10",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-11.svg",
-      alt: "Company logo 11",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
-    {
-      src: "https://cdn.shadcnblocks.com/shadcnblocks/image-set/modern/logos/fictional-company-logo-12.svg",
-      alt: "Company logo 12",
-      className: "h-7 w-auto",
-      href: "https://www.shadcnblocks.com",
-    },
+  features: [
+    { label: "Drag & Drop", Icon: Grip },
+    { label: "Live Preview", Icon: Eye },
+    { label: "Conditional Logic", Icon: GitBranch },
+    { label: "Field Validation", Icon: ShieldCheck },
+    { label: "Templates", Icon: Layers },
+    { label: "No-Code Builder", Icon: WandSparkles },
+    { label: "Mobile Friendly", Icon: Smartphone },
+    { label: "Easy Sharing", Icon: Share2 },
   ],
 };
 
 const Logos19 = (props: Props) => {
-  const { logos, className } = {
+  const { features, className } = {
     ...defaultProps,
     ...props,
   };
 
   return (
-    <section className={cn("py-16", className)}>
-      <Marquee gradient gradientWidth={64} autoFill pauseOnHover speed={40}>
-        {logos.map((logo, index) => (
+    <section className={cn("py-10", className)}>
+      <MarqueeComponent
+        gradient
+        gradientWidth={64}
+        autoFill
+        pauseOnHover
+        speed={40}
+      >
+        {features.map(({ label, Icon }, index) => (
           <div
-            key={`${logo.src}-${index}`}
-            className="mx-8 flex aspect-3/1 w-28 items-center justify-center sm:w-32 lg:mx-10"
+            key={`${label}-${index}`}
+            className="mx-5 flex h-10 items-center justify-center gap-2 sm:mx-7"
           >
-            <img
-              src={logo.src}
-              alt={logo.alt}
-              className={cn(
-                logo.className,
-                "h-auto max-h-7 w-auto object-contain dark:invert",
-              )}
+            <Icon
+              className="size-5 shrink-0 text-on-surface-variant"
+              aria-hidden="true"
             />
+            <span className="text-xl font-heading font-semibold text-on-surface-variant">
+              {label}
+            </span>
           </div>
         ))}
-      </Marquee>
+      </MarqueeComponent>
     </section>
   );
 };
