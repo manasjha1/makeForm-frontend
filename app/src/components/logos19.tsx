@@ -62,8 +62,7 @@ const Logos19 = (props: Props) => {
         gradient
         gradientWidth={64}
         autoFill
-        pauseOnHover
-        speed={40}
+        speed={50}
       >
         {features.map(({ label, Icon }, index) => (
           <div
