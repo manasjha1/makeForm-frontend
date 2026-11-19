@@ -42,6 +42,7 @@ import ScrollStackDeck, {
   type ProjectItem,
 } from "~/src/components/scroll-stack-deck";
 import { findTemplate } from "~/src/data/form-templates";
+import { Logos19 } from "~/src/components/logos19";
 import { InteractiveHoverButton } from "~/src/components/interactive-hover-button";
 import { RippleButton } from "~/src/components/ripple-button";
 import { ShinyButton } from "~/src/components/shiny-button";
@@ -217,6 +218,7 @@ export default function Home() {
               alt="makeForm studio with field palette, form canvas, and settings"
             />
           </section>
+          <Logos19 className="border-b border-[#e1e3e4]" />
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
             <div className="flex items-center gap-2 min-w-0">
               <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
