@@ -23,6 +23,7 @@
   "menuAccent": "subtle",
   "registries": {
     "@uselayouts": "https://uselayouts.com/r/{name}.json",
-    "@magicui": "https://magicui.design/r/{name}"
+    "@magicui": "https://magicui.design/r/{name}",
+    "@shadcnblocks": "https://shadcnblocks.com/r/{name}.json"
   }
 }
