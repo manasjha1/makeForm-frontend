@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../lib/utils";
 
@@ -27,49 +27,11 @@ export default function VerticalTabs({
 }: VerticalTabsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const sectionRef = useRef<HTMLElement | null>(null);
 
   const handleTabClick = (index: number) => {
     if (index === activeIndex) return;
     setActiveIndex(index);
   };
-
-  useEffect(() => {
-    let frame = 0;
-
-    const updateActiveTab = () => {
-      frame = 0;
-      const section = sectionRef.current;
-      if (!section) return;
-
-      const rect = section.getBoundingClientRect();
-      const scrollDistance = rect.height - window.innerHeight;
-      const progress =
-        scrollDistance > 0
-          ? Math.min(1, Math.max(0, -rect.top / scrollDistance))
-          : 0;
-      const nextIndex = Math.min(
-        items.length - 1,
-        Math.max(0, Math.floor(progress * items.length)),
-      );
-      setActiveIndex(nextIndex);
-    };
-
-    const handleScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(updateActiveTab);
-    };
-
-    updateActiveTab();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [items.length]);
 
   const active = items[activeIndex] ?? items[0];
 
@@ -77,14 +39,12 @@ export default function VerticalTabs({
 
   return (
     <section
-      ref={sectionRef}
       className={cn(
         "relative w-screen max-w-none ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] overflow-hidden border-y border-border bg-white",
         className,
       )}
-      style={{ height: `${items.length * 100}vh` }}
     >
-      <div className="sticky top-0 flex h-screen flex-col mx-auto w-full max-w-7xl overflow-hidden border-x border-border">
+      <div className="mx-auto flex min-h-152 w-full max-w-7xl flex-col overflow-hidden border-x border-border">
         <header className="shrink-0 px-6 py-8 sm:px-10 sm:py-10 lg:px-16 lg:py-12">
           {eyebrow && (
             <p className="mb-5 text-sm font-medium text-[#5c64ff]">
