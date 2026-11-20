@@ -116,10 +116,10 @@ const Hero195 = (props: Props) => {
   const ActiveIcon = TAB_ICONS[activeIndex % TAB_ICONS.length];
 
   return (
-    <section className={cn("overflow-hidden", className)}>
-      <div className="container">
-        <div className="border-x border-border py-20">
-          <div className="relative mx-auto max-w-4xl px-6 pt-8 pb-4 lg:p-2">
+    <section className={cn("flex w-full justify-center overflow-hidden text-center", className)}>
+      <div className="container mx-auto w-full">
+        <div className="mx-auto border-x border-border py-20 text-center">
+          <div className="relative mx-auto max-w-4xl items-center px-6 pt-8 pb-4 text-center lg:p-2">
             <h1 className="mx-auto mt-6 max-w-4xl text-center text-3xl font-bold tracking-tight text-pretty md:text-4xl lg:text-6xl lg:tracking-tighter">
               {heading}
             </h1>
