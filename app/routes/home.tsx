@@ -273,14 +273,6 @@ export default function Home() {
                 image: eventFormImage,
                 imageAlt: "A makeForm event registration preview",
               },
-              {
-                id: "04",
-                title: "Collect and review",
-                description:
-                  "Receive submissions in one place and keep every response organized for follow-up.",
-                image: feedbackFormImage,
-                imageAlt: "A makeForm feedback response preview",
-              },
             ]}
           />
           <section className="w-full max-w-6xl mx-auto my-5">
