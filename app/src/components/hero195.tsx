@@ -28,6 +28,7 @@ interface Button {
   text: string;
   url: string;
   icon?: ReactNode;
+  className?: string;
 }
 interface Buttons {
   primary?: Button;
@@ -128,12 +129,12 @@ const Hero195 = (props: Props) => {
             </p>
             <div className="mx-auto mt-6 flex w-full max-w-sm flex-col gap-2 sm:max-w-none sm:flex-row sm:justify-center">
               {buttons?.primary && (
-                <Button className="w-full sm:w-auto" asChild>
+                <Button className={cn("w-full sm:w-auto", buttons.primary.className)} asChild>
                   <a href={buttons.primary.url}>{buttons.primary.text}</a>
                 </Button>
               )}
               {buttons?.secondary && (
-                <Button className="w-full sm:w-auto" variant="outline" asChild>
+                <Button className={cn("w-full sm:w-auto", buttons.secondary.className)} asChild>
                   <a href={buttons.secondary.url}>{buttons.secondary.text}</a>
                 </Button>
               )}
