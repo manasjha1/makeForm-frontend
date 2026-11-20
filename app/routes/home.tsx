@@ -177,10 +177,17 @@ export default function Home() {
           heading="Build high-converting forms with effortless elegance."
           description="Design and customize forms with live validation, conditional logic, and an interactive preview—no code required."
           buttons={{
-            primary: { text: "Launch your form", url: "/form-builder" },
+            primary: {
+              text: "Launch your form",
+              url: "/form-builder",
+              className:
+                "min-h-11 rounded-full border border-gray-300 bg-white px-6 py-4 text-sm font-medium text-gray-900 hover:bg-white hover:text-primary",
+            },
             secondary: {
               text: "Explore prebuilt templates",
               url: "/form-builder?view=templates",
+              className:
+                "min-h-11 rounded-full border-black bg-black px-6 py-4 text-sm font-medium text-white hover:bg-primary hover:text-white",
             },
           }}
           tabs={[
