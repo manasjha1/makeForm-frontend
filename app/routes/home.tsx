@@ -171,7 +171,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-white">
       <Header viewPage="Home" />
-      <main className="home-content min-h-full bg-white">
+      <main className="home-content min-h-full mx-auto bg-white">
         <Hero195
           className="bg-white"
           heading="Build high-converting forms with effortless elegance."
