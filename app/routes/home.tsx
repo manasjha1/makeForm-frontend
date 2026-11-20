@@ -43,6 +43,7 @@ import { Logos19 } from "~/src/components/logos19";
 import { RippleButton } from "~/src/components/ripple-button";
 import { ShinyButton } from "~/src/components/shiny-button";
 import { Hero195 } from "~/src/components/hero195";
+import VerticalTabs from "~/src/components/vertical-tabs";
 
 const featuredTemplates = [
   {
@@ -199,24 +200,17 @@ export default function Home() {
               },
             },
             {
-              title: "Onboarding",
+              title: "Dashboard",
               image: {
                 src: onboardingFormImage,
-                alt: "Client onboarding form preview",
+                alt: "Dashboard preview",
               },
             },
             {
-              title: "Events",
+              title: "Live Preview",
               image: {
                 src: eventFormImage,
-                alt: "Event registration form preview",
-              },
-            },
-            {
-              title: "Feedback",
-              image: {
-                src: feedbackFormImage,
-                alt: "Customer feedback form preview",
+                alt: "Live Preview",
               },
             },
           ]}
@@ -343,6 +337,37 @@ export default function Home() {
             </div>
           </section>
         </div>
+        <VerticalTabs
+          title="[ How makeForm works ]"
+          eyebrow="(WORKFLOW)"
+          className="mx-auto w-full max-w-7xl"
+          items={[
+            {
+              id: "01",
+              title: "Choose your starting point",
+              description:
+                "Start with a ready-made template or build a form from a blank canvas.",
+              image: formImage,
+              imageAlt: "makeForm visual form builder",
+            },
+            {
+              id: "02",
+              title: "Design and customize",
+              description:
+                "Add fields, arrange your layout, configure validation, and set conditional logic.",
+              image: onboardingFormImage,
+              imageAlt: "A customized makeForm onboarding form",
+            },
+            {
+              id: "03",
+              title: "Preview and share",
+              description:
+                "Check the live preview, publish your form, and share it with every respondent.",
+              image: eventFormImage,
+              imageAlt: "A makeForm event registration preview",
+            },
+          ]}
+        />
         <section
           className="relative my-16 w-full overflow-hidden px-4 py-12 sm:px-6 sm:py-14 lg:my-24 lg:px-8 lg:py-16"
           aria-labelledby="home-features-title"
