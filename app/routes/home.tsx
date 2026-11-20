@@ -1,16 +1,13 @@
 import {
   CalendarDays,
-  CheckCircle,
   Dot,
   Eye,
-  FileText,
   GitBranch,
   Layers,
   MessageSquareText,
   MoveRight,
   Smartphone,
   SlidersHorizontal,
-  Stars,
   UsersRound,
   ShieldCheck,
 } from "lucide-react";
@@ -43,9 +40,9 @@ import ScrollStackDeck, {
 } from "~/src/components/scroll-stack-deck";
 import { findTemplate } from "~/src/data/form-templates";
 import { Logos19 } from "~/src/components/logos19";
-import { InteractiveHoverButton } from "~/src/components/interactive-hover-button";
 import { RippleButton } from "~/src/components/ripple-button";
 import { ShinyButton } from "~/src/components/shiny-button";
+import { Hero195 } from "~/src/components/hero195";
 
 const featuredTemplates = [
   {
@@ -175,49 +172,50 @@ export default function Home() {
     <div className="relative min-h-screen bg-white">
       <Header viewPage="Home" />
       <main className="home-content min-h-full bg-white">
-        <section className="relative overflow-hidden px-4 sm:px-6">
-          <div className="home-hero relative z-10 mx-auto w-full max-w-4xl">
-            <div className="flex items-center justify-center gap-2 w-fit max-w-full mx-auto px-3.5 py-1.5 rounded-full bg-white border text-gray-900 text-sm font-normal mb-6">
-              <Stars className="w-3.5 h-3.5 text-[#3525cd]" />
-              <span>Next-gen drag & drop form studio </span>
-            </div>
-            <h1 className="home-title text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#191c1d] text-center tracking-tight max-w-4xl mx-auto leading-[1.12]">
-              Build high-converting forms with{" "}
-              <span className="text-[#3525cd] underline decoration-[#c3c0ff] underline-offset-8">
-                effortless elegance
-              </span>
-              .
-            </h1>
-
-            {/* Short Description */}
-            <p className="mt-8 text-base sm:text-lg text-on-surface-variant text-center max-w-2xl mx-auto font-normal leading-relaxed">
-              Design and customize forms with live validation, conditional
-              logic, and an interactive preview—no code required.
-            </p>
-            <div className="home-cta flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 mx-auto my-8">
-              <Link to="/form-builder">
-                <ShinyButton className="px-6 py-4 rounded-full text-gray-900 text-sm hover:text-primary font-medium capitalize">
-                  Launch your form
-                </ShinyButton>
-              </Link>
-              <Link to="/form-builder?view=templates">
-                <InteractiveHoverButton className="px-6 py-4 bg-primary text-white text-sm font-normal">
-                  Explore prebuilt templates
-                </InteractiveHoverButton>
-              </Link>
-            </div>
-
-          </div>
-        </section>
+        <Hero195
+          className="bg-white"
+          heading="Build high-converting forms with effortless elegance."
+          description="Design and customize forms with live validation, conditional logic, and an interactive preview—no code required."
+          buttons={{
+            primary: { text: "Launch your form", url: "/form-builder" },
+            secondary: {
+              text: "Explore prebuilt templates",
+              url: "/form-builder?view=templates",
+            },
+          }}
+          tabs={[
+            {
+              title: "Studio",
+              image: {
+                src: formImage,
+                alt: "makeForm studio with field palette, form canvas, and settings",
+              },
+            },
+            {
+              title: "Onboarding",
+              image: {
+                src: onboardingFormImage,
+                alt: "Client onboarding form preview",
+              },
+            },
+            {
+              title: "Events",
+              image: {
+                src: eventFormImage,
+                alt: "Event registration form preview",
+              },
+            },
+            {
+              title: "Feedback",
+              image: {
+                src: feedbackFormImage,
+                alt: "Customer feedback form preview",
+              },
+            },
+          ]}
+        />
 
         <div className="px-4 sm:px-6">
-          <section className="w-full max-w-6xl mx-auto my-5">
-            <img
-              className="h-auto w-full rounded-xl object-contain border border-[#e1e3e4]"
-              src={formImage}
-              alt="makeForm studio with field palette, form canvas, and settings"
-            />
-          </section>
           <Logos19 className="w-full md:w-[80%] mx-auto" />
           {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
             <div className="flex items-center gap-2 min-w-0">
