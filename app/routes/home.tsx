@@ -244,7 +244,45 @@ export default function Home() {
               </p>
             </div>
           </div> */}
-          <hr className="w-full max-w-6xl mx-auto my-10 border-[#e1e3e4]" />
+          <VerticalTabs
+            title="One workspace for every form step."
+            eyebrow="How makeForm works"
+            className="mx-auto w-full"
+            items={[
+              {
+                id: "01",
+                title: "Choose your starting point",
+                description:
+                  "Start with a ready-made template or build a form from a blank canvas.",
+                image: formImage,
+                imageAlt: "makeForm visual form builder",
+              },
+              {
+                id: "02",
+                title: "Design and customize",
+                description:
+                  "Add fields, arrange your layout, configure validation, and set conditional logic.",
+                image: onboardingFormImage,
+                imageAlt: "A customized makeForm onboarding form",
+              },
+              {
+                id: "03",
+                title: "Preview and share",
+                description:
+                  "Check the live preview, publish your form, and share it with every respondent.",
+                image: eventFormImage,
+                imageAlt: "A makeForm event registration preview",
+              },
+              {
+                id: "04",
+                title: "Collect and review",
+                description:
+                  "Receive submissions in one place and keep every response organized for follow-up.",
+                image: feedbackFormImage,
+                imageAlt: "A makeForm feedback response preview",
+              },
+            ]}
+          />
           <section className="w-full max-w-6xl mx-auto my-5">
             <ScrollStackDeck
               projects={templateProjects}
@@ -337,37 +375,6 @@ export default function Home() {
             </div>
           </section>
         </div>
-        <VerticalTabs
-          title="[ How makeForm works ]"
-          eyebrow="(WORKFLOW)"
-          className="mx-auto w-full max-w-7xl"
-          items={[
-            {
-              id: "01",
-              title: "Choose your starting point",
-              description:
-                "Start with a ready-made template or build a form from a blank canvas.",
-              image: formImage,
-              imageAlt: "makeForm visual form builder",
-            },
-            {
-              id: "02",
-              title: "Design and customize",
-              description:
-                "Add fields, arrange your layout, configure validation, and set conditional logic.",
-              image: onboardingFormImage,
-              imageAlt: "A customized makeForm onboarding form",
-            },
-            {
-              id: "03",
-              title: "Preview and share",
-              description:
-                "Check the live preview, publish your form, and share it with every respondent.",
-              image: eventFormImage,
-              imageAlt: "A makeForm event registration preview",
-            },
-          ]}
-        />
         <section
           className="relative my-16 w-full overflow-hidden px-4 py-12 sm:px-6 sm:py-14 lg:my-24 lg:px-8 lg:py-16"
           aria-labelledby="home-features-title"
