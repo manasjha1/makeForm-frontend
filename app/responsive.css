@@ -62,11 +62,10 @@
 .home-hero svg {
   flex-shrink: 0;
 }
-@media (max-width: 359px) {
-  .home-hero > div:first-child {
-    font-size: 10px;
-    padding-inline: 8px;
-  }
+
+.home-hero > div:first-child {
+  font-size: 10px;
+  padding-inline: 8px;
 }
 
 .home-template {
