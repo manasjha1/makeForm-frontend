@@ -43,7 +43,7 @@ interface HeroSaasProps {
   tabs?: HeroSaasTab[];
 }
 
-interface Hero195Props extends HeroSaasProps {}
+interface Hero195Props extends HeroSaasProps { }
 type Props = Partial<Hero195Props>;
 
 const defaultProps: Hero195Props = {
@@ -144,14 +144,14 @@ const Hero195 = (props: Props) => {
             <div className="mt-4 md:mt-16 lg:mt-20">
               <Tabs value={activeTab} onValueChange={setActiveTab}>
                 <div className="hidden md:block">
-                  <TabsList className="mx-auto mb-6 flex h-auto w-fit flex-wrap justify-center gap-2 p-1 md:gap-2 lg:gap-3">
+                  <TabsList className="mx-auto mb-6 flex h-fit w-fit justify-center gap-2 p-1 lg:px-1 lg:py-5 md:gap-2 lg:gap-3">
                     {tabs.map((tab, i) => {
                       const Icon = TAB_ICONS[i % TAB_ICONS.length];
                       return (
                         <TabsTrigger
                           key={tab.title}
                           value={tab.title}
-                          className="gap-1.5 px-2 py-1 text-sm font-normal text-muted-foreground lg:gap-2 lg:px-3 lg:py-2 lg:text-base"
+                          className="gap-1.5 px-3 py-2 text-sm font-normal text-muted-foreground data-active:bg-gray-900 data-active:text-white data-active:hover:text-white lg:gap-2 lg:px-6 lg:py-4 lg:text-base"
                         >
                           <Icon className="size-4 lg:size-5" aria-hidden />
                           {tab.title}
@@ -209,8 +209,8 @@ const Hero195 = (props: Props) => {
                         className={cn(
                           "h-1.5 rounded-full transition-all",
                           activeTab === tab.title
-                            ? "w-8 bg-foreground"
-                            : "w-1.5 bg-muted-foreground/40",
+                            ? "w-8 bg-muted-foreground"
+                            : "w-1.5 bg-muted-foreground",
                         )}
                       />
                     ))}
