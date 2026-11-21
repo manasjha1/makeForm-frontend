@@ -212,12 +212,12 @@ export default function VerticalTabs({
             </div>
 
           </div>
-          <span className="absolute -inset-x-1/5 top-0 -z-10 h-px bg-border mask-[linear-gradient(to_right,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
-          <span className="absolute -inset-x-1/5 bottom-0 -z-10 h-px bg-border mask-[linear-gradient(to_right,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
-
-
-          <span className="absolute -inset-y-1/5 left-22 w-px border-r border-border mask-[linear-gradient(to_bottom,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
-          <span className="absolute -inset-y-1/5 right-22 w-px border-r border-border mask-[linear-gradient(to_bottom,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
+          <span className="pointer-events-none absolute -inset-x-1/5 top-0 -z-10 h-px border mask-[linear-gradient(to_right,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
+          <span className="pointer-events-none absolute -inset-x-1/5 bottom-0 -z-10 h-px border mask-[linear-gradient(to_right,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
+          <span className="pointer-events-none absolute -inset-x-1/5 top-12 h-px border-t -z-10 border-dashed border-border mask-[linear-gradient(to_right,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
+          <span className="pointer-events-none absolute -inset-x-1/5 bottom-12 h-px border-t -z-10 border-dashed border-border mask-[linear-gradient(to_right,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
+          <span className="pointer-events-none absolute -inset-y-1/5 left-22 w-px border-r border-border mask-[linear-gradient(to_bottom,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
+          <span className="pointer-events-none absolute -inset-y-1/5 right-22 w-px border-r border-border mask-[linear-gradient(to_bottom,transparent_1%,black_10%,black_90%,transparent_99%)]"></span>
         </div>
 
       </section>
