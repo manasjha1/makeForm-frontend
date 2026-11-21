@@ -231,37 +231,7 @@ export default function Home() {
 
         <div className="px-4 sm:px-6">
           <Logos19 className="w-full md:w-[80%] mx-auto" />
-          <VerticalTabs
-            title="One workspace for every form step."
-            eyebrow="How makeForm works"
-            className="mx-auto w-full"
-            items={[
-              {
-                id: "01",
-                title: "Choose your starting point",
-                description:
-                  "Start with a ready-made template or build a form from a blank canvas.",
-                image: formImage,
-                imageAlt: "makeForm visual form builder",
-              },
-              {
-                id: "02",
-                title: "Design and customize",
-                description:
-                  "Add fields, arrange your layout, configure validation, and set conditional logic.",
-                image: onboardingFormImage,
-                imageAlt: "A customized makeForm onboarding form",
-              },
-              {
-                id: "03",
-                title: "Preview and share",
-                description:
-                  "Check the live preview, publish your form, and share it with every respondent.",
-                image: eventFormImage,
-                imageAlt: "A makeForm event registration preview",
-              },
-            ]}
-          />
+          <VerticalTabs />
 
           {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
             <div className="flex items-center gap-2 min-w-0">
