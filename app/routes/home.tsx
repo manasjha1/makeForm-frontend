@@ -12,6 +12,7 @@ import {
 
 import Header from "~/src/components/Headers";
 import { Button } from "~/src/components/ui/button";
+import { Card, CardContent, CardFooter } from "~/src/components/ui/card";
 import {
   Accordion,
   AccordionContent,
@@ -286,7 +287,7 @@ export default function Home() {
                 const CategoryIcon = categoryIcons[template.category];
 
                 return (
-                  <article
+                  <Card
                     key={template.id}
                     className="group flex min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white transition-all duration-300 hover:scale-110"
                   >
@@ -304,16 +305,16 @@ export default function Home() {
                         />
                       </div>
 
-                      <div className="flex flex-1 flex-col px-4 pb-4 pt-2">
+                      <CardContent className="flex flex-1 flex-col px-4 pb-4 pt-2">
                         <div className="flex items-center justify-between gap-3">
-                          <span className="flex items-center gap-1.5 text-sm font-semibold text-[#191c1d]">
+                          <span className="flex items-center gap-1.5 text-md font-medium text-[#191c1d]">
                             <CategoryIcon
                               aria-hidden="true"
-                              className="size-4"
+                              className="size-5"
                             />
                             {template.title}
                           </span>
-                          <span className="shrink-0 rounded-full bg-[#f1f2f3] px-2.5 py-1 text-xs font-medium text-[#687177]">
+                          <span className="shrink-0 rounded-full px-2.5 py-1 text-sm font-medium text-[#687177]">
                             {template.category}
                           </span>
                         </div>
@@ -321,16 +322,16 @@ export default function Home() {
                         <p className="mt-4 text-sm leading-6 text-[#505254]">
                           {description}
                         </p>
-
-                        <p className="mt-auto pt-5 text-sm font-medium text-[#3525cd]">
+                        <hr className="mt-5" />
+                        <p className="mt-auto px-0 pt-5 text-sm font-medium text-[#3525cd]">
                           {template.fields.length} fields
                           <span className="text-[#7d8489]">
                             {" "}· {template.category} form
                           </span>
                         </p>
-                      </div>
+                      </CardContent>
                     </Link>
-                  </article>
+                  </Card>
                 );
               })}
             </div>
