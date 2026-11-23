@@ -248,12 +248,17 @@ export default function Home() {
           ]}
         />
 
-        <div className="px-4 sm:px-6">
-          <Logos19 className="w-full md:w-[80%] mx-auto" />
-          <VerticalTabs />
-
+        <div className="">
+          <div className="my-5">
+            <Logos19 className="w-full md:w-[80%] mx-auto" />
+          </div>
+          <div className="w-full border-y border-[#e1e3e4]">
+            <VerticalTabs />
+          </div>
+        </div>
+        <div className="">
           <section
-            className="w-full border-y border-[#e1e3e4] bg-white"
+            className="w-full border-y border-[#e1e3e4] bg-white px-4 sm:px-6"
             aria-label="makeForm product metrics"
           >
             <div className="grid grid-cols-2 lg:grid-cols-4">
@@ -261,13 +266,8 @@ export default function Home() {
                 <article
                   key={metric.value}
                   className={`flex min-h-36 flex-col justify-center px-6 py-8 sm:min-h-44 sm:px-10 lg:min-h-48 lg:px-12 ${index % 2 !== 0 ? "border-l border-[#e1e3e4]" : ""
-                    } ${index >= 2
-                      ? "border-t border-[#e1e3e4] lg:border-t-0"
-                      : ""
-                    } ${index > 0
-                      ? "lg:border-l lg:border-l-[#e1e3e4]"
-                      : ""
-                    }`}
+                    } ${index >= 2 ? "border-t border-[#e1e3e4] lg:border-t-0" : ""
+                    } ${index > 0 ? "lg:border-l lg:border-l-[#e1e3e4]" : ""}`}
                 >
                   <p className="text-4xl font-medium leading-none tracking-tight text-[#191c1d] sm:text-5xl">
                     {metric.value}
@@ -279,7 +279,6 @@ export default function Home() {
               ))}
             </div>
           </section>
-
           <section className="w-full max-w-6xl mx-auto my-5">
             <ScrollStackDeck
               projects={templateProjects}
@@ -517,5 +516,6 @@ export default function Home() {
       </main>
       <Footer />
     </div>
+
   );
 }
