@@ -74,7 +74,7 @@ export default function LivePreview() {
               {isTemplatePreview ? (
                 <div className="flex flex-wrap items-center gap-2.5">
                   <Button asChild variant="outline" className="border-[#e1e3e4] hover:bg-surface-container-low shadow-xs">
-                    <Link to="/form-builder?view=templates">
+                    <Link to="/templates">
                       <ArrowLeft className="size-4" />
                       Back to templates
                     </Link>
@@ -112,7 +112,7 @@ export default function LivePreview() {
               it here.
             </p>
             <Button asChild className="bg-[#3525cd] hover:bg-primary-container text-white shadow-xs">
-              <Link to="/form-builder?view=templates">Browse templates</Link>
+              <Link to="/templates">Browse templates</Link>
             </Button>
           </section>
         )}
