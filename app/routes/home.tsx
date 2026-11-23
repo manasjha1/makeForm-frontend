@@ -159,6 +159,25 @@ const featureStats = [
   },
 ];
 
+const homeMetrics = [
+  {
+    value: "4,000+",
+    label: "product teams plan in Ondrel",
+  },
+  {
+    value: "38%",
+    label: "fewer status meetings in the first quarter",
+  },
+  {
+    value: "2.4x",
+    label: "faster from request to release",
+  },
+  {
+    value: "99.99%",
+    label: "uptime over the last 12 months",
+  },
+];
+
 export function meta() {
   return [
     { title: "makeForm | Visual Form Builder" },
@@ -233,32 +252,34 @@ export default function Home() {
           <Logos19 className="w-full md:w-[80%] mx-auto" />
           <VerticalTabs />
 
-          {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mx-auto mt-10">
-            <div className="flex items-center gap-2 min-w-0">
-              <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-              <p className="text-xs text-on-surface-variant font-normal capitalize">
-                3-column editing workspace
-              </p>
+          <section
+            className="w-full border-y border-[#e1e3e4] bg-white"
+            aria-label="makeForm product metrics"
+          >
+            <div className="grid grid-cols-2 lg:grid-cols-4">
+              {homeMetrics.map((metric, index) => (
+                <article
+                  key={metric.value}
+                  className={`flex min-h-36 flex-col justify-center px-6 py-8 sm:min-h-44 sm:px-10 lg:min-h-48 lg:px-12 ${index % 2 !== 0 ? "border-l border-[#e1e3e4]" : ""
+                    } ${index >= 2
+                      ? "border-t border-[#e1e3e4] lg:border-t-0"
+                      : ""
+                    } ${index > 0
+                      ? "lg:border-l lg:border-l-[#e1e3e4]"
+                      : ""
+                    }`}
+                >
+                  <p className="text-4xl font-medium leading-none tracking-tight text-[#191c1d] sm:text-5xl">
+                    {metric.value}
+                  </p>
+                  <p className="mt-4 max-w-56 text-sm font-medium leading-5 text-[#505254] sm:text-base sm:leading-6">
+                    {metric.label}
+                  </p>
+                </article>
+              ))}
             </div>
-            <div className="flex items-center gap-2 min-w-0">
-              <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-              <p className="text-xs text-on-surface-variant font-normal capitalize">
-                conditional field logic
-              </p>
-            </div>
-            <div className="flex items-center gap-2 min-w-0">
-              <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-              <p className="text-xs text-on-surface-variant font-normal capitalize">
-                ready-to-use form templates
-              </p>
-            </div>
-            <div className="flex items-center gap-2 min-w-0">
-              <CheckCircle className="w-3.5 h-3.5 text-[#3525cd]" />
-              <p className="text-xs text-on-surface-variant font-normal capitalize">
-                mobile responsive preview
-              </p>
-            </div>
-          </div> */}
+          </section>
+
           <section className="w-full max-w-6xl mx-auto my-5">
             <ScrollStackDeck
               projects={templateProjects}
