@@ -234,7 +234,7 @@ export default function Home() {
           <div className="my-5">
             <Logos19 className="w-full md:w-[80%] mx-auto" />
           </div>
-          <div className="w-full border-y border-[#e1e3e4]">
+          <div className="w-full mx-auto border-y border-[#e1e3e4]">
             <VerticalTabs />
           </div>
         </div>
@@ -243,7 +243,7 @@ export default function Home() {
             className="w-full border-y border-[#e1e3e4] bg-white px-4 sm:px-6"
             aria-label="makeForm product metrics"
           >
-            <div className="grid grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 w-fit mx-auto border-x border-border">
               {homeMetrics.map((metric, index) => (
                 <article
                   key={metric.value}
@@ -261,8 +261,8 @@ export default function Home() {
               ))}
             </div>
           </section>
-          <section className="mx-auto my-16 w-full max-w-6xl lg:my-24">
-            <div className="flex items-end justify-between gap-6">
+          <section className="mx-auto px-16.5 py-16 lg:py-28 w-fit h-full border-x border-border">
+            <div className="flex items-end justify-between gap-6 w-full max-w-6xl mx-auto">
               <div>
                 <p className="text-sm font-medium text-[#3525cd]">Templates</p>
                 <h2 className="mt-3 max-w-3xl text-3xl font-medium leading-[1.05] tracking-tight text-[#191c1d] sm:text-4xl lg:text-5xl">
@@ -280,7 +280,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="mt-10 flex flex-col gap-5 md:flex-row md:items-stretch">
+            <div className="mt-10 flex flex-col gap-5 md:flex-row md:items-stretch w-full max-w-6xl mx-auto">
               {featuredTemplates.slice(0, 3).map((featured) => {
                 const { template, description, image, imageAlt } = featured;
                 const CategoryIcon = categoryIcons[template.category];
@@ -489,6 +489,5 @@ export default function Home() {
       </main>
       <Footer />
     </div>
-
   );
 }
