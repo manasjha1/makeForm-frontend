@@ -56,7 +56,9 @@ const slideVariants = {
 
 export default function VerticalTabs() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isTabsHovered, setIsTabsHovered] = useState(false);
+  const [isGalleryHovered, setIsGalleryHovered] = useState(false);
+  const isPaused = isTabsHovered || isGalleryHovered;
 
   const handleNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % SERVICES.length);
@@ -69,7 +71,6 @@ export default function VerticalTabs() {
   const handleTabClick = (index: number) => {
     if (index === activeIndex) return;
     setActiveIndex(index);
-    setIsPaused(false);
   };
 
   useEffect(() => {
@@ -88,7 +89,11 @@ export default function VerticalTabs() {
     <section className="@container w-full bg-white py-8 md:py-16">
       <div className="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-24 xl:px-28">
         <div className="grid grid-cols-1 items-start gap-10 @min-[720px]:grid-cols-12 @min-[720px]:gap-12">
-          <div className="flex flex-col justify-center order-2 pt-4 @min-[720px]:col-span-5 @min-[720px]:order-1">
+          <div
+            className="flex flex-col justify-center order-2 pt-4 @min-[720px]:col-span-5 @min-[720px]:order-1"
+            onMouseEnter={() => setIsTabsHovered(true)}
+            onMouseLeave={() => setIsTabsHovered(false)}
+          >
             <div className="space-y-1 mb-12">
               <h2 className="tracking-tighter text-balance text-3xl font-medium md:text-4xl lg:text-5xl text-foreground">
                 How make<span className="text-primary">Form</span> works
@@ -171,8 +176,8 @@ export default function VerticalTabs() {
           <div className="flex h-full flex-col justify-end order-1 @min-[720px]:col-span-7 @min-[720px]:order-2">
             <div
               className="relative group/gallery"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
+              onMouseEnter={() => setIsGalleryHovered(true)}
+              onMouseLeave={() => setIsGalleryHovered(false)}
             >
               <div className="relative aspect-4/5 overflow-hidden rounded-3xl border border-border/40 bg-muted/30 md:aspect-4/3 md:rounded-[2.5rem] @min-[720px]:aspect-16/11">
                 <AnimatePresence initial={false}>
