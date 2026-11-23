@@ -33,7 +33,7 @@ export default function StudioFooter({
                             Form Templates
                         </button>
                     ) : (
-                        <Link to="/form-builder?view=templates">Form Templates</Link>
+                        <Link to="/templates">Form Templates</Link>
                     )}
                     {onPreview ? (
                         <button className="studio-footer-link" onClick={onPreview}>

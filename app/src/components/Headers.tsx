@@ -44,13 +44,20 @@ export default function Header({
       ? "Dashboard"
       : pathname === "/live-preview" || preview
         ? "LivePreview"
-        : pathname === "/form-builder"
-          ? "FormBuilder"
-          : pathname === "/"
-            ? "Home"
-            : undefined);
+        : pathname === "/templates"
+          ? "Templates"
+          : pathname === "/form-builder"
+            ? "FormBuilder"
+            : pathname === "/"
+              ? "Home"
+              : undefined);
   const links = [
     { label: "Home", page: "Home", to: "/" },
+    {
+      label: "Templates",
+      page: "Templates",
+      to: "/templates",
+    },
     {
       label: "Dashboard",
       page: "Dashboard",
@@ -155,9 +162,8 @@ export default function Header({
   );
   return (
     <header
-      className={`app-header sticky top-0 z-40 w-full border-b border-[#e1e3e4] bg-white px-3 py-2 backdrop-blur sm:px-5 ${
-        pathname === "/" ? "" : "shadow-[0_1px_3px_0_rgba(25,28,29,0.03)]"
-      }`}
+      className={`app-header sticky top-0 z-40 w-full border-b border-[#e1e3e4] bg-white px-3 py-2 backdrop-blur sm:px-5 ${pathname === "/" ? "" : "shadow-[0_1px_3px_0_rgba(25,28,29,0.03)]"
+        }`}
     >
       <nav
         aria-label="Main navigation"
@@ -179,7 +185,7 @@ export default function Header({
         </div>
         <div className="ml-auto flex items-center gap-2">{actions}</div>
       </nav>
-      <div className="mx-auto grid w-full grid-cols-4 gap-1 border-t border-[#e1e3e4] pt-2 lg:hidden">
+      <div className="mx-auto grid w-full grid-cols-5 gap-1 border-t border-[#e1e3e4] pt-2 lg:hidden">
         {navigation()}
       </div>
     </header>
