@@ -1,11 +1,9 @@
 import {
   CalendarDays,
-  Dot,
   Eye,
   GitBranch,
   Layers,
   MessageSquareText,
-  MoveRight,
   Smartphone,
   SlidersHorizontal,
   UsersRound,
@@ -35,13 +33,8 @@ import statImage6 from "~/assests/stat-img6.jpeg";
 import { Link } from "react-router";
 import Footer from "~/src/components/Footer";
 
-import ScrollStackDeck, {
-  type ProjectItem,
-} from "~/src/components/scroll-stack-deck";
 import { findTemplate } from "~/src/data/form-templates";
 import { Logos19 } from "~/src/components/logos19";
-import { RippleButton } from "~/src/components/ripple-button";
-import { ShinyButton } from "~/src/components/shiny-button";
 import { Hero195 } from "~/src/components/hero195";
 import VerticalTabs from "~/src/components/vertical-tabs";
 
@@ -190,17 +183,6 @@ export function meta() {
 }
 
 export default function Home() {
-  const templateProjects: ProjectItem[] = featuredTemplates.map(
-    ({ template, description, image }, index) => ({
-      id: template.id,
-      tabTitle: `${String(index + 1).padStart(2, "0")} · ${template.category}`,
-      title: template.title,
-      description,
-      image,
-      color: "#f1f0ff",
-    }),
-  );
-
   return (
     <div className="relative min-h-screen bg-white">
       <Header viewPage="Home" />
@@ -279,93 +261,84 @@ export default function Home() {
               ))}
             </div>
           </section>
-          <section className="w-full max-w-6xl mx-auto my-5">
-            <ScrollStackDeck
-              projects={templateProjects}
-              title="Start with a prebuilt form"
-              subtitle="Browse ready-to-use forms, then customize the fields and preview your form."
-              scrollIndicatorText="Scroll to explore templates"
-              showFooter={false}
-              enableLenis={false}
-              className="min-h-0! bg-transparent!"
-              renderCard={(project, index) => {
-                const featured = featuredTemplates[index];
-                if (!featured) return null;
+          <section className="mx-auto my-16 w-full max-w-6xl lg:my-24">
+            <div className="flex items-end justify-between gap-6">
+              <div>
+                <p className="text-sm font-medium text-[#3525cd]">Templates</p>
+                <h2 className="mt-3 max-w-3xl text-3xl font-medium leading-[1.05] tracking-tight text-[#191c1d] sm:text-4xl lg:text-5xl">
+                  Start faster.{" "}
+                  <span className="text-[#7d8489]">
+                    Choose a ready-to-use form.
+                  </span>
+                </h2>
+              </div>
+              <Link
+                to="/form-builder?view=templates"
+                className="hidden shrink-0 text-sm font-medium text-[#191c1d] transition-colors hover:text-[#3525cd] sm:block"
+              >
+                All templates →
+              </Link>
+            </div>
+
+            <div className="mt-10 flex flex-col gap-5 md:flex-row md:items-stretch">
+              {featuredTemplates.slice(0, 3).map((featured) => {
                 const { template, description, image, imageAlt } = featured;
                 const CategoryIcon = categoryIcons[template.category];
 
                 return (
-                  // template cards
-                  <article className="relative rounded-xl w-full">
-                    <div className="grid min-h-112 gap-6 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white p-4 sm:p-8 md:min-h-112 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.85fr)] md:items-center md:gap-10">
-                      <div className="flex flex-col items-start">
-                        <span className="flex items-center gap-1.5 rounded-full border border-[#4f23a6] bg-[#d3c5f6] px-3 py-1 text-xs font-semibold text-[#4f23a6]">
-                          <CategoryIcon
-                            aria-hidden="true"
-                            className="size-3.5"
-                          />
-                          {template.category} template
-                        </span>
-                        <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#191c1d] sm:text-5xl">
-                          {template.title}
-                        </h3>
-                        <p className="mt-3 text-sm leading-6 text-[#505254] sm:text-base">
-                          {description}
-                        </p>
-                        <p className="flex items-center gap-1 mt-3 text-xs font-medium text-[#505253]">
-                          <Layers className="size-4" /> {template.fields.length}{" "}
-                          fields <Dot className="p-0" />{" "}
-                          <SlidersHorizontal className="size-4" /> Fully
-                          cutomizable
-                        </p>
-                        <div className="mt-6 flex w-full items-center gap-2">
-                          <Link
-                            to={`/live-preview?template=${encodeURIComponent(template.id)}`}
-                            className="flex items-center gap-2 capitalize "
-                          >
-                            <ShinyButton className="capitalized min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d] rounded-full">
-                              Preview
-                            </ShinyButton>
-                          </Link>
-                          <Link
-                            to={`/form-builder?template=${encodeURIComponent(template.id)}`}
-                            className="min-w-0 flex-1"
-                          >
-                            <RippleButton className="flex w-fit items-center justify-center px-5 text-center min-h-11 bg-[#3525cd] font-semibold text-white hover:bg-primary rounded-full">
-                              <span className="inline-flex items-center gap-2 whitespace-nowrap">
-                                Use this template
-                                <MoveRight
-                                  aria-hidden="true"
-                                  className="transition-all size-4"
-                                />
-                              </span>
-                            </RippleButton>
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="overflow-hidden rounded-xl border border-[#e1e3e4] bg-[#f8f9fa]">
+                  <article
+                    key={template.id}
+                    className="group flex min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#e1e3e4] bg-white transition-all duration-300 hover:scale-110"
+                  >
+                    <Link
+                      to={`/form-builder?template=${encodeURIComponent(template.id)}`}
+                      className="flex w-full flex-col"
+                    >
+                      <div className="m-2.5 overflow-hidden rounded-xl bg-[#f1f3f4]">
                         <img
                           src={image}
                           alt={imageAlt}
-                          className="block h-full w-full object-contain"
+                          className="block aspect-[1.65/1] h-full w-full object-cover transition-all duration-300"
                           loading="lazy"
                           decoding="async"
                         />
                       </div>
-                    </div>
+
+                      <div className="flex flex-1 flex-col px-4 pb-4 pt-2">
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="flex items-center gap-1.5 text-sm font-semibold text-[#191c1d]">
+                            <CategoryIcon
+                              aria-hidden="true"
+                              className="size-4"
+                            />
+                            {template.title}
+                          </span>
+                          <span className="shrink-0 rounded-full bg-[#f1f2f3] px-2.5 py-1 text-xs font-medium text-[#687177]">
+                            {template.category}
+                          </span>
+                        </div>
+
+                        <p className="mt-4 text-sm leading-6 text-[#505254]">
+                          {description}
+                        </p>
+
+                        <p className="mt-auto pt-5 text-sm font-medium text-[#3525cd]">
+                          {template.fields.length} fields
+                          <span className="text-[#7d8489]">
+                            {" "}· {template.category} form
+                          </span>
+                        </p>
+                      </div>
+                    </Link>
                   </article>
                 );
-              }}
-            />
-            <div className="flex justify-center">
-              <Button
-                asChild
-                variant="outline"
-                className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d]"
-              >
+              })}
+            </div>
+
+            <div className="mt-8 flex justify-center sm:hidden">
+              <Button asChild variant="outline" className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d]">
                 <Link to="/form-builder?view=templates">
                   Browse all templates
-                  {/* <MoveRight aria-hidden="true" className="ml-2 size-4" /> */}
                 </Link>
               </Button>
             </div>
