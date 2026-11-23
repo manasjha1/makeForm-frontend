@@ -200,7 +200,7 @@ export default function Home() {
             },
             secondary: {
               text: "Explore prebuilt templates",
-              url: "/form-builder?view=templates",
+              url: "/templates",
               className:
                 "min-h-11 rounded-full border-black bg-black px-6 py-4 text-sm font-medium text-white hover:bg-primary hover:text-white",
             },
@@ -273,7 +273,7 @@ export default function Home() {
                 </h2>
               </div>
               <Link
-                to="/form-builder?view=templates"
+                to="/templates"
                 className="hidden shrink-0 text-sm font-medium text-[#191c1d] transition-colors hover:text-[#3525cd] sm:block"
               >
                 All templates →
@@ -337,7 +337,7 @@ export default function Home() {
 
             <div className="mt-8 flex justify-center sm:hidden">
               <Button asChild variant="outline" className="min-h-11 border-[#d6d9da] bg-white px-5 font-semibold text-[#191c1d]">
-                <Link to="/form-builder?view=templates">
+                <Link to="/templates">
                   Browse all templates
                 </Link>
               </Button>
