@@ -1,5 +1,6 @@
 type toggleBtn =
   | "Home"
+  | "Templates"
   | "Dashboard"
   | "FormBuilder"
   | "LivePreview"
