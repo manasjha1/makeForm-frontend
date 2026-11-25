@@ -125,7 +125,7 @@
 .studio-workspace {
   display: grid;
   grid-template-columns: 288px minmax(0, 1fr) 320px;
-  height: calc(100dvh - 128px);
+  height: calc(109dvh - 128px);
   min-height: 420px;
 }
 .studio-panel {
@@ -291,8 +291,7 @@
   min-width: 0;
   overflow: auto;
   padding: 24px;
-  border: 1px solid var(--studio-border);
-  background: white;
+  background: rgb(242, 242, 243);
 }
 .studio-canvas-inner {
   max-width: 720px;
