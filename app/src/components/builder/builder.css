@@ -345,7 +345,7 @@
   cursor: pointer;
 }
 .studio-card.selected {
-  border-color: var(--studio-primary-container);
+  border-color: var(--studio-primary);
   box-shadow:
     0 0 0 1px var(--studio-primary-container),
     0 8px 16px -3px rgba(79, 70, 229, 0.12);
@@ -799,6 +799,7 @@
     min-height: 44px;
   }
 }
+
 @media (min-width: 480px) and (max-width: 767px) {
   .studio-palette-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
