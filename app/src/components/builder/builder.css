@@ -216,12 +216,12 @@
 }
 .studio-tabs button[aria-pressed="true"] {
   color: white;
-  background: var(--studio-primary);
+  background: black;
   box-shadow: 0 2px 4px rgba(53, 37, 205, 0.2);
 }
 .studio-tabs button[aria-selected="true"] {
   color: white;
-  background: var(--studio-primary);
+  background: black;
   box-shadow: 0 2px 4px rgba(53, 37, 205, 0.2);
 }
 .studio-palette-list {
