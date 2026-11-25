@@ -11,6 +11,7 @@ import {
   X,
   RefreshCw,
   BarChart2,
+  Play,
 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import FormPreview from "~/src/components/FormPreview";
@@ -41,6 +42,8 @@ import {
 } from "~/src/lib/studio-model";
 import { saveAndPublishForm } from "~/src/services/forms";
 import "~/src/components/builder/builder.css";
+import { RippleButton } from "~/src/components/ripple-button";
+import { Button } from "~/src/components/ui/button";
 
 export function meta() {
   return [
@@ -252,7 +255,7 @@ export default function FormBuilder() {
   return (
     <div className="studio">
       <Toaster position="top-right" />
-      <Header
+      {/* <Header
         count={form?.fields.length ?? 0}
         preview={preview}
         onPreview={showPreview}
@@ -275,13 +278,14 @@ export default function FormBuilder() {
         canUndo={!!history.length}
         onRedo={redo}
         canRedo={!!future.length}
-      />
-      <div className="studio-status">
+      /> */}
+      <div className="studio-status border-b border-border">
         <span role="status" className="flex items-center gap-2 text-sm">
           <CheckCircle2 size={16} />
           {message ||
             (saveError ? "Draft not saved" : "Draft saved in this browser tab")}
         </span>
+        <span className="flex items-center gap-2 text-sm text-gray-900 font-medium">{form?.title} ({form?.category}) </span>
         <div className="studio-actions">
           <button
             className="studio-button"
@@ -297,20 +301,12 @@ export default function FormBuilder() {
             disabled={!form}
             onClick={showPreview}
           >
-            <Eye size={16} />
+            <Play size={16} />
           </button>
-          <button
-            className="studio-button"
+          <Button
+            className="studio-button bg-[#000000] hover:bg-primary text-sm text-white inline-flex font-medium align-middle gap-1.5"
             disabled={!form || isPublishing}
             onClick={handlePublishAndShare}
-            style={{
-              backgroundColor: "#3525cd",
-              color: "#ffffff",
-              fontWeight: 600,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-            }}
           >
             {isPublishing ? (
               <RefreshCw size={12} className="animate-spin" />
@@ -318,7 +314,7 @@ export default function FormBuilder() {
               <Share2 size={12} />
             )}
             Publish &amp; Share
-          </button>
+          </Button>
         </div>
       </div>
       {saveError && (
