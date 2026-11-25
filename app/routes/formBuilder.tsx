@@ -327,7 +327,7 @@ export default function FormBuilder() {
         <main className="mx-auto max-w-6xl px-5 py-8">
           {form && (
             <button
-              className="studio-button mb-6"
+              className="studio-button mb-6 bg-[#000000] hover:bg-primary text-sm text-white inline-flex font-medium align-middle gap-1.5"
               onClick={() => setGallery(false)}
             >
               <ArrowLeft size={14} />
@@ -377,7 +377,7 @@ export default function FormBuilder() {
         <main className="studio-preview">
           <div className={`${previewLayout?.brandBarClass || "mx-auto max-w-4xl"} mb-5`}>
             <div className="flex w-full flex-wrap items-center justify-between gap-3">
-              <button className="studio-button" onClick={() => setPreview(false)}>
+              <button className="studio-button bg-[#000000] hover:bg-primary text-sm text-white inline-flex font-medium align-middle gap-1.5" onClick={() => setPreview(false)}>
                 <ArrowLeft size={14} />
                 Back to editor
               </button>
