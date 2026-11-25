@@ -88,7 +88,7 @@ export default function FieldsPalette({
                             <span className="studio-category">{category}</span>
                             <p>{description}</p>
                         </span>
-                        <Plus size={14} className="shrink-0 text-[#6b7872]" />
+                        <Plus size={14} className="shrink-0 text-[#6f6b78]" />
                     </button>
                 ))}
                 {!fields.length && (
@@ -111,8 +111,8 @@ export default function FieldsPalette({
             <p className="sr-only" role="status">
                 {fields.length} field types available
             </p>
-            <p className="studio-tip">
-                <Lightbulb size={13} className="mb-2" />
+            <p className="studio-tip flex items-center gap-1.5">
+                <Lightbulb className="mb-2 size-5" />
                 Tip: Select any card on the canvas to configure options &amp; validation
             </p>
         </aside>
