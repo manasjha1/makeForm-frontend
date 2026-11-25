@@ -290,10 +290,9 @@
 .studio-canvas {
   min-width: 0;
   overflow: auto;
-  padding: 32px;
-  background-color: var(--studio-paper);
-  background-image: radial-gradient(#d9dadb 1px, transparent 1px);
-  background-size: 20px 20px;
+  padding: 24px;
+  border: 1px solid var(--studio-border);
+  background: white;
 }
 .studio-canvas-inner {
   max-width: 720px;
