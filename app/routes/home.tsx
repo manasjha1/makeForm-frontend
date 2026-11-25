@@ -8,6 +8,7 @@ import {
   SlidersHorizontal,
   UsersRound,
   ShieldCheck,
+  ArrowBigRight,
 } from "lucide-react";
 
 import Header from "~/src/components/Headers";
@@ -275,9 +276,9 @@ export default function Home() {
               </div>
               <Link
                 to="/templates"
-                className="hidden shrink-0 text-sm font-medium text-[#191c1d] transition-colors hover:text-[#3525cd] sm:block"
+                className="hidden lg:flex items-center gap-1 shrink-0 text-sm font-medium text-[#191c1d] transition-colors hover:text-[#3525cd] sm:block"
               >
-                All templates →
+                All templates <ArrowBigRight className="size-4" />
               </Link>
             </div>
 
