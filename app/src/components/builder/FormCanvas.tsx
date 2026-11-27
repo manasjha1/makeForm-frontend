@@ -73,14 +73,14 @@ export default function FormCanvas({
       <div className="studio-canvas-inner">
         <section className="studio-form-header">
           <div className="flex items-center justify-between">
-            <span className="studio-eyebrow">
+            <span className="studio-eyebrow text-sm">
               Form header{" "}
-              <span className="studio-badge ml-2">
+              <span className="ml-2 text-gray-500 text-xs">
                 {form.fields.length} Fields
               </span>
             </span>
             <button
-              className="studio-icon-button"
+              className="studio-icon-button bg-[#d0cbff]"
               aria-label="Edit form header"
               aria-expanded={editingHeader}
               onClick={() => setEditingHeader(!editingHeader)}
