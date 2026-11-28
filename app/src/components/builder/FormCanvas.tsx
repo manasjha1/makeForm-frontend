@@ -73,7 +73,7 @@ export default function FormCanvas({
       <div className="studio-canvas-inner">
         <section className="studio-form-header">
           <div className="flex items-center justify-between">
-            <span className="studio-eyebrow text-sm">
+            <span className="studio-eyebrow text-xs">
               Form header{" "}
               <span className="ml-2 text-gray-500 text-xs">
                 {form.fields.length} Fields
