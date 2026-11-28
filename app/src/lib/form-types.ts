@@ -26,7 +26,7 @@ export type FormTemplate = {
     id: string;
     title: string;
     description: string;
-    category: "Business" | "Events" | "Feedback" | "Personal";
+    category: "Business" | "Contact" | "Events" | "Feedback" | "Personal";
     fields: FormField[];
 };
 
