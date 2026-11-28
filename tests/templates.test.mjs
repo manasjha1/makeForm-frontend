@@ -14,8 +14,10 @@ const { createForm } = await import("../app/src/lib/form-types.ts");
 const { readDraft, saveDraft } = await import("../app/src/lib/form-draft.ts");
 
 test("catalog has unique templates and valid field definitions", () => {
-    assert.equal(formTemplates.length, 6);
-    assert.equal(new Set(formTemplates.map((item) => item.id)).size, 6);
+    assert.equal(formTemplates.length, 8);
+    assert.equal(new Set(formTemplates.map((item) => item.id)).size, 8);
+    assert.equal(findTemplate("business-inquiry").category, "Business");
+    assert.equal(findTemplate("project-brief").category, "Business");
     for (const form of formTemplates) {
         assert.ok(form.title && form.description && form.fields.length);
         assert.equal(new Set(form.fields.map((field) => field.id)).size, form.fields.length);
