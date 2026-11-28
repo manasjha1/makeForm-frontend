@@ -1,9 +1,11 @@
 import type { FormTemplate } from "../lib/form-types";
 import { businessTemplates } from "./business-templates";
 import { communityTemplates } from "./community-templates";
+import { contactTemplates } from "./contact-templates";
 
 export const formTemplates: FormTemplate[] = [
     ...businessTemplates,
+    ...contactTemplates,
     ...communityTemplates,
     {
         id: "job-application", title: "Job Application", category: "Business",
