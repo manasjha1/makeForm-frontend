@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { Eye, FileText, Search } from "lucide-react";
+import { Eye, FileText, Play, Search } from "lucide-react";
 import { formTemplates } from "../data/form-templates";
 import type { FormTemplate } from "../lib/form-types";
 import { Button } from "./ui/button";
@@ -51,7 +51,7 @@ export default function TemplateGallery({
         </label>
       </div>
       <div className="flex flex-wrap gap-2" aria-label="Template categories">
-        {["All", "Business", "Events", "Feedback", "Personal"].map((item) => (
+        {["All", "Business", "📞 Contact", "Events", "Feedback", "Personal"].map((item) => (
           <Button
             key={item}
             variant={category === item ? "default" : "outline"}
@@ -90,16 +90,17 @@ export default function TemplateGallery({
               {template.fields.length} fields · Fully customizable
             </p>
             <div className="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-              <Button
-                asChild
-                variant="outline"
-                className="flex-1 border-[#e1e3e4] text-[#191c1d] hover:bg-surface-container-low shadow-2xs font-medium cursor-pointer"
-              >
-                <Link to={`/live-preview?template=${encodeURIComponent(template.id)}`}>
-                  <Eye className="size-4" />
+              <Link to={`/live-preview?template=${encodeURIComponent(template.id)}`}>
+
+                <Button
+                  variant="outline"
+                  className="flex-1 border-[#e1e3e4] text-[#191c1d] hover:bg-surface-container-low shadow-2xs font-medium cursor-pointer"
+                >
+                  <Play className="size-4" />
                   Preview
-                </Link>
-              </Button>
+                </Button>
+              </Link>
+
               <Button
                 onClick={() => onSelect(template)}
                 className="flex-1 bg-[#3525cd] text-white hover:bg-primary-container shadow-xs font-semibold cursor-pointer"
