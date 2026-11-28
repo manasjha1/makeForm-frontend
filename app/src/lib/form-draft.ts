@@ -4,7 +4,7 @@ import { normalizeConditions } from "./studio-model";
 
 const draftSchema = z.object({
     id: z.string(), title: z.string(), description: z.string(),
-    category: z.enum(["Business", "Events", "Feedback", "Personal"]),
+    category: z.enum(["Business", "📞 Contact", "Events", "Feedback", "Personal"]),
     fields: z.array(z.object({
         id: z.string().min(1), label: z.string(), required: z.boolean(),
         type: z.enum(["text", "email", "tel", "number", "date", "textarea", "select", "checkbox", "radio", "file"]),
