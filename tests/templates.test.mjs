@@ -14,10 +14,13 @@ const { createForm } = await import("../app/src/lib/form-types.ts");
 const { readDraft, saveDraft } = await import("../app/src/lib/form-draft.ts");
 
 test("catalog has unique templates and valid field definitions", () => {
-    assert.equal(formTemplates.length, 8);
-    assert.equal(new Set(formTemplates.map((item) => item.id)).size, 8);
+    assert.equal(formTemplates.length, 10);
+    assert.equal(new Set(formTemplates.map((item) => item.id)).size, 10);
     assert.equal(findTemplate("business-inquiry").category, "Business");
     assert.equal(findTemplate("project-brief").category, "Business");
+    assert.equal(findTemplate("contact").category, "📞 Contact");
+    assert.equal(findTemplate("support-request").category, "📞 Contact");
+    assert.equal(findTemplate("sales-inquiry").category, "📞 Contact");
     for (const form of formTemplates) {
         assert.ok(form.title && form.description && form.fields.length);
         assert.equal(new Set(form.fields.map((field) => field.id)).size, form.fields.length);
@@ -34,9 +37,9 @@ test("editing a form cannot mutate catalog fields or option arrays", () => {
     const source = findTemplate("contact");
     const copy = createForm(source);
     copy.fields[0].label = "Changed";
-    copy.fields[2].options.push("Extra");
+    copy.fields[5].options.push("Text");
     assert.equal(source.fields[0].label, "Full name");
-    assert.equal(source.fields[2].options.length, 3);
+    assert.equal(source.fields[5].options.length, 2);
 });
 
 test("draft round trip preserves custom labels, options and numeric bounds", () => {
