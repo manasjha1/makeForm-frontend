@@ -39,11 +39,11 @@ export default function FieldSettings({
       ) : (
         <>
           <div className="studio-panel-header flex items-center gap-3">
-            <span className="studio-field-icon">
-              <Icon size={19} />
+            <span className="bg-accent p-4 rounded-lg border">
+              <Icon className="size-6 text-primary" />
             </span>
             <div className="min-w-0">
-              <span className="studio-eyebrow">{field.type}</span>
+              <span className="text-gray-900 capitalize">{field.type}</span>
               <h2 className="truncate">{field.label || "Untitled field"}</h2>
               <p className="studio-muted truncate" title={field.id}>
                 ID: {field.id}
